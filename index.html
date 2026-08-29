@@ -64,12 +64,12 @@
   #stopBtn:hover{background:rgba(240,168,60,.15)}
 
   #staffWrap{flex:0 0 auto;margin-top:1px;position:relative;height:clamp(54px,16.5%,98px);background:#0d0a08}
-  #staff{display:block;width:100%;height:100%}
+  #staff{display:block;width:100%;height:100%;contain:layout paint}
   #judge{position:absolute;right:0;top:-1px;font-size:15px;font-weight:700;letter-spacing:.1em;
     transform:scaleX(.85);transform-origin:right;opacity:0;transition:opacity .26s;pointer-events:none}
 
   /* ── Kafana ── */
-  #stage{flex:1 1 auto;position:relative;min-height:0;overflow:hidden;background:#07050a;isolation:isolate}
+  #stage{flex:1 1 auto;position:relative;min-height:0;overflow:hidden;background:#07050a;isolation:isolate;contain:paint}
   #stage>div{position:absolute;pointer-events:none}
   #stage>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
   #scene{pointer-events:none}
@@ -391,11 +391,11 @@ const NUMS = ["1","2","3","4","5","6","7","8"];
    bright = Höhen der Zungen · sub = Anteil der 16'-Zunge                 */
 const REGISTERS = [
   { id:"tre", name:"Tremolo",  body:"url(#pearlR)", rim:"#ffb0a6",
-    voices:[0,-14,15], bright:.78, sub:0,   need:0 },
+    voices:[0,-15.5,16.5], vgain:[1,.84,.80], bright:.80, sub:0,   cham:0,   need:0 },
   { id:"suv", name:"Suvo",     body:"url(#pearlK)", rim:"#cfcfd8",
-    voices:[0,-4],     bright:.62, sub:0,   need:9000 },
+    voices:[0,-3.5],    vgain:[1,.92],     bright:.66, sub:0,   cham:.25, need:9000 },
   { id:"dub", name:"Duboko",   body:"url(#pearlW)", rim:"#fff6e6",
-    voices:[0,-9,10],  bright:.5,  sub:.55, need:26000 }
+    voices:[0,-8,9],    vgain:[1,.82,.78], bright:.46, sub:.62, cham:.9,  need:26000 }
 ];
 
 /* cleanMs/nearMs: Zeitfenster · slack: geduldeter Knopffehler
@@ -419,7 +419,7 @@ const LEVELS = [
    Jovano an den sieben Achteln, die Niška banja am Čoček-Hinken 2+2+2+3.
    root ist der Grundton in Hz — Dugmetara-üblich in B und C.              */
 const SONGS = [
-  { id:"uzi", title:"Užičko kolo", gloss:"SRBIJA · KOLO", scale:"dur", root:196.00, beat:240, meter:4, rounds:3,
+  { id:"uzi", title:"Užičko kolo", gloss:"SRBIJA · KOLO", scale:"dur", root:196.00, beat:240, meter:4, rounds:3, terca:true,
     bass:"2", verses:[
     { n:"5 5 6 7 6 5 4 .", ch:"I I" },
     { n:"5 5 6 7 6 5 4 .", ch:"V I" },
@@ -429,7 +429,7 @@ const SONGS = [
     { n:"2 4 6 6 7 6 5 4", ch:"V V" },
     { n:"3 5 7 8 7 6 5 4", ch:"I I" },
     { n:"3 2 1 - . . . .", ch:"V I" }]},
-  { id:"tam", title:"Tamo daleko", gloss:"SRBIJA · 3/4", scale:"dur", root:174.61, beat:520, meter:3, rounds:2,
+  { id:"tam", title:"Tamo daleko", gloss:"SRBIJA · 3/4", scale:"dur", root:174.61, beat:520, meter:3, rounds:2, terca:true,
     bass:"3", verses:[
     { n:"1 2 4 4 5 4", ch:"I I" },
     { n:"2 1 - . . .", ch:"V V" },
@@ -439,7 +439,7 @@ const SONGS = [
     { n:"5 4 - . . .", ch:"I I" },
     { n:"2 3 4 4 3 2", ch:"V V" },
     { n:"1 - - . . .", ch:"I I" }]},
-  { id:"jan", title:"Ajde Jano", gloss:"KOSOVO · 7/8", scale:"dur", root:196.00, beat:270, meter:7, rounds:2,
+  { id:"jan", title:"Ajde Jano", gloss:"KOSOVO · 7/8", scale:"dur", root:196.00, beat:270, meter:7, rounds:2, terca:true,
     bass:"7", verses:[
     { n:"5 5 5 6 5 4 3", ch:"I" },
     { n:"4 4 4 5 4 3 2", ch:"V" },
@@ -458,7 +458,7 @@ const SONGS = [
     { n:"5* . 6 5 4 3 .", ch:"I" },
     { n:"4* . 5 4 3 2 .", ch:"VII" },
     { n:"3 2 1 - - . .", ch:"I" }]},
-  { id:"nis", title:"Niška banja", gloss:"ČOČEK · 9/8", scale:"hidz", root:220.00, beat:230, meter:9, rounds:3,
+  { id:"nis", title:"Niška banja", gloss:"ČOČEK · 9/8", scale:"hidz", root:220.00, beat:230, meter:9, rounds:3, terca:true,
     bass:"9", verses:[
     { n:"1 1 2 1 . 3 2 1 .", ch:"I" },
     { n:"1 1 2 1 . 3 2 1 .", ch:"I" },
@@ -692,7 +692,7 @@ const S = {
   sheenT:0, edgeFlash:0, freeStrokes:0, lastVerse:0,
   songIdx:0, verse:0, head:0, curNote:null, shakeDone:0,
   drill:null, soloStart:0, bec:false, airWarnT:0, finale:0, finaleGood:0,
-  bassHead:0, bassEvents:[], verseStat:{}
+  bassHead:0, bassEvents:[], verseStat:{}, press:0, demoExtra:[]
 };
 const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
 const REG=function(){ return REGISTERS[S.reg]; };
@@ -745,36 +745,170 @@ function applyLang(){
 function setLang(l){ if(!STR[l]) return; LANG=l; applyLang(); prefsSave(); }
 
 /* ═══════════ Klang ═══════════
-   Alles synthetisch. Die Zunge einer Harmonika ist im Kern ein Sägezahn
-   mit stark bedämpften Höhen; zwei oder drei Zungen je Ton, leicht gegen-
-   einander verstimmt, geben die Schwebung, die man »Tremolo« nennt.
-   Die Luft kommt aus dem Balg: ein einziger Gain-Knoten zwischen allen
-   Zungen und dem Ausgang, den die linke Hand füllt und der leer läuft,
-   sobald sie stillsteht.                                                  */
-let AC=null, master=null, comp=null, belGain=null, reedFilt=null, bassFilt=null, room=null, roomGain=null;
-let noiseBuf=null;
-const LIVE=[];                                    // klingende Töne
+   Alles synthetisch, aber nicht mehr aus einem Sägezahn. Eine Harmonika-
+   zunge ist ein Metallblatt, das im Luftstrom schlägt: kein reiner Sägezahn,
+   sondern ein Spektrum mit einer Nase um den sechsten Teilton — daher das
+   Näselnde, an dem man sie sofort erkennt. Die Zunge braucht ein paar
+   Millisekunden, bis sie »spricht«: sie setzt ein wenig zu tief an, zieht
+   sich auf die Tonhöhe hoch und schießt in der Lautstärke kurz übers Ziel.
+   Davor steht ein Luftgeräusch — das Anblasen, der »Chiff«.
+
+   Zwei oder drei Zungen je Ton, gegeneinander verstimmt, geben die
+   Schwebung. Ein Stimmer legt sie nicht in gleichen Cent an: im Bass
+   breiter, im Diskant enger, sonst flattert die Höhe. Das steckt in
+   reedDetune().
+
+   Der Balg ist mehr als ein Lautstärkeregler. Mehr Druck heißt lauter,
+   heller UND ein paar Cent höher — deshalb hängt an jeder Zunge eine
+   Modulationsquelle, die den Druck auf die Verstimmung legt.
+
+   Signalweg:
+     Zungen  → reedFilt → Kammerfilter (Cassotto) → Panorama rechts ─┐
+     Bässe   → bassFilt → Basskuppe      → Panorama links            ├→ belGain
+                                                                     │
+     belGain → Korpusresonanz → Sättigung → Kompressor → Ausgang     ┘
+             ↘ Vorverzögerung → Kafana-Hall ─────────────────────────┘
+     Mechanik (Klappen, Balgstoß, Rufe) geht am Balg vorbei — die hört
+     man auch dann, wenn keine Luft mehr da ist.                          */
+let AC=null, master=null, comp=null, shaper=null, belGain=null;
+let reedFilt=null, chamP=null, chamN=null, trebPan=null;
+let bassFilt=null, bassP=null, bassPan=null;
+let bodyHP=null, bodyP1=null, bodyP2=null;
+let room=null, roomGain=null, roomPre=null, mechBus=null;
+let pressCS=null;                                  // Balgdruck als Modulationsquelle
+let reedWave=null, bassWave=null, subWave=null;
+let noiseBuf=null, chiffBuf=null, clickBuf=null;
+let reedBase=3000;
+const LIVE=[];                                     // klingende Töne
+const AUDIO={vol:.9, room:.20};                    // vom Spieler einstellbar
+
+/* Ein Zungenspektrum. tilt = Abfall der Teiltöne, fq/fw = Lage und Breite
+   der Nase, odd = wie weit die geraden Teiltöne zurücktreten. Die Phasen
+   werden verwürfelt: gleichphasige Teiltöne geben eine harte Spitze im
+   Wellenzug, verwürfelte klingen voller bei gleicher Lautstärke.         */
+function mkWave(n,tilt,formant,fq,fw,odd){
+  const re=new Float32Array(n+1), im=new Float32Array(n+1);
+  let s=987654321;
+  const rr=function(){ s=(s*1664525+1013904223)%4294967296; return s/4294967296; };
+  for(let k=1;k<=n;k++){
+    let a=Math.pow(k,-tilt);
+    a*=1+formant*Math.exp(-Math.pow(k-fq,2)/(2*fw*fw));
+    a*=Math.exp(-Math.pow(k/n,2)*2.1);
+    if(k%2===0) a*=odd;
+    const ph=rr()*6.2831853;
+    re[k]=a*Math.cos(ph); im[k]=a*Math.sin(ph);
+  }
+  try{ return AC.createPeriodicWave(re,im,{disableNormalization:false}); }
+  catch(e){ return AC.createPeriodicWave(re,im); }
+}
+/* Der Chiff: das kurze Zischen, mit dem die Zunge anspricht. Fertig
+   gerechnet in einen Puffer, damit je Ton nur drei Knoten nötig sind.    */
+function mkChiff(sr){
+  const N=Math.floor(sr*.085), b=AC.createBuffer(1,N,sr), d=b.getChannelData(0);
+  let lp=0;
+  for(let i=0;i<N;i++){ const x=Math.random()*2-1; lp+=(x-lp)*.5; d[i]=lp*Math.pow(1-i/N,3.4); }
+  return b;
+}
+/* Die Klappe, die auf das Loch zurückfällt. Ein Holz-Leder-Klack.        */
+function mkClick(sr){
+  const N=Math.floor(sr*.03), b=AC.createBuffer(1,N,sr), d=b.getChannelData(0);
+  let lp=0;
+  for(let i=0;i<N;i++){ const x=Math.random()*2-1; lp+=(x-lp)*.3; d[i]=lp*Math.pow(1-i/N,5.5); }
+  return b;
+}
+/* Kafana-Hall: erst ein paar frühe Reflexionen von den nahen Wänden,
+   darüber eine Fahne, in der die Höhen schneller sterben als die Tiefen —
+   ein niedriger Raum voller Menschen und Vorhänge, kein Konzertsaal.
+   Beide Seiten werden getrennt gewürfelt, sonst klingt es mono.          */
+function mkRoom(sr,sec){
+  const N=Math.max(1,Math.floor(sr*sec)), b=AC.createBuffer(2,N,sr);
+  const taps=[[.0091,.44],[.0163,-.36],[.0247,.30],[.0359,-.24],[.0501,.20],[.0662,-.16],[.0834,.13]];
+  for(let c=0;c<2;c++){
+    const d=b.getChannelData(c); let lp=0;
+    for(let i=0;i<N;i++){
+      const t=i/N, x=Math.random()*2-1;
+      lp+=(x-lp)*Math.max(.05,.58-.48*t);          // Dämpfung wächst mit der Zeit
+      d[i]=lp*Math.pow(1-t,2.5)*.55;
+    }
+    for(let i=0;i<taps.length;i++){
+      const idx=Math.floor((taps[i][0]+c*.0026+i*.0007)*sr);
+      if(idx<N) d[idx]+=taps[i][1]*(c?.88:1);
+    }
+  }
+  return b;
+}
+/* Sanfte Sättigung statt hartem Anschlag am Rand — der Kompressor darunter
+   fängt Spitzen, diese Kurve nimmt ihnen vorher die Schärfe.             */
+function mkCurve(){
+  const N=1024, c=new Float32Array(N);
+  for(let i=0;i<N;i++){ const x=i/(N-1)*2-1; c[i]=Math.tanh(x*1.6)/Math.tanh(1.6); }
+  return c;
+}
+function mkPan(v){
+  if(AC.createStereoPanner){ try{ const p=AC.createStereoPanner(); p.pan.value=v; return p; }catch(e){} }
+  return AC.createGain();
+}
 function initAudio(){
   if(AC) return;
   const Ctx=window.AudioContext||window.webkitAudioContext;
   if(!Ctx) return;
   AC=new Ctx({latencyHint:"interactive"});
+  const sr=AC.sampleRate;
+
+  master=AC.createGain(); master.gain.value=AUDIO.vol;
+  master.connect(AC.destination);
   comp=AC.createDynamicsCompressor();
-  comp.threshold.value=-14; comp.knee.value=18; comp.ratio.value=5; comp.attack.value=.004; comp.release.value=.16;
-  master=AC.createGain(); master.gain.value=.9;
-  comp.connect(master); master.connect(AC.destination);
+  comp.threshold.value=-12; comp.knee.value=22; comp.ratio.value=3.4;
+  comp.attack.value=.006; comp.release.value=.19;
+  comp.connect(master);
+  shaper=AC.createWaveShaper(); shaper.curve=mkCurve(); shaper.oversample="2x";
+  shaper.connect(comp);
+
+  // Korpus: das Holz um die Zungen. Eine tiefe Kuppe, eine in den Mitten,
+  // und unten weg, was nur wummert.
+  bodyHP=AC.createBiquadFilter(); bodyHP.type="highpass"; bodyHP.frequency.value=62; bodyHP.Q.value=.7;
+  bodyP1=AC.createBiquadFilter(); bodyP1.type="peaking"; bodyP1.frequency.value=232; bodyP1.Q.value=1.0; bodyP1.gain.value=1.5;
+  bodyP2=AC.createBiquadFilter(); bodyP2.type="peaking"; bodyP2.frequency.value=1380; bodyP2.Q.value=1.5; bodyP2.gain.value=2.2;
+  bodyHP.connect(bodyP1); bodyP1.connect(bodyP2); bodyP2.connect(shaper);
+
   belGain=AC.createGain(); belGain.gain.value=0;
-  reedFilt=AC.createBiquadFilter(); reedFilt.type="lowpass"; reedFilt.Q.value=.9;
-  bassFilt=AC.createBiquadFilter(); bassFilt.type="lowpass"; bassFilt.frequency.value=520; bassFilt.Q.value=.6;
-  reedFilt.connect(belGain); bassFilt.connect(belGain); belGain.connect(comp);
-  // ein bisschen Kafana: kurzer, dichter Nachhall
+  belGain.connect(bodyHP);
+
+  // Diskant: Helligkeit des Registers, dann die Kammer (Cassotto)
+  reedFilt=AC.createBiquadFilter(); reedFilt.type="lowpass"; reedFilt.Q.value=.85;
+  chamP=AC.createBiquadFilter(); chamP.type="peaking"; chamP.frequency.value=520; chamP.Q.value=.9;
+  chamN=AC.createBiquadFilter(); chamN.type="peaking"; chamN.frequency.value=2500; chamN.Q.value=.8;
+  trebPan=mkPan(.32);
+  reedFilt.connect(chamP); chamP.connect(chamN); chamN.connect(trebPan); trebPan.connect(belGain);
+
+  // Bassseite: hinter dem Riemen, ohne Kammer, deutlich dumpfer
+  bassFilt=AC.createBiquadFilter(); bassFilt.type="lowpass"; bassFilt.frequency.value=1150; bassFilt.Q.value=.7;
+  bassP=AC.createBiquadFilter(); bassP.type="peaking"; bassP.frequency.value=150; bassP.Q.value=.9; bassP.gain.value=3.2;
+  bassPan=mkPan(-.36);
+  bassFilt.connect(bassP); bassP.connect(bassPan); bassPan.connect(belGain);
+
+  // Mechanik hört man auch ohne Luft
+  mechBus=AC.createGain(); mechBus.gain.value=1; mechBus.connect(shaper);
+
+  // Hall mit Vorverzögerung — die erste Wand ist ein paar Meter weg
   try{
-    room=AC.createConvolver(); const sr=AC.sampleRate, N=Math.floor(sr*.9), b=AC.createBuffer(2,N,sr);
-    for(let c=0;c<2;c++){ const d=b.getChannelData(c); for(let i=0;i<N;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/N,2.6)*.5; }
-    room.buffer=b; roomGain=AC.createGain(); roomGain.gain.value=.16;
-    belGain.connect(room); room.connect(roomGain); roomGain.connect(comp);
+    room=AC.createConvolver(); room.buffer=mkRoom(sr,1.45);
+    roomPre=AC.createDelay(.2); roomPre.delayTime.value=.019;
+    roomGain=AC.createGain(); roomGain.gain.value=AUDIO.room;
+    belGain.connect(roomPre); mechBus.connect(roomPre);
+    roomPre.connect(room); room.connect(roomGain); roomGain.connect(comp);
   }catch(e){ room=null; }
-  const N=AC.sampleRate*1.2; noiseBuf=AC.createBuffer(1,N,AC.sampleRate);
+
+  // Balgdruck als Modulationsquelle auf die Verstimmung aller Zungen
+  try{
+    if(AC.createConstantSource){ pressCS=AC.createConstantSource(); pressCS.offset.value=0; pressCS.start(); }
+  }catch(e){ pressCS=null; }
+
+  reedWave=mkWave(40,0.92,1.60,5.5,2.7,.82);
+  bassWave=mkWave(30,1.32,0.95,4.0,2.2,.86);
+  subWave =mkWave(16,1.60,0.45,3.0,1.7,.72);
+  chiffBuf=mkChiff(sr); clickBuf=mkClick(sr);
+  const N=Math.floor(sr*1.2); noiseBuf=AC.createBuffer(1,N,sr);
   const d=noiseBuf.getChannelData(0); for(let i=0;i<N;i++) d[i]=Math.random()*2-1;
   applyRegister();
 }
@@ -784,114 +918,195 @@ function unlock(){
 }
 function applyRegister(){
   if(!AC) return;
-  const R=REG();
-  reedFilt.frequency.value=1500+R.bright*2600;
+  const R=REG(), cm=R.cham||0, t=AC.currentTime;
+  reedBase=1600+R.bright*4700;
+  reedFilt.frequency.setTargetAtTime(reedBase,t,.05);
+  chamP.gain.setTargetAtTime(5.5*cm,t,.05);
+  chamN.gain.setTargetAtTime(-8.5*cm,t,.05);
 }
+function setVolume(v){ AUDIO.vol=v; if(master) master.gain.setTargetAtTime(v,AC.currentTime,.03); }
+function setRoom(v){ AUDIO.room=v; if(roomGain) roomGain.gain.setTargetAtTime(v,AC.currentTime,.05); }
+
 const CENT=Math.pow(2,1/1200);
 function scaleOf(){ return SCALES[(S.song&&S.song.scale)||"dur"]; }
 function rootOf(){ return (S.song&&S.song.root)||196; }
 function freqOf(deg){ return rootOf()*Math.pow(2,scaleOf()[Math.max(0,Math.min(7,deg))]/12); }
+/* Schwebungskurve. Gleiche Cent über den ganzen Umfang klingen im Diskant
+   nervös; ein Stimmer nimmt sie oben zurück.                             */
+function reedDetune(f,cents){ return cents*Math.pow(440/Math.max(60,f),.34); }
 
-/* Ein Ton besteht aus den Zungen des Registers; sie hängen an einem Gain,
-   der beim Loslassen in 90 ms zufällt. Mehr als sechs Töne zugleich gibt
-   es nicht — der Älteste fliegt raus, wie beim echten Instrument der
-   Finger, der weitermuss.                                                */
-function noteOn(deg,vel){
+/* Ein Ton: die Zungen des Registers, jede mit eigener Ansprache. Mehr als
+   acht Töne zugleich gibt es nicht — der Älteste fliegt raus, wie beim
+   echten Instrument der Finger, der weitermuss.                          */
+function noteOn(deg,vel,when){
   if(!AC) return null;
-  const R=REG(), t=AC.currentTime+.002, f=freqOf(deg);
-  const g=AC.createGain(); g.gain.setValueAtTime(0,t);
-  g.gain.linearRampToValueAtTime(.11*(vel||1),t+.014);
+  const R=REG(), t=Math.max(AC.currentTime,when||0)+.003, f=freqOf(deg), v=vel||1;
+  const speak=Math.min(.040,.008+4.6/f);                 // tiefe Zungen sprechen träger an
+  const scoop=Math.pow(2,-(8+20*Math.min(1,280/f))/1200); // sie setzt zu tief an
+  const g=AC.createGain(); g.gain.setValueAtTime(.0001,t);
+  const pk=.095*v;
+  g.gain.linearRampToValueAtTime(pk*1.18,t+speak);        // die Zunge schießt kurz übers Ziel
+  g.gain.linearRampToValueAtTime(pk,t+speak*2.6);
   g.connect(reedFilt);
-  const oscs=[];
+  const oscs=[], vg=R.vgain||[];
   R.voices.forEach(function(c,i){
-    const o=AC.createOscillator(); o.type="sawtooth";
-    o.frequency.value=f*Math.pow(CENT,c);
-    const og=AC.createGain(); og.gain.value=i===0?1:.72;
-    o.connect(og); og.connect(g); o.start(t); oscs.push(o);
+    const o=AC.createOscillator(); o.setPeriodicWave(reedWave);
+    o.frequency.setValueAtTime(f*scoop,t);
+    o.frequency.exponentialRampToValueAtTime(f,t+speak*.9);
+    o.detune.setValueAtTime(reedDetune(f,c)+(Math.random()-.5)*4.2,t);
+    if(pressCS){ try{ pressCS.connect(o.detune); }catch(e){} }
+    const og=AC.createGain(); og.gain.value=(vg[i]!==undefined?vg[i]:(i===0?1:.8));
+    o.connect(og); og.connect(g); o.start(t+i*.0035); oscs.push(o);
   });
   if(R.sub>0){
-    const o=AC.createOscillator(); o.type="square"; o.frequency.value=f/2;
-    const og=AC.createGain(); og.gain.value=R.sub*.55; o.connect(og); og.connect(g); o.start(t); oscs.push(o);
+    const o=AC.createOscillator(); o.setPeriodicWave(subWave);
+    o.frequency.setValueAtTime(f*.5*scoop,t);
+    o.frequency.exponentialRampToValueAtTime(f*.5,t+speak*1.4);
+    o.detune.setValueAtTime((Math.random()-.5)*3,t);
+    if(pressCS){ try{ pressCS.connect(o.detune); }catch(e){} }
+    const og=AC.createGain(); og.gain.value=R.sub*.6;
+    o.connect(og); og.connect(g); o.start(t+.004); oscs.push(o);
   }
-  // Anblasgeräusch: die Zunge spricht mit einem winzigen Luftstoß an
-  const n=AC.createBufferSource(); n.buffer=noiseBuf; n.loop=true;
-  const nf=AC.createBiquadFilter(); nf.type="bandpass"; nf.frequency.value=f*3; nf.Q.value=1.4;
-  const ng=AC.createGain(); ng.gain.setValueAtTime(.05,t); ng.gain.exponentialRampToValueAtTime(.0008,t+.09);
-  n.connect(nf); nf.connect(ng); ng.connect(g); n.start(t); n.stop(t+.12);
+  // Anblasen: der Luftstoß, bevor die Zunge greift — tiefe Töne zischen mehr
+  const n=AC.createBufferSource(); n.buffer=chiffBuf;
+  const nf=AC.createBiquadFilter(); nf.type="bandpass"; nf.frequency.value=Math.min(6800,f*2.6); nf.Q.value=1.1;
+  const ng=AC.createGain(); ng.gain.value=.05*v*(1.4-.5*Math.min(1,f/520));
+  n.connect(nf); nf.connect(ng); ng.connect(g); n.start(t);
+  n.onended=function(){ try{ n.disconnect(); nf.disconnect(); ng.disconnect(); }catch(e){} };
+
   const h={g:g, oscs:oscs, deg:deg, on:t};
+  oscs[0].onended=function(){
+    for(let i=0;i<oscs.length;i++){
+      try{ if(pressCS) pressCS.disconnect(oscs[i].detune); }catch(e){}
+      try{ oscs[i].disconnect(); }catch(e){}
+    }
+    try{ g.disconnect(); }catch(e){}
+  };
   LIVE.push(h);
-  while(LIVE.length>6) noteOff(LIVE[0]);
+  while(LIVE.length>8) noteOff(LIVE[0]);
   return h;
 }
-function noteOff(h){
+function noteOff(h,when){
   if(!h||!AC||h.off) return;
   h.off=true;
-  const t=Math.max(AC.currentTime,h.on+.03);
-  h.g.gain.cancelScheduledValues(t);
-  h.g.gain.setValueAtTime(h.g.gain.value,t);
-  h.g.gain.linearRampToValueAtTime(0,t+.09);
-  h.oscs.forEach(function(o){ try{ o.stop(t+.12); }catch(e){} });
+  const t=Math.max(AC.currentTime,when||0,h.on+.03);
+  try{
+    h.g.gain.cancelScheduledValues(t);
+    h.g.gain.setValueAtTime(h.g.gain.value,t);
+    h.g.gain.setTargetAtTime(.0001,t,.016);            // die Zunge steht schnell
+  }catch(e){}
+  h.oscs.forEach(function(o){ try{ o.stop(t+.11); }catch(e){} });
+  clickSnd(t,.45);                                     // die Klappe fällt zu
   const i=LIVE.indexOf(h); if(i>=0) LIVE.splice(i,1);
 }
 function allOff(){ while(LIVE.length) noteOff(LIVE[0]); }
 
-/* Linke Hand: Bass und Akkord. »bas« ist der Grundton zwei Oktaven tiefer
-   mit seiner Oktave, »akord« der Dreiklang auf der Stufe — beides kurz,
-   beides durch denselben Balg.                                           */
+/* Linke Hand: Stradella. Der Grundbass wechselt von Takt zu Takt zwischen
+   Grundton und Quinte — das ist der Gang, den man hört, ohne ihn zu suchen.
+   Der Akkord liegt in enger Lage in einer festen Oktave: am echten
+   Instrument gibt es keine Umkehrungen, drei Zungen sitzen fest, und
+   deshalb springt der Akkord nie, egal wohin die Harmonie geht.          */
 const ROMANDEG={I:0,II:1,III:2,IV:3,V:4,VI:5,VII:6};
-function chordFreqs(deg){
-  const sc=scaleOf(), r=rootOf();
-  function st(d){ const o=Math.floor(d/7), k=d%7; return sc[k]+12*o; }
-  return [st(deg),st(deg+2),st(deg+4)].map(function(s){ return r*Math.pow(2,s/12); });
+function degSemi(d){ const sc=scaleOf(), o=Math.floor(d/7), k=((d%7)+7)%7; return sc[k]+12*o; }
+function chordFreqs(deg){ return stradella(deg); }
+function stradella(deg){
+  const r=rootOf(), lo=r*.92;
+  return [degSemi(deg),degSemi(deg+2),degSemi(deg+4)].map(function(s){
+    let f=r*Math.pow(2,s/12);
+    while(f<lo) f*=2;
+    while(f>=lo*2) f/=2;
+    return f;
+  });
 }
-function bassHit(kind,deg,when,strength){
+function bassRoot(deg,alt){
+  const r=rootOf();
+  let f=r*Math.pow(2,(degSemi(deg)+(alt?7:0))/12)/2;
+  while(f>r*.8) f/=2;
+  return f;
+}
+function clickSnd(when,amt){
+  if(!AC||!clickBuf) return;
+  const t=Math.max(AC.currentTime,when||0);
+  const n=AC.createBufferSource(); n.buffer=clickBuf;
+  const f=AC.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1500+Math.random()*700; f.Q.value=.8;
+  const g=AC.createGain(); g.gain.value=.03*(amt||1);
+  n.connect(f); f.connect(g); g.connect(mechBus); n.start(t);
+  n.onended=function(){ try{ n.disconnect(); f.disconnect(); g.disconnect(); }catch(e){} };
+}
+/* Bass und Akkord sind Zungen wie der Diskant, keine gezupften Saiten:
+   sie stehen für die Dauer des Schlags und werden dann abgestellt.       */
+function bassHit(kind,deg,when,strength,opt){
   if(!AC) return;
-  const t=Math.max(AC.currentTime,when), s=strength||1;
-  const fs=chordFreqs(deg);
+  const t=Math.max(AC.currentTime,when||0), s=strength||1, o=opt||{};
+  const beat=(S.song&&S.song.beat)||420;
   const g=AC.createGain(); g.connect(bassFilt);
+  let dur, parts;
   if(kind==="b"){
-    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.26*s,t+.012);
-    g.gain.exponentialRampToValueAtTime(.001,t+.24);
-    [fs[0]/4,fs[0]/2].forEach(function(f,i){
-      const o=AC.createOscillator(); o.type="sawtooth"; o.frequency.value=f;
-      const og=AC.createGain(); og.gain.value=i?.5:1; o.connect(og); og.connect(g); o.start(t); o.stop(t+.3);
-    });
+    const fr=bassRoot(deg,o.alt);
+    dur=Math.max(.16,Math.min(.52,beat/1000*.62));
+    parts=[[fr,.92],[fr*2,.5],[fr*4,.10]];
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.linearRampToValueAtTime(.21*s,t+.020);
+    g.gain.setTargetAtTime(.115*s,t+.034,.10);
+    g.gain.setTargetAtTime(.0001,t+dur,.050);
   }else{
-    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.10*s,t+.01);
-    g.gain.exponentialRampToValueAtTime(.001,t+.16);
-    fs.forEach(function(f){
-      [0,-7].forEach(function(c){
-        const o=AC.createOscillator(); o.type="sawtooth"; o.frequency.value=f/2*Math.pow(CENT,c);
-        o.connect(g); o.start(t); o.stop(t+.2);
-      });
-    });
+    dur=Math.max(.11,Math.min(.36,beat/1000*.44));
+    parts=stradella(deg).map(function(f){ return [f,.9]; });
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.linearRampToValueAtTime(.092*s,t+.016);
+    g.gain.setTargetAtTime(.056*s,t+.032,.08);
+    g.gain.setTargetAtTime(.0001,t+dur,.038);
   }
+  const stop=t+dur+.3;
+  let last=null;
+  parts.forEach(function(p){
+    const oo=AC.createOscillator(); oo.setPeriodicWave(bassWave);
+    oo.frequency.setValueAtTime(p[0]*.988,t);
+    oo.frequency.exponentialRampToValueAtTime(p[0],t+.028);
+    oo.detune.value=(Math.random()-.5)*5;
+    const og=AC.createGain(); og.gain.value=p[1];
+    oo.connect(og); og.connect(g); oo.start(t); oo.stop(stop);
+    oo.onended=function(){ try{ oo.disconnect(); og.disconnect(); }catch(e){} };
+    last=oo;
+  });
+  if(last){ const prev=last.onended; last.onended=function(){ if(prev) prev(); try{ g.disconnect(); }catch(e){} }; }
+  clickSnd(t,kind==="b"?.8:.55);                       // der Bassknopf schlägt an
 }
-/* Balgwechsel: ein kurzer, dumpfer Luftstoß, das »Klack« der Umkehr.     */
+/* Balgwechsel: die Luft kehrt um. Unten ein dumpfer Stoß, darüber ein
+   Streifen Zischen an der Falte, dazu das Leder.                         */
 function puff(str){
-  if(!AC) return;
-  const t=AC.currentTime;
-  const n=AC.createBufferSource(); n.buffer=noiseBuf;
-  const f=AC.createBiquadFilter(); f.type="lowpass"; f.frequency.value=380;
-  const g=AC.createGain(); g.gain.setValueAtTime(.09*(str||1),t); g.gain.exponentialRampToValueAtTime(.001,t+.08);
-  n.connect(f); f.connect(g); g.connect(comp); n.start(t); n.stop(t+.1);
+  if(!AC||!noiseBuf) return;
+  const t=AC.currentTime, s=str||1;
+  const n=AC.createBufferSource(); n.buffer=noiseBuf; n.loop=true;
+  const lo=AC.createBiquadFilter(); lo.type="lowpass"; lo.frequency.value=300; lo.Q.value=.8;
+  const g=AC.createGain(); g.gain.setValueAtTime(.075*s,t); g.gain.exponentialRampToValueAtTime(.0006,t+.11);
+  n.connect(lo); lo.connect(g); g.connect(mechBus); n.start(t); n.stop(t+.14);
+  const n2=AC.createBufferSource(); n2.buffer=noiseBuf; n2.loop=true;
+  const bp=AC.createBiquadFilter(); bp.type="bandpass"; bp.frequency.value=2300; bp.Q.value=.9;
+  const g2b=AC.createGain(); g2b.gain.setValueAtTime(.016*s,t); g2b.gain.exponentialRampToValueAtTime(.0004,t+.07);
+  n2.connect(bp); bp.connect(g2b); g2b.connect(mechBus); n2.start(t); n2.stop(t+.09);
+  n.onended=function(){ try{ n.disconnect(); lo.disconnect(); g.disconnect(); }catch(e){} };
+  n2.onended=function(){ try{ n2.disconnect(); bp.disconnect(); g2b.disconnect(); }catch(e){} };
+  clickSnd(t,.5*s);
 }
 /* Die Kafana: Rauschen, das anschwillt, und ein paar Kehlen darüber.     */
 function roar(strength){
-  if(!AC) return;
+  if(!AC||!noiseBuf) return;
   const t=AC.currentTime, s=strength||1;
   const n=AC.createBufferSource(); n.buffer=noiseBuf; n.loop=true;
   const f=AC.createBiquadFilter(); f.type="bandpass"; f.frequency.value=900; f.Q.value=.5;
   const g=AC.createGain(); g.gain.setValueAtTime(.0001,t);
   g.gain.exponentialRampToValueAtTime(.16*s,t+.25); g.gain.exponentialRampToValueAtTime(.0001,t+1.9);
-  n.connect(f); f.connect(g); g.connect(comp); n.start(t); n.stop(t+2);
+  n.connect(f); f.connect(g); g.connect(mechBus); n.start(t); n.stop(t+2);
+  n.onended=function(){ try{ n.disconnect(); f.disconnect(); g.disconnect(); }catch(e){} };
   for(let i=0;i<5;i++){
     const o=AC.createOscillator(); o.type="triangle";
     const f0=180+Math.random()*160; o.frequency.setValueAtTime(f0,t+i*.07);
     o.frequency.exponentialRampToValueAtTime(f0*1.25,t+i*.07+.18);
     const og=AC.createGain(); og.gain.setValueAtTime(.0001,t+i*.07);
     og.gain.exponentialRampToValueAtTime(.05*s,t+i*.07+.04); og.gain.exponentialRampToValueAtTime(.0001,t+i*.07+.32);
-    o.connect(og); og.connect(comp); o.start(t+i*.07); o.stop(t+i*.07+.35);
+    o.connect(og); og.connect(mechBus); o.start(t+i*.07); o.stop(t+i*.07+.35);
+    o.onended=function(){ try{ o.disconnect(); og.disconnect(); }catch(e){} };
   }
 }
 /* Živjeli: zwei Gläser, wenn das Veselje beginnt.                        */
@@ -902,7 +1117,8 @@ function clink(){
     const o=AC.createOscillator(); o.type="sine"; o.frequency.value=f;
     const g=AC.createGain(); g.gain.setValueAtTime(.0001,t+i*.11);
     g.gain.exponentialRampToValueAtTime(.06,t+i*.11+.004); g.gain.exponentialRampToValueAtTime(.0001,t+i*.11+.5);
-    o.connect(g); g.connect(comp); o.start(t+i*.11); o.stop(t+i*.11+.55);
+    o.connect(g); g.connect(mechBus); o.start(t+i*.11); o.stop(t+i*.11+.55);
+    o.onended=function(){ try{ o.disconnect(); g.disconnect(); }catch(e){} };
   });
 }
 function thumpSnd(){
@@ -910,11 +1126,15 @@ function thumpSnd(){
   const t=AC.currentTime, o=AC.createOscillator(); o.type="sine";
   o.frequency.setValueAtTime(120,t); o.frequency.exponentialRampToValueAtTime(48,t+.14);
   const g=AC.createGain(); g.gain.setValueAtTime(.12,t); g.gain.exponentialRampToValueAtTime(.001,t+.16);
-  o.connect(g); g.connect(comp); o.start(t); o.stop(t+.18);
+  o.connect(g); g.connect(mechBus); o.start(t); o.stop(t+.18);
+  o.onended=function(){ try{ o.disconnect(); g.disconnect(); }catch(e){} };
 }
 /* Luft-Modell. Von Hand: jede Balgbewegung füllt, Stillstand leert.
    Automatisch: der Balg ist immer voll — nur das Tresenje braucht die
-   Hand. Der Gain folgt weich, damit kein Knacken entsteht.               */
+   Hand. Aus der Luft und der Bewegung der Hand wird ein Druck: er
+   bestimmt Lautstärke, Helligkeit und die letzten paar Cent Tonhöhe.
+   Genau das ist der Unterschied zwischen einem Sampler und einem
+   Instrument — auf einer Harmonika macht die linke Hand die Dynamik.    */
 function driveAir(dt){
   const lvl=LVL();
   if(S.autoBel) S.air=1;
@@ -922,9 +1142,15 @@ function driveAir(dt){
     S.air-=dt/1000*lvl.air*.85;
     if(S.air<0) S.air=0;
   }
+  const a=Math.min(1,S.air);
+  const push=Math.min(1,Math.abs(S.belVel)*11);
+  const want=a*(.74+.26*push);
+  S.press+=(want-S.press)*Math.min(1,dt/85);
   if(AC&&belGain){
-    const target=Math.min(1,S.air)*(S.mode==="demo"?1:1);
-    belGain.gain.setTargetAtTime(target*.9+.0001,AC.currentTime,.03);
+    const t=AC.currentTime;
+    belGain.gain.setTargetAtTime(S.press*.94+.0002,t,.028);
+    reedFilt.frequency.setTargetAtTime(reedBase*(.60+.52*S.press),t,.055);
+    if(pressCS) pressCS.offset.setTargetAtTime(S.press*7.5-3,t,.09);
   }
 }
 function pumpAir(amt){ S.air=Math.min(1,S.air+amt); }
@@ -1205,10 +1431,20 @@ function zoneOf(e){
   const r=stageEl.getBoundingClientRect();
   return (e.clientX-r.left)<r.width*.46?"bel":"btn";
 }
+/* getScreenCTM() zwingt den Browser zu einem Layout — bei jedem Finger-
+   zucken einmal, und es sind zwei Finger, die auf einem 120-Hz-Schirm
+   mehrfach je Bild melden. Die Matrix wird deshalb je Bild einmal geholt
+   und bis zum nächsten Bild behalten: die Kamera wackelt zwar weiter,
+   aber um höchstens ein Bild — das merkt kein Finger.                    */
+let ctmInv=null;
+function dropCtm(){ ctmInv=null; }
 function toLocal(cx,cy){
-  const m=artG.getScreenCTM(); if(!m) return {x:0,y:0};
+  if(!ctmInv){
+    const m=artG.getScreenCTM(); if(!m) return {x:0,y:0};
+    ctmInv=m.inverse();
+  }
   const p=instSvg.createSVGPoint(); p.x=cx; p.y=cy;
-  const q=p.matrixTransform(m.inverse()); return {x:q.x,y:q.y};
+  const q=p.matrixTransform(ctmInv); return {x:q.x,y:q.y};
 }
 function btnFromY(cy){
   const l=toLocal(0,cy).y;
@@ -1390,20 +1626,22 @@ function readFont(){
   FNT10='700 10px '+FAM; FNT12='700 12px '+FAM; FNT9='700 9px '+FAM;
 }
 function fit(){
-  const r=cv.getBoundingClientRect(), dpr=Math.min(2,devicePixelRatio||1);
+  const r=cv.getBoundingClientRect(), dpr=Math.min(GFX.low?1.5:2,devicePixelRatio||1);
   W=r.width; H=r.height;
   cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
   g2.setTransform(dpr,0,0,dpr,0,0);
   HITX=Math.max(56,Math.min(120,W*.13));
   PXMS=.20/LVL().lead;
-  readFont(); frameInstrument(); checkOrient();
+  readFont(); frameInstrument(); checkOrient(); dropCtm();
 }
 function checkOrient(){ document.getElementById("rotate").className=(innerHeight>innerWidth*1.02)?"on":""; }
 addEventListener("resize",function(){ fit(); if(veilOpen) requestAnimationFrame(fitVeil); });
+
 addEventListener("orientationchange",function(){ setTimeout(function(){ fit(); if(veilOpen) fitVeil(); },220); });
 function ny(p){ return 11+(p/7)*(H-26); }   // tief oben, hoch unten — wie am Diskant
 
 let staffGrad=null, staffGradH=0;
+let drawFrom=0, drawRef=null;      // Fensterkopf der gezeichneten Noten
 function drawStaff(now){
   g2.fillStyle="#0d0a08"; g2.fillRect(0,0,W,H);
   g2.lineCap="round"; g2.lineJoin="round";
@@ -1437,7 +1675,11 @@ function drawStaff(now){
       g2.beginPath(); g2.moveTo(x,ny(0)-7); g2.lineTo(x,ny(7)+7); g2.stroke();
     }
     const lvl=LVL();
-    for(let i=0;i<S.notes.length;i++){
+    // Der Kopf wandert mit: was links hinausgelaufen ist, wird nicht mehr
+    // angefasst. Vorher lief jeder Frame über alle Noten des Liedes.
+    if(drawRef!==S.notes){ drawRef=S.notes; drawFrom=0; }
+    while(drawFrom<S.notes.length&&HITX+(S.notes[drawFrom].t+S.notes[drawFrom].dur-now)*PXMS<-30) drawFrom++;
+    for(let i=drawFrom;i<S.notes.length;i++){
       const n=S.notes[i];
       const x=HITX+(n.t-now)*PXMS, xe=HITX+(n.t+n.dur-now)*PXMS;
       if(xe<-30) continue; if(x>W+30) break;
@@ -1464,9 +1706,10 @@ function drawStaff(now){
   g2.strokeStyle="rgba(240,168,60,"+(.55+S.flash*.45).toFixed(2)+")"; g2.lineWidth=2+S.flash*2;
   g2.beginPath(); g2.moveTo(HITX,6); g2.lineTo(HITX,H-6); g2.stroke();
   // Funken
+  const pn=performance.now();
   for(let i=S.sparks.length-1;i>=0;i--){
     const sp=S.sparks[i];
-    const age=performance.now()-sp.t; if(age>420){ S.sparks.splice(i,1); continue; }
+    const age=pn-sp.t; if(age>420){ S.sparks.splice(i,1); continue; }
     const k=age/420;
     g2.strokeStyle="rgba(240,168,60,"+(1-k).toFixed(2)+")"; g2.lineWidth=2;
     g2.beginPath(); g2.arc(HITX,ny(sp.pos),6+k*16,0,6.283); g2.stroke();
@@ -1490,17 +1733,41 @@ function parseVerse(v,beat,t,vi,out){
   }
   return t;
 }
-/* Bassfiguren je Taktart: b = Bass, c = Akkord, . = nichts               */
-const BASSPAT={ "2":"b c b c", "3":"b c c", "7":"b . c b c b c", "9":"b . c . b . b . c" };
+/* Bassfiguren je Taktart: b = Bass, c = Akkord, . = nichts.
+   Der wichtigste Punkt am ganzen Lied. Im geraden Takt ist es das
+   Oom-Pah des Kola, im Dreier der Walzerschritt. Im Aksak aber sitzt die
+   linke Hand NICHT auf jedem Achtel, sondern auf den Gruppenköpfen:
+   7/8 ist 2+2+3, also Achtel 0, 2, 4 — die letzte Gruppe ist die längere,
+   und genau dieses Hinken macht Jovano und Ajde Jano aus. 9/8 ist
+   2+2+2+3, also 0, 2, 4, 6. Vorher lief der Bass hier gleichmäßig durch
+   und hat den Čoček zu einem Marsch gemacht.                             */
+const BASSPAT={
+  "2":"b c b c",                     // 4/4 — Kolo
+  "3":"b c c",                       // 3/4 — Walzer
+  "7":"b . c . c . .",               // 7/8 — 2+2+3
+  "9":"b . c . c . c . ."            // 9/8 — 2+2+2+3, Čoček
+};
+/* Gruppenköpfe je Taktart. Dort liegt der Akzent — in der Begleitung wie
+   in der Melodie.                                                        */
+const GROUPS={ 2:[0], 3:[0], 4:[0,2], 7:[0,2,4], 9:[0,2,4,6] };
+function groupsOf(meter){ return GROUPS[meter]||[0]; }
+function isHead(k,meter){ const g=groupsOf(meter); for(let i=0;i<g.length;i++) if(g[i]===k) return true; return false; }
+/* Wie stark ein Schlag gespielt wird: der Taktkopf voll, die anderen
+   Gruppenköpfe fast, alles dazwischen leicht.                            */
+function beatVel(k,meter){ return k===0?1:(isHead(k,meter)?.84:.62); }
 function addBass(song,verse,t,out){
   const pat=(BASSPAT[song.bass]||BASSPAT["2"]).split(" ");
   const chs=(verse.ch||"I").split(/\s+/), toks=verse.n.split(/\s+/).length;
   const bars=Math.max(1,Math.round(toks/song.meter));
+  let bn=0;
   for(let b=0;b<bars;b++){
     const deg=ROMANDEG[chs[Math.min(b,chs.length-1)]]||0;
     for(let k=0;k<song.meter;k++){
       const p=pat[k%pat.length]; if(p===".") continue;
-      out.push({t:t+(b*song.meter+k)*song.beat, kind:p, deg:deg, acc:k===0});
+      // Wechselbass: erst der Grundton, beim nächsten Bass die Quinte
+      const alt=(p==="b")&&((bn++)%2===1);
+      out.push({t:t+(b*song.meter+k)*song.beat, kind:p, deg:deg, acc:k===0,
+                alt:alt, vel:beatVel(k,song.meter)});
     }
   }
 }
@@ -1542,7 +1809,7 @@ function driveBass(now){
     const e=S.bassEvents[S.bassHead++];
     if(e.t<now-60) continue;
     const when=AC.currentTime+(e.t-now)/1000;
-    bassHit(e.kind,e.deg,when,e.acc?1:.75);
+    bassHit(e.kind,e.deg,when,(e.vel!==undefined?e.vel:.75)*(e.acc?1.1:.95),{alt:e.alt});
     if(e.kind==="b") S.pulseAt=e.t;
   }
 }
@@ -1749,20 +2016,60 @@ function driveIntro(t){
 
 /* ═══════════ Demo ═══════════ */
 let demoIdx=0;
+/* Was ein Harmonikaš tut, was in keiner Griffschrift steht.
+   Ein Vorschlag von oben (predudar) auf einen betonten Ton, ein Mordent
+   auf einem langen — und in den Kolos die Terz darunter, die zweite
+   Stimme, die jeder mitspielt, ohne sie je gelernt zu haben. Ausgewürfelt
+   wird nichts: die Wahl hängt an Ton, Schlag und Strophe, damit dieselbe
+   Stelle beim zweiten Durchgang gleich klingt.                           */
+function demoOrn(n){
+  const meter=(S.song&&S.song.meter)||4, beat=(S.song&&S.song.beat)||400;
+  if(n.type===1||n.pos>=7) return 0;
+  if(!isHead(n.beat%meter,meter)) return 0;
+  const pick=(n.pos*7+n.beat*3+n.verse*5)%9;
+  if(n.dur>beat*1.5&&pick<4) return 2;              // Mordent auf langen Tönen
+  if(pick===4||pick===7) return 1;                  // Vorschlag von oben
+  return 0;
+}
+function demoExtraOff(){
+  for(let i=0;i<S.demoExtra.length;i++) noteOff(S.demoExtra[i]);
+  S.demoExtra.length=0;
+}
 function demoDrive(now){
+  const meter=(S.song&&S.song.meter)||4;
   while(demoIdx<S.notes.length&&S.notes[demoIdx].t<=now){
     const n=S.notes[demoIdx++];
     if(S.demoH) noteOff(S.demoH);
-    S.demoH=noteOn(n.pos,1); S.demoOff=n.t+n.dur; S.held={}; S.held[n.pos]=true; S.visBtn=n.pos; S.btn=n.pos;
+    demoExtraOff();
+    const t0=AC?AC.currentTime:0;
+    const orn=demoOrn(n);
+    const vel=.72+.28*beatVel(n.beat%meter,meter);
+    if(orn===1&&AC){
+      // Vorschlag: die obere Stufe klingt kurz an und fällt auf den Ton
+      const gr=noteOn(n.pos+1,vel*.72,t0); noteOff(gr,t0+.048);
+      S.demoH=noteOn(n.pos,vel,t0+.044);
+    }else{
+      S.demoH=noteOn(n.pos,vel,t0);
+      if(orn===2&&AC){
+        const up=noteOn(n.pos+1,vel*.6,t0+.085); noteOff(up,t0+.155);
+      }
+    }
+    // Terca: die zweite Stimme eine Terz tiefer, nur auf den Gruppenköpfen
+    if(AC&&S.song&&S.song.terca&&n.pos>=2&&n.type===0&&isHead(n.beat%meter,meter)){
+      S.demoExtra.push(noteOn(n.pos-2,vel*.46,t0+.006));
+    }
+    S.demoOff=n.t+n.dur; S.held={}; S.held[n.pos]=true; S.visBtn=n.pos; S.btn=n.pos;
     S.sparks.push({t:performance.now(),pos:n.pos}); n.grade=2; S.flash=1; S.combo++; S.energy=Math.min(1,S.energy+.06);
     if(n.type===1){ n.strokes=n.need; }
     S.bob=Math.max(S.bob,.3);
   }
-  if(S.demoH&&now>=S.demoOff){ noteOff(S.demoH); S.demoH=null; S.held={}; }
-  // der Balg atmet im Takt
+  if(S.demoH&&now>=S.demoOff){ noteOff(S.demoH); S.demoH=null; demoExtraOff(); S.held={}; }
+  // der Balg atmet im Takt — und mit ihm Lautstärke, Helligkeit, Tonhöhe
   const beat=S.song?S.song.beat:400;
   const ph=(now/(beat*4))%1;
+  const pb=S.bel;
   S.bel=.5+Math.sin(ph*6.283)*.42;
+  S.belVel=S.belVel*.5+(S.bel-pb)*.5;
   const cur=S.curNote; if(cur&&cur.type===1){ S.bel=.5+Math.sin(now/40)*.18; if(Math.floor(now/80)!==S.lastShakeK){ S.lastShakeK=Math.floor(now/80); puff(.4); } }
   S.air=1;
   if(S.demoBec&&now>2600&&!S.demoBecOn){ S.demoBecOn=1; S.soloStart=performance.now(); S.soloEnd=performance.now()+14000; flareSweep(); roar(1); clink(); throwBills(10); burst("VESELJE!"); S.shake=.7; }
@@ -1781,7 +2088,7 @@ function startDemo(i,verse,bec){
 }
 function endDemo(){
   if(S.mode!=="demo") return;
-  if(S.demoH) noteOff(S.demoH); allOff(); S.held={};
+  if(S.demoH) noteOff(S.demoH); demoExtraOff(); allOff(); S.held={};
   S.mode="idle"; S.soloEnd=0; stopBtn.style.display="none"; multEl.style.opacity=0; hintEl.className="";
   showMenu();
 }
@@ -1814,6 +2121,7 @@ function measure(dt){
 }
 function loop(t){
   requestAnimationFrame(loop);
+  ctmInv=null;                       // die Kamera hat sich bewegt
   let dt=Math.min(50,t-prev); prev=t;
   measure(dt);
   if(veilOpen&&S.mode!=="intro"){ return; }
@@ -2136,7 +2444,9 @@ window.__H={S:S,SONGS:SONGS,DRILLS:DRILLS,LEVELS:LEVELS,REGISTERS:REGISTERS,STR:
   startSong:startSong,startDrill:startDrill,startFree:startFree,startDemo:startDemo,endDemo:endDemo,
   press:press,releaseBtn:releaseBtn,moveBellows:moveBellows,tapBellows:tapBellows,closeGate:closeGate,endIntro:endIntro,
   showScreen:showScreen,finish:finish,setLang:setLang,buildSong:buildSong,buildDrill:buildDrill,btnY:btnY,
-  judgePress:judgePress,judgeFrame:judgeFrame,get AC(){ return AC; },get master(){ return master; },noteOn:noteOn,noteOff:noteOff,bassHit:bassHit,goPause:goPause,goResume:goResume,get veil(){ return veilOpen; },DB:DB};
+  judgePress:judgePress,judgeFrame:judgeFrame,get AC(){ return AC; },get master(){ return master; },noteOn:noteOn,noteOff:noteOff,bassHit:bassHit,goPause:goPause,goResume:goResume,get veil(){ return veilOpen; },DB:DB,
+  unlock:unlock,ac:function(){ return AC; },tap:function(n){ if(master) master.connect(n); },
+  setVolume:setVolume,setRoom:setRoom,applyRegister:applyRegister,stradella:stradella,bassRoot:bassRoot};
 })();
 </script>
 </body>
