@@ -1956,30 +1956,33 @@ function isHead(k,meter){ const g=groupsOf(meter); for(let i=0;i<g.length;i++) i
 /* Wie stark ein Schlag gespielt wird: der Taktkopf voll, die anderen
    Gruppenköpfe fast, alles dazwischen leicht.                            */
 function beatVel(k,meter){ return k===0?1:(isHead(k,meter)?.84:.62); }
-function addBass(song,verse,t,out){
+/* st traegt den Wechselbass ueber die Strophengrenze. Er darf nicht je
+   Strophe neu anfangen: im 7/8 und 9/8 ist eine Strophe genau ein Takt,
+   also gaebe es sonst nie eine Quinte — die linke Hand bliebe auf dem
+   Grundton stehen.                                                       */
+function addBass(song,verse,t,out,st){
   const pat=(BASSPAT[song.bass]||BASSPAT["2"]).split(" ");
   const chs=(verse.ch||"I").split(/\s+/), toks=verse.n.split(/\s+/).length;
   const bars=Math.max(1,Math.round(toks/song.meter));
-  let bn=0;
   for(let b=0;b<bars;b++){
     const deg=ROMANDEG[chs[Math.min(b,chs.length-1)]]||0;
     for(let k=0;k<song.meter;k++){
       const p=pat[k%pat.length]; if(p===".") continue;
       // Wechselbass: erst der Grundton, beim nächsten Bass die Quinte
-      const alt=(p==="b")&&((bn++)%2===1);
+      const alt=(p==="b")&&((st.bn++)%2===1);
       out.push({t:t+(b*song.meter+k)*song.beat, kind:p, deg:deg, acc:k===0,
                 alt:alt, vel:beatVel(k,song.meter)});
     }
   }
 }
 function buildSong(song,onlyVerse,rounds){
-  const out=[], bass=[]; let t=1800;
+  const out=[], bass=[], st={bn:0}; let t=1800;
   const R=onlyVerse?1:Math.max(1,rounds||1);
   for(let r=0;r<R;r++){
     const src=onlyVerse?[song.verses[onlyVerse-1]]:song.verses;
     src.forEach(function(v,vi0){
       const vi=onlyVerse?onlyVerse:(vi0+1);
-      addBass(song,v,t,bass);
+      addBass(song,v,t,bass,st);
       t=parseVerse(v.n,song.beat,t,vi,out);
       t+=song.beat*1.6;
     });
@@ -1999,10 +2002,10 @@ function atTempo(o){
 }
 const DRILL_MS=30000;
 function buildDrill(d,ms){
-  const out=[], bass=[]; let t=1600, rep=0;
+  const out=[], bass=[], st={bn:0}; let t=1600, rep=0;
   const song={beat:d.beat,meter:d.meter,bass:d.bass};
   while(t<1600+(ms||DRILL_MS)&&rep<200){
-    addBass(song,{n:d.pat,ch:"I"},t,bass);
+    addBass(song,{n:d.pat,ch:"I"},t,bass,st);
     t=parseVerse(d.pat,d.beat,t,++rep,out);
   }
   S.bassEvents=bass; S.bassHead=0;
