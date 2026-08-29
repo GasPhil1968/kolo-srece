@@ -188,8 +188,8 @@
   .kits button{flex:1 0 18%;background:none;border:1px solid rgba(244,234,214,.14);color:rgba(244,234,214,.45);font-family:var(--cond);font-size:8.5px;font-weight:700;
     letter-spacing:.06em;padding:4px 0;cursor:pointer;border-radius:1px}
   .kits button[aria-pressed="true"]{border-color:var(--amber);color:var(--amber)}
-  .cols{display:flex;gap:26px;align-items:flex-start;flex:1 1 auto;min-height:0}
-  .cols>div{flex:1;min-width:0}
+  .cols{display:flex;flex-wrap:wrap;gap:18px 22px;align-items:flex-start;flex:1 1 auto;min-height:0}
+  .cols>div{flex:1 1 210px;min-width:0}
   .diag{display:block;width:100%;max-width:390px;margin:0 auto;height:auto}
   .diag .dl{font-family:var(--cond);font-size:12px;font-weight:700;letter-spacing:.16em;fill:rgba(244,234,214,.85)}
   .diag .ds{font-family:var(--cond);font-size:9.5px;letter-spacing:.14em;fill:rgba(244,234,214,.4)}
@@ -626,6 +626,14 @@ de:{
  dh4:"Neun Achtel: 2 + 2 + 2 + 3. Der letzte Schlag hinkt — das ist der Čoček.",
  demo:"Demo anhören", subDemo:"NUR ZUHÖREN", noteDemo:"ZUHÖREN — TIPPEN AUF DIE BÜHNE BRICHT AB",
  becarNote:"DER GROSSE MOMENT", silent:"Falls es still bleibt: am iPhone den Schalter für Lautlos ausschalten.",
+
+ setVol:"LAUTSTÄRKE", vol0:"LEISE", vol1:"NORMAL", vol2:"LAUT",
+ vol0d:"für die Nacht", vol1d:"wie gebaut", vol2d:"für die Kafana",
+ setRoom:"RAUM", room0:"TROCKEN", room1:"KAFANA", room2:"SALA",
+ room0d:"wie im Zimmer", room1d:"kleiner Saal", room2d:"große Halle",
+ setTempo:"TEMPO", tempo0:"POLAKO", tempo1:"NORMAL", tempo2:"BRZO",
+ tempo0d:"−15 %", tempo1d:"wie geschrieben", tempo2d:"+18 %",
+ tempoNote:"Das Tempo gilt für Lieder und Übungen. Die Noten bleiben dieselben — nur der Puls ändert sich, und mit ihm die Wertung.",
  airLow:"LUFT!"
 },
 sr:{
@@ -678,6 +686,14 @@ sr:{
  dh4:"Devet osmina: 2 + 2 + 2 + 3. Zadnji udarac hramlje — to je čoček.",
  demo:"Slušaj demo", subDemo:"SAMO SLUŠAJ", noteDemo:"SLUŠAJ — DODIR NA BINU PREKIDA",
  becarNote:"VELIKI TRENUTAK", silent:"Ako je tiho: na iPhoneu isključi prekidač za nečujno.",
+
+ setVol:"JAČINA", vol0:"TIHO", vol1:"NORMALNO", vol2:"GLASNO",
+ vol0d:"za noć", vol1d:"kako jeste", vol2d:"za kafanu",
+ setRoom:"PROSTOR", room0:"SUVO", room1:"KAFANA", room2:"SALA",
+ room0d:"kao u sobi", room1d:"mala sala", room2d:"velika dvorana",
+ setTempo:"TEMPO", tempo0:"POLAKO", tempo1:"NORMALNO", tempo2:"BRZO",
+ tempo0d:"−15 %", tempo1d:"kako je pisano", tempo2d:"+18 %",
+ tempoNote:"Tempo važi za pjesme i vježbe. Note ostaju iste — mijenja se samo puls, a s njim i ocjena.",
  airLow:"VAZDUH!"
 },
 en:{
@@ -730,6 +746,14 @@ en:{
  dh4:"Nine eighths: 2 + 2 + 2 + 3. The last beat limps — that is the čoček.",
  demo:"Listen to the demo", subDemo:"JUST LISTEN", noteDemo:"LISTEN — TAP THE STAGE TO STOP",
  becarNote:"THE BIG MOMENT", silent:"If it stays quiet: turn off the silent switch on your iPhone.",
+
+ setVol:"VOLUME", vol0:"QUIET", vol1:"NORMAL", vol2:"LOUD",
+ vol0d:"for the night", vol1d:"as built", vol2d:"for the kafana",
+ setRoom:"ROOM", room0:"DRY", room1:"KAFANA", room2:"HALL",
+ room0d:"like a room", room1d:"small hall", room2d:"big hall",
+ setTempo:"TEMPO", tempo0:"SLOW", tempo1:"NORMAL", tempo2:"FAST",
+ tempo0d:"−15 %", tempo1d:"as written", tempo2d:"+18 %",
+ tempoNote:"Tempo applies to songs and drills. The notes stay the same — only the pulse changes, and with it the scoring.",
  airLow:"AIR!"
 }};
 const LANGS=["de","sr","en"];
@@ -776,7 +800,8 @@ const S = {
   sheenT:0, edgeFlash:0, freeStrokes:0, lastVerse:0,
   songIdx:0, verse:0, head:0, curNote:null, shakeDone:0,
   drill:null, soloStart:0, bec:false, airWarnT:0, finale:0, finaleGood:0,
-  bassHead:0, bassEvents:[], verseStat:{}, press:0, demoExtra:[]
+  bassHead:0, bassEvents:[], verseStat:{}, press:0, demoExtra:[],
+  vol:1, room:1, tempo:1
 };
 const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
 const REG=function(){ return REGISTERS[S.reg]; };
@@ -811,11 +836,16 @@ function prefsLoad(){
     if(p.reg>=0&&p.reg<REGISTERS.length) S.reg=p.reg;
     if(p.gfx) GFX.mode=p.gfx;
     if(p.autoBel) S.autoBel=true;
+    if(p.vol>=0&&p.vol<VOLS.length) S.vol=p.vol;
+    if(p.room>=0&&p.room<ROOMS.length) S.room=p.room;
+    if(p.tempo>=0&&p.tempo<TEMPI.length) S.tempo=p.tempo;
+    AUDIO.vol=VOLS[S.vol]; AUDIO.room=ROOMS[S.room];
   }catch(e){}
 }
 function prefsSave(){
   if(!hasLS()) return;
-  try{ localStorage.setItem(PKEY,JSON.stringify({lang:LANG,level:S.level,reg:S.reg,gfx:GFX.mode,autoBel:S.autoBel})); }catch(e){}
+  try{ localStorage.setItem(PKEY,JSON.stringify({lang:LANG,level:S.level,reg:S.reg,gfx:GFX.mode,autoBel:S.autoBel,
+    vol:S.vol,room:S.room,tempo:S.tempo})); }catch(e){}
 }
 function applyLang(){
   document.documentElement.lang=LANG==="sr"?"sr-Latn":LANG;
@@ -854,7 +884,7 @@ function setLang(l){ if(!STR[l]) return; LANG=l; applyLang(); prefsSave(); }
              ↘ Vorverzögerung → Kafana-Hall ─────────────────────────┘
      Mechanik (Klappen, Balgstoß, Rufe) geht am Balg vorbei — die hört
      man auch dann, wenn keine Luft mehr da ist.                          */
-let AC=null, master=null, comp=null, shaper=null, belGain=null;
+let AC=null, master=null, comp=null, shaper=null, preGain=null, lim=null, belGain=null;
 let reedFilt=null, chamP=null, chamN=null, trebPan=null;
 let bassFilt=null, bassP=null, bassPan=null;
 let bodyHP=null, bodyP1=null, bodyP2=null;
@@ -865,6 +895,7 @@ let noiseBuf=null, chiffBuf=null, clickBuf=null;
 let reedBase=3000;
 const LIVE=[];                                     // klingende Töne
 const AUDIO={vol:.9, room:.20};                    // vom Spieler einstellbar
+const VOLS=[.55,.9,1.35], ROOMS=[.06,.20,.42], TEMPI=[.85,1,1.18];
 
 /* Ein Zungenspektrum. tilt = Abfall der Teiltöne, fq/fw = Lage und Breite
    der Nase, odd = wie weit die geraden Teiltöne zurücktreten. Die Phasen
@@ -928,6 +959,17 @@ function mkCurve(){
   for(let i=0;i<N;i++){ const x=i/(N-1)*2-1; c[i]=Math.tanh(x*1.6)/Math.tanh(1.6); }
   return c;
 }
+/* Ganz am Ende ein Fangnetz. Unterhalb von .72 rührt es nichts an, darüber
+   biegt es die Spitzen weich auf 1 herunter. Ohne das würde GLASNO im
+   Veselje — Baß, Melodie, Terz und die ganze Kafana zugleich — anschlagen. */
+function mkLimit(){
+  const N=2048, K=.7, CEIL=.96, c=new Float32Array(N);
+  for(let i=0;i<N;i++){
+    const x=i/(N-1)*2-1, a=Math.abs(x), sg=x<0?-1:1;
+    c[i]=a<=K?x:sg*(K+(CEIL-K)*Math.tanh((a-K)/(1-K)*1.6)/Math.tanh(1.6));
+  }
+  return c;
+}
 function mkPan(v){
   if(AC.createStereoPanner){ try{ const p=AC.createStereoPanner(); p.pan.value=v; return p; }catch(e){} }
   return AC.createGain();
@@ -939,14 +981,20 @@ function initAudio(){
   AC=new Ctx({latencyHint:"interactive"});
   const sr=AC.sampleRate;
 
-  master=AC.createGain(); master.gain.value=AUDIO.vol;
-  master.connect(AC.destination);
+  lim=AC.createWaveShaper(); lim.curve=mkLimit(); lim.oversample="2x";
+  lim.connect(AC.destination);
+  master=AC.createGain(); master.gain.value=.78;     // fest — die Lautstärke
+  master.connect(lim);                                // sitzt vor dem Kompressor
   comp=AC.createDynamicsCompressor();
   comp.threshold.value=-12; comp.knee.value=22; comp.ratio.value=3.4;
   comp.attack.value=.006; comp.release.value=.19;
   comp.connect(master);
+  // Die Lautstärke läuft VOR den Kompressor: so fängt er das Mehr an Pegel
+  // ab, statt dass es hinter ihm den Ausgang übersteuert.
+  preGain=AC.createGain(); preGain.gain.value=AUDIO.vol/.9;
+  preGain.connect(comp);
   shaper=AC.createWaveShaper(); shaper.curve=mkCurve(); shaper.oversample="2x";
-  shaper.connect(comp);
+  shaper.connect(preGain);
 
   // Korpus: das Holz um die Zungen. Eine tiefe Kuppe, eine in den Mitten,
   // und unten weg, was nur wummert.
@@ -980,7 +1028,7 @@ function initAudio(){
     roomPre=AC.createDelay(.2); roomPre.delayTime.value=.019;
     roomGain=AC.createGain(); roomGain.gain.value=AUDIO.room;
     belGain.connect(roomPre); mechBus.connect(roomPre);
-    roomPre.connect(room); room.connect(roomGain); roomGain.connect(comp);
+    roomPre.connect(room); room.connect(roomGain); roomGain.connect(preGain);
   }catch(e){ room=null; }
 
   // Balgdruck als Modulationsquelle auf die Verstimmung aller Zungen
@@ -1008,7 +1056,7 @@ function applyRegister(){
   chamP.gain.setTargetAtTime(5.5*cm,t,.05);
   chamN.gain.setTargetAtTime(-8.5*cm,t,.05);
 }
-function setVolume(v){ AUDIO.vol=v; if(master) master.gain.setTargetAtTime(v,AC.currentTime,.03); }
+function setVolume(v){ AUDIO.vol=v; if(preGain) preGain.gain.setTargetAtTime(v/.9,AC.currentTime,.04); }
 function setRoom(v){ AUDIO.room=v; if(roomGain) roomGain.gain.setTargetAtTime(v,AC.currentTime,.05); }
 
 const CENT=Math.pow(2,1/1200);
@@ -1940,6 +1988,15 @@ function buildSong(song,onlyVerse,rounds){
   S.bassEvents=bass; S.bassHead=0;
   return out;
 }
+/* Tempo ist eine Einstellung, kein Eingriff ins Lied. Das Stück bekommt
+   einen eigenen Schlagabstand, alles andere bleibt, wie es geschrieben
+   steht — und weil Bahn, Bass und Wertung alle S.song.beat lesen, rechnen
+   sie danach mit demselben Puls.                                         */
+function atTempo(o){
+  const f=TEMPI[S.tempo]||1;
+  if(f===1||!o) return o;
+  const c=Object.assign({},o); c.beat=Math.round(o.beat/f); return c;
+}
 const DRILL_MS=30000;
 function buildDrill(d,ms){
   const out=[], bass=[]; let t=1600, rep=0;
@@ -2230,7 +2287,7 @@ function demoDrive(now){
 function startDemo(i,verse,bec){
   begin(); resetRun();
   const s=SONGS[i]; S.songIdx=i; S.verse=verse||0;
-  S.mode="demo"; S.song=s; S.notes=buildSong(s,S.verse,s.rounds);
+  S.mode="demo"; S.song=atTempo(s); S.notes=buildSong(S.song,S.verse,s.rounds);
   demoIdx=0; S.demoH=null; S.demoBec=!!bec; S.demoBecOn=0;
   S.t0=performance.now(); S.paused=false; S.air=1;
   document.getElementById("modeLabel").textContent="DEMO";
@@ -2450,15 +2507,25 @@ function scrSetup(){
   const c3=chips("cBel",[{n:TR("bel0"),d:TR("bel0d")},{n:TR("bel1"),d:TR("bel1d")}],S.autoBel?1:0,function(i){ S.autoBel=i===1; prefsSave(); });
   const c4=chips("cFx",[{n:TR("fx0"),d:TR("fx0d")},{n:TR("fx1"),d:TR("fx1d")},{n:TR("fx2"),d:TR("fx2d")}],["auto","full","thrift"].indexOf(GFX.mode),function(i){ setGfx(["auto","full","thrift"][i]); });
   const c5=chips("cLang",LANGS.map(function(l){ return {n:LANGNAME[l],d:""}; }),LANGS.indexOf(LANG),function(i){ setLang(LANGS[i]); });
+  const c6=chips("cVol",[0,1,2].map(function(i){ return {n:TR("vol"+i),d:TR("vol"+i+"d")}; }),S.vol,
+    function(i){ S.vol=i; setVolume(VOLS[i]); prefsSave(); });
+  const c7=chips("cRoom",[0,1,2].map(function(i){ return {n:TR("room"+i),d:TR("room"+i+"d")}; }),S.room,
+    function(i){ S.room=i; setRoom(ROOMS[i]); prefsSave(); });
+  const c8=chips("cTempo",[0,1,2].map(function(i){ return {n:TR("tempo"+i),d:TR("tempo"+i+"d")}; }),S.tempo,
+    function(i){ S.tempo=i; prefsSave(); });
   inner.innerHTML=shead(TR("mSet"),"")+'<div class="cols"><div>'+
     '<p class="eyebrow">'+TR("setDiff")+'</p>'+c1.h+
     '<p class="eyebrow">'+TR("setInst")+'</p>'+c2.h+
     '<p class="eyebrow">'+TR("setBel")+'</p>'+c3.h+'<p class="howto" style="font-size:9.5px">'+TR("belNote")+'</p>'+
     '</div><div>'+
+    '<p class="eyebrow">'+TR("setVol")+'</p>'+c6.h+
+    '<p class="eyebrow">'+TR("setRoom")+'</p>'+c7.h+
+    '<p class="eyebrow">'+TR("setTempo")+'</p>'+c8.h+'<p class="howto" style="font-size:9.5px">'+TR("tempoNote")+'</p>'+
+    '</div><div>'+
     '<p class="eyebrow">'+TR("setFx")+'</p>'+c4.h+'<p class="howto" style="font-size:9.5px">'+TR("fxNote")+'</p>'+
     '<p class="eyebrow">'+TR("setLang")+'</p>'+c5.h+
     '</div></div>';
-  wireBack("main"); c1.wire(); c2.wire(); c3.wire(); c4.wire(); c5.wire();
+  wireBack("main"); c1.wire(); c2.wire(); c3.wire(); c4.wire(); c5.wire(); c6.wire(); c7.wire(); c8.wire();
 }
 
 /* ═══════════ Runden ═══════════ */
@@ -2471,7 +2538,7 @@ function resetRun(){
   S.soloAt=LVL().soloAt; S.calls=makeCalls(S.soloAt);
   S.energy=0; S.solo=0; S.soloEnd=0; S.dim=0; wasSolo=false; S.bec=false;
   S.sheenT=0; S.edgeFlash=0; S.flash=0; S.shake=0; S.pulse=0; S.bob=0; S.bobVel=0;
-  S.zoom=0; S.belAcc=0; S.belVel=0; S.bel=.5; S.air=S.autoBel?1:.6; S.held={}; S.btn=-1; S.visBtn=0; S.holding=false;
+  S.zoom=0; S.belAcc=0; S.belVel=0; S.bel=.5; S.air=S.autoBel?1:.6; S.press=S.air*.74; S.held={}; S.btn=-1; S.visBtn=0; S.holding=false;
   S.head=0; S.curNote=null; S.shakeDone=0; S.drill=null; S.soloStart=0; S.finale=0; S.finaleGood=0;
   S.bassEvents=[]; S.bassHead=0; S.demoH=null;
   judgeFrame._k=undefined; PXMS=.20/LVL().lead;
@@ -2490,7 +2557,7 @@ function startFree(){
 }
 function startDrill(i){
   begin(); resetRun();
-  const d=DRILLS[i];
+  const d=atTempo(DRILLS[i]);
   S.drill=d; S.songIdx=i; S.verse=0;
   S.song={ id:"vjezba:"+d.id, title:TR("dn"+d.i), gloss:TR("dg"+d.i), beat:d.beat, meter:d.meter, scale:d.scale, root:d.root, bass:d.bass, verses:[{n:d.pat}] };
   S.notes=buildDrill(d); S.calls=[];
@@ -2503,7 +2570,7 @@ function startDrill(i){
 function startSong(i,verse){
   begin(); resetRun();
   const s=SONGS[i]; S.songIdx=i; S.verse=verse||0; S.drill=null;
-  S.mode="song"; S.song=s; S.notes=buildSong(s,S.verse);
+  S.mode="song"; S.song=atTempo(s); S.notes=buildSong(S.song,S.verse);
   S.t0=performance.now(); S.paused=false;
   document.getElementById("modeLabel").textContent=S.verse?TR("verseWord",S.verse):TR("modeSong");
   document.getElementById("scoreOut").textContent="0";
@@ -2598,7 +2665,7 @@ window.__H={S:S,SONGS:SONGS,DRILLS:DRILLS,LEVELS:LEVELS,REGISTERS:REGISTERS,STR:
   press:press,releaseBtn:releaseBtn,moveBellows:moveBellows,tapBellows:tapBellows,closeGate:closeGate,endIntro:endIntro,
   showScreen:showScreen,finish:finish,setLang:setLang,buildSong:buildSong,buildDrill:buildDrill,btnY:btnY,
   judgePress:judgePress,judgeFrame:judgeFrame,get AC(){ return AC; },get master(){ return master; },noteOn:noteOn,noteOff:noteOff,bassHit:bassHit,goPause:goPause,goResume:goResume,get veil(){ return veilOpen; },DB:DB,
-  unlock:unlock,ac:function(){ return AC; },tap:function(n){ if(master) master.connect(n); },
+  unlock:unlock,ac:function(){ return AC; },tap:function(n){ if(lim) lim.connect(n); },
   setVolume:setVolume,setRoom:setRoom,applyRegister:applyRegister,stradella:stradella,bassRoot:bassRoot};
 })();
 </script>

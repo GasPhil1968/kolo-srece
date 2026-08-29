@@ -75,6 +75,20 @@ const path = require('path');
     await new Promise(r => setTimeout(r, 400));
   }));
 
+  await step('Lautstaerke, Raum, Tempo', () => page.evaluate(async () => {
+    for (let i = 0; i < 3; i++) {
+      __H.S.vol = i; __H.setVolume([.55, .9, 1.35][i]);
+      __H.S.room = i; __H.setRoom([.06, .20, .42][i]);
+      __H.S.tempo = i;
+      __H.startSong(0, 0);
+      const b = __H.S.song.beat, want = Math.round(240 / [.85, 1, 1.18][i]);
+      if (b !== want) throw new Error(`Tempo ${i}: Schlag ${b}, erwartet ${want}`);
+      __H.showScreen('setup');
+      await new Promise(r => setTimeout(r, 60));
+    }
+    __H.S.tempo = 1; __H.S.vol = 1; __H.S.room = 1;
+  }));
+
   const frames = await page.evaluate(() => new Promise(res => {
     let n = 0; const t0 = performance.now();
     const f = () => { n++; performance.now() - t0 < 2000 ? requestAnimationFrame(f) : res(n / 2); };

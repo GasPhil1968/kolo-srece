@@ -42,9 +42,16 @@ const out   = process.argv[4] || 'out.wav';
     H.tap(sp);
     sp.connect(AC.destination);
 
-    const [kind, arg] = scene.split(':');
+    const [kind, arg, vol] = scene.split(':');
+    if (vol !== undefined) H.setVolume(parseFloat(vol));
     if (kind === 'demo') H.startDemo(+arg, 0, false);
+    else if (kind === 'fest') H.startDemo(+arg, 0, true);
     else if (kind === 'note') { H.S.mode = 'free'; H.S.air = 1; H.S.press = 1; H.noteOn(+arg, 1); }
+    else if (kind === 'reg') {
+      H.S.reg = +arg; H.applyRegister();
+      H.S.mode = 'free'; H.S.air = 1; H.S.press = 1;
+      const h = H.noteOn(0, 1); setTimeout(() => H.noteOff(h), 1600);
+    }
     else if (kind === 'scale') {
       H.S.mode = 'free'; H.S.air = 1; H.S.press = 1;
       let i = 0;
