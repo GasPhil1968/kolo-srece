@@ -276,6 +276,17 @@
           <stop offset="0" stop-color="#ffe6ac" stop-opacity=".9"/><stop offset=".4" stop-color="#f0a83c" stop-opacity=".35"/>
           <stop offset="1" stop-color="#f0a83c" stop-opacity="0"/>
         </radialGradient>
+        <radialGradient id="bokehG" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#f0c070" stop-opacity=".5"/>
+          <stop offset=".62" stop-color="#e09a40" stop-opacity=".16"/>
+          <stop offset="1" stop-color="#e09a40" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="vigG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#000" stop-opacity=".72"/>
+          <stop offset=".26" stop-color="#000" stop-opacity="0"/>
+          <stop offset=".78" stop-color="#000" stop-opacity="0"/>
+          <stop offset="1" stop-color="#000" stop-opacity=".55"/>
+        </linearGradient>
         <pattern id="pKaro" width="14" height="14" patternUnits="userSpaceOnUse">
           <rect width="14" height="14" fill="#a8232a"/><rect width="7" height="7" fill="#e9d9c4"/><rect x="7" y="7" width="7" height="7" fill="#e9d9c4"/>
         </pattern>
@@ -283,11 +294,24 @@
       <rect x="0" y="0" width="1000" height="420" fill="url(#wallG)"/>
       <g id="wall"></g>
       <rect id="floor" x="0" y="262" width="1000" height="158" fill="url(#floorG)"/>
+      <!-- Die Lampen liegen als Streifen auf den abgetretenen Dielen -->
+      <ellipse cx="500" cy="300" rx="430" ry="44" fill="url(#bulbG)" opacity=".22"/>
+      <ellipse cx="240" cy="330" rx="150" ry="26" fill="url(#bulbG)" opacity=".13"/>
+      <ellipse cx="760" cy="330" rx="150" ry="26" fill="url(#bulbG)" opacity=".13"/>
       <g id="tables"></g>
       <g id="guests"></g>
       <g id="wires"></g>
       <g id="halos"></g>
       <g id="bulbs"></g>
+      <!-- Unscharfe Lichter weit hinten: dahinter geht die Kafana weiter -->
+      <g id="bokeh" opacity=".5">
+        <circle cx="118" cy="122" r="27" fill="url(#bokehG)"/>
+        <circle cx="352" cy="96"  r="18" fill="url(#bokehG)"/>
+        <circle cx="596" cy="130" r="22" fill="url(#bokehG)"/>
+        <circle cx="742" cy="104" r="15" fill="url(#bokehG)"/>
+        <circle cx="924" cy="136" r="24" fill="url(#bokehG)"/>
+      </g>
+      <rect x="0" y="0" width="1000" height="420" fill="url(#vigG)"/>
     </svg>
 
     <div id="warm"></div>
@@ -328,6 +352,66 @@
         </pattern>
         <filter id="soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="5"/></filter>
         <filter id="soft2" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="10"/></filter>
+
+        <!-- Sedef: das Zelluloid der Kaesten bricht das Licht in Baendern.
+             Ohne das sieht ein Kasten aus wie lackiertes Blech.          -->
+        <linearGradient id="sedefG" x1="0" y1="0" x2=".78" y2="1">
+          <stop offset="0"   stop-color="#ffffff" stop-opacity=".30"/>
+          <stop offset=".14" stop-color="#ffffff" stop-opacity=".04"/>
+          <stop offset=".29" stop-color="#ffe6bc" stop-opacity=".19"/>
+          <stop offset=".44" stop-color="#ffffff" stop-opacity=".02"/>
+          <stop offset=".60" stop-color="#c8e2ff" stop-opacity=".15"/>
+          <stop offset=".74" stop-color="#ffffff" stop-opacity=".03"/>
+          <stop offset=".88" stop-color="#ffd9e8" stop-opacity=".11"/>
+          <stop offset="1"   stop-color="#ffffff" stop-opacity=".22"/>
+        </linearGradient>
+        <!-- Eine einzelne Balgfalte: Tal dunkel, Grat hell. Der Verlauf
+             sitzt im Kasten der Falte und waechst deshalb mit dem Balg. -->
+        <linearGradient id="foldG" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0"   stop-color="#000000" stop-opacity=".72"/>
+          <stop offset=".26" stop-color="#241a14" stop-opacity=".25"/>
+          <stop offset=".48" stop-color="#7a6152" stop-opacity=".55"/>
+          <stop offset=".62" stop-color="#3a2c24" stop-opacity=".22"/>
+          <stop offset="1"   stop-color="#000000" stop-opacity=".78"/>
+        </linearGradient>
+        <!-- Der Balg steht im Licht der Lampen: oben und unten laeuft er
+             ins Dunkle, in der Mitte faengt er die Buehne.               -->
+        <linearGradient id="belVG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0"   stop-color="#000" stop-opacity=".62"/>
+          <stop offset=".30" stop-color="#000" stop-opacity=".05"/>
+          <stop offset=".47" stop-color="#f0a83c" stop-opacity=".10"/>
+          <stop offset=".68" stop-color="#000" stop-opacity=".08"/>
+          <stop offset="1"   stop-color="#000" stop-opacity=".68"/>
+        </linearGradient>
+        <!-- Der Zwickel: die Innenseite der Falte. Am jugoslawischen Balg
+             ist sie rot mit Gold, und man sieht sie nur an den Kanten.   -->
+        <linearGradient id="gussG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0"   stop-color="#e8c25a"/>
+          <stop offset=".30" stop-color="#c23028"/>
+          <stop offset="1"   stop-color="#5c0d10"/>
+        </linearGradient>
+        <linearGradient id="gussG2" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0"   stop-color="#e8c25a"/>
+          <stop offset=".30" stop-color="#c23028"/>
+          <stop offset="1"   stop-color="#5c0d10"/>
+        </linearGradient>
+        <!-- Schatten in eine Vertiefung hinein, fuer das Gitter          -->
+        <linearGradient id="grillG" x1="0" y1="0" x2=".4" y2="1">
+          <stop offset="0" stop-color="#cfd2d6"/><stop offset=".32" stop-color="#7e8288"/>
+          <stop offset=".55" stop-color="#b9bcc1"/><stop offset="1" stop-color="#54585e"/>
+        </linearGradient>
+        <linearGradient id="innerG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0"   stop-color="#000" stop-opacity=".85"/>
+          <stop offset=".16" stop-color="#000" stop-opacity=".18"/>
+          <stop offset=".84" stop-color="#000" stop-opacity=".10"/>
+          <stop offset="1"   stop-color="#000" stop-opacity=".45"/>
+        </linearGradient>
+        <!-- Glanzlicht auf einem Knopf: das Perlmutt faengt die Lampe    -->
+        <radialGradient id="btnLit" cx=".34" cy=".26" r=".42">
+          <stop offset="0" stop-color="#fff" stop-opacity=".95"/>
+          <stop offset=".55" stop-color="#fff" stop-opacity=".22"/>
+          <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </radialGradient>
       </defs>
       <g id="cam">
         <g id="scaleG">
@@ -1198,6 +1282,7 @@ function buildBass(){
   const R=REG(), W=BASS_X1-BASS_X0, H=BOX_Y1-BOX_Y0;
   // Basskasten von oben: Sedef-Deckel, Chromleisten, der Riemen quer darüber
   el("rect",{x:BASS_X0,y:BOX_Y0,width:W,height:H,rx:12,fill:R.body,stroke:"#14090a","stroke-width":2.5},L);
+  el("rect",{x:BASS_X0,y:BOX_Y0,width:W,height:H,rx:12,fill:"url(#sedefG)"},L);
   el("rect",{x:BASS_X0+7,y:BOX_Y0+7,width:W-14,height:H-14,rx:9,fill:"none",stroke:R.rim,"stroke-opacity":".32","stroke-width":1.2},L);
   chromeRect(BASS_X0+W-16,BOX_Y0+10,10,H-20,4,L);                 // Kante zum Balg
   chromeRect(BASS_X0+10,BOX_Y0+10,10,H-20,4,L);
@@ -1207,42 +1292,87 @@ function buildBass(){
   }
   // Luftknopf
   chromeRect(BASS_X0+28,BOX_Y0+18,16,40,5,L);
-  // Riemen mit Schnalle, die linke Hand darunter
+  // Die linke Hand liegt UNTER dem Riemen — also wird sie zuerst gezeichnet
+  // und der Riemen darüber. Der Handrücken bleibt dunkel; nur die Kante
+  // zur Lampe hin bekommt Licht, sonst frisst die Hand den halben Kasten.
+  lhandEl=el("g",{},L);
+  const hx=BASS_X0+52, hy=BOX_Y0+128, hw=96, hh=74;
+  const hand="M"+hx+" "+(hy+hh)+
+    " C"+(hx-8)+" "+(hy+hh*.5)+" "+(hx+18)+" "+(hy-6)+" "+(hx+hw*.52)+" "+hy+
+    " C"+(hx+hw*.92)+" "+(hy+6)+" "+(hx+hw)+" "+(hy+hh*.42)+" "+(hx+hw*.9)+" "+(hy+hh*.86)+
+    " C"+(hx+hw*.6)+" "+(hy+hh+10)+" "+(hx+hw*.2)+" "+(hy+hh+8)+" "+hx+" "+(hy+hh)+" Z";
+  el("path",{d:hand,fill:"#000","fill-opacity":".5",transform:"translate(5 7)"},lhandEl);
+  // Finger greifen nach rechts über die Kante zu den Bassknöpfen
+  for(let f=0;f<4;f++){
+    const fy=hy+16+f*15;
+    el("path",{d:"M"+(hx+hw*.72)+" "+fy+" L"+(BASS_X1-16)+" "+(fy-7+f*3),
+      stroke:"#33200f","stroke-width":10,"stroke-linecap":"round"},lhandEl);
+  }
+  el("path",{d:hand,fill:"#3a2317"},lhandEl);
+  el("path",{d:"M"+(hx+6)+" "+(hy+hh*.34)+" C"+(hx+30)+" "+(hy+2)+" "+(hx+66)+" "+(hy+4)+" "+(hx+hw*.9)+" "+(hy+hh*.34),
+    fill:"none",stroke:"#8a5a3e","stroke-width":4,"stroke-linecap":"round","stroke-opacity":".3"},lhandEl);
+
+  // Riemen mit Schnalle, quer über die Hand
   strapEl=el("g",{},L);
   el("path",{d:"M"+(BASS_X0+22)+" "+(BOX_Y0+110)+" C"+(BASS_X0+60)+" "+(BOX_Y0+96)+" "+(BASS_X0+120)+" "+(BOX_Y0+96)+" "+(BASS_X0+W-20)+" "+(BOX_Y0+112)+
     " L"+(BASS_X0+W-20)+" "+(BOX_Y0+160)+" C"+(BASS_X0+120)+" "+(BOX_Y0+142)+" "+(BASS_X0+60)+" "+(BOX_Y0+142)+" "+(BASS_X0+22)+" "+(BOX_Y0+158)+" Z",
     fill:"#3b2416",stroke:"#150c07","stroke-width":1.5},strapEl);
   el("path",{d:"M"+(BASS_X0+22)+" "+(BOX_Y0+120)+" C"+(BASS_X0+60)+" "+(BOX_Y0+106)+" "+(BASS_X0+120)+" "+(BOX_Y0+106)+" "+(BASS_X0+W-20)+" "+(BOX_Y0+122),
     fill:"none",stroke:"#5a3a22","stroke-width":1,"stroke-dasharray":"3 3"},strapEl);
+  // Das abgegriffene Leder fängt oben ein wenig Licht
+  el("path",{d:"M"+(BASS_X0+24)+" "+(BOX_Y0+112)+" C"+(BASS_X0+62)+" "+(BOX_Y0+98)+" "+(BASS_X0+120)+" "+(BOX_Y0+98)+" "+(BASS_X0+W-22)+" "+(BOX_Y0+114),
+    fill:"none",stroke:"#7a5433","stroke-width":2,"stroke-opacity":".45"},strapEl);
   chromeRect(BASS_X0+W-44,BOX_Y0+118,18,34,3,strapEl);
-  lhandEl=el("g",{},L);
-  // Handrücken unter dem Riemen, Finger zu den Bässen
-  el("path",{d:"M"+(BASS_X0+40)+" "+(BOX_Y0+200)+" C"+(BASS_X0+30)+" "+(BOX_Y0+150)+" "+(BASS_X0+70)+" "+(BOX_Y0+118)+" "+(BASS_X0+112)+" "+(BOX_Y0+126)+
-    " C"+(BASS_X0+150)+" "+(BOX_Y0+134)+" "+(BASS_X0+164)+" "+(BOX_Y0+170)+" "+(BASS_X0+150)+" "+(BOX_Y0+206)+" Z",fill:"#3a2118"},lhandEl);
-  for(let f=0;f<4;f++) el("path",{d:"M"+(BASS_X0+118+f*11)+" "+(BOX_Y0+128+f*6)+" l 34 -"+(6+f*3),stroke:"#3a2118","stroke-width":9,"stroke-linecap":"round"},lhandEl);
-  el("path",{d:"M"+(BASS_X0+40)+" "+(BOX_Y0+200)+" C"+(BASS_X0+30)+" "+(BOX_Y0+150)+" "+(BASS_X0+70)+" "+(BOX_Y0+118)+" "+(BASS_X0+112)+" "+(BOX_Y0+126)+
-    " C"+(BASS_X0+150)+" "+(BOX_Y0+134)+" "+(BASS_X0+164)+" "+(BOX_Y0+170)+" "+(BASS_X0+150)+" "+(BOX_Y0+206)+" Z",fill:"rgba(226,164,118,.16)",transform:"translate(-3 -3)"},lhandEl);
 }
+
+/* Der Balg. Vorher war er eine schwarze Fläche mit Strichen darauf; das
+   Auge liest daraus keine Falten. Jetzt ist jede Falte ein eigenes Feld
+   mit eigenem Verlauf — Tal dunkel, Grat hell —, und weil der Verlauf im
+   Kasten der Falte sitzt, wandert das Licht beim Ziehen richtig mit.
+   Dazu der Zwickel oben und unten: die rote Innenseite der Falte, die man
+   an jedem Balg von Subotica bis Đevđelija sieht.                        */
+const BEL_TOP=BOX_Y0+8, BEL_BOT=BOX_Y1-8, BEL_AMP=9, BEL_LIP=2, GUSS=15;
 function bellowsD(x0,x1){
-  const w=(x1-x0)/PLEATS, top=BOX_Y0+8, bot=BOX_Y1-8, d=[];
-  d.push("M"+x0+" "+top);
-  for(let i=0;i<=PLEATS;i++){ d.push("L"+(x0+i*w)+" "+(i%2?top-9:top+2)); }
-  d.push("L"+x1+" "+bot);
-  for(let i=PLEATS;i>=0;i--){ d.push("L"+(x0+i*w)+" "+(i%2?bot+9:bot-2)); }
+  const w=(x1-x0)/PLEATS, d=[];
+  d.push("M"+x0+" "+BEL_TOP);
+  for(let i=0;i<=PLEATS;i++){ d.push("L"+(x0+i*w)+" "+(i%2?BEL_TOP-BEL_AMP:BEL_TOP+BEL_LIP)); }
+  d.push("L"+x1+" "+BEL_BOT);
+  for(let i=PLEATS;i>=0;i--){ d.push("L"+(x0+i*w)+" "+(i%2?BEL_BOT+BEL_AMP:BEL_BOT-BEL_LIP)); }
+  d.push("Z");
+  return d.join(" ");
+}
+/* Das Band entlang der Zickzackkante — der sichtbare Streifen Zwickel.   */
+function bellowsBand(x0,x1,y,dir){
+  const w=(x1-x0)/PLEATS, d=[];
+  for(let i=0;i<=PLEATS;i++){ const yy=y+dir*(i%2?-BEL_AMP:BEL_LIP); d.push((i?"L":"M")+(x0+i*w).toFixed(1)+" "+yy.toFixed(1)); }
+  for(let i=PLEATS;i>=0;i--){ const yy=y+dir*((i%2?-BEL_AMP:BEL_LIP)+GUSS); d.push("L"+(x0+i*w).toFixed(1)+" "+yy.toFixed(1)); }
   d.push("Z");
   return d.join(" ");
 }
 function buildBellows(){
   const L=document.getElementById("bellowsLayer"); L.innerHTML="";
-  bellowsEl=el("path",{d:bellowsD(BASS_X1,trebX()),fill:"url(#bellG)",stroke:"#3b2d24","stroke-width":1},L);
-  bellowsEl.folds=[]; bellowsEl.corners=[];
-  for(let i=1;i<PLEATS;i++){
-    bellowsEl.folds.push(el("line",{x1:0,y1:BOX_Y0+2,x2:0,y2:BOX_Y1-2,stroke:i%2?"#6a5446":"#0a0705","stroke-width":i%2?1.6:2.4,"stroke-opacity":".9"},L));
+  bellowsEl=el("path",{d:bellowsD(BASS_X1,trebX()),fill:"url(#bellG)",stroke:"#241c17","stroke-width":1},L);
+  bellowsEl.folds=[]; bellowsEl.corners=[]; bellowsEl.ribs=[];
+  // Ein Feld je Falte, jedes mit eigenem Licht
+  for(let i=0;i<PLEATS;i++){
+    bellowsEl.folds.push(el("rect",{x:0,y:BEL_TOP-BEL_AMP,width:1,height:BEL_BOT-BEL_TOP+BEL_AMP*2,fill:"url(#foldG)"},L));
   }
-  // Metallecken: an jeder äußeren Falte oben und unten ein Chromdreieck
+  // Die Kante selbst: ein heller Grat, im Wechsel mit dem Schatten des Tals
+  for(let i=1;i<PLEATS;i++){
+    bellowsEl.ribs.push(el("line",{x1:0,y1:BEL_TOP-6,x2:0,y2:BEL_BOT+6,
+      stroke:i%2?"#8a705d":"#050303","stroke-width":i%2?1.3:2,"stroke-opacity":i%2?".6":".8"},L));
+  }
+  bellowsEl.gTop=el("path",{d:"",fill:"url(#gussG)","fill-opacity":".9"},L);
+  bellowsEl.gBot=el("path",{d:"",fill:"url(#gussG2)","fill-opacity":".9"},L);
+  // Das Licht der Kafana über allem
+  bellowsEl.shade=el("rect",{x:0,y:BEL_TOP-BEL_AMP-2,width:1,height:BEL_BOT-BEL_TOP+BEL_AMP*2+4,fill:"url(#belVG)"},L);
+  // Metallecken: an jeder äußeren Falte eine Chromkappe, die den Grat
+  // umschließt — vorher standen dort Dreiecke ab wie Pfeilspitzen.
   for(let i=1;i<PLEATS;i+=2){
-    const t=el("path",{d:"M0 0 L-7 12 L7 12 Z",fill:CHROME,stroke:"#2a2426","stroke-width":.7},L);
-    const b=el("path",{d:"M0 0 L-7 -12 L7 -12 Z",fill:CHROME,stroke:"#2a2426","stroke-width":.7},L);
+    const t=el("path",{d:"M-3.8 7.5 L-2.4 0.4 Q0 -1.6 2.4 0.4 L3.8 7.5 Q0 5.6 -3.8 7.5 Z",
+      fill:CHROME,stroke:"#1a1618","stroke-width":.5,opacity:.78},L);
+    const b=el("path",{d:"M-3.8 -7.5 L-2.4 -0.4 Q0 1.6 2.4 -0.4 L3.8 -7.5 Q0 -5.6 -3.8 -7.5 Z",
+      fill:CHROME,stroke:"#1a1618","stroke-width":.5,opacity:.78},L);
     bellowsEl.corners.push([t,b]);
   }
   updateBellows();
@@ -1251,10 +1381,17 @@ function updateBellows(){
   if(!bellowsEl) return;
   const x0=BASS_X1, x1=trebX(), w=(x1-x0)/PLEATS;
   sattr(bellowsEl,"d",bellowsD(x0,x1));
-  for(let i=1;i<PLEATS;i++){ const f=bellowsEl.folds[i-1], x=(x0+i*w).toFixed(1); sattr(f,"x1",x); sattr(f,"x2",x); }
+  for(let i=0;i<PLEATS;i++){
+    const f=bellowsEl.folds[i];
+    sattr(f,"x",(x0+i*w).toFixed(1)); sattr(f,"width",w.toFixed(2));
+  }
+  for(let i=1;i<PLEATS;i++){ const r=bellowsEl.ribs[i-1], x=(x0+i*w).toFixed(1); sattr(r,"x1",x); sattr(r,"x2",x); }
+  sattr(bellowsEl.gTop,"d",bellowsBand(x0,x1,BEL_TOP,1));
+  sattr(bellowsEl.gBot,"d",bellowsBand(x0,x1,BEL_BOT,-1));
+  sattr(bellowsEl.shade,"x",x0.toFixed(1)); sattr(bellowsEl.shade,"width",(x1-x0).toFixed(1));
   let k=0;
   for(let i=1;i<PLEATS;i+=2){ const x=(x0+i*w).toFixed(1), c=bellowsEl.corners[k++];
-    sattr(c[0],"transform","translate("+x+" "+(BOX_Y0-1)+")"); sattr(c[1],"transform","translate("+x+" "+(BOX_Y1+1)+")"); }
+    sattr(c[0],"transform","translate("+x+" "+(BOX_Y0-3)+")"); sattr(c[1],"transform","translate("+x+" "+(BOX_Y1+3)+")"); }
   if(trebG) sattr(trebG,"transform","translate("+(x1-(BASS_X1+BEL_MIN)).toFixed(1)+" 0)");
 }
 function buildTreble(){
@@ -1262,14 +1399,22 @@ function buildTreble(){
   const R=REG(), x=BASS_X1+BEL_MIN, H=BOX_Y1-BOX_Y0;
   trebG=el("g",{},L);
   el("rect",{x:x,y:BOX_Y0-14,width:TREB_W,height:H+28,rx:14,fill:R.body,stroke:"#14090a","stroke-width":2.5},trebG);
+  // Zelluloid: der Kasten bricht das Lampenlicht in Bändern
+  el("rect",{x:x,y:BOX_Y0-14,width:TREB_W,height:H+28,rx:14,fill:"url(#sedefG)"},trebG);
   el("rect",{x:x+8,y:BOX_Y0-6,width:TREB_W-16,height:H+12,rx:10,fill:"none",stroke:R.rim,"stroke-opacity":".36","stroke-width":1.2},trebG);
   chromeRect(x+6,BOX_Y0+2,10,H-4,4,trebG);                          // Kante zum Balg
   // Štras: eine Reihe Steinchen am äußeren Rand
-  for(let i=0;i<22;i++) el("circle",{cx:x+TREB_W-14,cy:BOX_Y0+i*(H/21),r:2.6,fill:"#fff8e8",stroke:"#a08040","stroke-width":.6,opacity:.9},trebG);
+  for(let i=0;i<22;i++){
+    const sy=BOX_Y0+i*(H/21);
+    el("circle",{cx:x+TREB_W-14,cy:sy,r:2.6,fill:"#fff8e8",stroke:"#a08040","stroke-width":.6,opacity:.9},trebG);
+    el("circle",{cx:x+TREB_W-14.8,cy:sy-.8,r:.9,fill:"#fff",opacity:.85},trebG);   // der Schliff fängt die Lampe
+  }
   // Chromgitter mit Ornament: Rahmen, Lochblech, in der Mitte die Lyra-Schleife
   chromeRect(x+24,BOX_Y0+40,128,H-80,10,trebG);
+  el("rect",{x:x+32,y:BOX_Y0+48,width:112,height:H-96,rx:7,fill:"url(#grillG)"},trebG);
   el("rect",{x:x+32,y:BOX_Y0+48,width:112,height:H-96,rx:7,fill:"url(#pGrill)"},trebG);
-  el("rect",{x:x+32,y:BOX_Y0+48,width:112,height:H-96,rx:7,fill:"#000","fill-opacity":".28"},trebG);
+  // Durch die Löcher sieht man in den Kasten hinein — dort ist es dunkel
+  el("rect",{x:x+32,y:BOX_Y0+48,width:112,height:H-96,rx:7,fill:"url(#innerG)","fill-opacity":".55"},trebG);
   const cy=BOX_Y0+H/2;
   el("path",{d:"M"+(x+88)+" "+(cy-70)+" C"+(x+40)+" "+(cy-40)+" "+(x+40)+" "+(cy+40)+" "+(x+88)+" "+(cy+70)+" C"+(x+136)+" "+(cy+40)+" "+(x+136)+" "+(cy-40)+" "+(x+88)+" "+(cy-70)+" Z",
     fill:"none",stroke:CHROME,"stroke-width":5},trebG);
@@ -1289,8 +1434,9 @@ function buildTreble(){
     let playable=false;
     for(let i=0;i<8;i++) if(c===btnCol(i)&&Math.abs(btnY(i)-cy2)<2) playable=true;
     if(playable) continue;
+    el("circle",{cx:cx,cy:cy2+1.2,r:9.6,fill:"#000","fill-opacity":".4"},trebG);
     el("circle",{cx:cx,cy:cy2,r:9.6,fill:c<3?"#141014":"#1c1618",stroke:"#2e262a","stroke-width":.8},trebG);
-    el("circle",{cx:cx-2,cy:cy2-2.5,r:3,fill:"#fff","fill-opacity":c<3?".05":".03"},trebG);
+    el("circle",{cx:cx-2.4,cy:cy2-3,r:3.4,fill:"#fff","fill-opacity":c<3?".09":".06"},trebG);
   }
   buildButtons();
 }
@@ -1304,6 +1450,9 @@ function buildButtons(){
     const b=el("g",{},g);
     el("circle",{cx:cx,cy:cy+1.5,r:11.5,fill:"#000","fill-opacity":".45"},b);
     const c=el("circle",{cx:cx,cy:cy,r:11.2,fill:"url(#btnG)",stroke:"#5a4c3c","stroke-width":.9},b);
+    el("circle",{cx:cx,cy:cy,r:11.2,fill:"url(#btnLit)"},b);                 // Perlmutt im Licht
+    el("path",{d:"M"+(cx-8.6)+" "+(cy+6.4)+" A 11.2 11.2 0 0 0 "+(cx+8.6)+" "+(cy+6.4),
+      fill:"none",stroke:"#000","stroke-opacity":".26","stroke-width":2},b); // und der Schatten darunter
     const t=el("text",{x:cx,y:cy+3.6,"text-anchor":"middle","font-size":"10","font-weight":"700","font-family":"Arial Narrow, Arial, sans-serif",fill:"#3a2a18"},b);
     t.textContent=NUMS[i];
     btnEls.push({g:b,c:c,t:t,cx:cx,cy:cy});
@@ -1371,6 +1520,10 @@ function buildScene(){
   window.GUESTS=[];
   G.forEach(function(p,i){
     const g=el("g",{},guests);
+    // Die Bühne steht hinter ihnen: die Kontur glüht, das Innere bleibt schwarz
+    const lit=p[0]<500?1:-1;
+    el("ellipse",{cx:p[0]+lit*2.5,cy:p[1]+39,rx:35.5,ry:31.5,fill:"#f0a83c","fill-opacity":".2"},g);
+    el("circle",{cx:p[0]+lit*2.5,cy:p[1]-1,r:18.5,fill:"#f0a83c","fill-opacity":".22"},g);
     el("ellipse",{cx:p[0],cy:p[1]+40,rx:34,ry:30,fill:"#0b0709"},g);
     el("circle",{cx:p[0],cy:p[1],r:17,fill:"#0b0709"},g);
     if(i%2) el("path",{d:"M"+(p[0]-20)+" "+(p[1]-10)+" C"+(p[0]-16)+" "+(p[1]-30)+" "+(p[0]+16)+" "+(p[1]-30)+" "+(p[0]+20)+" "+(p[1]-10)+" Z",fill:"#0b0709"},g);
