@@ -40,6 +40,7 @@
     --epic:"Palatino Linotype",Palatino,"Iowan Old Style",Georgia,serif;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  button{touch-action:manipulation}
   html,body{height:100%;margin:0}
   body{background:var(--night);color:var(--cream);font-family:var(--cond);
     overflow:hidden;overscroll-behavior:none;touch-action:none;
@@ -1047,6 +1048,7 @@ function initAudio(){
 function unlock(){
   initAudio();
   if(AC&&AC.state!=="running"){ try{ AC.resume(); }catch(e){} }
+  if(typeof keepSession==="function") keepSession();      // siehe Abschnitt iPhone
 }
 function applyRegister(){
   if(!AC) return;
@@ -1308,9 +1310,41 @@ const CHROME="url(#chrome)";
 function trebX(){ return BASS_X1+BEL_MIN+(BEL_MAX-BEL_MIN)*S.bel; }
 /* Fünf Reihen. Die drei inneren tragen die acht Stufen, die zwei äußeren
    sind Hilfsreihen wie am C-Griff — Kulisse, aber echte Kulisse.        */
-const ROW_DX=23, ROW_DY=8, BTN_DY=27, BTN_X0=176, BTN_Y0=92;
+const ROW_DX=23, ROW_DY=8, BTN_X0=176;
+/* Die acht spielbaren Knöpfe liegen auf einer gleichmäßigen Leiter.
+   Vorher trug btnY() zwei Versätze mit: den Zeilenversatz der Reihe und
+   alle drei Knöpfe einen Sprung. Das sah nach Griffbrett aus, hatte aber
+   ungleiche Abstände zur Folge — auf einem iPhone SE 23, 23, 18, 23 …
+   Bildpunkte. Ein Daumen trifft eine 18-Bildpunkt-Spur nicht, und dass
+   ausgerechnet jeder dritte Knopf der engste war, konnte niemand ahnen.
+   Der Zickzack der drei Reihen steckt weiterhin im X (btnXrel), die
+   Treffspur im Y ist jetzt für jeden Knopf gleich breit.                 */
+let BTN_DY=27, BTN_Y0=124.5, BTN_R=11.2;
+const BTN_DECO=27;                                 // die Kulissenreihen bleiben dicht
 function btnCol(i){ return i%3; }
-function btnY(i){ return BTN_Y0+i*BTN_DY+btnCol(i)*ROW_DY+ (i>=3?BTN_DY*.6:0)+(i>=6?BTN_DY*.6:0); }
+function btnY(i){ return BTN_Y0+i*BTN_DY; }
+/* Auf einem Zeigegerät mit dickem Finger rücken die acht auseinander, bis
+   die Spur etwa 34 Bildpunkte breit ist — mehr gibt der Kasten nicht her.
+   Mit Maus bleibt es beim dichten, echt aussehenden Griffbrett.          */
+const COARSE=(function(){
+  try{
+    // Der PRIMÄRE Zeiger zählt. Ein Notebook mit Berührungsschirm, das
+    // am Zeigefeld bedient wird, behält das dichte Griffbrett.
+    if(window.matchMedia) return matchMedia("(pointer:coarse)").matches;
+    return navigator.maxTouchPoints>0;
+  }catch(e){ return false; }
+})();
+const BTN_MAX=(BOX_Y1-BOX_Y0-48)/7;                // was zwischen die Kanten passt
+function layoutButtons(stageH,vbH){
+  const want=COARSE&&stageH>0 ? Math.min(BTN_MAX,Math.max(27,34*vbH/stageH)) : 27;
+  const dy=Math.round(want*10)/10;
+  if(dy===BTN_DY) return false;
+  BTN_DY=dy; BTN_Y0=(BOX_Y0+BOX_Y1)/2-3.5*dy;
+  // Stehen die Knöpfe weiter auseinander, dürfen sie auch größer sein —
+  // sonst schwimmen acht kleine Perlen in einem leeren Feld.
+  BTN_R=Math.round(Math.min(16,Math.max(11.2,11.2*dy/27))*10)/10;
+  return true;
+}
 function btnXrel(i){ return BTN_X0+btnCol(i)*ROW_DX; }
 let bellowsEl=null, trebG=null, btnEls=[], btnGlow=null, fingerEl=null, lhandEl=null, strapEl=null, targetRing=null;
 
@@ -1477,10 +1511,10 @@ function buildTreble(){
   for(let i=0;i<3;i++) chromeRect(x+TREB_W-60+i*16,BOX_Y0-12,10,14,3,trebG);
   // Fünf Reihen Knöpfe: die drei spielbaren innen, zwei Hilfsreihen außen
   for(let k=-2;k<13;k++) for(let c=0;c<5;c++){
-    const cx=x+BTN_X0+c*ROW_DX, cy2=BTN_Y0+k*BTN_DY+c*ROW_DY;
+    const cx=x+BTN_X0+c*ROW_DX, cy2=BOX_Y0+22+k*BTN_DECO+c*ROW_DY;
     if(cy2<BOX_Y0+8||cy2>BOX_Y1-8) continue;
     let playable=false;
-    for(let i=0;i<8;i++) if(c===btnCol(i)&&Math.abs(btnY(i)-cy2)<2) playable=true;
+    for(let i=0;i<8;i++) if(c===btnCol(i)&&Math.abs(btnY(i)-cy2)<20) playable=true;
     if(playable) continue;
     el("circle",{cx:cx,cy:cy2+1.2,r:9.6,fill:"#000","fill-opacity":".4"},trebG);
     el("circle",{cx:cx,cy:cy2,r:9.6,fill:c<3?"#141014":"#1c1618",stroke:"#2e262a","stroke-width":.8},trebG);
@@ -1492,26 +1526,32 @@ function buildButtons(){
   const L=document.getElementById("btnLayer"); L.innerHTML=""; btnEls=[];
   const x=BASS_X1+BEL_MIN;
   const g=el("g",{},L); btnGlow=g;
-  targetRing=el("circle",{cx:0,cy:0,r:17,fill:"none",stroke:"#f0a83c","stroke-width":2.2,opacity:0},g);
+  targetRing=el("circle",{cx:0,cy:0,r:BTN_R+6,fill:"none",stroke:"#f0a83c","stroke-width":2.2,opacity:0},g);
+  const R=BTN_R, sh=R*.77;
   for(let i=0;i<8;i++){
     const cx=x+btnXrel(i), cy=btnY(i);
     const b=el("g",{},g);
-    el("circle",{cx:cx,cy:cy+1.5,r:11.5,fill:"#000","fill-opacity":".45"},b);
-    const c=el("circle",{cx:cx,cy:cy,r:11.2,fill:"url(#btnG)",stroke:"#5a4c3c","stroke-width":.9},b);
-    el("circle",{cx:cx,cy:cy,r:11.2,fill:"url(#btnLit)"},b);                 // Perlmutt im Licht
-    el("path",{d:"M"+(cx-8.6)+" "+(cy+6.4)+" A 11.2 11.2 0 0 0 "+(cx+8.6)+" "+(cy+6.4),
+    el("circle",{cx:cx,cy:cy+1.5,r:R+.3,fill:"#000","fill-opacity":".45"},b);
+    const c=el("circle",{cx:cx,cy:cy,r:R,fill:"url(#btnG)",stroke:"#5a4c3c","stroke-width":.9},b);
+    el("circle",{cx:cx,cy:cy,r:R,fill:"url(#btnLit)"},b);                    // Perlmutt im Licht
+    el("path",{d:"M"+(cx-sh)+" "+(cy+R*.57)+" A "+R+" "+R+" 0 0 0 "+(cx+sh)+" "+(cy+R*.57),
       fill:"none",stroke:"#000","stroke-opacity":".26","stroke-width":2},b); // und der Schatten darunter
-    const t=el("text",{x:cx,y:cy+3.6,"text-anchor":"middle","font-size":"10","font-weight":"700","font-family":"Arial Narrow, Arial, sans-serif",fill:"#3a2a18"},b);
+    const t=el("text",{x:cx,y:cy+R*.32,"text-anchor":"middle","font-size":(R*.89).toFixed(1),"font-weight":"700","font-family":"Arial Narrow, Arial, sans-serif",fill:"#3a2a18"},b);
     t.textContent=NUMS[i];
     btnEls.push({g:b,c:c,t:t,cx:cx,cy:cy});
   }
   // die rechte Hand: von unten rechts über die Knöpfe, der Zeigefinger auf dem Ton
   const H=document.getElementById("handLayer"); H.innerHTML="";
   fingerEl=el("g",{},H);
-  // Handteller rechts neben dem Finger, zum Rand hin — die Zielknöpfe bleiben frei
-  el("path",{d:"M22 14 C52 2 90 14 100 44 C110 74 96 104 64 108 C42 110 26 94 18 66 C14 48 14 26 22 14 Z",fill:"#3a2118",opacity:".6"},fingerEl);
-  for(let f=1;f<4;f++) el("path",{d:"M"+(26+f*14)+" "+(14+f*18)+" l -24 -"+(10+f*4),stroke:"#3a2118","stroke-width":9,"stroke-linecap":"round",opacity:".65"},fingerEl);
-  el("path",{d:"M-8 0 C-12 -7 -4 -15 5 -11 L12 -2 C16 3 9 11 2 9 Z",fill:"#4a2c20"},fingerEl);
+  // Der gemalte Handteller bleibt auf dem Zeigegerät weg: dort liegt der
+  // eigene Daumen schon auf dem Glas, und die Zeichnung verdeckte
+  // ausgerechnet die drei Knöpfe, auf die man als nächstes muss.
+  if(!COARSE){
+    el("path",{d:"M22 14 C52 2 90 14 100 44 C110 74 96 104 64 108 C42 110 26 94 18 66 C14 48 14 26 22 14 Z",fill:"#3a2118",opacity:".6"},fingerEl);
+    for(let f=1;f<4;f++) el("path",{d:"M"+(26+f*14)+" "+(14+f*18)+" l -24 -"+(10+f*4),stroke:"#3a2118","stroke-width":9,"stroke-linecap":"round",opacity:".65"},fingerEl);
+    el("path",{d:"M-8 0 C-12 -7 -4 -15 5 -11 L12 -2 C16 3 9 11 2 9 Z",fill:"#4a2c20"},fingerEl);
+  }
+  el("circle",{cx:0,cy:0,r:COARSE?BTN_R+3:6,fill:"none",stroke:"rgba(240,168,60,.85)","stroke-width":COARSE?2.4:0},fingerEl);
   el("circle",{cx:0,cy:0,r:6,fill:"rgba(226,164,118,.35)"},fingerEl);
   fingerEl.setAttribute("transform","translate("+(x+btnXrel(0))+" "+btnY(0)+")");
 }
@@ -1705,33 +1745,50 @@ function tapBellows(){
   reversal(-S.belDir); S.belVel=S.belDir*.05;
   if(!S.autoBel) pumpAir(.22);
 }
+/* Kein Zeigerfang mehr. Auf dem iPhone spielt man mit zwei Daumen, und
+   setPointerCapture auf einem einzigen Element verliert den Fang, sobald
+   der zweite Daumen aufsetzt — lostpointercapture feuerte dann onUp und
+   der gehaltene Ton brach mitten im Takt ab. Verfolgt wird stattdessen am
+   Fenster: der Finger darf über jede Kante wandern und bleibt gemeldet.  */
+let zoneW=1;
 function onDown(e){
   if(S.mode==="idle"){ return; }
   if(S.mode==="demo"){ return; }
   if(S.paused){ goResume(); return; }
   unlock();
-  const z=zoneOf(e);
-  if(e.pointerId!==undefined&&instSvg.setPointerCapture){ try{ instSvg.setPointerCapture(e.pointerId); }catch(x){} }
+  const z=zoneOf(e), r=stageEl.getBoundingClientRect();
+  zoneW=Math.max(80,r.width*.46);
   const p={zone:z,x:e.clientX,y:e.clientY,btn:-1,t:performance.now(),moved:0};
   ptrs[e.pointerId]=p;
   if(z==="btn"){ p.btn=btnFromY(e.clientY); press(p.btn,"touch"); }
   else if(S.autoBel){ tapBellows(); }
   else { p.t0=performance.now(); }
-  e.preventDefault();
+  if(e.cancelable) e.preventDefault();
 }
-function onMove(e){
-  const p=ptrs[e.pointerId]; if(!p) return;
-  const r=stageEl.getBoundingClientRect();
+/* Ein iPhone mit ProMotion meldet den Finger 120-mal in der Sekunde, das
+   Bild läuft aber mit 60. Safari fasst die Zwischenschritte zusammen und
+   liefert nur den letzten — beim Tresenje, wo der Daumen zwischen zwei
+   Bildern zweimal die Richtung wechselt, verschwindet der Wechsel damit
+   spurlos. getCoalescedEvents() gibt den ganzen Weg zurück; wir laufen
+   ihn Schritt für Schritt ab, dann zählt jeder Wechsel.                  */
+function movePtr(p,cx,cy){
   if(p.zone==="btn"){
-    const b=btnFromY(e.clientY);
+    const b=btnFromY(cy);
     if(b!==p.btn){ releaseBtn(p.btn); p.btn=b; press(b,"slide"); }
   }else{
-    const dx=(e.clientX-p.x)/(r.width*.46);
+    const dx=(cx-p.x)/zoneW;
     p.moved+=Math.abs(dx);
     if(Math.abs(dx)>.002) moveBellows(dx*1.6);
   }
-  p.x=e.clientX; p.y=e.clientY;
-  e.preventDefault();
+  p.x=cx; p.y=cy;
+}
+function onMove(e){
+  const p=ptrs[e.pointerId]; if(!p) return;
+  let steps=null;
+  if(e.getCoalescedEvents){ try{ steps=e.getCoalescedEvents(); }catch(x){ steps=null; } }
+  if(steps&&steps.length>1){ for(let i=0;i<steps.length;i++) movePtr(p,steps[i].clientX,steps[i].clientY); }
+  else movePtr(p,e.clientX,e.clientY);
+  if(e.cancelable) e.preventDefault();
 }
 function onUp(e){
   const p=ptrs[e.pointerId]; if(!p) return;
@@ -1740,10 +1797,9 @@ function onUp(e){
   delete ptrs[e.pointerId];
 }
 instSvg.addEventListener("pointerdown",onDown);
-instSvg.addEventListener("pointermove",onMove);
-instSvg.addEventListener("pointerup",onUp);
-instSvg.addEventListener("pointercancel",onUp);
-instSvg.addEventListener("lostpointercapture",onUp);
+addEventListener("pointermove",onMove,{passive:false});
+addEventListener("pointerup",onUp);
+addEventListener("pointercancel",onUp);
 stageEl.addEventListener("pointerdown",function(e){
   if(S.mode==="demo"&&e.target!==document.getElementById("stopBtn")){ endDemo(); }
 });
@@ -1803,20 +1859,112 @@ function goResume(){
   hintEl.textContent=S.mode==="free"?TR("hintFree"):(S.drill?TR("dh"+S.drill.i).toUpperCase():TR("hintSong"));
 }
 document.addEventListener("visibilitychange",function(){ if(document.hidden&&!S.paused&&(S.mode==="song"||S.mode==="free")) goPause(); });
-document.getElementById("backBtn").onclick=function(){
-  if(S.mode==="demo") endDemo();
-  else { if(S.mode==="song"||S.mode==="free") goPause(); releaseAll(); allOff(); S.mode="idle"; showMenu(); }
-};
+function toMenu(){
+  if(S.mode==="demo"){ endDemo(); return; }
+  if(S.mode==="song"||S.mode==="free") goPause();
+  releaseAll(); allOff(); S.mode="idle"; showMenu();
+}
+document.getElementById("backBtn").onclick=function(){ toMenu(); };
+
+/* ═══════════ iPhone ═══════════
+   Auf dem Telefon spielt man mit zwei Daumen auf einem Glas, das
+   gleichzeitig das Betriebssystem bedient. Alles hier drin räumt weg, was
+   Safari dazwischenfunkt.                                                */
+
+/* 1 — Das Wischen von der linken Kante.
+   Safari geht damit zurück, und links liegt bei uns ausgerechnet der
+   Balg. Ein zusätzlicher Eintrag in der Chronik fängt es ab: fährt der
+   Daumen daneben, landet man im Menü statt draußen. Im Hauptmenü lassen
+   wir das Wischen durch — sonst käme man nie mehr von der Seite weg.    */
+try{
+  history.pushState({h:1},"");
+  addEventListener("popstate",function(){
+    if(veilOpen&&SCREEN==="main") return;                 // von hier darf man gehen
+    try{ history.pushState({h:1},""); }catch(e){}
+    if(veilOpen) showScreen("main"); else toMenu();
+  });
+}catch(e){}
+
+/* 2 — Kneifen, Doppeltipp-Zoom, Gummiband.
+   »user-scalable=no« im Viewport wird von iOS seit Jahren übergangen, das
+   muss also von Hand weg. Nur im Spielbereich: das Menü liegt außerhalb
+   von #app und behält seine normalen Tipp-Ereignisse, und Schaltflächen
+   nehmen wir überall aus, sonst kommt ihr Klick nicht mehr an.          */
+(function(){
+  const app=document.getElementById("app");
+  const kill=function(e){
+    const t=e.target;
+    if(t&&t.closest&&t.closest("button")) return;
+    if(e.cancelable) e.preventDefault();
+  };
+  app.addEventListener("touchstart",kill,{passive:false});
+  app.addEventListener("touchmove",kill,{passive:false});
+  ["gesturestart","gesturechange","gestureend"].forEach(function(n){
+    document.addEventListener(n,function(e){ if(e.cancelable) e.preventDefault(); },{passive:false});
+  });
+  document.addEventListener("dblclick",function(e){ if(e.cancelable) e.preventDefault(); },{passive:false});
+})();
+
+/* 3 — Der Lautlos-Schalter.
+   iOS legt Web Audio auf den Klingelton-Kanal und schaltet es mit dem
+   kleinen Schalter an der Seite stumm. Läuft daneben aber ein gewöhnliches
+   Tonelement, wandert die Sitzung auf den Wiedergabe-Kanal. Wir lassen
+   also eine Spur Stille mitlaufen. Das ist ein Kniff, kein Versprechen:
+   je nach iOS-Fassung greift er, deshalb steht der Hinweis am Anfang
+   weiterhin da.                                                          */
+let hush=null;
+function silentWav(){
+  const n=1600, b=new Uint8Array(44+n), dv=new DataView(b.buffer);
+  const wr=function(o,t){ for(let i=0;i<t.length;i++) b[o+i]=t.charCodeAt(i); };
+  wr(0,"RIFF"); dv.setUint32(4,36+n,true); wr(8,"WAVEfmt ");
+  dv.setUint32(16,16,true); dv.setUint16(20,1,true); dv.setUint16(22,1,true);
+  dv.setUint32(24,8000,true); dv.setUint32(28,8000,true); dv.setUint16(32,1,true); dv.setUint16(34,8,true);
+  wr(36,"data"); dv.setUint32(40,n,true);
+  for(let i=0;i<n;i++) b[44+i]=128;                       // 8-Bit-Stille ist 128
+  let t=""; for(let i=0;i<b.length;i++) t+=String.fromCharCode(b[i]);
+  return "data:audio/wav;base64,"+btoa(t);
+}
+function keepSession(){
+  if(hush||!IOSISH) return;
+  try{
+    hush=new Audio(silentWav());
+    hush.loop=true; hush.volume=0;
+    hush.setAttribute("playsinline",""); hush.setAttribute("webkit-playsinline","");
+    const q=hush.play(); if(q&&q.catch) q.catch(function(){});
+  }catch(e){ hush=null; }
+}
+
+/* 4 — Zurück aus dem Hintergrund.
+   Ein Anruf, ein Blick in eine andere App, und iOS hält den Ton an. Ohne
+   das hier bliebe das Instrument danach stumm, bis man neu lädt.        */
+function wakeAudio(){
+  if(AC&&AC.state!=="running"&&!S.paused){ try{ AC.resume(); }catch(e){} }
+  if(hush&&hush.paused){ try{ const q=hush.play(); if(q&&q.catch) q.catch(function(){}); }catch(e){} }
+}
+document.addEventListener("visibilitychange",function(){
+  if(document.hidden){ releaseAll(); allOff(); if(S.mode==="song"||S.mode==="free") goPause(); }
+  else wakeAudio();
+});
+addEventListener("pageshow",wakeAudio);
+addEventListener("focus",wakeAudio);
+/* Wird das Fenster weggenommen, während ein Daumen liegt, kommt für
+   diesen Finger nie ein pointerup — der Ton bliebe stehen. */
+addEventListener("blur",function(){
+  for(const k in ptrs) delete ptrs[k];
+  releaseAll(); allOff();
+});
 
 /* ═══════════ Notenbahn ═══════════ */
 const cv=document.getElementById("staff"), g2=cv.getContext("2d");
 let W=0,H=0,HITX=70;
 const INST_W=900, INST_H=420, INST_CX=440, INST_CY=222;
+let vbHNow=INST_H;
 function frameInstrument(){
   const r=stageEl.getBoundingClientRect();
   if(!(r.width>8&&r.height>8)) return;
   const R=r.width/r.height;
   const vbH=Math.max(INST_H, INST_W/R), vbW=vbH*R;
+  vbHNow=vbH;
   instSvg.setAttribute("viewBox",(INST_CX-vbW/2).toFixed(1)+" "+(INST_CY-vbH/2).toFixed(1)+" "+vbW.toFixed(1)+" "+vbH.toFixed(1));
 }
 let PXMS=.20;
@@ -1833,7 +1981,10 @@ function fit(){
   g2.setTransform(dpr,0,0,dpr,0,0);
   HITX=Math.max(56,Math.min(120,W*.13));
   PXMS=.20/LVL().lead;
-  readFont(); frameInstrument(); checkOrient(); dropCtm();
+  readFont(); frameInstrument();
+  const sr=stageEl.getBoundingClientRect();
+  if(layoutButtons(sr.height,vbHNow)&&trebG) rebuild();
+  checkOrient(); dropCtm();
 }
 function checkOrient(){ document.getElementById("rotate").className=(innerHeight>innerWidth*1.02)?"on":""; }
 addEventListener("resize",function(){ fit(); if(veilOpen) requestAnimationFrame(fitVeil); });
@@ -2669,7 +2820,8 @@ window.__H={S:S,SONGS:SONGS,DRILLS:DRILLS,LEVELS:LEVELS,REGISTERS:REGISTERS,STR:
   showScreen:showScreen,finish:finish,setLang:setLang,buildSong:buildSong,buildDrill:buildDrill,btnY:btnY,
   judgePress:judgePress,judgeFrame:judgeFrame,get AC(){ return AC; },get master(){ return master; },noteOn:noteOn,noteOff:noteOff,bassHit:bassHit,goPause:goPause,goResume:goResume,get veil(){ return veilOpen; },DB:DB,
   unlock:unlock,ac:function(){ return AC; },tap:function(n){ if(lim) lim.connect(n); },
-  setVolume:setVolume,setRoom:setRoom,applyRegister:applyRegister,stradella:stradella,bassRoot:bassRoot};
+  setVolume:setVolume,setRoom:setRoom,applyRegister:applyRegister,stradella:stradella,bassRoot:bassRoot,
+  get COARSE(){ return COARSE; },get BTN_DY(){ return BTN_DY; },toMenu:toMenu};
 })();
 </script>
 </body>
