@@ -109,6 +109,7 @@ function load(){
       snd: (o.snd === 0) ? 0 : 1,
       tut: (o.tut === 1) ? 1 : 0,
       easy: (o.easy === 1) ? 1 : 0,
+      stp: (o.stp === 1) ? 1 : 0,
       stats: o.stats || null
     };
   }catch(e){ return null; }
@@ -118,7 +119,7 @@ function save(){
     localStorage.setItem(STORE, JSON.stringify({
       best: G.best|0, bestRound: G.bestRound|0, season: G.season|0,
       lvl: G.level|0, ml: G.medjuLast, lang: LANG, carry: G.carry|0,
-      pix: PIX?1:0, snd: AU.on?1:0, tut: G.tut?1:0, easy:G.easy?1:0, stats:META
+      pix: PIX?1:0, snd: AU.on?1:0, tut: G.tut?1:0, easy:G.easy?1:0, stp:G.stoPokrpan?1:0, stats:META
     }));
   }catch(e){}
 }
@@ -1704,6 +1705,21 @@ var UI = {
     bjegDim2:'Levat: „Ljudi... pa gdje je?!"',
     bjegMil:'Šaner: „ENO MILICIJE! Eno je, iza tebe!"',
     bjegMil2:'Levat: „Ma nema tamo nikog, majke mi."',
+    navika:'Šaner: „Opet isti fildžan? Hajde da ga malo prošetamo."',
+    levatMito:'LEVATU 20 KM', levatMitoSub:'gurni mu nešto',
+    levatMito1:'Levat: „Ništa ja ne znam. Ali mogu se spotaći."',
+    levatMito2:'Šaner: „Levatu! Gledaj gdje staješ!"',
+    hakalaMijesa:'Hakala: „Daj meni! Ja sam mješao još prije rata!"',
+    hakalaZaboravio:'Hakala: „Čekaj... đe sam ono stavio?"',
+    vjetar:'Šaner: „Bura! Drž\'te fildžane!"',
+    ciroKaze:'Ćiro (iz publike): „Sto posto ovaj! Kuću dajem!"',
+    ciroFulao:'Šaner: „Ćiro, kuću si upravo dao."',
+    ciroPogodak:'Ćiro: „A šta sam ja rek\'o?!"',
+    ciroTjera:'Šaner: „Ćiro! Marš kući! Doživotna zabrana!"',
+    silvester1:'Šaner: „SILVESTARSKI PROGRAM! Večeras sve duplo!"',
+    silvHud:'DOČEK · DUPLO',
+    silvMinka:['Minka: „Ja samo pazim da ne lažeš."','Minka: „Publiko, ja sam ovdje protiv svoje volje."','Minka: „Šefe, kamera dva te snima."','Minka: „Poslije emisije — kući. Odmah."'],
+    stoKrpljen:'Levat: „Isti sto. Samo sad ima selotejp."',
     rukeUvis:'Šaner: „Ruke uvis?! Ja sam samo mješao!"',
     polaPola:'Šaner: „Kolega, pola-pola. Ti si ionako u plusu."',
     uzeliFildzan:'Šaner: „Uzeli su mi fildžan. Ostala su dva."',
@@ -1806,6 +1822,21 @@ var UI = {
     bjegDim2:'Levat: „Leute... wo ist er hin?!"',
     bjegMil:'Šaner: „DIE MILIZ! Da, hinter dir!"',
     bjegMil2:'Levat: „Da ist doch keiner, ich schwöre."',
+    navika:'Šaner: „Schon wieder derselbe Fildžan? Gehen wir mit ihm spazieren."',
+    levatMito:'LEVAT · 20 KM', levatMitoSub:'steck ihm was zu',
+    levatMito1:'Levat: „Ich weiß nichts. Aber stolpern kann ich."',
+    levatMito2:'Šaner: „Levat! Schau, wo du hintrittst!"',
+    hakalaMijesa:'Hakala: „Gib her! Ich habe schon vor dem Krieg gemischt!"',
+    hakalaZaboravio:'Hakala: „Moment... wo habe ich sie hingetan?"',
+    vjetar:'Šaner: „Die Bura! Haltet die Fildžani!"',
+    ciroKaze:'Ćiro (aus dem Publikum): „Hundert Prozent der da! Ich verwette mein Haus!"',
+    ciroFulao:'Šaner: „Ćiro, dein Haus ist soeben weg."',
+    ciroPogodak:'Ćiro: „Was habe ich gesagt?!"',
+    ciroTjera:'Šaner: „Ćiro! Ab nach Hause! Lebenslanges Verbot!"',
+    silvester1:'Šaner: „SILVESTERPROGRAMM! Heute Nacht alles doppelt!"',
+    silvHud:'SILVESTER · DOPPELT',
+    silvMinka:['Minka: „Ich passe nur auf, dass du nicht lügst."','Minka: „Liebes Publikum, ich bin gegen meinen Willen hier."','Minka: „Chef, Kamera zwei filmt dich."','Minka: „Nach der Sendung — nach Hause. Sofort."'],
+    stoKrpljen:'Levat: „Derselbe Tisch. Nur jetzt mit Klebeband."',
     rukeUvis:'Šaner: „Hände hoch?! Ich habe nur gemischt!"',
     polaPola:'Šaner: „Kollege, halbe-halbe. Du bist ohnehin im Plus."',
     uzeliFildzan:'Šaner: „Sie haben mir eine Tasse abgenommen. Bleiben zwei."',
@@ -1908,6 +1939,21 @@ var UI = {
     bjegDim2:'Levat: "Folks... where did he go?!"',
     bjegMil:'Šaner: "THE POLICE! There, behind you!"',
     bjegMil2:'Levat: "There is nobody there, I swear."',
+    navika:'Šaner: "The same cup again? Let us take it for a walk."',
+    levatMito:'LEVAT · 20 KM', levatMitoSub:'slip him something',
+    levatMito1:'Levat: "I know nothing. But I can trip."',
+    levatMito2:'Šaner: "Levat! Watch where you step!"',
+    hakalaMijesa:'Hakala: "Give it here! I was shuffling before the war!"',
+    hakalaZaboravio:'Hakala: "Hold on... where did I put it?"',
+    vjetar:'Šaner: "The bura! Hold the fildžans!"',
+    ciroKaze:'Ćiro (from the crowd): "That one, hundred percent! I bet my house!"',
+    ciroFulao:'Šaner: "Ćiro, your house is gone."',
+    ciroPogodak:'Ćiro: "What did I tell you?!"',
+    ciroTjera:'Šaner: "Ćiro! Go home! Banned for life!"',
+    silvester1:'Šaner: "NEW YEAR\'S SPECIAL! Everything double tonight!"',
+    silvHud:'NYE · ALL DOUBLE',
+    silvMinka:['Minka: "I am only here to make sure you do not lie."','Minka: "Dear viewers, I am here against my will."','Minka: "Boss, camera two is filming you."','Minka: "After the show — home. At once."'],
+    stoKrpljen:'Levat: "Same table. Only now with sticky tape."',
     rukeUvis:'Šaner: "Hands up?! I was only shuffling!"',
     polaPola:'Šaner: "Colleague, half and half. You are up anyway."',
     uzeliFildzan:'Šaner: "They took one of my cups. Two left."',
@@ -2232,6 +2278,14 @@ var G = {
   /* bijeg: varijanta + tajming (kad trči, kad se pojavi bošča, odakle kreće) */
   fleeVar: 'inventura', fleeZadnji: '', fleeRunAt: 2.2, boscaAt: 1.5, fleeDX0: 0,
   tableFlip: 0, sanerA: 1,
+  /* nove fore: navika igrača, mito Levatu, Hakala miješa, bura, Ćiro, Silvestrovo, pokrpan sto */
+  pickHist: [], navika: -1, navikaDone: false,
+  mitoLevata: false, levatSaplT: 0, nakrivT: 0,
+  hakalaRunda: false, hakalaBio: false, hakalaAnim: 0, hakalaCheckAt: -1, hakalaCheckT: 0, hakalaChecked: false,
+  vjetar: null, vjetarBio: false,
+  ciroTip: -1, ciroPogodio: 0, ciroTjeran: false,
+  silvester: false, konf: [], konfT: 0,
+  stoPokrpan: false, stoRekao: false,
   bird: {on:false, phase:0, t:0, x:0, y:0, sx:0, sy:0, slot:1, cupIdx:-1, dir:1, perch:false, leave:false},
   minka: 0, minkaAnim: 0, minkaSay: '', minkaSayT: 0, minkaSeen: false,
   hakalaT: 0,
@@ -2325,6 +2379,7 @@ function maxUlog(){
   var potreba = Math.max(40, G.fleeCilj - G.startPare);
   var kapa = Math.round(potreba / 4 / 5) * 5;
   kapa += Math.min(4, G.streak) * 5;          /* serija otvara malo veći ulog */
+  if(G.silvester) kapa *= 2;                  /* doček: sve duplo */
   return Math.max(5, Math.min(kapa, G.money));
 }
 
@@ -2355,14 +2410,31 @@ function newGame(){
   G.racija = 0; G.parts = []; G.coins = []; G.rings = [];
   G.polA = 0; G.racijaIshod = ''; G.racijaStep = 0; G.mitoFaza = 0;
   G.mjestoUzeto = false;
+  G.pickHist = []; G.navika = -1; G.navikaDone = false;
+  G.mitoLevata = false; G.levatSaplT = 0; G.nakrivT = 0;
+  G.hakalaRunda = false; G.hakalaBio = false; G.hakalaAnim = 0; G.hakalaCheckT = 0; G.hakalaChecked = false;
+  G.vjetar = null; G.vjetarBio = false;
+  G.ciroTip = -1; G.ciroPogodio = 0; G.ciroTjeran = false;
+  /* poslije osme sezone svaka partija je doček — sve duplo, Minka voditeljka */
+  G.silvester = (G.season >= 8);
+  G.konf = []; G.konfT = 0;
   initCups();
   for(var q=0;q<G.nc;q++){ G.cups[q].a = 1; G.cups[q].sc = 1; G.cups[q].grab = false; }
   toBet();
+  if(G.silvester){
+    say(T('silvester1'), 3.6);
+    AU.win(); vib([20,40,20,40]);
+    burst(200, 420, 18, '#f0c46a'); burst(520, 420, 18, '#e87a9a');
+  } else if(G.stoPokrpan && !G.stoRekao){
+    G.stoRekao = true;
+    levatSay(T('stoKrpljen'), 4.4);
+  }
 }
 
 function toBet(){
   G.st = S.BET; G.t = 0; G.picked = -1;
   G.slow = 1; G.kafaOn = false; G.okoT = 0;
+  G.hakalaRunda = false; G.hakalaCheckT = 0;   /* Hakala se vraća u publiku */
   for(var i=0;i<G.nc;i++){ G.cups[i].lift = 0; G.cups[i].tilt = 0; }
   if(G.money < 5){ toOver(); return; }
   /* kasnije u sezoni Levat može sam otići → kraj levela */
@@ -2585,6 +2657,8 @@ function toFlee(){
 
 function toPobjeda(){
   TRK.dogadjaj('bijeg', G.money|0); meta('flees');
+  /* prevrnuo je sto — od sada isti sto, samo pokrpan selotejpom */
+  if(G.fleeVar === 'sto') G.stoPokrpan = true;
   G.st = S.POBJEDA; G.t = 0;
   G.carry = G.money;               /* zarađeno ide u sljedeći nivo */
   G.levatLeavePhase = 0;   /* oproštaj je gotov — dugmad opet rade */
@@ -2637,13 +2711,15 @@ function startRound(bet){
   for(var i=0;i<G.nc;i++){ G.cups[i].lift = 0; }
   G.levatTip = -1;
   G.bird.on = false; G.bird.leave = false; G.bird.cupIdx = -1;
+  G.ciroTip = -1; G.vjetar = null; G.vjetarBio = false;
+  G.nakrivT = 0; G.levatSaplT = 0; G.navikaDone = false;
   var ns = nSwaps(G.round), sd = swapDur(G.round);
   if(G.nc === 4){ ns = Math.round(ns*1.15); }
   if(G.nc === 2){ ns = Math.max(2, Math.round(ns*0.8)); }
   if(G.usporeno) sd *= 1.30;
-  /* ili Minka zove, ili Minka dođe — nikad oboje */
+  /* ili Minka zove, ili Minka dođe — nikad oboje (na dočeku je ionako tu) */
   G.minka = 0;
-  if(G.round >= 2){
+  if(G.round >= 2 && !G.silvester){
     var ev = Math.random();
     var mp = Math.min(0.38, 0.18 + G.round*0.008 + Math.max(0,G.money-100)*0.0005);
     if(ev < mp*0.54) G.minka = 1;
@@ -2660,6 +2736,13 @@ function startRound(bet){
     ns = Math.max(2, Math.round(ns*0.45));
     sd *= 1.70;
   }
+  /* Hakala jednom po partiji preuzme miješanje — sporo, klimavo i pošteno */
+  G.hakalaRunda = false; G.hakalaCheckT = 0; G.hakalaChecked = false;
+  if(!G.minka && !G.silvester && !G.hakalaBio && G.round >= 4 && Math.random() < 0.10){
+    G.hakalaRunda = true; G.hakalaBio = true;
+    ns = Math.max(2, Math.round(ns*0.55));
+    sd *= 1.85;
+  }
   G.swaps = buildSwaps(ns);
   G.swDur = sd;
   /* od 6. runde Šaner ponekad izvede puni pokret bez stvarne zamjene. Vizuelno čitljivo, nikad teleport. */
@@ -2670,6 +2753,15 @@ function startRound(bet){
   G.si = 0; G.sw = 0; G.swActive = false;
   var cc = cheatChance(G.round) + (G.usporeno ? 0.12 : 0);
   G.cheatAt = (G.forceCheat || (!G.minka && Math.random() < cc)) ? ri(1, G.swaps.length-1) : -1;
+  if(G.hakalaRunda){
+    /* pijan, ali pošten */
+    G.cheatAt = -1; G.fakeAt = -1;
+    G.hakalaCheckAt = Math.max(1, (G.swaps.length/2)|0);
+  }
+  /* zapamtio je tvoju naviku — večeras vara češće */
+  if(G.navika >= 0 && !G.hakalaRunda && !G.minka && G.cheatAt < 0 && Math.random() < 0.5){
+    G.cheatAt = ri(1, Math.max(1, G.swaps.length-1));
+  }
   AU.chip(); vib(12);
   if(G.minka === 1){
     AU.ring(); vib([20,40,20]);
@@ -2683,6 +2775,13 @@ function startRound(bet){
     say(novoPravilo, 3.0);
   }else{
     say(T('evoKuglice'), 1.9);
+  }
+  if(G.hakalaRunda){
+    say(T('hakalaMijesa'), 3.2);
+    AU.tone(340, 0.14, 'square', 0.07, 220);
+  }
+  if(G.silvester && Math.random() < 0.30){
+    G.minkaSay = pick(T('silvMinka')); G.minkaSayT = 3.6;
   }
 }
 
@@ -2718,6 +2817,12 @@ function beginSwap(){
 
 function doPick(slot){
   if(G.st !== S.PICK) return;
+  /* Šaner pamti gdje uvijek biraš */
+  G.pickHist.push(slot);
+  if(G.pickHist.length > 6) G.pickHist.shift();
+  var ph = G.pickHist.length;
+  G.navika = (ph >= 3 && G.pickHist[ph-1] === G.pickHist[ph-2] &&
+              G.pickHist[ph-2] === G.pickHist[ph-3]) ? slot : -1;
   G.picked = slot;
   G.st = S.REVEAL; G.t = 0; G.revPhase = 0;
   var c = cupAt(slot);
@@ -2766,6 +2871,24 @@ function resolve(){
   G.levatHold = 1.4; G.levatIdleT = rnd(22, 38);
   G.round++; meta('rounds');
   if(Math.random()<0.22) levatSay(pick(LB('LEVAT')), 4);
+  /* Ćiro iz publike — obračun njegove wette */
+  if(G.ciroTip >= 0){
+    var ciroPravi = (G.ciroTip === G.cups[G.cube].slot);
+    if(ciroPravi){
+      G.ciroPogodio++;
+      if(G.ciroPogodio >= 3){
+        G.ciroTjeran = true;
+        say(T('ciroTjera'), 3.6);
+        G.poke = 0.6; AU.tone(200, 0.25, 'sawtooth', 0.10, 120); vib([30,40,30]);
+      }else{
+        levatSay(T('ciroPogodak'), 3.4);
+      }
+    }else if(G.picked === G.ciroTip){
+      say(T('ciroFulao'), 3.2);
+      AU.tone(520, 0.28, 'triangle', 0.08, 300);
+    }
+    G.ciroTip = -1;
+  }
 }
 
 function boom(word, x, win){
@@ -2974,6 +3097,20 @@ function update(dt){
       vib([20,40,20]);
     }
   }
+  /* Levat "slučajno" zapne za sto sekundu nakon što mu gurneš pare */
+  if(G.levatSaplT > 0){
+    G.levatSaplT -= dt;
+    if(G.levatSaplT <= 0){
+      if(G.st === S.PICK){
+        G.nakrivT = 1.1;
+        G.levatHold = 1.8;
+        AU.thunk(); G.shake = 12; vib([30,50,30]);
+        dust(120, TABLEY+40, 10);
+        say(T('levatMito2'), 2.6);
+      }
+      G.levatSaplT = 0;
+    }
+  }
   /* milicija odlazi čim racija prestane — inače ostane stajati do kraja partije */
   if(G.st !== S.RACIJA && G.st !== S.MITO && G.polA > 0.001){
     G.polA = lerp(G.polA, 0, Math.min(1, dt*3.2));
@@ -3039,7 +3176,7 @@ function update(dt){
     }
   } else {
     if(G.levatHold > 0) G.levatHold -= dt;
-    var wantLevat = !G.levatGone && G.minkaAnim < 0.15 &&   /* dvoje na sceni je gužva */
+    var wantLevat = !G.levatGone && G.minkaAnim < 0.15 && G.hakalaAnim < 0.15 &&   /* dvoje na sceni je gužva */
                    ((G.levatT > 0) || (G.st === S.PICK && G.levatTip >= 0) || (G.levatHold > 0));
     if(!wantLevat && G.st !== S.INTRO && G.st !== S.POBJEDA && G.st !== S.BJEG){
       G.levatIdleT -= dt;
@@ -3048,9 +3185,12 @@ function update(dt){
     if(G.st === S.INTRO || G.levatGone){ G.levatPeek = 0; }
     else G.levatPeek = lerp(G.levatPeek, wantLevat ? 1 : 0, Math.min(1, dt*(wantLevat ? 7 : 4.5)));
   }
-  /* Minka dolazi lično */
-  var ft2 = (G.minka === 2) ? 1 : 0;
+  /* Minka dolazi lično — na dočeku je stalno tu kao voditeljka */
+  var ft2 = (G.minka === 2 ||
+             (G.silvester && G.st !== S.INTRO && G.st !== S.BJEG && G.st !== S.POBJEDA)) ? 1 : 0;
   G.minkaAnim = lerp(G.minkaAnim, ft2, Math.min(1, dt*4.2));
+  /* Hakala dolazi za sto kad miješa */
+  G.hakalaAnim = lerp(G.hakalaAnim, G.hakalaRunda ? 1 : 0, Math.min(1, dt*3.4));
   if(G.minka === 2 && !G.minkaSeen && G.minkaAnim > 0.45){
     G.minkaSeen = true;
     G.minkaSay = pick(LB('MINKA_ONA')); G.minkaSayT = 4.2;
@@ -3058,8 +3198,8 @@ function update(dt){
   }
   if(G.minka !== 2) G.minkaSeen = false;
   if(G.minkaSayT>0) G.minkaSayT -= dt;
-  /* dim iz pepeljare */
-  if(G.st !== S.BJEG && G.st !== S.POBJEDA && G.st !== S.INTRO){
+  /* dim iz pepeljare (na dočeku: konfete umjesto dima) */
+  if(!G.silvester && G.st !== S.BJEG && G.st !== S.POBJEDA && G.st !== S.INTRO){
     G.smokeT -= dt;
     if(G.smokeT <= 0 && G.smoke.length < 18){
       G.smokeT = (G.level === MJ_KAFIC) ? 0.16 : ((scena() === 1) ? 0.20 : 0.28);
@@ -3075,6 +3215,23 @@ function update(dt){
     sm.vy *= (1 - dt*0.25);
     sm.r += 17*dt;
     if(sm.life <= 0 || sm.y < 120) G.smoke.splice(i,1);
+  }
+  /* Silvestrovo — konfete padaju cijelu partiju */
+  if(G.silvester && G.st !== S.INTRO){
+    G.konfT -= dt;
+    if(G.konfT <= 0 && G.konf.length < 36){
+      G.konfT = 0.12;
+      G.konf.push({x:rnd(20,700), y:-12, vy:rnd(46,90), ph:rnd(0,6.28),
+        rot:rnd(0,6.28), vr:rnd(-3,3), r:rnd(3.5,6.5),
+        c:pick(['#f0c46a','#e87a9a','#8fd48f','#9fc3da','#e8734a'])});
+    }
+  }
+  for(i=G.konf.length-1;i>=0;i--){
+    var kf = G.konf[i];
+    kf.y += kf.vy*dt;
+    kf.x += Math.sin(G.gt*2.2 + kf.ph)*36*dt;
+    kf.rot += kf.vr*dt;
+    if(kf.y > 1170) G.konf.splice(i,1);
   }
   if(G.onom){
     G.onom.t += dt;
@@ -3213,7 +3370,22 @@ function update(dt){
     case S.MIX:
       var sdt = dt * (G.kafaOn ? 0.55 : 1);
       if(!G.swActive){
-        if(G.t > 0.25){ beginSwap(); }
+        if(G.hakalaCheckT > 0){
+          /* Hakala je zaboravio — digne fildžan da provjeri, svi vide kuglicu */
+          G.hakalaCheckT -= dt;
+          var hcc = G.cups[G.cube];
+          hcc.lift = Math.sin(Math.PI * clamp(1 - G.hakalaCheckT/1.7, 0, 1)) * 0.55;
+          if(G.hakalaCheckT <= 0){
+            hcc.lift = 0;
+            AU.thunk(); dust(SLOTX[hcc.slot], TABLEY, 5); vib(14);
+            G.t = 0.05;
+          }
+        } else if(G.hakalaRunda && !G.hakalaChecked && G.si === G.hakalaCheckAt &&
+                  G.si < G.swaps.length && G.t > 0.25){
+          G.hakalaChecked = true; G.hakalaCheckT = 1.7;
+          say(T('hakalaZaboravio'), 2.0);
+          AU.tone(300, 0.2, 'sine', 0.08, 180);
+        } else if(G.t > 0.25){ beginSwap(); }
       }else{
         G.sw += sdt / G.swDur;
         var t = clamp(G.sw,0,1);
@@ -3245,6 +3417,15 @@ function update(dt){
           }
           G.swActive = false; G.si++;
           AU.tone(110,0.07,'sine',0.10,70);
+          /* zapamtio je tvoj omiljeni fildžan: ako je kuglica baš tu, prošeta je još jednom */
+          if(G.si >= G.swaps.length && G.navika >= 0 && !G.navikaDone && !G.hakalaRunda &&
+             G.cups[G.cube].slot === G.navika && Math.random() < 0.75){
+            G.navikaDone = true;
+            var nb = G.navika + ((G.navika === G.nc-1) ? -1 : 1);
+            G.swaps.push([G.navika, nb]);
+            say(T('navika'), 2.4);
+            AU.tone(420, 0.12, 'triangle', 0.09, 300);
+          }
           if(G.si >= G.swaps.length){
             G.st = S.PICK; G.t = 0;
             if(!G.tut){
@@ -3269,6 +3450,12 @@ function update(dt){
               G.levatTip = ri(0,G.nc-1);
               levatSay(pick(LB('TIP')), 4.0);
             }
+            /* Ćiro, stalna mušterija — glasno tipuje, i to opasno dobro */
+            else if(!G.ciroTjeran && G.round >= 3 && Math.random() < 0.22){
+              G.ciroTip = (Math.random() < 0.65) ? G.cups[G.cube].slot : ri(0, G.nc-1);
+              levatSay(T('ciroKaze'), 4.0);
+              AU.tone(600, 0.10, 'square', 0.06, 480);
+            }
           }else{
             G.t = 0.2; /* mali predah između zamjena */
           }
@@ -3278,6 +3465,56 @@ function update(dt){
 
     case S.PICK:
       for(i=0;i<G.nc;i++) G.cups[i].lift = Math.sin(G.gt*2.2 + i)*0.012;
+      /* bura u noćnim scenama — fildžani se prošetaju za jedan slot */
+      if(!G.vjetar && !G.vjetarBio && scena() === 2 && !G.bird.on && G.t > 1.4 &&
+         Math.random() < dt*0.11){
+        G.vjetarBio = true;
+        var vdir = (Math.random() < 0.5) ? 1 : -1;
+        for(i=0;i<G.nc;i++){
+          var vc = G.cups[i];
+          vc.vFrom = vc.slot; vc.vTo = (vc.slot + vdir + G.nc) % G.nc;
+          vc.vHop = (vdir === 1 && vc.slot === G.nc-1) || (vdir === -1 && vc.slot === 0);
+        }
+        /* savjeti prate fildžane, ne mjesta */
+        if(G.levatTip >= 0) G.levatTip = (G.levatTip + vdir + G.nc) % G.nc;
+        if(G.ciroTip >= 0) G.ciroTip = (G.ciroTip + vdir + G.nc) % G.nc;
+        G.vjetar = {t:0, dur:0.6, dir:vdir};
+        say(T('vjetar'), 2.2);
+        AU.noise(0.8, 320, 0.5, 0.16, 0, 1100);
+        G.shake = 8; vib(20);
+        for(i=0;i<14;i++) G.parts.push({x:(vdir===1 ? -10 : 730), y:rnd(500,860),
+          vx:vdir*rnd(260,520), vy:rnd(-170,-40), life:rnd(0.5,0.9), max:1,
+          r:rnd(2,5), c:(i%3) ? '#8a793f' : '#6f7a3a'});
+      }
+      if(G.vjetar){
+        G.vjetar.t += dt;
+        var wt = clamp(G.vjetar.t/G.vjetar.dur, 0, 1);
+        for(i=0;i<G.nc;i++){
+          var wc = G.cups[i];
+          wc.x = lerp(SLOTX[wc.vFrom], SLOTX[wc.vTo], eio(wt));
+          wc.lift = Math.sin(Math.PI*wt) * (wc.vHop ? 0.95 : 0.10);
+          wc.tilt = Math.sin(Math.PI*wt) * 0.18 * G.vjetar.dir * (wc.vHop ? 2 : 1);
+        }
+        if(wt >= 1){
+          for(i=0;i<G.nc;i++){
+            var wd = G.cups[i];
+            wd.slot = wd.vTo; wd.x = SLOTX[wd.slot]; wd.from = wd.x; wd.to = wd.x;
+            wd.lift = 0; wd.tilt = 0;
+            dust(wd.x, TABLEY, 4);
+          }
+          AU.thunk(); vib(14);
+          G.vjetar = null;
+        }
+      }
+      /* Levat je zapeo za sto — fildžan s kuglicom se nakrivi */
+      if(G.nakrivT > 0){
+        G.nakrivT -= dt;
+        var nkc = G.cups[G.cube];
+        var nk = Math.sin(Math.PI * clamp(1 - G.nakrivT/1.1, 0, 1));
+        nkc.lift = nk * 0.42;
+        nkc.tilt = nk * 0.30;
+        if(G.nakrivT <= 0){ nkc.lift = 0; nkc.tilt = 0; AU.thunk(); }
+      }
       idleGunđanje(dt, false);
       break;
 
@@ -4299,7 +4536,10 @@ function drawSaner(){
 
   /* ruke ciljaju čaše tokom miješanja */
   var lt = {x:250, y:770}, rt = {x:470, y:770};
-  if(G.st === S.MIX && G.swActive){
+  if(G.hakalaRunda && G.st === S.MIX){
+    /* Hakala miješa — Šaner prekrsti ruke i pati */
+    lt = {x:cx+34, y:702}; rt = {x:cx-34, y:708};
+  } else if(G.st === S.MIX && G.swActive){
     var moving = [];
     for(var i=0;i<G.nc;i++) if(G.cups[i].from !== G.cups[i].to) moving.push(G.cups[i]);
     if(moving.length===2 && G.jednaRuka){
@@ -4676,7 +4916,7 @@ function drawPepeljara(x, y){
 
 function drawSmoke(){
   /* tanka nit dima odmah iznad žara */
-  if(G.st !== S.BJEG && G.st !== S.POBJEDA && G.st !== S.INTRO){
+  if(!G.silvester && G.st !== S.BJEG && G.st !== S.POBJEDA && G.st !== S.INTRO){
     ctx.save();
     ctx.globalAlpha = 0.30;
     ctx.strokeStyle = 'rgba(236,232,220,0.9)'; ctx.lineWidth = 2.4; ctx.lineCap = 'round';
@@ -4714,10 +4954,12 @@ function smokeSprite(){
   return c;
 }
 
-/* mušema se ne mijenja — jednom nacrtana (u dvostrukoj rezoluciji), poslije samo drawImage */
-var CLOTH_SPR = null;
+/* mušema se ne mijenja — jednom nacrtana (u dvostrukoj rezoluciji), poslije samo drawImage.
+   Druga varijanta: pokrpana selotejpom, uspomena na prevrnuti sto. */
+var CLOTH_SPR = [null, null];
 function clothSprite(){
-  if(CLOTH_SPR) return CLOTH_SPR;
+  var pk = G.stoPokrpan ? 1 : 0;
+  if(CLOTH_SPR[pk]) return CLOTH_SPR[pk];
   var c = document.createElement('canvas');
   c.width = W*2; c.height = 264;
   var g2 = c.getContext('2d');
@@ -4748,7 +4990,29 @@ function clothSprite(){
   rr(g2, 26, TABLEY+90, W-52, 24, 8); g2.fill();
   g2.fillStyle = 'rgba(20,10,8,0.30)';
   g2.fillRect(26, TABLEY-16, W-52, 6);
-  CLOTH_SPR = c;
+  if(pk){
+    /* pukotina od pada */
+    g2.strokeStyle = 'rgba(40,20,14,0.5)'; g2.lineWidth = 3; g2.lineCap = 'round';
+    g2.beginPath();
+    g2.moveTo(300, TABLEY-10); g2.lineTo(330, TABLEY+24);
+    g2.lineTo(312, TABLEY+52); g2.lineTo(348, TABLEY+86);
+    g2.stroke();
+    /* selotejp */
+    var tejp = function(x, y, w, ang){
+      g2.save();
+      g2.translate(x, y); g2.rotate(ang);
+      g2.fillStyle = 'rgba(214,204,178,0.85)';
+      g2.fillRect(-w/2, -11, w, 22);
+      g2.strokeStyle = 'rgba(120,105,80,0.5)'; g2.lineWidth = 1.5;
+      g2.strokeRect(-w/2, -11, w, 22);
+      g2.restore();
+    };
+    tejp(318, TABLEY+18, 74, 0.5);
+    tejp(322, TABLEY+62, 74, -0.35);
+    tejp(120, TABLEY+96, 90, 0.08);
+    tejp(586, TABLEY-8, 84, -0.06);
+  }
+  CLOTH_SPR[pk] = c;
   return c;
 }
 
@@ -4999,12 +5263,116 @@ function drawLevatTip(){
   ctx.restore();
 }
 
+function drawCiroTip(){
+  if(G.ciroTip < 0 || G.st !== S.PICK) return;
+  var x = SLOTX[G.ciroTip], y = TABLEY - CUPH - 46 + Math.sin(G.gt*4 + 1.7)*5;
+  if(G.levatTip === G.ciroTip) y -= 64;   /* da se tablice ne preklope */
+  ctx.save();
+  ctx.globalAlpha = 0.9;
+  ctx.fillStyle = '#e8a08a';
+  ctx.beginPath();
+  ctx.moveTo(x, y+26); ctx.lineTo(x-13, y+4); ctx.lineTo(x+13, y+4); ctx.closePath(); ctx.fill();
+  rr(ctx, x-42, y-26, 84, 30, 8); ctx.fill();
+  txt('ĆIRO', x, y-11, '800 20px system-ui,sans-serif', '#4a1c12');
+  ctx.restore();
+}
+
+/* Silvestrovo — konfete padaju preko cijele scene */
+function drawKonfeti(){
+  if(!G.konf.length) return;
+  ctx.save();
+  ctx.globalAlpha = 0.9;
+  for(var i=0;i<G.konf.length;i++){
+    var k = G.konf[i];
+    ctx.save();
+    ctx.translate(k.x, k.y); ctx.rotate(k.rot);
+    ctx.fillStyle = k.c;
+    ctx.fillRect(-k.r, -k.r*0.6, k.r*2, k.r*1.2);
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+/* Hakala — dođe za sto kad on miješa: klimav, s flašom, pošten */
+function drawHakala(){
+  if(G.hakalaAnim < 0.02) return;
+  var k = eoc(G.hakalaAnim);
+  var fx = lerp(-150, 118, k);
+  var sway = Math.sin(G.gt*1.3)*0.055 + Math.sin(G.gt*3.7)*0.02;
+  ctx.save();
+  ctx.globalAlpha = clamp(G.hakalaAnim*1.6, 0, 1);
+  ctx.translate(fx, 900); ctx.rotate(sway); ctx.translate(-fx, -900);
+  /* iznošen sako */
+  ctx.fillStyle = '#5a5648';
+  ctx.beginPath();
+  ctx.moveTo(fx-58, 900);
+  ctx.quadraticCurveTo(fx-60, 730, fx-44, 690);
+  ctx.quadraticCurveTo(fx-20, 668, fx, 668);
+  ctx.quadraticCurveTo(fx+20, 668, fx+44, 690);
+  ctx.quadraticCurveTo(fx+60, 730, fx+58, 900);
+  ctx.closePath(); ctx.fill();
+  /* košulja koja je nekad bila bijela */
+  ctx.fillStyle = '#8a8070';
+  ctx.fillRect(fx-12, 690, 24, 74);
+  /* ruka s flašom */
+  var hbob = Math.sin(G.gt*2.1)*6;
+  ctx.strokeStyle = '#5a5648'; ctx.lineWidth = 20; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(fx-40, 710); ctx.lineTo(fx-66, 792+hbob); ctx.stroke();
+  ctx.save();
+  ctx.translate(fx-66, 792+hbob); ctx.rotate(-0.5 + Math.sin(G.gt*2.1)*0.1);
+  ctx.fillStyle = '#3f6b3a';
+  ctx.fillRect(-7, -34, 14, 40);
+  ctx.fillRect(-3, -50, 6, 18);
+  ctx.restore();
+  /* druga ruka — prema fildžanima dok radi */
+  var toX = fx+72, toY = 760;
+  if(G.st === S.MIX && G.swActive){
+    for(var mi=0; mi<G.nc; mi++){
+      if(G.cups[mi].from !== G.cups[mi].to){
+        toX = G.cups[mi].x - 30;
+        toY = TABLEY - 90 - G.cups[mi].lift*LIFTH;
+        break;
+      }
+    }
+  } else if(G.hakalaCheckT > 0){
+    var hkc = G.cups[G.cube];
+    toX = hkc.x - 26; toY = TABLEY - 100 - hkc.lift*LIFTH;
+  }
+  ctx.strokeStyle = '#5a5648'; ctx.lineWidth = 20;
+  ctx.beginPath(); ctx.moveTo(fx+40, 706); ctx.lineTo(toX, toY); ctx.stroke();
+  ctx.fillStyle = '#b98a5e';
+  ctx.beginPath(); ctx.arc(toX, toY, 13, 0, 6.284); ctx.fill();
+  /* glava */
+  ctx.fillStyle = '#c08a5e';
+  ctx.beginPath(); ctx.ellipse(fx, 618, 44, 50, 0, 0, 6.284); ctx.fill();
+  /* čekinje */
+  ctx.fillStyle = 'rgba(70,60,50,0.35)';
+  ctx.beginPath(); ctx.ellipse(fx, 648, 30, 18, 0, 0, 6.284); ctx.fill();
+  /* crven nos */
+  ctx.fillStyle = '#c05a4a';
+  ctx.beginPath(); ctx.arc(fx, 628, 10, 0, 6.284); ctx.fill();
+  /* poluzatvorene oči */
+  ctx.strokeStyle = '#241a10'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(fx-22, 610); ctx.lineTo(fx-8, 613); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(fx+8, 613); ctx.lineTo(fx+22, 610); ctx.stroke();
+  /* blažen osmijeh */
+  ctx.strokeStyle = '#5a2f22'; ctx.lineWidth = 3.5;
+  ctx.beginPath(); ctx.arc(fx+2, 638, 14, 0.4, 2.5); ctx.stroke();
+  /* kačket */
+  ctx.fillStyle = '#3d3a33';
+  ctx.beginPath(); ctx.ellipse(fx, 584, 46, 22, 0, Math.PI, 0); ctx.fill();
+  ctx.fillRect(fx-46, 578, 92, 10);
+  ctx.beginPath(); ctx.ellipse(fx+40, 586, 22, 7, 0.1, 0, 6.284); ctx.fill();
+  ctx.restore();
+}
+
 function drawScene(){
   drawSky();
   drawSkyline();
   var fleeing = (G.st === S.BJEG || G.st === S.POBJEDA);
   drawLevat();
   drawMinka();
+  drawHakala();
   if(fleeing){ drawTable(); drawSaner(); }
   else { drawSaner(); drawTable(); }
 
@@ -5012,6 +5380,7 @@ function drawScene(){
   var cubeCup = G.cups[G.cube];
   var showCube = cubeCup.lift > 0.22 &&
       (G.st===S.SHOW || G.st===S.REVEAL || G.st===S.RESULT ||
+       G.nakrivT > 0 || G.hakalaCheckT > 0 ||
        (G.st===S.INTRO && G.t > 3.98));
   if(showCube){
     drawKugla(cubeCup.x, TABLEY-18, 1, clamp((cubeCup.lift-0.20)*3.2,0,1));
@@ -5024,9 +5393,11 @@ function drawScene(){
   for(var i=0;i<order.length;i++) drawFildzan(order[i], i);
 
   drawSmoke();
+  drawKonfeti();
   drawRacija();
   drawBird();
   drawLevatTip();
+  drawCiroTip();
   drawOnom();
 
   /* Šanerova podvala – bljesak */
@@ -5139,7 +5510,7 @@ function drawHUD(){
       '600 17px system-ui,sans-serif', 'rgba(255,220,170,0.5)', 'left');
 
   txt(T('runda')+' '+G.round, W-40, 40, '800 24px system-ui,sans-serif', '#f0e0c8', 'right');
-  txt(T('sezona')+' '+(G.season+1)+'  ·  '+epizoda(G.round), W-40, 72,
+  txt((G.silvester ? T('silvHud') : T('sezona')+' '+(G.season+1))+'  ·  '+epizoda(G.round), W-40, 72,
       '700 18px system-ui,sans-serif', 'rgba(255,190,110,0.92)', 'right');
   txt(MJ(G.level), W-40, 98,
       '600 17px system-ui,sans-serif', 'rgba(255,220,170,0.6)', 'right');
@@ -5198,7 +5569,7 @@ function drawBetUI(){
   var y = 1078;
   txt(T('koliko'), 360, 1032, '800 26px system-ui,sans-serif', 'rgba(255,220,170,0.8)');
   var kapa = maxUlog();
-  var amounts = [5,10,25];
+  var amounts = G.silvester ? [10,20,50] : [5,10,25];   /* doček: sve duplo */
   for(var i=0;i<3;i++){
     var a = amounts[i];
     btn('bet'+a, 64+i*152, y, 136, 92, a+'', T('km'),
@@ -5249,6 +5620,12 @@ function drawMitoUI(){
 function drawPowerUI(){
   if(G.st!==S.MIX && G.st!==S.PICK) return;
   var y = 1080;
+  /* jednom po partiji: gurni Levatu 20 KM pa će se "spotaći" o sto.
+     Gore lijevo, ispod para — dolje je gužva od savjeta i uloga. */
+  if(G.st===S.PICK && !G.mitoLevata && !G.levatGone && G.minkaAnim < 0.15 && G.round >= 2){
+    btn('levmito', 26, 150, 316, 72, T('levatMito'), T('levatMitoSub'),
+      ['#9fc3da','#5d8ca7'], G.money < 20 || G.levatSaplT > 0 || G.nakrivT > 0);
+  }
   if(G.pow.kafa>0) btn('kafa', 30, y, 200, 86, T('kafa')+' ×'+G.pow.kafa, T('kafaSub'),
     ['#c99a6a','#8a6038'], G.kafaOn || G.st!==S.MIX);
   if(G.pow.oko>0) btn('oko', 260, y, 200, 86, T('oko')+' ×'+G.pow.oko, T('okoSub'),
@@ -7171,10 +7548,11 @@ function handle(id){
   if(id==='again'){ AU.chip(); pustiMedjuigru(); return; }
   if(G.st===S.BET){
     var kapaH = maxUlog();
-    if(id==='bet5' && G.money>=5 && kapaH>=5) startRound(5);
-    else if(id==='bet10' && G.money>=10 && kapaH>=10) startRound(10);
-    else if(id==='bet25' && G.money>=25 && kapaH>=25) startRound(25);
-    else if(id==='betall') startRound(maxUlog());
+    if(id==='betall'){ startRound(maxUlog()); return; }
+    if(id && id.indexOf('bet')===0){
+      var ulozi = parseInt(id.substr(3), 10);
+      if(ulozi > 0 && G.money >= ulozi && kapaH >= ulozi) startRound(ulozi);
+    }
     return;
   }
   if(G.st === S.MITO && G.mitoFaza === 0){
@@ -7201,6 +7579,14 @@ function handle(id){
       }
       return;
     }
+    return;
+  }
+  if(id==='levmito' && G.st===S.PICK && !G.mitoLevata && !G.levatGone &&
+     G.money >= 20 && G.levatSaplT <= 0 && G.nakrivT <= 0){
+    G.mitoLevata = true; G.money -= 20;
+    G.levatSaplT = 1.1;
+    levatSay(T('levatMito1'), 2.6);
+    AU.coin(2); vib(14);
     return;
   }
   if(id==='kafa' && G.pow.kafa>0 && !G.kafaOn && (G.st===S.MIX)){
@@ -7283,7 +7669,8 @@ function boot(){
     if(st.lang) LANG = st.lang; else LANG = pogodiJezik();
     G.carry = st.carry||0;
     if(st.pix === 1 && pixInit()) PIX = true;
-    AU.on = st.snd!==0; G.tut = st.tut===1; G.easy = st.easy===1; metaMerge(st.stats);
+    AU.on = st.snd!==0; G.tut = st.tut===1; G.easy = st.easy===1;
+    G.stoPokrpan = st.stp===1; metaMerge(st.stats);
   }
 
   /* svako pokretanje igre počinje na drugom mjestu */
