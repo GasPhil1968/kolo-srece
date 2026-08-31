@@ -2766,7 +2766,8 @@ function startRound(bet){
   if(G.minka === 1){
     AU.ring(); vib([20,40,20]);
     say(pick(LB('MINKA')), 3.0);
-    levatSay(T('doTri'), 4.2);
+    /* dok je Minka na vezi, Levat se ne pojavljuje — svoj komentar čuva za poslije */
+    G.levatT = 0; G.levatHold = 0; G.levatPeek = 0;
   }else if(G.minka === 2){
     vib([30,60,30]);
     say(pick(LB('MINKA_LICNO')), 3.4);
@@ -2825,6 +2826,8 @@ function doPick(slot){
               G.pickHist[ph-2] === G.pickHist[ph-3]) ? slot : -1;
   G.picked = slot;
   G.st = S.REVEAL; G.t = 0; G.revPhase = 0;
+  /* telefon je upravo nestao s ekrana — sad Levat smije proviriti s komentarom */
+  if(G.minka === 1) levatSay(T('doTri'), 3.5);
   var c = cupAt(slot);
   c.wob = 1;
   G.bird.leave = true; G.levatTip = -1;
@@ -3176,7 +3179,9 @@ function update(dt){
     }
   } else {
     if(G.levatHold > 0) G.levatHold -= dt;
-    var wantLevat = !G.levatGone && G.minkaAnim < 0.15 && G.hakalaAnim < 0.15 &&   /* dvoje na sceni je gužva */
+    /* dok Minka zove (telefon na ekranu), Levat se drži po strani */
+    var minkaTel = (G.minka === 1 && (G.st === S.SHOW || G.st === S.MIX || G.st === S.PICK));
+    var wantLevat = !G.levatGone && G.minkaAnim < 0.15 && G.hakalaAnim < 0.15 && !minkaTel &&   /* dvoje na sceni je gužva */
                    ((G.levatT > 0) || (G.st === S.PICK && G.levatTip >= 0) || (G.levatHold > 0));
     if(!wantLevat && G.st !== S.INTRO && G.st !== S.POBJEDA && G.st !== S.BJEG){
       G.levatIdleT -= dt;
@@ -3445,13 +3450,14 @@ function update(dt){
               G.bird.slot = (Math.random() < 0.72) ? G.cups[G.cube].slot : ri(0,G.nc-1);
               levatSay(pick(LB('BIRD')), 4.2);
             }
-            /* Levat daje savjet od kojeg nema koristi */
-            else if(Math.random() < 0.28){
+            /* Levat daje savjet od kojeg nema koristi — ali ne dok je Minka na vezi */
+            else if(G.minka !== 1 && Math.random() < 0.28){
               G.levatTip = ri(0,G.nc-1);
               levatSay(pick(LB('TIP')), 4.0);
             }
-            /* Ćiro, stalna mušterija — glasno tipuje, i to opasno dobro */
-            else if(!G.ciroTjeran && G.round >= 3 && Math.random() < 0.22){
+            /* Ćiro, stalna mušterija — glasno tipuje, i to opasno dobro.
+               Dok Minka zove, i publika šuti. */
+            else if(!G.ciroTjeran && G.minka !== 1 && G.round >= 3 && Math.random() < 0.22){
               G.ciroTip = (Math.random() < 0.65) ? G.cups[G.cube].slot : ri(0, G.nc-1);
               levatSay(T('ciroKaze'), 4.0);
               AU.tone(600, 0.10, 'square', 0.06, 480);
