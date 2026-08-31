@@ -110,6 +110,7 @@ function load(){
       tut: (o.tut === 1) ? 1 : 0,
       easy: (o.easy === 1) ? 1 : 0,
       stp: (o.stp === 1) ? 1 : 0,
+      iv: clamp(o.iv|0, 0, 3),
       stats: o.stats || null
     };
   }catch(e){ return null; }
@@ -119,7 +120,8 @@ function save(){
     localStorage.setItem(STORE, JSON.stringify({
       best: G.best|0, bestRound: G.bestRound|0, season: G.season|0,
       lvl: G.level|0, ml: G.medjuLast, lang: LANG, carry: G.carry|0,
-      pix: PIX?1:0, snd: AU.on?1:0, tut: G.tut?1:0, easy:G.easy?1:0, stp:G.stoPokrpan?1:0, stats:META
+      pix: PIX?1:0, snd: AU.on?1:0, tut: G.tut?1:0, easy:G.easy?1:0, stp:G.stoPokrpan?1:0,
+      iv: G.introVar|0, stats:META
     }));
   }catch(e){}
 }
@@ -1720,6 +1722,12 @@ var UI = {
     silvHud:'DOČEK · DUPLO',
     silvMinka:['Minka: „Ja samo pazim da ne lažeš."','Minka: „Publiko, ja sam ovdje protiv svoje volje."','Minka: „Šefe, kamera dva te snima."','Minka: „Poslije emisije — kući. Odmah."'],
     stoKrpljen:'Levat: „Isti sto. Samo sad ima selotejp."',
+    intKlapa2:'Šaner: „Jesmo počeli? Meni niko ništa ne javi."',
+    intAkcija:'AKCIJA!',
+    intTel1:'Šaner: „Da, Minka... da... kupiću deterdžent."',
+    intTel2:'Šaner: „Moram prekinuti! Emisija!"',
+    intLevat1:'Levat: „Dame i gospodo — čovjek, legenda, i njegova tri fildžana!"',
+    intLevat2:'Šaner: „Levatu, ko ti je rek\'o da si spiker?"',
     rukeUvis:'Šaner: „Ruke uvis?! Ja sam samo mješao!"',
     polaPola:'Šaner: „Kolega, pola-pola. Ti si ionako u plusu."',
     uzeliFildzan:'Šaner: „Uzeli su mi fildžan. Ostala su dva."',
@@ -1837,6 +1845,12 @@ var UI = {
     silvHud:'SILVESTER · DOPPELT',
     silvMinka:['Minka: „Ich passe nur auf, dass du nicht lügst."','Minka: „Liebes Publikum, ich bin gegen meinen Willen hier."','Minka: „Chef, Kamera zwei filmt dich."','Minka: „Nach der Sendung — nach Hause. Sofort."'],
     stoKrpljen:'Levat: „Derselbe Tisch. Nur jetzt mit Klebeband."',
+    intKlapa2:'Šaner: „Läuft schon? Mir sagt ja keiner was."',
+    intAkcija:'UND... ACTION!',
+    intTel1:'Šaner: „Ja, Minka... ja... ich kaufe Waschmittel."',
+    intTel2:'Šaner: „Ich muss auflegen! Die Sendung!"',
+    intLevat1:'Levat: „Damen und Herren — der Mann, die Legende, und seine drei Fildžani!"',
+    intLevat2:'Šaner: „Levat, wer hat gesagt, dass du Ansager bist?"',
     rukeUvis:'Šaner: „Hände hoch?! Ich habe nur gemischt!"',
     polaPola:'Šaner: „Kollege, halbe-halbe. Du bist ohnehin im Plus."',
     uzeliFildzan:'Šaner: „Sie haben mir eine Tasse abgenommen. Bleiben zwei."',
@@ -1954,6 +1968,12 @@ var UI = {
     silvHud:'NYE · ALL DOUBLE',
     silvMinka:['Minka: "I am only here to make sure you do not lie."','Minka: "Dear viewers, I am here against my will."','Minka: "Boss, camera two is filming you."','Minka: "After the show — home. At once."'],
     stoKrpljen:'Levat: "Same table. Only now with sticky tape."',
+    intKlapa2:'Šaner: "Are we rolling? Nobody tells me anything."',
+    intAkcija:'ACTION!',
+    intTel1:'Šaner: "Yes, Minka... yes... I will buy the detergent."',
+    intTel2:'Šaner: "I have to hang up! The show!"',
+    intLevat1:'Levat: "Ladies and gentlemen — the man, the legend, and his three fildžans!"',
+    intLevat2:'Šaner: "Levat, who told you that you are the announcer?"',
     rukeUvis:'Šaner: "Hands up?! I was only shuffling!"',
     polaPola:'Šaner: "Colleague, half and half. You are up anyway."',
     uzeliFildzan:'Šaner: "They took one of my cups. Two left."',
@@ -2299,7 +2319,7 @@ var G = {
   startPare: 20,
   mjestoUzeto: false,
   mitoPrag: 0, mitoOpcije: [], mitoLinija: '', mitoT: 0, mitoFaza: 0, mitoDato: 0,
-  poke: 0, levatTip: -1, tut: false, introCue: 0,
+  poke: 0, levatTip: -1, tut: false, introCue: 0, introVar: 0,
   smoke: [], smokeT: 0, onom: null,
   revPhase: 0, flash: 0, newBest: false,
   cupsUp: 0,
@@ -3187,7 +3207,12 @@ function update(dt){
       G.levatIdleT -= dt;
       if(G.levatIdleT <= 0){ G.levatHold = rnd(0.9, 1.6); G.levatIdleT = rnd(24, 42); }
     }
-    if(G.st === S.INTRO || G.levatGone){ G.levatPeek = 0; }
+    if(G.st === S.INTRO){
+      /* uvod #4: Levat najavljuje emisiju kao spiker */
+      var levNajava = (G.introVar === 3 && G.t > 2.55 && G.t < 6.60);
+      G.levatPeek = levNajava ? lerp(G.levatPeek, 1, Math.min(1, dt*7)) : 0;
+    }
+    else if(G.levatGone){ G.levatPeek = 0; }
     else G.levatPeek = lerp(G.levatPeek, wantLevat ? 1 : 0, Math.min(1, dt*(wantLevat ? 7 : 4.5)));
   }
   /* Minka dolazi lično — na dočeku je stalno tu kao voditeljka */
@@ -3290,30 +3315,65 @@ function update(dt){
   switch(G.st){
     case S.INTRO: {
       var it = G.t;
+      var iv = G.introVar;
       if(G.introCue < 1 && it > 0.02){
         G.introCue = 1;
         AU.noise(0.10, 2400, 1.4, 0.13); AU.tone(70, 0.28, 'sine', 0.13, 44);
       }
       if(G.introCue < 2 && it > 0.9){
         G.introCue = 2;
-        AU.tone(1000, 1.45, 'sine', 0.045);
+        if(iv === 1) AU.tone(440, 0.35, 'sine', 0.05, 440);
+        else AU.tone(1000, 1.45, 'sine', 0.045);
       }
       if(G.introCue < 3 && it > 2.45){
         G.introCue = 3;
-        AU.noise(0.5, 1100, 0.5, 0.11, 0, 380);
+        if(iv === 1){
+          /* klapa! */
+          AU.thunk(); AU.tone(1600, 0.10, 'square', 0.12, 900);
+          G.shake = 12; vib(24);
+        }else{
+          AU.noise(0.5, 1100, 0.5, 0.11, 0, 380);
+        }
       }
-      /* 1) zatečen: broji pare */
-      if(G.introCue < 4 && it > 2.98){
-        G.introCue = 4;
-        say(T('brojiPare'), 1.60);
-      }
-      /* 2) primijeti crveno svjetlo */
-      if(G.introCue < 5 && it > 4.30){
-        G.introCue = 5;
-        say(T('snimaLi'), 1.90);
-        AU.noise(0.22, 300, 0.7, 0.16, 0, 1500);
-        AU.tone(180, 0.3, 'sawtooth', 0.12, 90);
-        G.shake = 16; G.poke = 0.9; vib([16,50,16]);
+      /* srednji dio — svaki uvod svoja mala scena */
+      if(iv === 1){          /* filmski set: klapa, pa zbunjeni Šaner */
+        if(G.introCue < 4 && it > 3.10){ G.introCue = 4; say(T('intKlapa2'), 2.0); }
+        if(G.introCue < 5 && it > 4.60){ G.introCue = 5; G.poke = 0.5; }
+      }else if(iv === 2){    /* telefonira s Minkom, pa panika */
+        if(G.introCue < 4 && it > 2.60){
+          G.introCue = 4;
+          say(T('intTel1'), 2.2);
+          AU.tone(880, 0.07, 'square', 0.04, 700);
+        }
+        if(G.introCue < 5 && it > 4.30){
+          G.introCue = 5;
+          say(T('intTel2'), 1.9);
+          AU.tone(180, 0.3, 'sawtooth', 0.12, 90);
+          G.shake = 12; G.poke = 0.8; vib([16,50,16]);
+        }
+      }else if(iv === 3){    /* Levat najavljuje kao spiker */
+        if(G.introCue < 4 && it > 2.70){
+          G.introCue = 4;
+          levatSay(T('intLevat1'), 3.4);
+          AU.tone(520, 0.10, 'square', 0.06, 400);
+        }
+        if(G.introCue < 5 && it > 4.60){
+          G.introCue = 5;
+          say(T('intLevat2'), 2.0);
+          G.poke = 0.5;
+        }
+      }else{                 /* klasika: zatečen broji pare */
+        if(G.introCue < 4 && it > 2.98){
+          G.introCue = 4;
+          say(T('brojiPare'), 1.60);
+        }
+        if(G.introCue < 5 && it > 4.30){
+          G.introCue = 5;
+          say(T('snimaLi'), 1.90);
+          AU.noise(0.22, 300, 0.7, 0.16, 0, 1500);
+          AU.tone(180, 0.3, 'sawtooth', 0.12, 90);
+          G.shake = 16; G.poke = 0.9; vib([16,50,16]);
+        }
       }
       /* 3) fildžani na sto */
       for(i=0;i<G.nc;i++){
@@ -4281,7 +4341,8 @@ function drawCRT(){
 var LEVAT_X = 46, LEVAT_Y = 680, LEVAT_R = 42;
 
 function drawLevat(){
-  if(G.st === S.INTRO) return;            /* uvod je Šanerov solo */
+  /* uvod je Šanerov solo — osim kad Levat najavljuje (uvod #4) */
+  if(G.st === S.INTRO && !(G.introVar === 3 && G.t > 2.55)) return;
   if(G.levatGone && G.levatLeavePhase !== 2) return;
   var pk = eoc(clamp(G.levatPeek, 0, 1));
   if(pk < 0.02) return;
@@ -4596,9 +4657,17 @@ function drawSaner(){
     rt = {x:474, y:TABLEY - 34 - tp*18};
     lt = {x:250, y:TABLEY - 26};
   } else if(G.st === S.INTRO){
-    if(G.t < 3.62){        /* broji pare */
+    if(G.introVar === 1){          /* filmski set: popravlja kačket, zbunjen */
+      if(G.t < 4.6){ rt = {x:cx+42, y:452 + Math.sin(G.gt*5)*6}; lt = {x:cx-72, y:742}; }
+      else { lt = {x:cx-70, y:744}; rt = {x:cx+70, y:740}; }
+    }else if(G.introVar === 2){    /* telefonira s Minkom */
+      if(G.t < 4.75){ rt = {x:cx+56, y:522}; lt = {x:cx-52, y:730}; }
+      else { lt = {x:cx-70, y:744}; rt = {x:cx+70, y:740}; }
+    }else if(G.introVar === 3){    /* sluša najavu, ruke na bokovima */
+      lt = {x:cx-80, y:700}; rt = {x:cx+80, y:696};
+    }else if(G.t < 3.62){          /* klasika: broji pare */
       lt = {x:cx-34, y:722}; rt = {x:cx+30, y:704 + Math.sin(G.gt*9)*6};
-    }else if(G.t < 4.0){   /* strpa ih u prsluk */
+    }else if(G.t < 4.0){           /* strpa ih u prsluk */
       lt = {x:cx-40, y:730}; rt = {x:cx+14, y:668};
     }else{
       lt = {x:cx-70, y:744}; rt = {x:cx+70, y:740};
@@ -4673,8 +4742,22 @@ function drawSaner(){
   drawArm(cx-58, 648+breathe, lt.x, lt.y, -1);
   drawArm(cx+58, 648+breathe, rt.x, rt.y, 1);
 
-  /* svežanj para koji broji na početku emisije */
-  if(G.st === S.INTRO && G.t > 2.90 && G.t < 4.00){
+  /* brick-telefon u ruci (uvod #3: zove ga Minka prije emisije) */
+  if(G.st === S.INTRO && G.introVar === 2 && G.t < 4.75){
+    ctx.save();
+    ctx.translate(rt.x+8, rt.y-8);
+    ctx.rotate(-0.32);
+    ctx.fillStyle = '#22262b';
+    rr(ctx, -15, -46, 30, 86, 6); ctx.fill();
+    ctx.fillStyle = '#3c444c';
+    rr(ctx, -10, -40, 20, 26, 3); ctx.fill();
+    ctx.fillStyle = '#181b1f';
+    ctx.fillRect(-6, -62, 5, 18);   /* antena */
+    ctx.restore();
+  }
+
+  /* svežanj para koji broji na početku emisije (samo klasični uvod) */
+  if(G.st === S.INTRO && G.introVar === 0 && G.t > 2.90 && G.t < 4.00){
     var pk = (G.t < 3.62) ? 1 : clamp((4.00-G.t)/0.34, 0, 1);
     ctx.save();
     ctx.globalAlpha = pk;
@@ -5704,6 +5787,60 @@ function drawSnijeg(a){
   ctx.restore();
 }
 
+/* filmska klapa za uvod #2 — odbrojavanje pa AKCIJA */
+function drawKlapa(t){
+  ctx.fillStyle = '#0a0a0c'; ctx.fillRect(0,0,W,HH);
+  ctx.save();
+  ctx.translate(360, 560);
+  var zatvorena = (t > 2.38);
+  /* gornja letva — otvorena dok se odbrojava, pa tres */
+  ctx.save();
+  ctx.translate(-190, -84);
+  ctx.rotate(zatvorena ? 0 : -0.38);
+  ctx.fillStyle = '#15161a';
+  rr(ctx, 0, -46, 380, 46, 8); ctx.fill();
+  ctx.fillStyle = '#e8e4da';
+  for(var s=0;s<5;s++){
+    ctx.beginPath();
+    ctx.moveTo(24+s*76, -46); ctx.lineTo(24+s*76+34, -46);
+    ctx.lineTo(24+s*76+12, 0); ctx.lineTo(24+s*76-22, 0);
+    ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
+  /* tijelo table */
+  ctx.fillStyle = '#15161a';
+  rr(ctx, -190, -84, 380, 250, 10); ctx.fill();
+  ctx.strokeStyle = 'rgba(232,228,218,0.35)'; ctx.lineWidth = 2;
+  rr(ctx, -190, -84, 380, 250, 10); ctx.stroke();
+  ctx.fillStyle = '#e8e4da';
+  for(var s2=0;s2<5;s2++){
+    ctx.beginPath();
+    ctx.moveTo(-166+s2*76, -84); ctx.lineTo(-166+s2*76+34, -84);
+    ctx.lineTo(-166+s2*76+12, -38); ctx.lineTo(-166+s2*76-22, -38);
+    ctx.closePath(); ctx.fill();
+  }
+  txt('TRI FILDŽANA', 0, -4, '900 34px system-ui,sans-serif', '#e8e4da');
+  ctx.strokeStyle = 'rgba(232,228,218,0.3)';
+  ctx.beginPath(); ctx.moveTo(-170, 22); ctx.lineTo(170, 22); ctx.stroke();
+  txt(T('mKlapaScena')+' 1  ·  '+T('mKlapaKadar')+' 1', 0, 62, '700 26px system-ui,sans-serif', 'rgba(232,228,218,0.85)');
+  txt(T('mKlapaReditelj'), 0, 116, '600 23px system-ui,sans-serif', 'rgba(232,228,218,0.55)');
+  ctx.restore();
+  /* odbrojavanje: 3, 2, 1 — pa AKCIJA */
+  if(t > 0.95){
+    var broj = 3 - Math.floor((t-0.95)/0.48);
+    var puls2 = 1 + ((t-0.95) % 0.48)*0.3;
+    ctx.save();
+    ctx.translate(360, 300);
+    ctx.scale(puls2, puls2);
+    if(broj >= 1){
+      txt(broj+'', 0, 0, '900 120px system-ui,sans-serif', '#ffd479');
+    }else{
+      txt(T('intAkcija'), 0, 0, '900 72px system-ui,sans-serif', '#ffe9b0');
+    }
+    ctx.restore();
+  }
+}
+
 function drawIntro(){
   var t = G.t;
 
@@ -5719,15 +5856,31 @@ function drawIntro(){
     return;
   }
 
-  /* 2. test slika */
-  if(t < 2.45){ drawTestSlika(t); return; }
-
-  /* 3. snijeg, pa rez na binu */
-  if(t < 2.94){ drawTestSlika(t); drawSnijeg(1); return; }
-  if(t < 3.22) drawSnijeg(1 - (t-2.94)/0.28);
+  /* 2.–3. otvaranje po uvodu: test slika, klapa ili kratki snijeg */
+  if(G.introVar === 1){
+    /* filmski set: klapa umjesto test slike */
+    if(t < 2.45){ drawKlapa(t); return; }
+    if(t < 2.80){ drawKlapa(t); drawSnijeg(1 - (t-2.45)/0.35); }
+  }else if(G.introVar === 2){
+    /* telefon zvoni već u snijegu — brzi rez na binu */
+    if(t < 1.45){
+      ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,HH);
+      drawSnijeg(0.85);
+      return;
+    }
+    if(t < 1.75) drawSnijeg(1 - (t-1.45)/0.30);
+  }else{
+    if(t < 2.45){ drawTestSlika(t); return; }
+    if(t < 2.94){ drawTestSlika(t); drawSnijeg(1); return; }
+    if(t < 3.22) drawSnijeg(1 - (t-2.94)/0.28);
+  }
 
   /* Šanerove replike prije naslova */
   if(G.sayT > 0 && t < 7.26) speechBubble(G.say, 372, 404, 540, 372, 442, false);
+  /* Levatova najava (uvod #4) */
+  if(G.introVar === 3 && G.levatT > 0 && G.levatPeek > 0.35 && t < 7.26){
+    speechBubble(G.levat, 196, 588, 344, 78, 622, true);
+  }
 
   /* 4. naslov udara */
   ctx.save();
@@ -7678,6 +7831,10 @@ function boot(){
     AU.on = st.snd!==0; G.tut = st.tut===1; G.easy = st.easy===1;
     G.stoPokrpan = st.stp===1; metaMerge(st.stats);
   }
+
+  /* svako pokretanje: drugi uvod nego prošli put */
+  var lastIv = st ? (st.iv|0) : -1;
+  do { G.introVar = ri(0, 3); } while(G.introVar === lastIv);
 
   /* svako pokretanje igre počinje na drugom mjestu */
   G.level = ri(0, MJESTA.length-1);
