@@ -37,10 +37,11 @@
   #device{flex:1 1 auto;min-height:0;width:100%;max-width:430px;display:block}
 
   #verdict{height:26px;line-height:26px;padding:0 14px;border-radius:4px;
-    font:700 14px var(--mono);letter-spacing:.12em;color:var(--green);background:#171009;
+    font:700 15px var(--mono);letter-spacing:.12em;color:#ff6650;background:#171009;
     box-shadow:inset 0 2px 5px rgba(0,0,0,.7);
-    text-shadow:0 0 8px rgba(125,255,154,.6);opacity:0;transition:opacity .25s}
-  #verdict.show{opacity:1}
+    text-shadow:0 0 10px rgba(255,80,50,.8);opacity:0;transition:opacity .25s}
+  #verdict.show{opacity:1;animation:blinkV .4s steps(2) 5}
+  @keyframes blinkV{50%{opacity:.3}}
 
   #btn{margin-top:6px;width:118px;height:118px;border-radius:50%;border:none;cursor:pointer;
     background:radial-gradient(circle at 38% 32%,#f16a54,var(--ember) 55%,#7c1c12 100%);
@@ -150,7 +151,7 @@
     </g>
   </svg>
 
-  <div id="verdict">NALAZ: ČOVJEK · 100%</div>
+  <div id="verdict">NALAZ: NACIONALISTA!</div>
   <button id="btn">PRITISNI<br>I DRŽI</button>
   <div class="hint">DRŽI: APARAT MJERI · PUSTI: NAUKA PRESUDI</div>
 </div>
@@ -178,7 +179,8 @@ function ctx(){
   return ac;
 }
 
-const SWEEP = 2.6;             // Sekunden bis zum oberen Ende des Waberns
+const SWEEP = 0.9;             // Sekunden bis zum oberen Ende des Kreischens
+const MIN_MS = 950;            // so lange laeuft eine Messung mindestens (auch bei kurzem Tipp)
 let warble = null;             // laufende Messklang-Knoten
 let pressT0 = 0, clickTimer = 0, needleRAF = 0;
 
@@ -186,30 +188,30 @@ function startMeasure(){
   const a = ctx(), t = a.currentTime;
   stopWarble();
 
-  // Traeger: Rechteck, hoch und schrill, jault nach oben
+  // Traeger: Rechteck, sofort schrill, jault schnell noch hoeher
   const osc = a.createOscillator();
   osc.type = 'square';
-  osc.frequency.setValueAtTime(950, t);
-  osc.frequency.exponentialRampToValueAtTime(2300, t + SWEEP);
+  osc.frequency.setValueAtTime(1600, t);
+  osc.frequency.exponentialRampToValueAtTime(2600, t + SWEEP);
 
-  // Sirenen-Vibrato: LFO moduliert die TONHOEHE, wird schneller und tiefer
+  // Sirenen-Vibrato: von Anfang an schnell und tief in der Tonhoehe
   const lfo = a.createOscillator();
   lfo.type = 'sine';
-  lfo.frequency.setValueAtTime(9, t);
-  lfo.frequency.linearRampToValueAtTime(19, t + SWEEP);
+  lfo.frequency.setValueAtTime(14, t);
+  lfo.frequency.linearRampToValueAtTime(22, t + SWEEP);
   const lfoGain = a.createGain();
-  lfoGain.gain.setValueAtTime(140, t);
-  lfoGain.gain.linearRampToValueAtTime(320, t + SWEEP);
+  lfoGain.gain.setValueAtTime(280, t);
+  lfoGain.gain.linearRampToValueAtTime(400, t + SWEEP);
 
   // Bandpass hoch angesetzt: nimmt dem Rechteck den Bass, laesst das Kreischen durch
   const bp = a.createBiquadFilter();
   bp.type = 'bandpass'; bp.Q.value = 0.9;
-  bp.frequency.setValueAtTime(1600, t);
-  bp.frequency.exponentialRampToValueAtTime(3200, t + SWEEP);
+  bp.frequency.setValueAtTime(2400, t);
+  bp.frequency.exponentialRampToValueAtTime(3600, t + SWEEP);
 
   const amp = a.createGain();
   amp.gain.setValueAtTime(0.0001, t);
-  amp.gain.linearRampToValueAtTime(0.075, t + 0.06);
+  amp.gain.linearRampToValueAtTime(0.075, t + 0.03);
 
   lfo.connect(lfoGain).connect(osc.frequency);
   osc.connect(bp).connect(amp).connect(a.destination);
@@ -244,16 +246,17 @@ function stopWarble(){
   warble = null;
 }
 
-function ding(){
+function alarm(){
+  // Urteil: drei scharfe Pfiffe, ganz oben im Register
   const a = ctx(), t = a.currentTime;
-  [[660, 0], [880, 0.09], [1320, 0.18]].forEach(([f, dt]) => {
+  [[1760, 0], [2217, 0.12], [2794, 0.24]].forEach(([f, dt]) => {
     const o = a.createOscillator(), g = a.createGain();
-    o.type = 'triangle'; o.frequency.value = f;
+    o.type = 'square'; o.frequency.value = f;
     g.gain.setValueAtTime(0.0001, t + dt);
-    g.gain.linearRampToValueAtTime(0.12, t + dt + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + dt + 0.5);
+    g.gain.linearRampToValueAtTime(0.09, t + dt + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dt + 0.28);
     o.connect(g).connect(a.destination);
-    o.start(t + dt); o.stop(t + dt + 0.6);
+    o.start(t + dt); o.stop(t + dt + 0.35);
   });
 }
 
@@ -277,11 +280,13 @@ function animateNeedle(){
   step();
 }
 
-let pressed = false;
+let pressed = false, finishTimer = 0, verdictTimer = 0;
 function down(e){
   if(pressed) return;
   pressed = true;
   e.preventDefault();
+  clearTimeout(finishTimer);
+  clearTimeout(verdictTimer);
   pressT0 = performance.now();
   body.classList.add('measuring');
   body.classList.remove('done');
@@ -290,22 +295,24 @@ function down(e){
   startMeasure();
   animateNeedle();
 }
+function finish(){
+  pressT0 = 0;
+  body.classList.remove('measuring');
+  stopWarble();
+  alarm();
+  body.classList.add('done');
+  verdict.classList.add('show');
+  verdictTimer = setTimeout(() => { verdict.classList.remove('show'); body.classList.remove('done'); }, 2400);
+  animateNeedle();
+}
 function up(){
   if(!pressed) return;
   pressed = false;
-  const held = performance.now() - pressT0;
-  pressT0 = 0;
-  body.classList.remove('measuring');
   btn.classList.remove('down');
-  stopWarble();
-  // Urteil nur nach ernsthafter Messung (sonst war es ein Wackelkontakt)
-  if(held > 350){
-    ding();
-    body.classList.add('done');
-    verdict.classList.add('show');
-    setTimeout(() => { verdict.classList.remove('show'); body.classList.remove('done'); }, 2200);
-  }
-  animateNeedle();
+  const held = performance.now() - pressT0;
+  // Kurzer Tipp: die Messung laeuft von selbst zu Ende, dann kommt das Urteil
+  if(held < MIN_MS) finishTimer = setTimeout(finish, MIN_MS - held);
+  else finish();
 }
 btn.addEventListener('pointerdown', down);
 addEventListener('pointerup', up);

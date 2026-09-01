@@ -30,7 +30,22 @@ const path = require('path');
   }));
   await page.screenshot({ path: '/tmp/claude-0/-home-user-kolo-srece/e9eb926b-5c1d-57b8-abdd-d418038033e8/scratchpad/aparat-done.png' });
 
-  console.log(JSON.stringify({ during, after, errors }, null, 2));
+  // Kurzer Tipp: Messung muss von selbst zu Ende laufen und das Urteil zeigen
+  await page.waitForTimeout(2600);
+  await page.mouse.down();
+  await page.waitForTimeout(120);
+  await page.mouse.up();
+  const tapMid = await page.evaluate(() => ({
+    measuring: document.body.classList.contains('measuring'),
+    warble: warble !== null,
+  }));
+  await page.waitForTimeout(1200);
+  const tapEnd = await page.evaluate(() => ({
+    verdict: document.getElementById('verdict').classList.contains('show'),
+    warble: warble !== null,
+  }));
+
+  console.log(JSON.stringify({ during, after, tapMid, tapEnd, errors }, null, 2));
   await browser.close();
   process.exit(errors.length ? 1 : 0);
 })();
