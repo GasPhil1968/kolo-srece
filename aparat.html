@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="bs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#120e0a">
+<meta name="color-scheme" content="dark">
+<title>APARAT — Nacional detektor</title>
+<meta name="description" content="Samo aparat i jedno dugme. Drži dugme: aparat mjeri. Pusti: nauka presudi. Model ND-84, TLN Elektronika.">
+
+<style>
+  :root{
+    color-scheme:dark;
+    --night:#120e0a; --cream:#f2e8d2; --amber:#f0a83c; --ember:#d43a2a; --green:#7dff9a;
+    --cond:"Arial Narrow","Roboto Condensed","Helvetica Neue Condensed","Liberation Sans Narrow",Impact,sans-serif;
+    --mono:"Courier New",Courier,monospace;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0}
+  body{background:radial-gradient(ellipse at 50% 30%,#2a2118,var(--night) 70%);color:var(--cream);
+    font-family:var(--cond);overflow:hidden;overscroll-behavior:none;touch-action:none;
+    user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;position:fixed;width:100%}
+
+  #app{position:fixed;inset:0;height:100dvh;display:flex;flex-direction:column;align-items:center;
+    padding:max(10px,env(safe-area-inset-top)) 12px max(14px,env(safe-area-inset-bottom))}
+
+  h1{margin:2px 0 0;font-size:15px;font-weight:700;letter-spacing:.3em;opacity:.75;transform:scaleX(.9)}
+  .sub{font-size:9px;letter-spacing:.28em;color:var(--amber);opacity:.8;margin-top:3px}
+
+  #device{flex:1 1 auto;min-height:0;width:100%;max-width:430px;display:block}
+
+  #verdict{height:22px;font:700 14px var(--mono);letter-spacing:.12em;color:var(--green);
+    text-shadow:0 0 8px rgba(125,255,154,.6);opacity:0;transition:opacity .25s}
+  #verdict.show{opacity:1}
+
+  #btn{margin-top:6px;width:118px;height:118px;border-radius:50%;border:none;cursor:pointer;
+    background:radial-gradient(circle at 38% 32%,#f16a54,var(--ember) 55%,#7c1c12 100%);
+    box-shadow:0 8px 0 #4a0f08,0 14px 30px rgba(0,0,0,.6),inset 0 2px 6px rgba(255,255,255,.35);
+    color:#2a0a05;font-family:var(--cond);font-size:13px;font-weight:700;letter-spacing:.18em;line-height:1.4}
+  #btn:active,#btn.down{transform:translateY(6px);box-shadow:0 2px 0 #4a0f08,0 6px 14px rgba(0,0,0,.6),inset 0 2px 6px rgba(255,255,255,.25)}
+  .hint{margin-top:12px;font-size:9.5px;letter-spacing:.22em;color:rgba(242,232,210,.4)}
+
+  /* Geraete-Animationen */
+  @keyframes blinkR{50%{opacity:.15}}
+  @keyframes blinkF{50%{opacity:.25}}
+  .measuring #lampTop{animation:blinkR .18s steps(2) infinite}
+  .measuring .lampSm{animation:blinkF .3s steps(2) infinite}
+  .measuring #lensL,.measuring #lensR{fill:url(#lensGlow)}
+  #lampTop,.lampSm{opacity:.15}
+  .done #lampTop{opacity:1}
+</style>
+</head>
+<body>
+<div id="app">
+  <h1>NACIONAL DETEKTOR</h1>
+  <div class="sub">MODEL ND-84 · TLN ELEKTRONIKA · SARAJEVO</div>
+
+  <!-- Der Apparat: Feldstecher mit Kabel zum Bakelitkasten mit Zeiger und Lampen -->
+  <svg id="device" viewBox="0 0 300 330" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <defs>
+      <radialGradient id="lensIdle" cx="35%" cy="30%">
+        <stop offset="0%" stop-color="#3a4a52"/><stop offset="70%" stop-color="#101b20"/><stop offset="100%" stop-color="#060a0c"/>
+      </radialGradient>
+      <radialGradient id="lensGlow" cx="40%" cy="35%">
+        <stop offset="0%" stop-color="#ffe6a8"/><stop offset="55%" stop-color="#f0a83c"/><stop offset="100%" stop-color="#7c4a10"/>
+      </radialGradient>
+      <linearGradient id="tube" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3d3a36"/><stop offset="35%" stop-color="#191715"/><stop offset="75%" stop-color="#25221f"/><stop offset="100%" stop-color="#0c0b0a"/>
+      </linearGradient>
+      <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#4a3a2a"/><stop offset="20%" stop-color="#2b211a"/><stop offset="100%" stop-color="#171009"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Feldstecher -->
+    <g transform="translate(150 78)">
+      <!-- Tuben -->
+      <g>
+        <rect x="-118" y="-34" width="96" height="68" rx="30" fill="url(#tube)" stroke="#000" stroke-width="2"/>
+        <rect x="22"   y="-34" width="96" height="68" rx="30" fill="url(#tube)" stroke="#000" stroke-width="2"/>
+        <!-- Riffelung -->
+        <g stroke="#000" stroke-opacity=".45">
+          <line x1="-96" y1="-33" x2="-96" y2="33"/><line x1="-72" y1="-34" x2="-72" y2="34"/><line x1="-48" y1="-33" x2="-48" y2="33"/>
+          <line x1="44"  y1="-33" x2="44"  y2="33"/><line x1="68"  y1="-34" x2="68"  y2="34"/><line x1="92"  y1="-33" x2="92"  y2="33"/>
+        </g>
+        <!-- Objektive -->
+        <circle id="lensL" cx="-104" cy="0" r="26" fill="url(#lensIdle)" stroke="#000" stroke-width="3"/>
+        <circle id="lensR" cx="104"  cy="0" r="26" fill="url(#lensIdle)" stroke="#000" stroke-width="3"/>
+        <circle cx="-112" cy="-8" r="6" fill="rgba(255,255,255,.18)"/>
+        <circle cx="96"   cy="-8" r="6" fill="rgba(255,255,255,.18)"/>
+        <!-- Bruecke + Wissenschafts-Anbau -->
+        <rect x="-26" y="-16" width="52" height="32" rx="6" fill="#1d1a17" stroke="#000" stroke-width="2"/>
+        <circle cx="0" cy="0" r="9" fill="#0d0b0a" stroke="#3d3a36"/>
+        <rect x="-14" y="-46" width="28" height="18" rx="4" fill="#2b211a" stroke="#000" stroke-width="2"/>
+        <circle id="lampTop" cx="0" cy="-52" r="7" fill="#ff4433"/>
+        <line x1="0" y1="-46" x2="0" y2="-58" stroke="#ff8877" stroke-width="1" opacity=".4"/>
+      </g>
+    </g>
+
+    <!-- Spiralkabel vom Feldstecher zum Kasten -->
+    <path d="M150 124
+             q -26 12 0 24 q 26 12 0 24 q -26 12 0 24 q 26 12 0 24"
+          fill="none" stroke="#0d0b0a" stroke-width="7" stroke-linecap="round"/>
+    <path d="M150 124
+             q -26 12 0 24 q 26 12 0 24 q -26 12 0 24 q 26 12 0 24"
+          fill="none" stroke="#3d3a36" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Bakelitkasten -->
+    <g transform="translate(150 272)">
+      <rect x="-92" y="-52" width="184" height="104" rx="10" fill="url(#box)" stroke="#000" stroke-width="2.5"/>
+      <rect x="-92" y="-52" width="184" height="8" rx="4" fill="rgba(255,255,255,.06)"/>
+      <!-- Skala -->
+      <g transform="translate(-38 6)">
+        <path d="M-40 24 a40 40 0 0 1 80 0 z" fill="#f5ecd8" stroke="#000" stroke-width="2"/>
+        <path d="M14 -6 A40 40 0 0 1 38 22 L 0 24 z" fill="rgba(212,58,42,.5)"/>
+        <g stroke="#5a4c33"><line x1="-28" y1="-4" x2="-24" y2="0"/><line x1="0" y1="-15" x2="0" y2="-10"/><line x1="28" y1="-4" x2="24" y2="0"/></g>
+        <line id="needle" x1="0" y1="24" x2="-30" y2="-2" stroke="#7c1f1f" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="0" cy="24" r="5" fill="#171009"/>
+        <text y="38" text-anchor="middle" font-family="Arial Narrow,sans-serif" font-size="7" letter-spacing="2" fill="rgba(242,232,210,.5)">NACIOMETAR</text>
+      </g>
+      <!-- Lautsprechergrill -->
+      <g stroke="#000" stroke-width="2" opacity=".8">
+        <line x1="30" y1="-38" x2="82" y2="-38"/><line x1="30" y1="-31" x2="82" y2="-31"/>
+        <line x1="30" y1="-24" x2="82" y2="-24"/><line x1="30" y1="-17" x2="82" y2="-17"/>
+      </g>
+      <!-- Laempchen -->
+      <circle class="lampSm" cx="40" cy="8" r="5" fill="#f0a83c"/>
+      <circle class="lampSm" cx="58" cy="8" r="5" fill="#7dff9a"/>
+      <circle class="lampSm" cx="76" cy="8" r="5" fill="#ff4433"/>
+      <text x="58" y="26" text-anchor="middle" font-family="Arial Narrow,sans-serif" font-size="6.5" letter-spacing="1.5" fill="rgba(242,232,210,.45)">MJERENJE U TOKU</text>
+      <!-- Typenschild -->
+      <text x="-84" y="-38" text-anchor="start" font-family="Courier New,monospace" font-size="7" letter-spacing="1" fill="rgba(242,232,210,.35)">ND-84 · SL. GLASNIK BR. 7/84</text>
+    </g>
+  </svg>
+
+  <div id="verdict">NALAZ: ČOVJEK · 100%</div>
+  <button id="btn">PRITISNI<br>I DRŽI</button>
+  <div class="hint">DRŽI: APARAT MJERI · PUSTI: NAUKA PRESUDI</div>
+</div>
+
+<script>
+'use strict';
+/* Nur das Geraet und ein Knopf. Halten laesst den Apparat messen
+   (steigendes Wabern + Geigerknacken), Loslassen liefert das Urteil. */
+
+const btn = document.getElementById('btn');
+const verdict = document.getElementById('verdict');
+const needle = document.getElementById('needle');
+const body = document.body;
+
+let ac = null, noiseBuf = null;
+function ctx(){
+  if(!ac){
+    ac = new (window.AudioContext || window.webkitAudioContext)();
+    const len = ac.sampleRate * 0.5;
+    noiseBuf = ac.createBuffer(1, len, ac.sampleRate);
+    const d = noiseBuf.getChannelData(0);
+    for(let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  }
+  if(ac.state === 'suspended') ac.resume();
+  return ac;
+}
+
+const SWEEP = 2.6;             // Sekunden bis zum oberen Ende des Waberns
+let warble = null;             // laufende Messklang-Knoten
+let pressT0 = 0, clickTimer = 0, needleRAF = 0;
+
+function startMeasure(){
+  const a = ctx(), t = a.currentTime;
+  stopWarble();
+
+  // Traeger: Saegezahn, gleitet nach oben, durch Bandpass gefiltert
+  const osc = a.createOscillator();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(160, t);
+  osc.frequency.exponentialRampToValueAtTime(760, t + SWEEP);
+
+  // Wabern: LFO moduliert die Lautstaerke, wird schneller
+  const lfo = a.createOscillator();
+  lfo.type = 'sine';
+  lfo.frequency.setValueAtTime(6, t);
+  lfo.frequency.linearRampToValueAtTime(15, t + SWEEP);
+  const lfoGain = a.createGain(); lfoGain.gain.value = 0.5;
+
+  const bp = a.createBiquadFilter();
+  bp.type = 'bandpass'; bp.Q.value = 1.2;
+  bp.frequency.setValueAtTime(500, t);
+  bp.frequency.exponentialRampToValueAtTime(1400, t + SWEEP);
+
+  const amp = a.createGain();
+  amp.gain.setValueAtTime(0.0001, t);
+  amp.gain.linearRampToValueAtTime(0.11, t + 0.08);
+
+  lfo.connect(lfoGain).connect(amp.gain);
+  osc.connect(bp).connect(amp).connect(a.destination);
+  osc.start(t); lfo.start(t);
+  warble = { osc, lfo, amp };
+
+  // Geigerknacken, immer dichter
+  const click = () => {
+    if(!warble) return;
+    const tt = a.currentTime;
+    const s = a.createBufferSource(); s.buffer = noiseBuf;
+    const f = a.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 2800; f.Q.value = 6;
+    const g = a.createGain();
+    g.gain.setValueAtTime(0.14, tt);
+    g.gain.exponentialRampToValueAtTime(0.0001, tt + 0.03);
+    s.connect(f).connect(g).connect(a.destination);
+    s.start(tt); s.stop(tt + 0.05);
+    const p = Math.min(1, (performance.now() - pressT0) / (SWEEP * 1000));
+    clickTimer = setTimeout(click, 200 - 160 * p);
+  };
+  click();
+}
+
+function stopWarble(){
+  clearTimeout(clickTimer);
+  if(!warble) return;
+  const a = ctx(), t = a.currentTime;
+  warble.amp.gain.cancelScheduledValues(t);
+  warble.amp.gain.setValueAtTime(warble.amp.gain.value || 0.1, t);
+  warble.amp.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
+  warble.osc.stop(t + 0.12); warble.lfo.stop(t + 0.12);
+  warble = null;
+}
+
+function ding(){
+  const a = ctx(), t = a.currentTime;
+  [[660, 0], [880, 0.09], [1320, 0.18]].forEach(([f, dt]) => {
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = 'triangle'; o.frequency.value = f;
+    g.gain.setValueAtTime(0.0001, t + dt);
+    g.gain.linearRampToValueAtTime(0.12, t + dt + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dt + 0.5);
+    o.connect(g).connect(a.destination);
+    o.start(t + dt); o.stop(t + dt + 0.6);
+  });
+}
+
+/* Zeiger: waehrend der Messung zittrig nach rechts, danach zurueck */
+function animateNeedle(){
+  cancelAnimationFrame(needleRAF);
+  const step = () => {
+    let ang;
+    if(pressT0){
+      const p = Math.min(1, (performance.now() - pressT0) / (SWEEP * 1000));
+      ang = -50 + p * 100 + (Math.random() - 0.5) * 12 * (0.3 + p);
+      needleRAF = requestAnimationFrame(step);
+    } else {
+      ang = -50;
+    }
+    // Linie von der Achse (0,24) aus drehen
+    const r = 34, rad = (ang - 90) * Math.PI / 180;
+    needle.setAttribute('x2', (Math.cos(rad) * r).toFixed(1));
+    needle.setAttribute('y2', (24 + Math.sin(rad) * r).toFixed(1));
+  };
+  step();
+}
+
+let pressed = false;
+function down(e){
+  if(pressed) return;
+  pressed = true;
+  e.preventDefault();
+  pressT0 = performance.now();
+  body.classList.add('measuring');
+  body.classList.remove('done');
+  verdict.classList.remove('show');
+  btn.classList.add('down');
+  startMeasure();
+  animateNeedle();
+}
+function up(){
+  if(!pressed) return;
+  pressed = false;
+  const held = performance.now() - pressT0;
+  pressT0 = 0;
+  body.classList.remove('measuring');
+  btn.classList.remove('down');
+  stopWarble();
+  // Urteil nur nach ernsthafter Messung (sonst war es ein Wackelkontakt)
+  if(held > 350){
+    ding();
+    body.classList.add('done');
+    verdict.classList.add('show');
+    setTimeout(() => { verdict.classList.remove('show'); body.classList.remove('done'); }, 2200);
+  }
+  animateNeedle();
+}
+btn.addEventListener('pointerdown', down);
+addEventListener('pointerup', up);
+addEventListener('pointercancel', up);
+addEventListener('keydown', e => { if(e.code === 'Space' && !e.repeat) down(e); });
+addEventListener('keyup', e => { if(e.code === 'Space') up(); });
+</script>
+</body>
+</html>
