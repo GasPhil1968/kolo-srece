@@ -60,9 +60,44 @@
     animation:badgePulse .3s ease-in-out infinite}
   #lampTop,.lampSm{opacity:.15}
   .done #lampTop{opacity:1}
+
+  /* Mehr Leben: Schweben, Zittern, Rueckstoss, Funken, Blitz */
+  #dryerAnim,#cable,#grill,#sparks{transform-box:fill-box;transform-origin:50% 50%}
+  #cable{transform-origin:50% 0%}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  body:not(.measuring):not(.done) #dryerAnim{animation:floaty 3.6s ease-in-out infinite}
+  @keyframes shake{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(.9px,-.6px) rotate(1deg)}
+    50%{transform:translate(-.8px,.5px) rotate(-.9deg)}75%{transform:translate(.5px,.8px) rotate(.7deg)}
+    100%{transform:translate(-.6px,-.5px) rotate(-.6deg)}}
+  .measuring #dryerAnim{animation:shake .1s linear infinite}
+  @keyframes recoil{0%{transform:rotate(0)}25%{transform:translateY(-8px) rotate(-5deg)}
+    60%{transform:translateY(2px) rotate(2deg)}100%{transform:none}}
+  .done #dryerAnim{animation:recoil .55s cubic-bezier(.2,.9,.3,1.2) 1}
+  @keyframes cableWag{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+  .measuring #cable{animation:cableWag .22s ease-in-out infinite alternate}
+  @keyframes grillBuzz{from{transform:translateY(-.7px)}to{transform:translateY(.7px)}}
+  .measuring #grill{animation:grillBuzz .07s linear infinite}
+  @keyframes standby{0%,70%,100%{opacity:.15}82%{opacity:.7}}
+  body:not(.measuring) #lampReady{animation:standby 2.8s infinite}
+  #sparks{opacity:0;pointer-events:none}
+  @keyframes spark{0%{opacity:1;transform:scale(.3)}100%{opacity:0;transform:scale(1.7)}}
+  .done #sparks{animation:spark .6s ease-out 1}
+  @keyframes btnPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+  body:not(.measuring):not(.done) #btn:not(.down):not(:active){animation:btnPulse 2.8s ease-in-out infinite}
+  #flash{position:fixed;inset:0;pointer-events:none;opacity:0;
+    background:radial-gradient(circle at 50% 35%,rgba(255,70,40,.85),rgba(255,70,40,0) 70%)}
+  @keyframes flashK{0%{opacity:.55}100%{opacity:0}}
+  .done #flash{animation:flashK .5s ease-out 1}
+  @keyframes appShake{0%,100%{transform:none}20%{transform:translate(3px,-2px)}
+    40%{transform:translate(-3px,2px)}60%{transform:translate(2px,1px)}80%{transform:translate(-2px,-1px)}}
+  .done #app{animation:appShake .4s linear 1}
+  @media (prefers-reduced-motion:reduce){
+    #dryerAnim,#cable,#grill,#sparks,#btn,#app,#flash,#lampReady{animation:none!important}
+  }
 </style>
 </head>
 <body>
+<div id="flash"></div>
 <div id="app">
   <h1>NACIONAL DETEKTOR</h1>
   <div class="sub">MODEL ND-84 · TLN ELEKTRONIKA · SARAJEVO</div>
@@ -92,6 +127,7 @@
 
     <!-- Der Apparat: ein schwarzer Foehn, Trommel mit Gold-Emblem, Griff nach unten -->
     <g transform="translate(148 102) rotate(-8)" filter="url(#drop)">
+      <g id="dryerAnim">
       <!-- Griff -->
       <path d="M -20 24 L -32 86 Q -34 98 -21 99 L -1 99 Q 9 98 8 87 L 6 26 Z"
             fill="url(#tube)" stroke="#000" stroke-width="2"/>
@@ -115,13 +151,25 @@
       <path d="M -26 8 Q -30 40 -26 70" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="4" stroke-linecap="round"/>
       <!-- Kontrolllampe -->
       <circle id="lampTop" cx="15" cy="14" r="5" fill="#ff4433" stroke="#000" stroke-width="1"/>
+      </g>
+      <!-- Funken beim Urteil, um die Trommel herum -->
+      <g transform="translate(0 -34)">
+        <g id="sparks" stroke="#f0a83c" stroke-width="3.5" stroke-linecap="round">
+          <line x1="0" y1="-58" x2="0" y2="-74"/><line x1="41" y1="-41" x2="52" y2="-52"/>
+          <line x1="58" y1="0" x2="74" y2="0"/><line x1="41" y1="41" x2="52" y2="52"/>
+          <line x1="0" y1="58" x2="0" y2="74"/><line x1="-41" y1="41" x2="-52" y2="52"/>
+          <line x1="-58" y1="0" x2="-74" y2="0"/><line x1="-41" y1="-41" x2="-52" y2="-52"/>
+        </g>
+      </g>
     </g>
 
     <!-- Spiralkabel vom Griff zum Kasten -->
-    <path d="M138 196 q -22 10 0 20 q 22 10 0 20"
-          fill="none" stroke="#2b241c" stroke-width="7" stroke-linecap="round"/>
-    <path d="M138 196 q -22 10 0 20 q 22 10 0 20"
-          fill="none" stroke="#8a8175" stroke-width="2.5" stroke-linecap="round"/>
+    <g id="cable">
+      <path d="M138 196 q -22 10 0 20 q 22 10 0 20"
+            fill="none" stroke="#2b241c" stroke-width="7" stroke-linecap="round"/>
+      <path d="M138 196 q -22 10 0 20 q 22 10 0 20"
+            fill="none" stroke="#8a8175" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
 
     <!-- Bakelitkasten -->
     <g transform="translate(150 272)" filter="url(#drop)">
@@ -137,13 +185,13 @@
         <text y="38" text-anchor="middle" font-family="Arial Narrow,sans-serif" font-size="7" letter-spacing="2" fill="rgba(242,232,210,.5)">NACIOMETAR</text>
       </g>
       <!-- Lautsprechergrill -->
-      <g stroke="#000" stroke-width="2" opacity=".8">
+      <g id="grill" stroke="#000" stroke-width="2" opacity=".8">
         <line x1="30" y1="-38" x2="82" y2="-38"/><line x1="30" y1="-31" x2="82" y2="-31"/>
         <line x1="30" y1="-24" x2="82" y2="-24"/><line x1="30" y1="-17" x2="82" y2="-17"/>
       </g>
       <!-- Laempchen -->
       <circle class="lampSm" cx="40" cy="8" r="5" fill="#f0a83c"/>
-      <circle class="lampSm" cx="58" cy="8" r="5" fill="#7dff9a"/>
+      <circle class="lampSm" id="lampReady" cx="58" cy="8" r="5" fill="#7dff9a"/>
       <circle class="lampSm" cx="76" cy="8" r="5" fill="#ff4433"/>
       <text x="58" y="26" text-anchor="middle" font-family="Arial Narrow,sans-serif" font-size="6.5" letter-spacing="1.5" fill="rgba(242,232,210,.45)">MJERENJE U TOKU</text>
       <!-- Typenschild -->
