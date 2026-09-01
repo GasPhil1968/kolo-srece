@@ -20,19 +20,21 @@
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{height:100%;margin:0}
-  body{background:radial-gradient(ellipse at 50% 30%,#2a2118,var(--night) 70%);color:var(--cream);
+  body{background:radial-gradient(ellipse at 50% 22%,#b3a189,#8f7d67 55%,#6b5a49 100%);color:#2a2118;
     font-family:var(--cond);overflow:hidden;overscroll-behavior:none;touch-action:none;
     user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;position:fixed;width:100%}
 
   #app{position:fixed;inset:0;height:100dvh;display:flex;flex-direction:column;align-items:center;
     padding:max(10px,env(safe-area-inset-top)) 12px max(14px,env(safe-area-inset-bottom))}
 
-  h1{margin:2px 0 0;font-size:15px;font-weight:700;letter-spacing:.3em;opacity:.75;transform:scaleX(.9)}
-  .sub{font-size:9px;letter-spacing:.28em;color:var(--amber);opacity:.8;margin-top:3px}
+  h1{margin:2px 0 0;font-size:15px;font-weight:700;letter-spacing:.3em;color:#241a10;transform:scaleX(.9)}
+  .sub{font-size:9px;letter-spacing:.28em;color:#7c4a10;margin-top:3px}
 
   #device{flex:1 1 auto;min-height:0;width:100%;max-width:430px;display:block}
 
-  #verdict{height:22px;font:700 14px var(--mono);letter-spacing:.12em;color:var(--green);
+  #verdict{height:26px;line-height:26px;padding:0 14px;border-radius:4px;
+    font:700 14px var(--mono);letter-spacing:.12em;color:var(--green);background:#171009;
+    box-shadow:inset 0 2px 5px rgba(0,0,0,.7);
     text-shadow:0 0 8px rgba(125,255,154,.6);opacity:0;transition:opacity .25s}
   #verdict.show{opacity:1}
 
@@ -41,7 +43,7 @@
     box-shadow:0 8px 0 #4a0f08,0 14px 30px rgba(0,0,0,.6),inset 0 2px 6px rgba(255,255,255,.35);
     color:#2a0a05;font-family:var(--cond);font-size:13px;font-weight:700;letter-spacing:.18em;line-height:1.4}
   #btn:active,#btn.down{transform:translateY(6px);box-shadow:0 2px 0 #4a0f08,0 6px 14px rgba(0,0,0,.6),inset 0 2px 6px rgba(255,255,255,.25)}
-  .hint{margin-top:12px;font-size:9.5px;letter-spacing:.22em;color:rgba(242,232,210,.4)}
+  .hint{margin-top:12px;font-size:9.5px;letter-spacing:.22em;color:rgba(36,26,16,.6)}
 
   /* Geraete-Animationen */
   @keyframes blinkR{50%{opacity:.15}}
@@ -62,21 +64,24 @@
   <svg id="device" viewBox="0 0 300 330" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
     <defs>
       <radialGradient id="lensIdle" cx="35%" cy="30%">
-        <stop offset="0%" stop-color="#3a4a52"/><stop offset="70%" stop-color="#101b20"/><stop offset="100%" stop-color="#060a0c"/>
+        <stop offset="0%" stop-color="#5c7684"/><stop offset="70%" stop-color="#1d2f38"/><stop offset="100%" stop-color="#0a1216"/>
       </radialGradient>
       <radialGradient id="lensGlow" cx="40%" cy="35%">
         <stop offset="0%" stop-color="#ffe6a8"/><stop offset="55%" stop-color="#f0a83c"/><stop offset="100%" stop-color="#7c4a10"/>
       </radialGradient>
       <linearGradient id="tube" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#3d3a36"/><stop offset="35%" stop-color="#191715"/><stop offset="75%" stop-color="#25221f"/><stop offset="100%" stop-color="#0c0b0a"/>
+        <stop offset="0%" stop-color="#6e6a63"/><stop offset="35%" stop-color="#2b2926"/><stop offset="75%" stop-color="#3d3a35"/><stop offset="100%" stop-color="#15130f"/>
       </linearGradient>
       <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#4a3a2a"/><stop offset="20%" stop-color="#2b211a"/><stop offset="100%" stop-color="#171009"/>
+        <stop offset="0%" stop-color="#6e5335"/><stop offset="20%" stop-color="#3d2d20"/><stop offset="100%" stop-color="#221709"/>
       </linearGradient>
+      <filter id="drop" x="-20%" y="-20%" width="140%" height="150%">
+        <feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#2a1e12" flood-opacity="0.55"/>
+      </filter>
     </defs>
 
     <!-- Feldstecher -->
-    <g transform="translate(150 78)">
+    <g transform="translate(150 78)" filter="url(#drop)">
       <!-- Tuben -->
       <g>
         <rect x="-118" y="-34" width="96" height="68" rx="30" fill="url(#tube)" stroke="#000" stroke-width="2"/>
@@ -89,8 +94,8 @@
         <!-- Objektive -->
         <circle id="lensL" cx="-104" cy="0" r="26" fill="url(#lensIdle)" stroke="#000" stroke-width="3"/>
         <circle id="lensR" cx="104"  cy="0" r="26" fill="url(#lensIdle)" stroke="#000" stroke-width="3"/>
-        <circle cx="-112" cy="-8" r="6" fill="rgba(255,255,255,.18)"/>
-        <circle cx="96"   cy="-8" r="6" fill="rgba(255,255,255,.18)"/>
+        <circle cx="-112" cy="-8" r="6" fill="rgba(255,255,255,.32)"/>
+        <circle cx="96"   cy="-8" r="6" fill="rgba(255,255,255,.32)"/>
         <!-- Bruecke + Wissenschafts-Anbau -->
         <rect x="-26" y="-16" width="52" height="32" rx="6" fill="#1d1a17" stroke="#000" stroke-width="2"/>
         <circle cx="0" cy="0" r="9" fill="#0d0b0a" stroke="#3d3a36"/>
@@ -103,13 +108,13 @@
     <!-- Spiralkabel vom Feldstecher zum Kasten -->
     <path d="M150 124
              q -26 12 0 24 q 26 12 0 24 q -26 12 0 24 q 26 12 0 24"
-          fill="none" stroke="#0d0b0a" stroke-width="7" stroke-linecap="round"/>
+          fill="none" stroke="#2b241c" stroke-width="7" stroke-linecap="round"/>
     <path d="M150 124
              q -26 12 0 24 q 26 12 0 24 q -26 12 0 24 q 26 12 0 24"
-          fill="none" stroke="#3d3a36" stroke-width="2.5" stroke-linecap="round"/>
+          fill="none" stroke="#8a8175" stroke-width="2.5" stroke-linecap="round"/>
 
     <!-- Bakelitkasten -->
-    <g transform="translate(150 272)">
+    <g transform="translate(150 272)" filter="url(#drop)">
       <rect x="-92" y="-52" width="184" height="104" rx="10" fill="url(#box)" stroke="#000" stroke-width="2.5"/>
       <rect x="-92" y="-52" width="184" height="8" rx="4" fill="rgba(255,255,255,.06)"/>
       <!-- Skala -->
