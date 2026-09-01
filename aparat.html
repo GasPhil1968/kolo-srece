@@ -186,29 +186,32 @@ function startMeasure(){
   const a = ctx(), t = a.currentTime;
   stopWarble();
 
-  // Traeger: Saegezahn, gleitet nach oben, durch Bandpass gefiltert
+  // Traeger: Rechteck, hoch und schrill, jault nach oben
   const osc = a.createOscillator();
-  osc.type = 'sawtooth';
-  osc.frequency.setValueAtTime(160, t);
-  osc.frequency.exponentialRampToValueAtTime(760, t + SWEEP);
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(950, t);
+  osc.frequency.exponentialRampToValueAtTime(2300, t + SWEEP);
 
-  // Wabern: LFO moduliert die Lautstaerke, wird schneller
+  // Sirenen-Vibrato: LFO moduliert die TONHOEHE, wird schneller und tiefer
   const lfo = a.createOscillator();
   lfo.type = 'sine';
-  lfo.frequency.setValueAtTime(6, t);
-  lfo.frequency.linearRampToValueAtTime(15, t + SWEEP);
-  const lfoGain = a.createGain(); lfoGain.gain.value = 0.5;
+  lfo.frequency.setValueAtTime(9, t);
+  lfo.frequency.linearRampToValueAtTime(19, t + SWEEP);
+  const lfoGain = a.createGain();
+  lfoGain.gain.setValueAtTime(140, t);
+  lfoGain.gain.linearRampToValueAtTime(320, t + SWEEP);
 
+  // Bandpass hoch angesetzt: nimmt dem Rechteck den Bass, laesst das Kreischen durch
   const bp = a.createBiquadFilter();
-  bp.type = 'bandpass'; bp.Q.value = 1.2;
-  bp.frequency.setValueAtTime(500, t);
-  bp.frequency.exponentialRampToValueAtTime(1400, t + SWEEP);
+  bp.type = 'bandpass'; bp.Q.value = 0.9;
+  bp.frequency.setValueAtTime(1600, t);
+  bp.frequency.exponentialRampToValueAtTime(3200, t + SWEEP);
 
   const amp = a.createGain();
   amp.gain.setValueAtTime(0.0001, t);
-  amp.gain.linearRampToValueAtTime(0.11, t + 0.08);
+  amp.gain.linearRampToValueAtTime(0.075, t + 0.06);
 
-  lfo.connect(lfoGain).connect(amp.gain);
+  lfo.connect(lfoGain).connect(osc.frequency);
   osc.connect(bp).connect(amp).connect(a.destination);
   osc.start(t); lfo.start(t);
   warble = { osc, lfo, amp };
@@ -218,7 +221,7 @@ function startMeasure(){
     if(!warble) return;
     const tt = a.currentTime;
     const s = a.createBufferSource(); s.buffer = noiseBuf;
-    const f = a.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 2800; f.Q.value = 6;
+    const f = a.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 3600; f.Q.value = 6;
     const g = a.createGain();
     g.gain.setValueAtTime(0.14, tt);
     g.gain.exponentialRampToValueAtTime(0.0001, tt + 0.03);
