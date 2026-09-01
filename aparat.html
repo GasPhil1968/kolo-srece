@@ -42,6 +42,9 @@
     text-shadow:0 0 10px rgba(255,80,50,.8);opacity:0;transition:opacity .25s}
   #verdict.show{opacity:1;animation:blinkV .4s steps(2) 5}
   @keyframes blinkV{50%{opacity:.3}}
+  #komentar{height:15px;margin-top:5px;font-size:9.5px;letter-spacing:.2em;
+    color:rgba(36,26,16,.65);opacity:0;transition:opacity .3s .25s}
+  #komentar.show{opacity:1}
 
   #btn{margin-top:6px;width:118px;height:118px;border-radius:50%;border:none;cursor:pointer;
     background:radial-gradient(circle at 38% 32%,#f16a54,var(--ember) 55%,#7c1c12 100%);
@@ -91,8 +94,14 @@
   @keyframes appShake{0%,100%{transform:none}20%{transform:translate(3px,-2px)}
     40%{transform:translate(-3px,2px)}60%{transform:translate(2px,1px)}80%{transform:translate(-2px,-1px)}}
   .done #app{animation:appShake .4s linear 1}
+  /* Rauch, wenn der Aparat verrueckt spielt */
+  .puff{opacity:0;fill:rgba(120,110,100,.6);transform-box:fill-box;transform-origin:50% 50%}
+  @keyframes puffUp{0%{opacity:.85;transform:translateY(0) scale(.5)}100%{opacity:0;transform:translateY(-36px) scale(1.9)}}
+  .mad .puff{animation:puffUp 1.4s ease-out 1}
+  .mad .puff:nth-child(2){animation-delay:.18s}
+  .mad .puff:nth-child(3){animation-delay:.36s}
   @media (prefers-reduced-motion:reduce){
-    #dryerAnim,#cable,#grill,#sparks,#btn,#app,#flash,#lampReady{animation:none!important}
+    #dryerAnim,#cable,#grill,#sparks,#btn,#app,#flash,#lampReady,.puff{animation:none!important}
   }
 </style>
 </head>
@@ -152,6 +161,12 @@
       <!-- Kontrolllampe -->
       <circle id="lampTop" cx="15" cy="14" r="5" fill="#ff4433" stroke="#000" stroke-width="1"/>
       </g>
+      <!-- Rauch aus der Trommel, wenn der Aparat verrueckt spielt -->
+      <g transform="translate(0 -92)">
+        <circle class="puff" cx="-10" cy="0" r="7"/>
+        <circle class="puff" cx="4" cy="-4" r="9"/>
+        <circle class="puff" cx="14" cy="2" r="6"/>
+      </g>
       <!-- Funken beim Urteil, um die Trommel herum -->
       <g transform="translate(0 -34)">
         <g id="sparks" stroke="#f0a83c" stroke-width="3.5" stroke-linecap="round">
@@ -200,8 +215,9 @@
   </svg>
 
   <div id="verdict">NALAZ: NACIONALISTA!</div>
+  <div id="komentar">NAUKA JE REKLA SVOJE.</div>
   <button id="btn">PRITISNI<br>I DRŽI</button>
-  <div class="hint">DRŽI: APARAT MJERI · PUSTI: NAUKA PRESUDI</div>
+  <div class="hint">DRŽI: MJERI · PUSTI: PRESUDA · ZAMAHNI: SAM SE PALI</div>
 </div>
 
 <script>
@@ -211,8 +227,32 @@
 
 const btn = document.getElementById('btn');
 const verdict = document.getElementById('verdict');
+const komentar = document.getElementById('komentar');
+const device = document.getElementById('device');
 const needle = document.getElementById('needle');
 const body = document.body;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Befunde aus dem Labor: der erste ist immer NACIONALISTA, danach wuerfelt die Nauka */
+const VERDICTS = [
+  { t: 'NALAZ: NACIONALISTA!',            c: '#ff6650', w: 5 },
+  { t: 'NALAZ: DVOSTRUKI NACIONALISTA!!', c: '#ff4433', w: 1 },
+  { t: 'NALAZ: ČIST KO SUZA',             c: '#7dff9a', w: 2 },
+  { t: 'NALAZ: SUMNJIVO ČIST…',           c: '#f0a83c', w: 2 },
+  { t: 'APARAT JE POLUDIO!',              c: '#ff6650', w: 1, mad: true },
+];
+const KOMENTARI = [
+  'NAUKA JE REKLA SVOJE.', 'REZULTAT JE NEPOBITAN.', 'APARAT NE GRIJEŠI. NIKAD.',
+  'PONOVITI POSLIJE KAFE.', 'MOLIM MIRNO STAJATI.', 'SLIJEDI STRUČNI KONSILIJ.',
+];
+let measureCount = 0;
+function pickVerdict(){
+  if(measureCount === 1) return VERDICTS[0];
+  let sum = 0; for(const v of VERDICTS) sum += v.w;
+  let r = Math.random() * sum;
+  for(const v of VERDICTS){ if((r -= v.w) < 0) return v; }
+  return VERDICTS[0];
+}
 
 let ac = null, noiseBuf = null;
 function ctx(){
@@ -308,6 +348,22 @@ function alarm(){
   });
 }
 
+function crazy(){
+  // Der Aparat spielt verrueckt: wildes Gepiepe kreuz und quer
+  const a = ctx(), t = a.currentTime;
+  for(let i = 0; i < 14; i++){
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = 'square';
+    o.frequency.value = 350 + Math.random() * 2800 * (1 - i / 18);
+    const st = t + i * 0.085;
+    g.gain.setValueAtTime(0.0001, st);
+    g.gain.linearRampToValueAtTime(0.08, st + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001, st + 0.07);
+    o.connect(g).connect(a.destination);
+    o.start(st); o.stop(st + 0.1);
+  }
+}
+
 /* Zeiger: waehrend der Messung zittrig nach rechts, danach zurueck */
 function animateNeedle(){
   cancelAnimationFrame(needleRAF);
@@ -329,28 +385,49 @@ function animateNeedle(){
 }
 
 let pressed = false, finishTimer = 0, verdictTimer = 0;
-function down(e){
-  if(pressed) return;
-  pressed = true;
-  e.preventDefault();
+function beginMeasure(){
   clearTimeout(finishTimer);
   clearTimeout(verdictTimer);
   pressT0 = performance.now();
   body.classList.add('measuring');
   body.classList.remove('done');
   verdict.classList.remove('show');
-  btn.classList.add('down');
+  komentar.classList.remove('show');
   startMeasure();
   animateNeedle();
 }
+function down(e){
+  if(pressed) return;
+  pressed = true;
+  e.preventDefault();
+  askMotion();
+  btn.classList.add('down');
+  beginMeasure();
+}
 function finish(){
   pressT0 = 0;
+  measureCount++;
   body.classList.remove('measuring');
   stopWarble();
   alarm();
+  const v = pickVerdict();
+  verdict.textContent = v.t;
+  verdict.style.color = v.c;
+  verdict.style.textShadow = '0 0 10px ' + v.c;
+  komentar.textContent = v.mad ? 'NAUKA MOLI ZA STRPLJENJE.' : KOMENTARI[(Math.random() * KOMENTARI.length) | 0];
+  if(v.mad){
+    body.classList.add('mad');
+    setTimeout(crazy, 250);
+    setTimeout(() => body.classList.remove('mad'), 1700);
+  }
   body.classList.add('done');
   verdict.classList.add('show');
-  verdictTimer = setTimeout(() => { verdict.classList.remove('show'); body.classList.remove('done'); }, 2400);
+  komentar.classList.add('show');
+  verdictTimer = setTimeout(() => {
+    verdict.classList.remove('show');
+    komentar.classList.remove('show');
+    body.classList.remove('done');
+  }, 2600);
   animateNeedle();
 }
 function up(){
@@ -367,6 +444,51 @@ addEventListener('pointerup', up);
 addEventListener('pointercancel', up);
 addEventListener('keydown', e => { if(e.code === 'Space' && !e.repeat) down(e); });
 addEventListener('keyup', e => { if(e.code === 'Space') up(); });
+
+/* ---- Bewegungssensoren: Neigen lehnt den Apparat mit, Schwenken loest die Messung aus ---- */
+let motionAsked = false;
+function askMotion(){
+  // iOS verlangt eine Freigabe, und zwar aus einer Beruehrung heraus
+  if(motionAsked) return;
+  motionAsked = true;
+  try{
+    if(window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function')
+      DeviceOrientationEvent.requestPermission().catch(() => {});
+    if(window.DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission === 'function')
+      DeviceMotionEvent.requestPermission().catch(() => {});
+  }catch(err){}
+}
+
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+let tiltActive = false, tgtG = 0, tgtB = 0, curG = 0, curB = 0;
+addEventListener('deviceorientation', e => {
+  if(e.gamma == null && e.beta == null) return;
+  tiltActive = true;
+  tgtG = clamp(e.gamma || 0, -28, 28);
+  tgtB = clamp((e.beta == null ? 45 : e.beta) - 45, -28, 28); // 45°: typische Haltung
+});
+(function tiltLoop(){
+  requestAnimationFrame(tiltLoop);
+  if(!tiltActive || reduceMotion) return;
+  curG += (tgtG - curG) * 0.12;
+  curB += (tgtB - curB) * 0.12;
+  device.style.transform =
+    `translate(${(curG * 0.9).toFixed(1)}px,${(curB * 0.7).toFixed(1)}px) rotate(${(curG * 0.25).toFixed(2)}deg)`;
+})();
+
+let lastShake = 0;
+addEventListener('devicemotion', e => {
+  const a = e.acceleration;
+  if(!a) return;
+  const m = Math.hypot(a.x || 0, a.y || 0, a.z || 0);
+  if(m < 17) return;
+  const now = performance.now();
+  // Zamah! Der Apparat schlaegt von selbst an, wie beim Herumfuchteln im Sketch
+  if(pressed || pressT0 || now - lastShake < 2200) return;
+  lastShake = now;
+  beginMeasure();
+  finishTimer = setTimeout(finish, MIN_MS + 250);
+});
 </script>
 </body>
 </html>
