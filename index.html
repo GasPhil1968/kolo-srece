@@ -5,12 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
 <meta name="theme-color" content="#150c08">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Fildžani">
+<link rel="manifest" href="/manifest.webmanifest">
 <title>TRI FILDŽANA</title>
 <meta name="description" content="Šaner miješa tri fildžana, ti pratiš plavu kuglicu. Oberi ga do 250 KM i gledaj kako pakuje.">
 <link rel="canonical" href="https://shibicar.netlify.app/">
 <link rel="icon" href="/icon-192.png" sizes="192x192">
-<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-512.png">
 
 <!-- Link-Vorschau (WhatsApp, Viber, Signal, Facebook, Telegram) -->
 <meta property="og:type" content="website">
@@ -7817,6 +7820,14 @@ function boot(){
     else if(AU.ctx){ try{ AU.ctx.resume(); }catch(e){} }
   });
   window.addEventListener('orientationchange', function(){ setTimeout(resize,120); });
+
+  /* PWA: service worker — igra se instalira i radi bez mreže */
+  if('serviceWorker' in navigator &&
+     (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('/sw.js').catch(function(){ /* nema veze, igra radi i bez */ });
+    });
+  }
 
   var st = load();
   if(!st) LANG = pogodiJezik();     /* prvi put: po uređaju */
