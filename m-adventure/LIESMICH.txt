@@ -2,7 +2,7 @@ M.  ·  Erinnerungen zwischen den Zeiten
 =======================================
 Stand: 3. September 2026
 
-VISUAL-V5
+VISUAL-V7
 ---------
 Die Terrasse und Rosko Polje verwenden jetzt eingebettete, gemalte
 Pixelhintergruende. M. wird als alter Mann und als Kind aus transparenten
@@ -31,6 +31,22 @@ transparente 4-x-3-Sprite-Sheets. Fahne, Farbeimer, Bordstein und die fahrende
 Sarajevoer Strassenbahn bleiben dynamisch. Die Klickflaechen von Material-
 kammer, Pier, Boot, Amt, Schalter, Kiosk, Fica und Stadion wurden an die neuen
 Bilder angepasst. Die Strassenbahn faengt Kiosk- und Fica-Klicks nicht mehr ab.
+
+Visual V6 ueberarbeitet Kapitel 5 und 6: Das westdeutsche Werk der 1970er
+und die winterliche Strasse von 1991 besitzen neue gemalte Pixelkulissen.
+M. in Arbeitskleidung, M. im Wintermantel, Yilmaz, Meister Krause und Frau
+Sommer haben eigene transparente 4-x-3-Sprite-Sheets. Foerderband,
+Maschinenanzeigen, Fernsehflimmern, Paketstatus und Schnee bleiben als kleine
+dynamische Ebenen erhalten. Alle 15 zentralen Klickflaechen wurden an die
+neuen Bilder angepasst und automatisch geprueft.
+
+Visual V7 vereinheitlicht die gesamte Praesentation: Alle Texte verwenden
+nun dieselbe eingebettete, gut lesbare Monospace-Schrift. Dialogfenster holen
+M.s jeweiliges Alter und die Gesichter aller wichtigen Figuren direkt aus den
+neuen Sprite-Sheets; Jure und der Abendgast besitzen eigene neue Portraets.
+Hauptmenue und Vorspann verwenden gemalte Pixelkulissen. Alle sieben Kapitel-
+intros zeigen jetzt die tatsaechliche Grafik ihres Kapitels; fuer den Hausbau
+2004 kam eine neue eigene Kulisse hinzu.
 
 
 SPIELEN

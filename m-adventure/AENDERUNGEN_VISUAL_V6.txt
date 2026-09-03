@@ -1,0 +1,38 @@
+M. Adventure · Visual V6
+=======================
+Stand: 3. September 2026
+
+KAPITEL 5 · DAS WERK
+--------------------
+- Neue gemalte Pixelkulisse fuer ein westdeutsches Werk der fruehen 1970er.
+- Neue transparente 4-x-3-Sprite-Sheets fuer M. in Arbeitskleidung, Yilmaz
+  und Meister Krause.
+- Spinde, Presse, Anschlagtafel, Kisten und Kantinentuer wurden auf die neue
+  Architektur ausgerichtet.
+- Foerderband, Schwungrad und Kontrollleuchten bleiben leichte, dynamische
+  Spielebenen und reagieren auf den Maschinenzustand.
+
+KAPITEL 6 · DEUTSCHLAND, WINTER 1991
+------------------------------------
+- Neue gemalte Pixelkulisse mit Telefonzelle, Wohnhaus, Fernsehgeschaeft,
+  Post/Laden und winterlicher Abendstimmung.
+- Neue transparente 4-x-3-Sprite-Sheets fuer M. im Wintermantel und Frau
+  Sommer. M.s spaetere NPC-Fassung verwendet dasselbe konsistente Sheet.
+- Telefonzelle, Apparat, Paket, Schaufenster, Post, Laden und Heimweg wurden
+  auf die neue Kulisse ausgerichtet.
+- Schneefall, Fernsehflimmern und der offene/geschlossene Paketstatus bleiben
+  als kleine dynamische Ebenen erhalten.
+
+PERFORMANCE UND QA
+------------------
+- Die grossen Kulissen werden einmal dekodiert und aus dem Bildspeicher
+  gezeichnet; pro Frame bewegen sich nur kleine Spielebenen.
+- 300-Frame-Test: Werk ca. 5,26 ms/Frame, Winter 1991 ca. 4,61 ms/Frame.
+- Zielbudget fuer 60 FPS: 16,67 ms/Frame.
+- 15 zentrale Hotspots der beiden Kapitel automatisch geprueft.
+- Alle fuenf neuen Sprite-Sheets: 512 x 480 Pixel, echte Transparenz,
+  gemeinsames 4-x-3-Raster und einheitliche Fusslinie.
+
+START
+-----
+most.html doppelklicken. Kein Server und keine Installation erforderlich.

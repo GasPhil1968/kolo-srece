@@ -1,0 +1,44 @@
+M. Adventure · Visual V7
+=======================
+Stand: 3. September 2026
+
+SCHRIFT UND UI
+--------------
+- Eine eingebettete, sprachuebergreifend gut lesbare Monospace-Schrift wird
+  jetzt durchgaengig in Spielleiste, Dialogen, Menue, Vorspann,
+  Zwischensequenzen und Kapitelkarten verwendet.
+- Die Schrift ist in most.html enthalten; es gibt keine Netzabhaengigkeit.
+- Kontrast, Titelhierarchie und Auswahlmarkierungen bleiben auf allen
+  gemalten Hintergruenden erhalten.
+
+DIALOGPORTRAETS
+---------------
+- M. zeigt automatisch das passende Gesicht seiner jeweiligen Lebensphase:
+  Kind, Schueler, Matrose, Sarajevo, Werk, Winter 1991 und Gegenwart.
+- Die Portraets aller bereits ueberarbeiteten Nebenfiguren werden direkt aus
+  ihren neuen Sprite-Sheets gewonnen. Gesicht, Frisur und Kleidung stimmen
+  dadurch mit der Figur im Raum ueberein.
+- Jure und der Abendgast besitzen neue eigene Pixelportraets.
+- Insgesamt wurden 25 Spieler-/Figurenvarianten automatisch auf ein neues
+  Dialogbild geprueft. Der Erzähler bleibt bewusst gesichtslos.
+
+MENUE, VORSPANN UND KAPITELINTROS
+--------------------------------
+- Das Hauptmenue verwendet eine neue gemalte Podaca-Kulisse bei Abendlicht.
+- Der komplette Vorspann verwendet nun die gemalten Spielkulissen und M.s
+  neues Sprite statt der alten prozeduralen Ersatzbilder.
+- Alle sieben Kapitelkarten zeigen die jeweils neue Grafik ihres Kapitels.
+- Kapitel 7 erhielt eine neue gemalte Hausbau-Kulisse fuer Podaca 2004.
+- Leichte Kamerafahrt, Vignette und Lichtbewegung bleiben erhalten, ohne
+  teure Vollbildanimationen pro Frame einzufuehren.
+
+PERFORMANCE UND QA
+------------------
+- Alle bisherigen Raum- und Hotspottests bleiben aktiv.
+- 25 neue Portraetzuordnungen und alle sieben Kapitelmotive werden geprueft.
+- Grosse Kulissen bleiben gecachte Bitmaps; nur kleine Effekte werden pro
+  Frame neu gezeichnet.
+
+START
+-----
+most.html doppelklicken. Kein Server und keine Installation erforderlich.
