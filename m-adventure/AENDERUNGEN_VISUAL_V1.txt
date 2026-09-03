@@ -1,0 +1,39 @@
+M. — VISUAL V1
+================
+
+Diese Version setzt den ersten grafischen Produktionsschritt um.
+
+TERRASSE
+--------
+- neuer gemalter Pixel-Hintergrund fuer Podaca 2018
+- auf 640 x 235 Pixel optimiert und hart auf 1280 x 470 skaliert
+- vollstaendig in most.html eingebettet
+- statischer Hintergrund statt hunderter Zeichenoperationen pro Frame
+- Hotspots fuer Tuer, Fenster, Radio, Tisch, Bank, Kaffee, Katze,
+  Feigenbaum, Mauer, Meer und Garage an das neue Bild angepasst
+- dynamische Ebene fuer Radio, Kiste, Erinnerungsstuecke und Katzenhinweis
+
+M. ALS SPRITE
+-------------
+- transparentes 4-x-3-Sprite-Sheet fuer den alten M.
+- transparentes 4-x-3-Sprite-Sheet fuer M. als Kind
+- Idle-, Geh-, Rede-, Nehmen- und Benutzen-Posen
+- automatische Spiegelung fuer beide Laufrichtungen
+- alter M. wird auf der Terrasse verwendet
+- Kind-M. wird in Kapitel 1 verwendet
+- alle anderen Lebensphasen verwenden weiterhin die prozedurale Figur
+
+TECHNIK
+-------
+- Assets werden beim Build als Data-URLs eingebettet
+- most.html bleibt eine einzelne offline spielbare Datei
+- Bilder werden vor dem Spielstart vorgeladen
+- bei einem Ladefehler bleibt die bisherige prozedurale Grafik als Fallback
+
+TEST
+----
+- JavaScript-Syntax geprueft
+- Terrasse und Rosko Polje mit der echten Canvas-Runtime gerendert
+- beide Sprite-Sheets besitzen echten Alpha-Kanal
+- keine Frame-Fehler im Render-Smoke-Test
+

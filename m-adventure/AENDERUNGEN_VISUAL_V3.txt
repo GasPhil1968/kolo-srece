@@ -1,0 +1,42 @@
+M-Adventure · Visual V3
+=======================
+Stand: 3. September 2026
+
+KAPITEL 1 GRAFISCH FERTIGGESTELLT
+---------------------------------
+- Neue gemalte Pixelhintergruende fuer die Weide ueber Rosko Polje,
+  das Haus und die Bruecke.
+- Terrasse und Rosko Polje aus Visual V2 bleiben unveraendert erhalten.
+- Klickflaechen, Laufziele und Hinweispunkte wurden an die neuen Kulissen
+  angepasst.
+- Auf der Weide bleiben alle spielrelevanten Elemente dynamisch: elf
+  sichtbare Ziegen, die zwoelfte Ziege im Felsschatten, Wacholder und
+  Baba Roga.
+
+NEUE FIGUREN
+------------
+- Otac/Vater: separates 4-x-3-Sprite-Sheet fuer Stehen/Gehen und Sitzen.
+- Majka/Mutter: transparentes 4-x-3-Sprite-Sheet.
+- Lehrer Petar: transparentes 4-x-3-Sprite-Sheet.
+- Andrin/der Fremde: transparentes 4-x-3-Sprite-Sheet; Sitzposition auf
+  der Brueckenbruestung korrigiert.
+- Die vorhandenen neuen Sheets fuer M., Luka, L. und Dedo bleiben aktiv.
+
+TECHNIK UND PERFORMANCE
+-----------------------
+- Alle neuen Grafiken sind direkt in most.html eingebettet. Das Spiel
+  braucht weiterhin weder Server noch Internetverbindung.
+- Gemalte Raeume werden ohne doppelte Farbstiche und Raster-Nachbearbeitung
+  ausgegeben. Das spart Rechenzeit und bewahrt die Bildqualitaet.
+- 300-Frame-Rendertest im Headless-Canvas:
+    Weide        8,14 ms/Frame
+    Haus         6,42 ms/Frame
+    Rosko Polje  8,99 ms/Frame
+    Bruecke      6,40 ms/Frame
+  Das 60-FPS-Budget liegt bei 16,67 ms/Frame.
+- Der komplette Rauchtest rendert Terrasse, Dialogportraet, alle vier
+  Kapitel-1-Raeume sowie spaetere Kontrollraeume ohne Framefehler.
+
+START
+-----
+most.html im Hauptordner doppelklicken.

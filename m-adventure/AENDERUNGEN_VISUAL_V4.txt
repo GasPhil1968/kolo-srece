@@ -1,0 +1,39 @@
+M-Adventure · Visual V4
+=======================
+Stand: 3. September 2026
+
+KAPITEL 2 · MOSTAR 1955
+-----------------------
+- Komplett neuer gemalter Pixelhintergrund fuer Mostar: historische
+  Fassaden, Kopfsteinpflaster, Zeitungsstand, Plakatwand, Tribuene,
+  Neretva und die Alte Bruecke.
+- Bewegte rot-weiss-blaue Wimpel und eine leichte Zuschauermenge liegen
+  als sparsame dynamische Ebene ueber der statischen Kulisse.
+- Der Kleistereimer bleibt als sichtbarer dynamischer Raetselgegenstand
+  erhalten.
+- Klickflaechen und Laufziele fuer Rinne, Zeitungsstand, Kleister,
+  Plakat, Tribuene und Alte Bruecke wurden neu ausgerichtet und
+  automatisiert geprueft.
+
+NEUE FIGUREN
+------------
+- M. mit 13 Jahren: eigenes transparentes 4-x-3-Sprite-Sheet mit
+  Ruhe-, Geh-, Dialog- und Aktionsframes.
+- Der Lehrer: eigenes transparentes 4-x-3-Sprite-Sheet.
+- Josip Broz Tiko: eigenes transparentes 4-x-3-Sprite-Sheet fuer den
+  Auftritt auf der Tribuene.
+- Dedo behaelt sein vorhandenes Sheet; der Fez bleibt dynamisch.
+
+PERFORMANCE UND QA
+------------------
+- Der neue Mostar-Raum benoetigte im finalen 300-Frame-Rendertest
+  5,56 ms pro Frame. Das 60-FPS-Budget liegt bei 16,67 ms.
+- Alle neuen Sprites werden aus eingebetteten 512-x-480-PNG-Sheets mit
+  echter Transparenz geladen.
+- Rauchtest fuer alle bisher ueberarbeiteten Raeume ohne Framefehler.
+- most.html bleibt eine einzelne offline spielbare Datei.
+
+START
+-----
+most.html im Hauptordner doppelklicken.
+

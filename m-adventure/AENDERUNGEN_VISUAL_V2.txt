@@ -1,0 +1,40 @@
+M. — VISUAL V2
+================
+
+Diese Version erweitert den ersten Grafikpass um die zentralen Nebenfiguren,
+das Dialogportraet des alten M. und Rosko Polje.
+
+FIGUREN
+-------
+- Luka: transparentes 4-x-3-Sprite-Sheet mit Ruhe-, Geh- und Aktionsposen
+- L.: eigenes 4-x-3-Sheet fuer die juengere und die aeltere Darstellung
+- Dedo: transparentes 4-x-3-Sheet; seine Kapitelhuete bleiben dynamisch
+- automatische Spiegelung der Geh-Richtung fuer alle neuen Sheets
+- prozedurale Figuren bleiben als Fallback erhalten, falls ein Bild fehlt
+
+M.-DIALOGPORTRAET
+-----------------
+- das alte prozedurale Portraet von M. auf der Terrasse wurde ersetzt
+- neues transparentes Pixelportraet passend zum neuen M.-Sprite
+- der vorhandene ovale Rahmen, Name und die Sprechanimation bleiben erhalten
+- andere Lebensphasen verwenden vorerst weiterhin ihre bisherigen Portraets
+
+ROSKO POLJE
+-----------
+- neuer gemalter Pixel-Hintergrund mit Karstbergen, Tal, Steinhaus und Brunnen
+- offene Lauf- und Interaktionsflaeche fuer die dynamischen Figuren
+- Karren, Radio, Holz und ihre Raetselzustaende bleiben im Spiel gezeichnet
+- doppelt gezeichnete Kulissenteile des alten Hintergrunds wurden entfernt
+- Wegflaechen, Hotspots und Kapitelablauf bleiben spielbar
+
+TECHNIK UND PERFORMANCE
+-----------------------
+- alle Bilder sind in most.html eingebettet; das Spiel bleibt offline spielbar
+- Hintergruende werden als ein vorberechnetes Bild statt aus vielen Formen pro
+  Frame gezeichnet
+- Figurenanimationen lesen nur einen kleinen Ausschnitt aus dem jeweiligen
+  Sprite-Sheet
+- alle neuen Figurensheets besitzen echte Transparenz
+- Canvas-Smoke-Test fuer Terrasse, Dialog, Rosko Polje und Sarajevo bestanden
+- keine JavaScript-Framefehler im Test
+

@@ -1,0 +1,111 @@
+M.  ·  Erinnerungen zwischen den Zeiten
+=======================================
+Stand: 3. September 2026
+
+VISUAL-V5
+---------
+Die Terrasse und Rosko Polje verwenden jetzt eingebettete, gemalte
+Pixelhintergruende. M. wird als alter Mann und als Kind aus transparenten
+Sprite-Sheets gezeichnet. Luka, L. und Dedo besitzen nun ebenfalls eigene
+4-x-3-Sheets. Dedos wechselnde Huete bleiben dynamisch. Das Dialogfenster des
+alten M. verwendet ein neues, zum Sprite passendes Pixelportraet. Fuer noch
+nicht umgestellte Lebensphasen und Nebenfiguren bleibt die prozedurale
+Darstellung als sicherer Rueckfall erhalten.
+
+Visual V3 schliesst die grafische Ueberarbeitung von Kapitel 1 ab: Weide,
+Haus und Bruecke besitzen neue gemalte Pixelkulissen. Otac, Majka, Lehrer
+Petar und Andrin haben eigene transparente 4-x-3-Sprite-Sheets. Klickflaechen,
+Laufziele und Sitzpositionen wurden an die neuen Bilder angepasst. Die
+Ziegenzaehlung, Wacholder und Baba Roga bleiben auf der Weide dynamisch.
+
+Visual V4 ueberarbeitet Kapitel 2: Mostar 1955 hat eine neue historische
+Pixelkulisse mit Alter Bruecke, Zeitungsstand, Plakat und Tribuene. M. mit
+13 Jahren, der Lehrer und Josip Broz Tiko besitzen neue transparente
+4-x-3-Sprite-Sheets. Bewegte Wimpel, Zuschauermenge und Kleister bleiben
+dynamisch. Alle sechs Raetsel-Hotspots wurden auf der neuen Grafik geprueft.
+
+Visual V5 ueberarbeitet Kapitel 3 und 4: Der Marinestuetzpunkt an der Adria
+und Sarajevo der 1970er besitzen neue historische Pixelkulissen. M. als
+Matrose, M. in Sarajevo, Zdravko, der Admiral und Safet haben eigene
+transparente 4-x-3-Sprite-Sheets. Fahne, Farbeimer, Bordstein und die fahrende
+Sarajevoer Strassenbahn bleiben dynamisch. Die Klickflaechen von Material-
+kammer, Pier, Boot, Amt, Schalter, Kiosk, Fica und Stadion wurden an die neuen
+Bilder angepasst. Die Strassenbahn faengt Kiosk- und Fica-Klicks nicht mehr ab.
+
+
+SPIELEN
+-------
+most.html doppelklicken. Das war es -- eine einzige Datei, kein
+Server, kein Internet, keine Installation. Sie laeuft in jedem
+aktuellen Browser und speichert den Spielstand lokal.
+
+Querformat. Auf dem Telefon das Geraet drehen.
+
+  Klick          gehen, ansehen, benutzen
+  H              Hinweis
+  S / L          speichern und laden
+  Escape         Zwischensequenz ueberspringen
+  V              Malvorlage des Raums als Bild sichern
+
+Sprache: wird beim ersten Start am Geraet erkannt (Deutsch, BKS
+oder Englisch) und laesst sich im Hauptmenue umstellen. Die eigene
+Wahl schlaegt die Erkennung und wird gemerkt.
+
+
+AENDERN
+-------
+quelle/build/   Das Spiel in 35 Bausteinen. Reines JavaScript.
+                Reihenfolge und Zusammenbau stehen in bauen.py.
+
+quelle/bauen.py Baut most.html aus den Bausteinen und der festen
+                HTML-Huelle:
+
+                    python3 bauen.py
+
+                Er baut nie auf dem letzten Ergebnis auf und bricht
+                ab, wenn ein Baustein HTML enthaelt. Beides ist
+                Absicht: genau daran ist der Build schon einmal
+                gescheitert, indem er sich selbst ins Skript-Tag
+                geschrieben hat.
+
+
+TEXTE UEBERARBEITEN
+-------------------
+quelle/M-Spieltexte-DE.txt  Alle deutschen Spieltexte, nach Kapiteln
+                            sortiert, mit Sprecher. Eine Zeile je
+                            Textstelle:
+
+                                [T0182 · M.] Ein Sims. Sonst liegt hier ...
+
+                            Nur den Text rechts der Klammer aendern.
+                            Die Kennung ist der Anker und muss bleiben.
+
+quelle/import_texte.py      Spielt die bearbeitete Datei zurueck:
+
+                                python3 import_texte.py M-Spieltexte-DE.txt --probe
+                                python3 import_texte.py M-Spieltexte-DE.txt
+
+                            --probe zeigt nur, was sich aendern wuerde.
+                            Der echte Lauf legt vorher eine Sicherung
+                            unter build_sicherung/ an und zieht die
+                            kroatischen und englischen Uebersetzungen
+                            automatisch auf die neuen Saetze um.
+
+quelle/texte_index.json     Die Zuordnung Kennung -> Fundstelle.
+                            Nicht von Hand aendern und nicht loeschen,
+                            sonst findet der Import nichts wieder.
+
+Der Auszug ist vom 2. September und kennt die Kapitel-Intros und
+Lehrer Petar noch nicht. Ein neuer Auszug (export_texte.py, dann
+schreibe_textdatei.py) vergibt fuer diese Zeilen neue Kennungen.
+
+
+WAS NOCH OFFEN IST
+------------------
+- Kapitel 4: Markt und der Dialog ueber kulturelle Aneignung
+- Dedos Szenen in die Kapitel 2, 3, 5, 6 und 7 einbauen
+  (er steht als Figur in den Raeumen, die Szenen fehlen)
+- Kapitel 3: Spind-Raetsel; Ort steht als Adria im Spiel,
+  in der Kapitelliste als Serbien
+- Kapitel 5: die Begegnung mit Rudi Dutschke ueber die Medien
+- Kroatisch und Englisch fuer die spaeteren Kapitel

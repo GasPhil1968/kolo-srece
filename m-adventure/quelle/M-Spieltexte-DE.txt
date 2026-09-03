@@ -1,0 +1,1979 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                     M.  ·  ALLE SPIELTEXTE, DEUTSCH                      ║
+║                     Erinnerungen zwischen den Zeiten                     ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+1338 Textstellen, 54120 Zeichen.  Stand: 2. September 2026.
+
+══════════════════════════════════════════════════════════════════════════
+  SO BEARBEITEST DU DIE DATEI
+══════════════════════════════════════════════════════════════════════════
+
+  Jede Zeile hat die Form:
+
+      [T0042 · Vater] Der Text, den du ändern kannst.
+
+  Ändere NUR den Text rechts von der schließenden Klammer.
+
+  1.  Die Kennung in eckigen Klammern muss bleiben, Zeichen für Zeichen.
+      Sie ist der Anker, über den ich deine Änderung zurückspiele.
+      Ohne sie ist die Zeile verloren.
+
+  2.  Eine Textstelle ist eine Zeile. Auch wenn sie lang wird.
+      Kein Zeilenumbruch mitten im Satz — der Umbruch im Spiel
+      passiert automatisch und richtet sich nach der Fensterbreite.
+
+  3.  Ein  ↵  im Text ist ein gewollter Absatz. Lass ihn stehen,
+      oder setze einen neuen, wo du einen brauchst.
+
+  4.  Zeilen ohne eckige Klammer sind Überschriften und Notizen.
+      Die kannst du ignorieren, sie kommen nicht im Spiel vor.
+
+  5.  Löschen geht nicht. Wenn eine Zeile weg soll, schreib  [WEG]
+      als einzigen Inhalt hinter die Kennung — dann sage ich dir,
+      was daran hängt, bevor ich sie entferne.
+
+  6.  Neue Zeilen kannst du dazuschreiben. Setze  [NEU]  statt einer
+      Kennung davor und darunter eine kurze Notiz, wo sie hin soll.
+
+  Kroatisch und Englisch hängen an den deutschen Sätzen. Wenn du einen
+  deutschen Satz änderst, ziehe ich die Übersetzung automatisch mit um;
+  wo sich der Sinn verschiebt, melde ich mich.
+
+  Speichern als reine Textdatei, UTF-8. Word geht, aber dann bitte
+  ausdrücklich als .txt speichern, nicht als .docx.
+
+
+══════════════════════════════════════════════════════════════════════════
+  VORSPANN
+══════════════════════════════════════════════════════════════════════════
+
+  ── vsTitel ─────────────────────────────────────────────────────
+[T0001 · Bildtext] präsentiert
+[T0002 · Bildtext] Podaca, an der Adria.
+[T0003 · Bildtext] Zweihundert Meter Land zwischen einem Berg und dem Wasser.
+[T0004 · Bildtext] Das Haus ist fertig. Seit vier Jahren ist es fertig.
+[T0005 · Bildtext] Vierzehn Sommer hat es gedauert.
+[T0006 · Bildtext] Hier sitzt er jeden Nachmittag.
+[T0007 · Bildtext] Er sagt, er denke an nichts.
+[T0008 · Bildtext] Sechsunddreißig Jahre Deutschland stehen in diesen Händen.
+[T0009 · Bildtext] Sonst nirgends.
+[T0010 · Bildtext] In der Garage steht eine Kiste.
+[T0011 · Bildtext] Sie ist zu, seit er sie bekommen hat.
+[T0012 · Bildtext] Diesen Sommer sind die Enkel da.
+[T0013 · Bildtext] Der jüngste fragt.
+
+══════════════════════════════════════════════════════════════════════════
+  HAUPTMENUE
+══════════════════════════════════════════════════════════════════════════
+
+  ── starteIntro ─────────────────────────────────────────────────
+[T0014 · M.] Halb sechs. Die Sonne steht schon über Pelješac.
+[T0015 · M.] Die Enkel sind seit Dienstag da. Das Haus ist voll und ich sitze draußen.
+[T0016 · Erzaehler] So fängt jeder Nachmittag an, seit vierzehn Jahren. An diesem hier ist etwas anders, und ich weiß es noch nicht.
+
+  ── neu ─────────────────────────────────────────────────────────
+[T0017 · Menuezeile] Neues Spiel
+
+  ── fortsetzen ──────────────────────────────────────────────────
+[T0018 · Menuezeile] Fortsetzen
+
+  ── menuContinue ────────────────────────────────────────────────
+[T0019 · Meldung] Spielstand geladen
+
+══════════════════════════════════════════════════════════════════════════
+  RAUMTITEL
+══════════════════════════════════════════════════════════════════════════
+
+  ── terrasse ────────────────────────────────────────────────────
+[T0020 · Raumtitel] PODACA · SOMMER 2018
+
+  ── garage ──────────────────────────────────────────────────────
+[T0021 · Raumtitel] DIE GARAGE
+
+  ── polje ───────────────────────────────────────────────────────
+[T0022 · Raumtitel] ROSKO POLJE · 1953
+
+  ── bruecke ─────────────────────────────────────────────────────
+[T0023 · Raumtitel] DIE BRÜCKE
+
+  ── mostar ──────────────────────────────────────────────────────
+[T0024 · Raumtitel] MOSTAR · 1955
+
+  ── kaserne ─────────────────────────────────────────────────────
+[T0025 · Raumtitel] MARINESTÜTZPUNKT · ADRIA, 1960er
+
+  ── sarajevo ────────────────────────────────────────────────────
+[T0026 · Raumtitel] SARAJEVO · 1970er
+
+  ── werk ────────────────────────────────────────────────────────
+[T0027 · Raumtitel] DEUTSCHLAND · DAS WERK, 1970er
+
+  ── telefon ─────────────────────────────────────────────────────
+[T0028 · Raumtitel] DEUTSCHLAND · WINTER 1991
+
+  ── bau ─────────────────────────────────────────────────────────
+[T0029 · Raumtitel] PODACA · DER HAUSBAU
+
+══════════════════════════════════════════════════════════════════════════
+  RAUMTITEL KAPITEL 1
+══════════════════════════════════════════════════════════════════════════
+
+  ── weide ───────────────────────────────────────────────────────
+[T0030 · Raumtitel] ÜBER ROSKO POLJE · MORGEN
+
+  ── kuca ────────────────────────────────────────────────────────
+[T0031 · Raumtitel] DAS HAUS
+
+══════════════════════════════════════════════════════════════════════════
+  GEGENSTAENDE
+══════════════════════════════════════════════════════════════════════════
+
+  ── leereInventar ───────────────────────────────────────────────
+[T0032 · Bezeichnung] Taschenlampe
+[T0033 · Gegenstand] Sie liegt seit Jahren im Schrank neben der Tür. Der Kontakt wackelt, aber sie geht an, wenn man sie schüttelt.
+[T0034 · Bezeichnung] Autoschlüssel
+[T0035 · Gegenstand] Ein Schlüssel, zwei Ringe, ein Plastikanhänger von einer Tankstelle, die es nicht mehr gibt.
+[T0036 · Bezeichnung] Das Foto
+[T0037 · Gegenstand] Elf Leute vor einem Steinhaus. Sechs davon leben noch. Auf der Rückseite steht eine Jahreszahl in Bleistift.
+[T0038 · Bezeichnung] Wacholderzweig
+[T0039 · Gegenstand] Frisch abgebrochen, die Beeren blau bereift. Zwischen den Fingern zerrieben hält sich der Geruch zwei Tage. Länger.
+[T0040 · Bezeichnung] Speckschwarte
+[T0041 · Gegenstand] Trocken, salzig, und viel zu schade zum Wegwerfen. Bei uns wurde sie zuerst gegessen und dann noch zweimal benutzt.
+[T0042 · Bezeichnung] Holzkeil
+[T0043 · Gegenstand] Aus dem Stapel hinter dem Haus. Buche, hart, an einer Seite schon einmal eingeschlagen.
+[T0044 · Bezeichnung] Radnagel
+[T0045 · Gegenstand] Der Splint, der das Rad auf der Achse hält. Handgeschmiedet, krumm, unersetzlich.
+[T0046 · Bezeichnung] Sack Mehl
+[T0047 · Gegenstand] Fünfzehn Kilo aus dem Nachbardorf. Er riecht nach Staub und nach dem, was man daraus macht.
+[T0048 · Bezeichnung] Zeitungsblatt
+[T0049 · Gegenstand] Ein halbes Blatt Oslobođenje, drei Tage alt. Eine Seite Politik, eine Seite Fußball.
+[T0050 · Bezeichnung] Holzstecken
+[T0051 · Gegenstand] Aus der Rinne am Straßenrand. Gerade genug, um etwas daran zu befestigen.
+[T0052 · Bezeichnung] Papierfähnchen
+[T0053 · Gegenstand] Rot, weiß, blau, ein Stern in der Mitte. Selbst gemacht, und man sieht es. Von hinten sieht man auch, aus welcher Zeitung.
+[T0054 · Bezeichnung] Klebreis
+[T0055 · Gegenstand] Ein Löffel voll vom Stand. Kalt, klebrig und für Papier besser als für Menschen.
+[T0056 · Bezeichnung] Befehl: Fahne
+[T0057 · Gegenstand] „Die Flagge ist um 0900 zu hissen." Unterschrift unleserlich. Es ist 0850.
+[T0058 · Bezeichnung] Befehl: Bordstein
+[T0059 · Gegenstand] „Der Bordstein ist bis 0900 weiß zu streichen." Dieselbe unleserliche Unterschrift.
+[T0060 · Bezeichnung] Befehl: Kammer
+[T0061 · Gegenstand] „Die Kammer ist um 0900 verschlossen und der Schlüssel abzugeben." Auch 0900. Auch dieselbe Schrift.
+[T0062 · Bezeichnung] Farbeimer
+[T0063 · Gegenstand] Weiße Farbe, halb voll, mit einer Haut oben drauf. Die Marine streicht damit alles, was nicht wegläuft.
+[T0064 · Bezeichnung] Pinsel
+[T0065 · Gegenstand] Borsten hart wie Draht. Er wurde nach dem letzten Mal nicht ausgewaschen, und das war vor einem Jahr.
+[T0066 · Bezeichnung] Kammerschlüssel
+[T0067 · Gegenstand] Schwer, kalt, an einem Bindfaden. Wer ihn hat, ist verantwortlich.
+[T0068 · Bezeichnung] Holzkiste
+[T0069 · Gegenstand] Munitionskiste, ausgemustert. Deckel, Schnalle, Aufschrift. Man bekommt sie, wenn man nicht danach fragt.
+[T0070 · Bezeichnung] Päckchen Kaffee
+[T0071 · Gegenstand] Kein Geschenk, keine Bestechung. Eine Höflichkeit, die zufällig auf dem Tisch liegen bleibt.
+[T0072 · Bezeichnung] Wohnungsantrag
+[T0073 · Gegenstand] Vier Seiten. Drei davon fragen nach Dingen, die im dritten Absatz schon stehen.
+[T0074 · Bezeichnung] Gestempelter Antrag
+[T0075 · Gegenstand] Derselbe Antrag. Ein Stempel mehr, und damit ein anderes Dokument.
+[T0076 · Bezeichnung] Vergaserdüse
+[T0077 · Gegenstand] Für einen Fića. Sie lag ein Jahr in meiner Tasche, weil man so etwas nicht wegwirft, bevor man weiß, wer sie braucht.
+[T0078 · Bezeichnung] Wohnungsschlüssel
+[T0079 · Gegenstand] Zwei Zimmer, dritter Stock, kein Aufzug. Der schwerste leichte Gegenstand, den ich je getragen habe.
+[T0080 · Bezeichnung] Werksausweis
+[T0081 · Gegenstand] Ein Foto, eine Nummer, ein Name, den hier niemand richtig ausspricht. Er gilt trotzdem.
+[T0082 · Bezeichnung] Der Zettel
+[T0083 · Gegenstand] Sieben Wörter in deutscher Schreibschrift. Ich erkenne die Zahl 12 und einen Pfeil. Der Rest ist ein Zaun.
+[T0084 · Bezeichnung] Die Skizze
+[T0085 · Gegenstand] Yılmaz hat sie mit dem Zimmermannsbleistift auf die Kistenpappe gezeichnet. Sie ist besser als der Zettel.
+[T0086 · Bezeichnung] Schlüssel 13
+[T0087 · Gegenstand] Maulschlüssel, Dreizehner. Blank an den Backen, wie alle Werkzeuge, die wirklich benutzt werden.
+[T0088 · Bezeichnung] Vier Markstücke
+[T0089 · Gegenstand] Vier Münzen. Jede ist eine Minute nach Split, wenn die Leitung steht, und nichts, wenn sie es nicht tut.
+[T0090 · Bezeichnung] Zollerklärung
+[T0091 · Gegenstand] Grüner Vordruck. Eine Zeile für den Inhalt, eine für den Wert. Was man hineinschreibt, entscheidet, ob es ankommt.
+[T0092 · Bezeichnung] Tafel Schokolade
+[T0093 · Gegenstand] Für die Kinder in Split, die keine Kinder mehr sind. Man packt so etwas trotzdem ein.
+[T0094 · Bezeichnung] Medikamente
+[T0095 · Gegenstand] Aus der Apotheke an der Ecke. Frau Sommer hat gefragt, wofür. Ich habe gesagt: für alle.
+[T0096 · Bezeichnung] Zollstock
+[T0097 · Gegenstand] Gelbes Holz, deutsche Marke, seit 1974 dasselbe Stück. Er hat mehr Häuser gesehen als ich.
+[T0098 · Bezeichnung] Baugenehmigung
+[T0099 · Gegenstand] Ein Stempel, zwei Unterschriften, elf Jahre. Sie gilt rückwirkend, und niemand weiß mehr, warum das ging.
+[T0100 · Bezeichnung] Sack Zement
+[T0101 · Gegenstand] Fünfzig Kilo. Jure sagt, ich soll ihn tragen lassen. Jure sagt viel.
+[T0102 · Bezeichnung] Wasserwaage
+[T0103 · Gegenstand] Die Blase steht in der Mitte. Sie steht in diesem Haus zum ersten Mal in der Mitte.
+
+  ── spielstandAlsDatei ──────────────────────────────────────────
+[T0104 · Meldung] Gespeichert im Browser dieser Seite
+
+  ── spielstandAusDatei ──────────────────────────────────────────
+[T0105 · Meldung] Kein Spielstand vorhanden
+
+  ── saveGame ────────────────────────────────────────────────────
+[T0106 · Meldung] Speichern fehlgeschlagen
+[T0107 · Meldung] Spiel gespeichert
+[T0108 · Meldung] Nur für diese Sitzung — Datei wird geladen
+
+  ── loadGame ────────────────────────────────────────────────────
+[T0109 · Meldung] Kein Spielstand — Datei wählen
+[T0110 · Meldung] Spielstand beschädigt
+[T0111 · Meldung] Spielstand inkompatibel
+[T0112 · Meldung] Spielstand geladen
+
+  ── m ───────────────────────────────────────────────────────────
+[T0113 · Bezeichnung] M.
+[T0114 · Bezeichnung] M.
+[T0115 · Bezeichnung] M.
+[T0116 · Bezeichnung] M.
+[T0117 · Bezeichnung] M.
+[T0118 · Bezeichnung] M.
+[T0119 · Bezeichnung] M.
+[T0120 · Bezeichnung] M.
+[T0121 · Bezeichnung] L.
+
+  ── luka ────────────────────────────────────────────────────────
+[T0122 · Bezeichnung] Luka
+[T0123 · Beschreibung] Neun Jahre alt und der Einzige, der fragt, statt zu wissen.
+
+  ── lena ────────────────────────────────────────────────────────
+[T0124 · Bezeichnung] L.
+[T0125 · Beschreibung] Sie sortiert etwas, während sie zuhört. Sie hört trotzdem alles.
+
+  ── otac ────────────────────────────────────────────────────────
+[T0126 · Bezeichnung] Vater
+[T0127 · Beschreibung] Einundvierzig, und er sieht aus wie sechzig. Hände, die abends nicht mehr ganz aufgehen.
+
+  ── majka ───────────────────────────────────────────────────────
+[T0128 · Bezeichnung] Mutter
+[T0129 · Beschreibung] Sie steht nie still. Wenn sie still steht, ist etwas passiert.
+
+  ── andrin ──────────────────────────────────────────────────────
+[T0130 · Bezeichnung] Der Fremde
+[T0131 · Beschreibung] Ein Mann in einem Mantel, der zu warm ist für den Tag. Er hat es nicht eilig, und das fällt hier auf.
+
+  ── lehrer ──────────────────────────────────────────────────────
+[T0132 · Bezeichnung] Der Lehrer
+[T0133 · Beschreibung] Er zählt uns dreimal, und dreimal kommt eine andere Zahl heraus.
+
+  ── tiko ────────────────────────────────────────────────────────
+[T0134 · Bezeichnung] Josip Broz Tiko
+[T0135 · Beschreibung] Weiß von oben bis unten, und die Sonne arbeitet für ihn.
+
+  ── zdravko ─────────────────────────────────────────────────────
+[T0136 · Bezeichnung] Narednik Zdravko
+[T0137 · Beschreibung] Er brüllt gern und meint es selten. Das muss man einmal begriffen haben.
+
+  ── admiral ─────────────────────────────────────────────────────
+[T0138 · Bezeichnung] Admiral Pivopija
+[T0139 · Beschreibung] Weiße Uniform, goldene Knöpfe, und eine Nase, die ihre eigene Geschichte erzählt.
+
+  ── safet ───────────────────────────────────────────────────────
+[T0140 · Bezeichnung] Safet Sušović
+[T0141 · Beschreibung] Er sieht an einem vorbei, auch wenn man direkt vor ihm steht. Das ist keine Absicht. Das ist Übung.
+
+  ── yilmaz ──────────────────────────────────────────────────────
+[T0142 · Bezeichnung] Yılmaz
+[T0143 · Beschreibung] Ein Jahr länger hier als ich. Ein Jahr ist hier ein großer Vorsprung.
+
+  ── krause ──────────────────────────────────────────────────────
+[T0144 · Bezeichnung] Meister Krause
+[T0145 · Beschreibung] Er ist nicht unfreundlich. Er hat nur nie darüber nachgedacht, dass ich ihn nicht verstehe.
+
+  ── sommer ──────────────────────────────────────────────────────
+[T0146 · Bezeichnung] Frau Sommer
+[T0147 · Beschreibung] Sie will helfen und darf nicht. Beides sieht man ihr an.
+
+  ── jure ────────────────────────────────────────────────────────
+[T0148 · Bezeichnung] Jure
+[T0149 · Beschreibung] Der Nachbar. Er weiß alles besser und hilft trotzdem jedes Mal.
+
+  ── mann ────────────────────────────────────────────────────────
+[T0150 · Bezeichnung] M.
+[T0151 · Beschreibung] Er steht da, als hätte er den Hörer noch in der Hand.
+
+  ── dedo ────────────────────────────────────────────────────────
+[T0152 · Bezeichnung] Dedo Muratović
+[T0153 · Beschreibung] Ein alter Mann, den nichts überrascht. Er sieht aus, als wäre er schon immer dort gewesen.
+
+  ── gestalt ─────────────────────────────────────────────────────
+[T0154 · Bezeichnung] Der Abendgast
+[T0155 · Beschreibung] Staub im Haar, Staub an den Händen. Die Hände sind zu groß für den Rest von ihm.
+
+══════════════════════════════════════════════════════════════════════════
+  VERBEN UND STANDARDANTWORTEN
+══════════════════════════════════════════════════════════════════════════
+
+  ── Allgemein ───────────────────────────────────────────────────────────
+[T0156 · Menuezeile] Ansehen
+[T0157 · Menuezeile] Nehmen
+[T0158 · Menuezeile] Benutzen
+[T0159 · Menuezeile] Reden mit
+[T0160 · Menuezeile] Geben
+
+  ── gehen ───────────────────────────────────────────────────────
+[T0161 · Menuezeile] Gehen zu
+
+  ── selbstAnsehen ───────────────────────────────────────────────
+[T0162 · M.] Sechsundsiebzig. Hemd offen, Sandalen, und seit acht Jahren keine Uhr mehr.
+[T0163 · M.] Die Hände sind das Einzige, das noch aussieht wie Arbeit.
+
+  ── selbst ──────────────────────────────────────────────────────
+[T0164 · Bezeichnung] Mich selbst
+
+  ── interactNPC ─────────────────────────────────────────────────
+[T0165 · M.] Menschen nehme ich mir nicht.
+
+  ── gebeItem ────────────────────────────────────────────────────
+[T0166 · M.] Sie trinkt keinen. Sie hat nie welchen getrunken.
+[T0167 · Der Lehrer] Sehen Sie. Geht doch.
+[T0168 · Meister Krause] Was ist das denn? Ach so. Ja. Genau das meine ich.
+[T0169 · npc] Danke. Aber das brauche ich nicht.
+
+══════════════════════════════════════════════════════════════════════════
+  PROLOG - TERRASSE UND GARAGE
+══════════════════════════════════════════════════════════════════════════
+
+  ── haustuer ────────────────────────────────────────────────────
+[T0170 · Bezeichnung] Haustür
+[T0171 · Erster Blick] Die Tür habe ich selbst eingehängt. Sie schließt, und das ist mehr, als man von den meisten Türen sagen kann.
+[T0172 · Erster Blick] Sie schließt nicht ganz. Sie hat nie ganz geschlossen.
+[T0173 · M.] Drin ist L. und der Fernseher läuft ohne Ton.
+[T0174 · M.] Ich bleibe draußen.
+
+  ── fenstersims ─────────────────────────────────────────────────
+[T0175 · Bezeichnung] Fenstersims
+[T0176 · M.] Ein Sims. Sonst liegt hier alles, was man einmal im Jahr braucht.
+[T0177 · M.] Auf dem Sims: eine Taschenlampe, zwei Schrauben und ein Feuerzeug, das nicht mehr geht.
+[T0178 · M.] Ich habe sie schon.
+[T0179 · M.] Die Lampe nehme ich mit. In der Garage ist es dunkel wie in einem Sack.
+
+  ── radio ───────────────────────────────────────────────────────
+[T0180 · Bezeichnung] Radio
+[T0181 · M.] Aus.
+[T0182 · M.] Musik. Etwas Altes, aus Sarajevo.
+[T0183 · M.] L. hört es drinnen und dreht den Fernseher leiser.
+[T0184 · Nehmen] Das Radio bleibt, wo es steht. Es steht dort seit dreiundzwanzig Jahren.
+
+  ── tisch ───────────────────────────────────────────────────────
+[T0185 · Bezeichnung] Tisch
+[T0186 · Ansehen] Steinplatte, selbst gesetzt. Sie steht schief, aber sie steht.
+
+  ── bank ────────────────────────────────────────────────────────
+[T0187 · Bezeichnung] Die Bank
+[T0188 · Erster Blick] Metallgestell, Holzlatten, die Farbe an den Kanten weg. Sie stand schon hier, als das Haus noch keins war.
+[T0189 · Erster Blick] Sie stand nicht schon hier. Ich habe sie 2007 in Makarska gekauft, gebraucht, für achtzig Kuna.
+[T0190 · M.] Also gut. Stehen wir wieder auf.
+[T0191 · M.] So. Von hier sieht man alles, was man sehen muss.
+
+  ── kaffee ──────────────────────────────────────────────────────
+[T0192 · Bezeichnung] Kaffeetasse
+[T0193 · Erster Blick] Halb voll, halb kalt. Ich trinke ihn trotzdem aus.
+[T0194 · Erster Blick] Nicht halb voll. Sie steht seit dem Frühstück da.
+[T0195 · Nehmen] Sie steht gut, wo sie steht.
+
+  ── katze ───────────────────────────────────────────────────────
+[T0196 · Bezeichnung] Die Katze
+[T0197 · Erster Blick] Sie hat keinen Namen. Sie kam mit dem Haus.
+[T0198 · Erster Blick] Sie hat einen Namen. Ich sage ihn nur nicht laut.
+[T0199 · Nehmen] Das haben wir vor Jahren einmal versucht.
+[T0200 · M.] Ich kraule sie hinter dem Ohr. Sie erlaubt es.
+
+  ── feige ───────────────────────────────────────────────────────
+[T0201 · Bezeichnung] Feigenbaum
+[T0202 · Erster Blick] Ich habe ihn 2005 gesetzt. Er ist größer als ich gedacht habe.
+[T0203 · Erster Blick] Nicht 2005. 2006, im zweiten Sommer. Im ersten hatten wir kein Wasser.
+[T0204 · M.] Zwei sind reif. Die anderen brauchen noch eine Woche.
+[T0205 · M.] Ich reibe ein Blatt zwischen den Fingern. Der Geruch bleibt zwei Tage in der Hand.
+
+  ── mauer ───────────────────────────────────────────────────────
+[T0206 · Bezeichnung] Die Mauer
+[T0207 · Erster Blick] Trockenmauer, ohne Mörtel. Jeder Stein liegt so, dass der nächste ihn hält.
+[T0208 · Erster Blick] Zwei Steine liegen falsch. Jure hat sie gelegt, und ich habe nichts gesagt.
+[T0209 · M.] Sie steht. Man muss sie nicht anfassen.
+
+  ── meer ────────────────────────────────────────────────────────
+[T0210 · Bezeichnung] Das Meer
+[T0211 · Erster Blick] Hinter der Mauer fängt das Meer an und hört so schnell nicht wieder auf.
+[T0212 · Erster Blick] Von hier sieht man Hügel drüben. Als Kind habe ich geglaubt, dahinter kommt Italien. Es kommt Pelješac.
+
+  ── garage ──────────────────────────────────────────────────────
+[T0213 · Bezeichnung] Garagentor
+[T0214 · Ansehen] Ein Tor aus Blech, größer als nötig. Dahinter steht alles, was nicht ins Haus durfte.
+[T0215 · M.] Was soll ich in der Garage.
+[T0216 · M.] Nichts liegt dort, was heute jemand braucht.
+
+  ── kiste_t ─────────────────────────────────────────────────────
+[T0217 · Bezeichnung] Die Kiste
+
+  ── when ────────────────────────────────────────────────────────
+[T0218 · M.] Offen. Und es ist nichts Schlimmes drin. Das ist das Merkwürdige.
+[T0219 · Erster Blick] Eine Munitionskiste. Sie war leer, als ich sie bekommen habe, und sie ist es nicht geblieben.
+[T0220 · Erster Blick] Sie war nicht leer. Es war noch Farbe drin, weiße.
+[T0221 · M.] Sie ist offen. Mehr muss ich nicht tun.
+[T0222 · M.] Nicht allein.
+[T0223 · M.] Wenn schon, dann soll er dabei sein.
+[T0224 · M.] Ich wische den Staub vom Deckel.
+[T0225 · M.] Mehr nicht.
+[T0226 · Nehmen] Sie steht jetzt hier. Das reicht fürs Erste.
+
+  ── ball ────────────────────────────────────────────────────────
+[T0227 · Bezeichnung] Lukas Ball
+
+  ── when ────────────────────────────────────────────────────────
+[T0228 · Erster Blick] Ein Ball, halb platt, mit einem Vereinswappen, das ich nicht kenne.
+[T0229 · Erster Blick] Doch. Ich kenne es. Ich will es nur nicht kennen.
+[T0230 · M.] Ich stoppe ihn mit dem Fuß und schiebe ihn zurück. Es geht noch.
+
+  ── tor_raus ────────────────────────────────────────────────────
+[T0231 · Bezeichnung] Ausgang
+[T0232 · Ansehen] Draußen ist es hell. Hier drin riecht es nach Öl und nach 1986.
+
+  ── regal_g ─────────────────────────────────────────────────────
+[T0233 · Bezeichnung] Regal
+[T0234 · Erster Blick] Vier Bretter, vier Jahrzehnte. Schrauben nach Größe sortiert, in Gläsern, die einmal Ajvar waren.
+[T0235 · Erster Blick] Nicht nach Größe. Nach dem Jahr, in dem ich sie gekauft habe. Das weiß nur ich.
+[T0236 · Nehmen] Ich nehme nichts vom Regal. Wer etwas vom Regal nimmt, findet es nie wieder.
+
+  ── netze ───────────────────────────────────────────────────────
+[T0237 · Bezeichnung] Fischernetze
+[T0238 · Erster Blick] Die Netze meines Schwagers. Er hat sie hiergelassen und ist nach Kanada.
+[T0239 · Erster Blick] Er hat sie nicht hiergelassen. Ich habe sie ihm abgekauft, damit er das Geld für das Ticket hatte.
+
+  ── moped ───────────────────────────────────────────────────────
+[T0240 · Bezeichnung] Tomos
+[T0241 · Erster Blick] Ein Tomos, Baujahr 1974. Er springt an, wenn man ihn schiebt und dabei nicht flucht.
+[T0242 · Erster Blick] Er springt seit vier Jahren nicht mehr an. Ich schiebe ihn trotzdem jedes Frühjahr einmal an.
+[T0243 · Benutzen] Heute nicht.
+
+  ── plane ───────────────────────────────────────────────────────
+[T0244 · Bezeichnung] Plane
+
+  ── when ────────────────────────────────────────────────────────
+[T0245 · Ansehen] Eine grüne Plane. Darunter liegt etwas Eckiges, und ich weiß genau, was.
+[T0246 · M.] Hier hinten sehe ich die Hand nicht vor Augen.
+[T0247 · M.] Ich bräuchte Licht.
+[T0248 · M.] Nur eine Plane. Darunter liegt Gerümpel wie überall.
+[T0249 · Luka] Deda! Was ist das für eine Kiste?
+[T0250 · M.] Eine Kiste.
+[T0251 · Luka] Ja, aber was für eine?
+[T0252 · M.] Eine alte.
+[T0253 · Erzaehler] Ich hätte etwas anderes sagen können. Ich habe siebenundvierzig Jahre Zeit gehabt, mir etwas anderes zu überlegen.
+
+  ── kiste_g ─────────────────────────────────────────────────────
+[T0254 · Bezeichnung] Die Kiste
+
+  ── when ────────────────────────────────────────────────────────
+[T0255 · Ansehen] Munitionskiste, Marine, ausgemustert. Der Deckel ist heller als der Rest, weil er nie in der Sonne stand.
+[T0256 · Luka] Nehmen wir sie mit raus?
+[T0257 · M.] Sie ist schwer.
+[T0258 · Luka] Ich helfe.
+[T0259 · Erzaehler] Er hat geholfen. Elf Kilo, und er hat wirklich geholfen.
+
+══════════════════════════════════════════════════════════════════════════
+  KAPITEL 1 - WEIDE, HAUS, DORFWEG
+══════════════════════════════════════════════════════════════════════════
+
+  ── herde ───────────────────────────────────────────────────────
+[T0260 · Bezeichnung] Die Ziegen
+[T0261 · M.] Zwölf. Jetzt stimmt es.
+[T0262 · M.] Eins, zwei, drei... neun, zehn, elf.
+[T0263 · M.] Elf.
+[T0264 · Vater] Zwölf.
+[T0265 · M.] Elf, Vater.
+[T0266 · Vater] Zwölf.
+[T0267 · Erzaehler] Er hat nicht hingesehen. Er hat den ganzen Morgen nicht hingesehen.
+[T0268 · Nehmen] Man nimmt keine Ziege. Eine Ziege kommt mit oder sie kommt nicht.
+
+  ── fels ────────────────────────────────────────────────────────
+[T0269 · Bezeichnung] Der große Fels
+[T0270 · Erster Blick] Ein Kalkblock, so hoch wie das Haus. Am Morgen wirft er einen Schatten bis zum Wacholder.
+[T0271 · Erster Blick] So hoch wie das Haus war er nicht. Er ging mir bis zur Schulter, als ich zwanzig war.
+[T0272 · Benutzen] Draufklettern kann man. Es sieht von oben genauso aus.
+
+  ── schatten ────────────────────────────────────────────────────
+[T0273 · Bezeichnung] Der Schatten des Felsens
+[T0274 · M.] Leerer Schatten. Sie steht jetzt bei den anderen.
+[T0275 · M.] Der Schatten vom Felsen. Um diese Zeit ist er lang.
+[T0276 · M.] Im Schatten ist es dunkler als die Ziegen hell sind.
+[T0277 · M.] Da steht eine.
+[T0278 · M.] Zwölf.
+[T0279 · Vater] Ich weiß.
+[T0280 · M.] Warum hast du nichts gesagt?
+[T0281 · Vater] Weil du dann elf gezählt hättest und mir geglaubt.
+[T0282 · Erzaehler] Das ist die einzige Lektion, die er mir je mit Absicht beigebracht hat, und ich habe sechzig Jahre davon gelebt.
+
+  ── wacholderbusch ──────────────────────────────────────────────
+[T0283 · Bezeichnung] Wacholder
+[T0284 · Erster Blick] Wacholder. Er wächst hier überall und nirgendwo sonst so.
+[T0285 · Erster Blick] Er wächst überall. Ich habe das erst in Deutschland gemerkt, als es ihn nicht gab.
+[T0286 · M.] Einer reicht.
+[T0287 · M.] Zwischen den Fingern zerrieben hält sich der Geruch zwei Tage.
+[T0288 · Erzaehler] Länger. Viel länger.
+
+  ── kante ───────────────────────────────────────────────────────
+[T0289 · Bezeichnung] Die Kante
+[T0290 · Erster Blick] Von hier sieht man das ganze Tal. Die Straße unten ist ein heller Strich.
+[T0291 · Erster Blick] Man sieht nicht das ganze Tal. Man sieht bis zur Biegung, und dahinter fängt an, was ich nicht kannte.
+
+  ── vater_w ─────────────────────────────────────────────────────
+[T0292 · Bezeichnung] Vater
+[T0293 · Ansehen] Er sitzt auf dem Stein und kaut auf einem Grashalm. So sitzt er, seit ich denken kann.
+
+  ── pfad ────────────────────────────────────────────────────────
+[T0294 · Bezeichnung] Der Pfad hinunter
+[T0295 · Ansehen] Zwanzig Minuten hinunter, vierzig herauf. So ist das hier.
+[T0296 · M.] Nicht, solange die Herde nicht stimmt.
+[T0297 · M.] Wenn eine fehlt und ich gehe, ist es meine Schuld.
+[T0298 · M.] Erst soll der Vater sagen, was zu tun ist.
+
+  ── rogaW ───────────────────────────────────────────────────────
+[T0299 · Bezeichnung] Am Waldrand
+
+  ── when ────────────────────────────────────────────────────────
+[T0300 · M.] Am Waldrand steht etwas.
+[T0301 · Vater] Was.
+[T0302 · M.] Nichts.
+[T0303 · Erzaehler] Im Sommer war ich oben, bevor es hell wurde, und unten, wenn es dunkel wurde.
+[T0304 · Erzaehler] Dazwischen passierte nichts, und das war das Beste am ganzen Jahr.
+[T0305 · Vater] Zähl sie.
+
+  ── tuer_k ──────────────────────────────────────────────────────
+[T0306 · Bezeichnung] Tür
+[T0307 · Ansehen] Nach draußen. Von drinnen ist sie das hellste Ding im Raum.
+
+  ── herd ────────────────────────────────────────────────────────
+[T0308 · Bezeichnung] Der Herd
+[T0309 · Erster Blick] Eine offene Feuerstelle mit einem Rauchfang darüber. Der Kessel hängt am Haken, seit ich denken kann.
+[T0310 · Erster Blick] Der Kessel hing nicht immer. Er kam 1949, und davor gab es einen aus Ton.
+[T0311 · Benutzen] Da hat nur die Mutter etwas zu suchen. Das ist keine Regel, das ist Erfahrung.
+
+  ── speck ───────────────────────────────────────────────────────
+[T0312 · Bezeichnung] Die Speckschwarte
+
+  ── when ────────────────────────────────────────────────────────
+[T0313 · Ansehen] Am Haken neben dem Rauchfang. Sie ist hart und salzig und viel zu schade zum Wegwerfen.
+[T0314 · M.] Ich habe sie.
+[T0315 · M.] Die Schwarte gehört der Mutter.
+[T0316 · M.] Ohne zu fragen fasse ich sie nicht an.
+[T0317 · M.] Und zurückbringen, hat sie gesagt.
+[T0318 · Erzaehler] Speck war bei uns Werkzeug, Medizin und Festessen, in dieser Reihenfolge.
+
+  ── mehlsack ────────────────────────────────────────────────────
+[T0319 · Bezeichnung] Der Mehlsack
+[T0320 · M.] Voll. Fünfzehn Kilo. Das reicht bis Michaeli.
+[T0321 · Erster Blick] Er liegt flach. Ganz unten ist noch eine Handbreit, und die ist für morgen.
+[T0322 · Erster Blick] Es war keine Handbreit. Es war nichts drin, und die Mutter hat es niemandem gesagt.
+[T0323 · M.] Leer bleibt leer, wenn man ihn schüttelt.
+
+  ── tisch_k ─────────────────────────────────────────────────────
+[T0324 · Bezeichnung] Der Tisch
+[T0325 · Erster Blick] Zwei Schüsseln stehen schon da. Wir sind fünf.
+[T0326 · Erster Blick] Wir waren sieben, bis zum Winter davor. Die Schüsseln haben nie gefehlt.
+
+  ── lampe_k ─────────────────────────────────────────────────────
+[T0327 · Bezeichnung] Petroleumlampe
+[T0328 · Erster Blick] Sie wird angezündet, wenn es wirklich nötig ist. Petroleum kostet Geld.
+[T0329 · Erster Blick] Sie wurde nie angezündet. Wir sind schlafen gegangen, wenn es dunkel wurde.
+[T0330 · Nehmen] Die bleibt auf dem Tisch.
+
+  ── bett_k ──────────────────────────────────────────────────────
+[T0331 · Bezeichnung] Das Bett
+[T0332 · Erster Blick] Ein Gestell, Stroh, drei Decken. Wir schlafen quer, dann passen alle.
+[T0333 · Erster Blick] Es passten nicht alle. Ich habe bis vierzehn auf der Bank am Herd geschlafen und es für einen Vorzug gehalten.
+
+  ── bild_k ──────────────────────────────────────────────────────
+[T0334 · Bezeichnung] Das Bild
+[T0335 · Erster Blick] Ein Bild an der Wand. Vom Rauch ist nicht mehr zu erkennen, wer darauf ist.
+[T0336 · Erster Blick] Es war eine Hochzeit. Meine Eltern. Ich habe es erst gewusst, als ich es 1991 aus dem Rahmen genommen habe.
+[T0337 · Nehmen] Das hängt da, seit es das Haus gibt.
+
+  ── mutter_k ────────────────────────────────────────────────────
+[T0338 · Bezeichnung] Mutter
+[T0339 · Ansehen] Sie steht nie still. Wenn sie still steht, ist etwas passiert.
+[T0340 · M.] Fünfzehn Kilo.
+[T0341 · Mutter] Stell ihn dorthin.
+[T0342 · M.] Der Karren steht wieder gerade.
+[T0343 · Mutter] Ich weiß.
+[T0344 · Mutter] Wasch dir die Hände, es gibt gleich etwas.
+[T0345 · Erzaehler] Das war alles. Und es war genug.
+
+══════════════════════════════════════════════════════════════════════════
+  KAPITEL 1 HOF UND BRUECKE / KAPITEL 2 / KAPITEL 3
+══════════════════════════════════════════════════════════════════════════
+
+  ── haus ────────────────────────────────────────────────────────
+[T0346 · Bezeichnung] Das Haus
+[T0347 · Erster Blick] Ein Raum, ein Ofen, fünf Menschen. Die Mauern sind so dick, dass es drinnen im August kalt ist.
+[T0348 · Erster Blick] Es waren nicht fünf. Sieben, bis zum Winter davor.
+
+  ── brunnen ─────────────────────────────────────────────────────
+[T0349 · Bezeichnung] Brunnen
+[T0350 · M.] Der Eimer hängt jetzt an einer Schnur. Er hängt schlechter, aber er hängt.
+[T0351 · Erster Blick] Kein Wasser drin um diese Zeit. Der Eimer hängt am Haken, und der Haken hängt an einem Splint aus Eisen.
+[T0352 · Erster Blick] Der Splint war schon damals das Wertvollste am ganzen Brunnen.
+[T0353 · M.] Ich habe ihn schon.
+[T0354 · M.] Ein Splint aus Eisen. Der hält.
+[T0355 · M.] Aber dann hält der Eimer nicht mehr, und ohne Eimer kein Wasser.
+[T0356 · M.] Der Eimer kann warten. Das Mehl nicht.
+[T0357 · M.] Ich binde den Eimer mit der Schnur an. Das hält bis heute Abend.
+[T0358 · Erzaehler] Es hat bis 1961 gehalten.
+[T0359 · M.] Ich kurble. Es kommt nichts. Um zwei Uhr kommt hier nie etwas.
+
+  ── karren ──────────────────────────────────────────────────────
+[T0360 · Bezeichnung] Ochsenkarren
+[T0361 · M.] Er steht gerade. Man kann ihn ziehen.
+[T0362 · Erster Blick] Der Karren hängt schief. Das Vorderrad ist von der Achse gerutscht.
+[T0363 · Erster Blick] Er hing nicht schief. Er lag. Das Rad war ganz ab.
+[T0364 · M.] So fährt er keine hundert Schritte.
+[T0365 · M.] Erst muss der Vater es sehen. Sonst gehe ich zweimal.
+[T0366 · M.] Er steht. Jetzt kann ich los.
+
+  ── achse ───────────────────────────────────────────────────────
+[T0367 · Bezeichnung] Achse
+[T0368 · M.] Fett drauf, Splint durch, Rad drauf. So macht man das.
+[T0369 · M.] Die Achse ist gefettet. Jetzt fehlt nur noch etwas, das das Rad hält.
+[T0370 · M.] Die Achse ist trocken wie ein Stein.
+[T0371 · M.] Ohne Fett geht das Rad nicht drauf, und wenn es draufgeht, frisst es sich fest.
+[T0372 · Nehmen] Die Achse gehört zum Karren.
+
+  ── rad ─────────────────────────────────────────────────────────
+[T0373 · Bezeichnung] Vorderrad
+[T0374 · M.] Es sitzt. Ein bisschen krumm, aber es sitzt.
+[T0375 · Erster Blick] Das Rad ist heil. Nur der Splint, der es auf der Achse hält, ist weg.
+[T0376 · Erster Blick] Der Splint war nicht weg. Ich hatte ihn verloren, drei Tage vorher, und es niemandem gesagt.
+[T0377 · M.] Fertig ist fertig.
+[T0378 · M.] Trocken geht es nicht auf die Achse. Ich brauche Fett.
+[T0379 · M.] Rad drauf. Splint durch. Umbiegen.
+[T0380 · M.] Es sitzt.
+[T0381 · Erzaehler] Es war das erste Mal, dass ich etwas repariert habe, von dem etwas abhing. Ich war elf.
+[T0382 · M.] Der Keil geht durch das Loch. Fast.
+[T0383 · M.] Er hält, solange nichts passiert.
+[T0384 · Vater] Bis zum ersten Stein, Sohn. Dann liegt das Rad im Graben und du unter dem Karren.
+[T0385 · Vater] Holz hält Holz. Eisen hält Eisen.
+[T0386 · M.] Ohne etwas, das durch das Loch geht, wird das nichts.
+
+  ── holzstapel ──────────────────────────────────────────────────
+[T0387 · Bezeichnung] Holzstapel
+[T0388 · Ansehen] Buchenholz für den Winter, und der Winter ist weit. Ein paar Scheite sind schon gespalten.
+[T0389 · M.] Ich habe genug Holz.
+[T0390 · M.] Ein Keil aus Buche. Hart genug, sagt man.
+
+  ── vater ───────────────────────────────────────────────────────
+[T0391 · Bezeichnung] Vater
+[T0392 · Erster Blick] Er kaut auf einem Grashalm und sieht zu, wie ich es falsch mache.
+[T0393 · Erster Blick] Einundvierzig war er. Ich habe ihn immer als alten Mann in Erinnerung, und er war jünger als meine Söhne heute.
+
+  ── weg ─────────────────────────────────────────────────────────
+[T0394 · Bezeichnung] Der Weg
+[T0395 · Ansehen] Nach rechts, über den Hügel, ins Nachbardorf. Zwei Stunden hin, drei zurück, wenn der Karren voll ist.
+[T0396 · M.] Nicht ohne Karren. Fünfzehn Kilo Mehl trage ich nicht auf dem Rücken.
+[T0397 · M.] Der Vater soll es erst sehen.
+[T0398 · M.] Also los.
+
+  ── naegel ──────────────────────────────────────────────────────
+[T0399 · Bezeichnung] Kiste mit Nägeln
+
+  ── when ────────────────────────────────────────────────────────
+[T0400 · Erster Blick] Eine Kiste voll Nägel. Jeder einzelne krumm.
+[T0401 · Erster Blick] Nicht jeder. Zwei waren gerade, und die hat er nicht hergegeben.
+[T0402 · M.] Ich habe schon Eisen.
+[T0403 · M.] Die gehören ihm.
+[T0404 · M.] Ich müsste fragen.
+[T0405 · M.] Danke.
+[T0406 · Dedo] Bring ihn zurück, wenn der Karren durchhält.
+[T0407 · M.] Und wenn nicht?
+[T0408 · Dedo] Dann behalt ihn. Dann hast du ihn gebraucht.
+[T0409 · Erzaehler] Ich habe ihn nicht zurückgebracht. Der Karren hat bis 1961 gehalten.
+
+  ── rogaP ───────────────────────────────────────────────────────
+[T0410 · Bezeichnung] Etwas am Feldrand
+
+  ── when ────────────────────────────────────────────────────────
+[T0411 · M.] Da steht jemand am Feldrand.
+[T0412 · M.] Nein. Da steht ein Wacholder.
+
+  ── bruestung ───────────────────────────────────────────────────
+[T0413 · Bezeichnung] Brüstung
+[T0414 · Erster Blick] Kalkstein, glatt gegriffen. Hier haben schon viele gestanden und ins Wasser gesehen.
+[T0415 · Erster Blick] Vier. Ich habe sie später gezählt: der Müller, zwei Hirten und der Fremde. Das Dorf hatte nicht mehr Leute, die Zeit hatten.
+[T0416 · Benutzen] Ich lehne mich an und sehe hinunter. Das Wasser hat es eiliger als ich.
+
+  ── wasser ──────────────────────────────────────────────────────
+[T0417 · Bezeichnung] Der Fluss
+[T0418 · Erster Blick] Es ist grün und kalt und hat unter der Brücke keine Eile.
+[T0419 · Erster Blick] Es war braun. Es war immer braun, außer im Mai.
+
+  ── bogen ───────────────────────────────────────────────────────
+[T0420 · Bezeichnung] Der Bogen
+[T0421 · M.] Ein Bogen aus Stein. Er steht seit vierhundert Jahren, sagt der Müller.
+[T0422 · M.] Jeder Stein drückt auf den nächsten. Deswegen fällt keiner.
+[T0423 · M.] Wenn man einen herausnimmt, fallen alle.
+
+  ── muehle ──────────────────────────────────────────────────────
+[T0424 · Bezeichnung] Mühle
+[T0425 · Erster Blick] Hier hole ich das Mehl. Der Müller nimmt ein Zehntel und redet nicht viel.
+[T0426 · Erster Blick] Er nahm ein Achtel. Wir haben es gewusst und nichts gesagt, weil er der einzige Müller war.
+[T0427 · M.] Der Müller mahlt noch. Ich muss warten.
+[T0428 · M.] Auf der Brüstung sitzt einer und wartet auch.
+[T0429 · M.] Ich habe den Sack. Jetzt zurück.
+[T0430 · M.] Fünfzehn Kilo. Er hat mir beim Aufladen geholfen.
+[T0431 · Erzaehler] Er hat nicht geholfen. Ich habe es allein aufgeladen und drei Tage nichts heben können.
+
+  ── zurueck ─────────────────────────────────────────────────────
+[T0432 · Bezeichnung] Der Rückweg
+[T0433 · Ansehen] Zurück nach Rosko Polje. Bergauf, mit vollem Karren.
+[T0434 · M.] Ohne Mehl brauche ich gar nicht erst heimzugehen.
+
+  ── rogaB ───────────────────────────────────────────────────────
+[T0435 · Bezeichnung] Am anderen Ufer
+
+  ── when ────────────────────────────────────────────────────────
+[T0436 · M.] Drüben, hinter der Mühle, steht wieder jemand.
+[T0437 · Der Fremde] Wo?
+[T0438 · M.] Jetzt nicht mehr.
+
+  ── rinne ───────────────────────────────────────────────────────
+[T0439 · Bezeichnung] Straßenrinne
+[T0440 · Erster Blick] In der Rinne liegt, was heute schon heruntergefallen ist. Ein Kamm, ein Schuhband, ein Stecken.
+[T0441 · Erster Blick] Kein Kamm. Ein Kamm wäre etwas wert gewesen, den hätte jemand aufgehoben.
+[T0442 · M.] Einer reicht.
+[T0443 · M.] Ein Stecken. Gerade genug für das, was ich vorhabe.
+
+  ── stand ───────────────────────────────────────────────────────
+[T0444 · Bezeichnung] Zeitungsstand
+[T0445 · Erster Blick] Zeitungen, Zigaretten einzeln, und ein Mann, der genau weiß, was jedes Stück kostet.
+[T0446 · Erster Blick] Zigaretten einzeln gab es erst später. 1955 gab es nur ganze Schachteln und keine Kunden dafür.
+[T0447 · M.] Ich habe schon eins.
+[T0448 · M.] Ein halbes Blatt von gestern. Für ihn Abfall, für mich Material.
+[T0449 · M.] Nehmen kann ich nichts. Das hier ist sein Geschäft und nicht mein Feld.
+
+  ── kleister ────────────────────────────────────────────────────
+[T0450 · Bezeichnung] Kleistereimer
+[T0451 · Ansehen] Ein Eimer Kleister. Die Plakatkleber sind zum Essen und haben ihn stehen lassen.
+[T0452 · M.] Ich habe genug.
+[T0453 · M.] Einen Finger voll. Mehr braucht kein Fähnchen.
+
+  ── plakat ──────────────────────────────────────────────────────
+[T0454 · Bezeichnung] Plakatwand
+[T0455 · Erster Blick] Rot mit weißer Schrift. Die Farbe ist noch feucht, man riecht sie bis hierher.
+[T0456 · Erster Blick] Sie war nicht feucht. Sie war seit einer Woche trocken, und ich habe eine Stunde gebraucht, bis ich das gemerkt habe.
+[T0457 · Nehmen] Ein Plakat abreißen, an diesem Tag, in dieser Stadt. Nein.
+[T0458 · M.] Womit denn?
+[T0459 · M.] Das Papier ist schon rot genug.
+[T0460 · M.] Ich drücke das Papier auf die feuchte Stelle.
+[T0461 · M.] Rot. Und weiß, wo es weiß war. Es fehlt eine Farbe.
+
+  ── tribuene ────────────────────────────────────────────────────
+[T0462 · Bezeichnung] Tribüne
+[T0463 · Erster Blick] Rot bespannt, ein Mikrofon, ein Bild von ihm, das größer ist als er.
+[T0464 · Erster Blick] Das Bild war nicht größer als er. Ich war kleiner.
+[T0465 · M.] Ohne Fähnchen gehe ich da nicht hin.
+[T0466 · M.] Ich habe gewunken. Einmal reicht.
+
+  ── gasse ───────────────────────────────────────────────────────
+[T0467 · Bezeichnung] Gasse
+[T0468 · Ansehen] Runter zur Neretva. Da würde ich jetzt lieber sein.
+[T0469 · M.] Der Lehrer zählt gleich wieder. Wer fehlt, ist am Montag dran.
+
+  ── bruecke2 ────────────────────────────────────────────────────
+[T0470 · Bezeichnung] Die alte Brücke
+[T0471 · Erster Blick] Von hier sieht man sie nur halb. Ein Bogen, weiter nichts.
+[T0472 · Erster Blick] Es ist derselbe Bogen wie zu Hause, nur größer und berühmt. Das habe ich damals nicht gewusst.
+
+  ── fahne_k ─────────────────────────────────────────────────────
+[T0473 · Bezeichnung] Fahnenmast
+[T0474 · M.] Sie steht oben. Pünktlich, auf die Minute.
+[T0475 · M.] Die Leine ist an der Kammertür festgemacht.
+[T0476 · M.] Wer die Tür schließt, hisst die Fahne. Das ist keine Vorschrift, aber es ist auch keine Übertretung.
+[T0477 · M.] Die Fahne habe ich. Die Leine hängt frei.
+[T0478 · M.] Ein Mast, eine Leine, keine Fahne. Die Fahne liegt in der Kammer, und die Kammer ist zu.
+[T0479 · M.] Fertig.
+[T0480 · M.] Ohne Fahne kann ich am Mast ziehen, so lange ich will.
+[T0481 · M.] Alles vorbereitet. Jetzt fehlt nur noch die Tür.
+[T0482 · M.] Fahne an die Leine. Und das andere Ende...
+[T0483 · M.] Das andere Ende an die Kammertür.
+[T0484 · Erzaehler] Drei Befehle, eine Bewegung. Das war das Erste, was mir die Armee beigebracht hat, und es war nicht das, was sie beibringen wollte.
+
+  ── bordstein ───────────────────────────────────────────────────
+[T0485 · Bezeichnung] Bordstein
+[T0486 · M.] Weiß bis zum Ende. Es sieht so aus, als hätte es einen Sinn.
+[T0487 · M.] Vierzig Meter Bordstein. Die Hälfte ist von letztem Jahr noch weiß.
+[T0488 · M.] Die andere Hälfte nicht.
+[T0489 · M.] Der ist fertig.
+[T0490 · M.] Ohne Farbe und Pinsel wird das nichts.
+[T0491 · M.] Zwanzig Meter. Der Pinsel ist hart wie ein Brett.
+[T0492 · M.] Fertig. Es glänzt sogar.
+[T0493 · Erzaehler] Am nächsten Tag hat es geregnet und die Farbe war Kalk. Aber die Inspektion war vorbei.
+
+  ── kammer ──────────────────────────────────────────────────────
+[T0494 · Bezeichnung] Kammer
+[T0495 · M.] Verschlossen. Und die Leine ist gespannt.
+[T0496 · M.] Offen. Drinnen: Farbe, Pinsel, eine Fahne und dreißig Jahre Marine.
+[T0497 · M.] Die Materialkammer. Verschlossen, wie sich das gehört.
+[T0498 · M.] Zu ist zu.
+[T0499 · M.] Abgeschlossen. Der Schlüssel hängt beim Narednik.
+[T0500 · M.] Auf.
+[T0501 · M.] Farbe. Pinsel. Eine Fahne, zusammengelegt wie ein Hemd.
+[T0502 · M.] Wenn ich jetzt zumache, komme ich nicht mehr an die Fahne.
+[T0503 · M.] Erst das andere.
+[T0504 · M.] Die Farbe steht noch draußen und der Bordstein ist halb.
+[T0505 · M.] Erst fertig streichen.
+[T0506 · M.] Tür zu.
+[T0507 · M.] Und oben geht die Fahne hoch.
+[T0508 · Narednik Zdravko] MATROSE!
+[T0509 · Narednik Zdravko] ...
+[T0510 · Narednik Zdravko] Neun Uhr. Alles drei. Wie?
+[T0511 · M.] Nach Vorschrift, Narednik.
+[T0512 · Narednik Zdravko] Das ist die schlimmste Antwort, die es gibt, und ich kann nichts dagegen sagen.
+
+  ── material ────────────────────────────────────────────────────
+[T0513 · Bezeichnung] Material in der Kammer
+
+  ── when ────────────────────────────────────────────────────────
+[T0514 · Ansehen] Farbe, Pinsel, Fahne. Genau das, was drei verschiedene Leute gleichzeitig von mir wollen.
+[T0515 · M.] Ich habe alles, was ich brauche.
+
+  ── steg ────────────────────────────────────────────────────────
+[T0516 · Bezeichnung] Steg
+[T0517 · Erster Blick] Zwölf Planken, dann Wasser, dann das Boot. Auf dem Steg raucht man, wenn keiner hinsieht.
+[T0518 · Erster Blick] Neun Planken. Und es hat immer jemand hingesehen.
+[T0519 · M.] Neun Uhr. Nicht jetzt.
+
+  ── boot ────────────────────────────────────────────────────────
+[T0520 · Bezeichnung] Das Boot
+[T0521 · Erster Blick] Ein Torpedoboot. Grau, laut, und es fährt nie weiter als bis Vis.
+[T0522 · Erster Blick] Es ist nie gefahren, solange ich dort war. Nicht ein einziges Mal.
+
+  ── tor_k ───────────────────────────────────────────────────────
+[T0523 · Bezeichnung] Wachtor
+[T0524 · Ansehen] Raus geht hier keiner ohne Zettel. Und Zettel gibt es nur mit Grund.
+[T0525 · Benutzen] Nicht vor der Inspektion.
+
+══════════════════════════════════════════════════════════════════════════
+  KAPITEL 4 BIS 7
+══════════════════════════════════════════════════════════════════════════
+
+  ── amt ─────────────────────────────────────────────────────────
+[T0526 · Bezeichnung] Das Amt
+[T0527 · Erster Blick] Wohnungsamt. Vierundzwanzig Fenster, und hinter jedem sitzt einer, der nicht zuständig ist.
+[T0528 · Erster Blick] Achtzehn Fenster. Ich habe sie später einmal gezählt, als ich wieder dort war.
+
+  ── schalter ────────────────────────────────────────────────────
+[T0529 · Bezeichnung] Schalter
+[T0530 · M.] Der Mann hinter dem Schalter sieht mich zum ersten Mal an wie einen Menschen.
+[T0531 · M.] Ein Schalter mit einer Öffnung, die genau so hoch ist, dass man sich bücken muss.
+
+  ── kiosk ───────────────────────────────────────────────────────
+[T0532 · Bezeichnung] Kiosk
+[T0533 · Erster Blick] Zeitungen, Zigaretten, Kaffee, Streichhölzer, Rasierklingen. Und Neuigkeiten, die teurer sind als alles andere.
+[T0534 · Erster Blick] Kaffee gab es nicht immer. In manchen Monaten gab es keinen, und dann gab es auch keine Neuigkeiten.
+[T0535 · M.] Ein Päckchen Kaffee. Er hat es mir hingelegt, ohne etwas zu sagen.
+[T0536 · M.] Ohne Geld nehme ich hier nichts.
+
+  ── fica ────────────────────────────────────────────────────────
+[T0537 · Bezeichnung] Der Fića
+[T0538 · M.] Er läuft. Nicht gut, aber er läuft.
+[T0539 · Erster Blick] Ein Zastava 750, Haube offen. Er steht hier seit drei Tagen und der Kioskmann redet von nichts anderem.
+[T0540 · Erster Blick] Vier Tage. Und er hat von nichts anderem geredet, weil er sonst über die Wohnung hätte reden müssen, die er nicht bekommt.
+[T0541 · M.] Fertig.
+[T0542 · M.] Die Düse ist verstopft. Man bräuchte eine neue.
+[T0543 · M.] Erst soll er mir sagen, was er hat. Sonst repariere ich das Falsche.
+[T0544 · M.] Düse raus, Düse rein.
+[T0545 · M.] Anlassen.
+[T0546 · Erzaehler] Er ist beim dritten Mal angesprungen. Das ist bei einem Fića ein sehr gutes Ergebnis.
+
+  ── tram ────────────────────────────────────────────────────────
+[T0547 · Bezeichnung] Straßenbahn
+[T0548 · Erster Blick] Die Sechser. Sie kommt alle elf Minuten und ist immer voll.
+[T0549 · Erster Blick] Alle zwanzig. Und sie war nicht immer voll, nur wenn ich sie brauchte.
+
+  ── stadion ─────────────────────────────────────────────────────
+[T0550 · Bezeichnung] Stadion
+[T0551 · Erster Blick] Grbavica. Von draußen ein Betonring, von drinnen der einzige Ort, wo alle dasselbe wollen.
+[T0552 · Erster Blick] Nicht alle. Aber näher dran als sonst irgendwo.
+[T0553 · Benutzen] Heute spielt niemand. Heute ist Training, und Training kostet nichts, weil man nichts sieht.
+
+  ── lena_s ──────────────────────────────────────────────────────
+[T0554 · Bezeichnung] L.
+[T0555 · Ansehen] Sie hat den Antrag zweimal gelesen, bevor ich ihn überhaupt hatte.
+
+  ── spind ───────────────────────────────────────────────────────
+[T0556 · Bezeichnung] Spind
+[T0557 · Erster Blick] Vier Spinde. Auf einem klebt ein Streifen mit meinem Namen, falsch geschrieben.
+[T0558 · Erster Blick] Nicht falsch. Nur ohne die Zeichen, die es auf der Schreibmaschine nicht gab.
+[T0559 · M.] Ich habe, was ich brauche.
+[T0560 · M.] Ein Spind mit Arbeitszeug. Ich weiß noch nicht, was ich davon brauche.
+[T0561 · M.] Ein Maulschlüssel. Dreizehn.
+[T0562 · M.] Auf der Skizze steht dreizehn. Das verstehe ich.
+
+  ── zettel_w ────────────────────────────────────────────────────
+[T0563 · Bezeichnung] Der Zettel
+
+  ── when ────────────────────────────────────────────────────────
+[T0564 · Erster Blick] Sieben Wörter in Schreibschrift. Ich erkenne eine 12 und einen Pfeil. Der Rest ist ein Zaun.
+[T0565 · Erster Blick] Es waren fünf Wörter. Zwei davon habe ich für Wörter gehalten, es waren Kürzel.
+[T0566 · Nehmen] Ich habe ihn. In der Hand hilft er auch nicht mehr.
+
+  ── tafel ───────────────────────────────────────────────────────
+[T0567 · Bezeichnung] Aushangtafel
+[T0568 · M.] Eine Tafel voller Schrift. Ich fange gar nicht erst an.
+[T0569 · M.] Auf der Tafel ist ein Bild: eine Hand, ein Kreis, ein rotes Band.
+[T0570 · M.] Und daneben eine Zahl. Zwölf.
+[T0571 · M.] Zwölf steht auch auf meinem Zettel. Aber welche Zwölf ist welche.
+
+  ── maschine ────────────────────────────────────────────────────
+[T0572 · Bezeichnung] Die Maschine
+[T0573 · M.] Sie läuft. Zwölf Stück in der Stunde, wie es scheint.
+[T0574 · Erster Blick] Eine Presse. Ein Handrad, ein Fußschalter, zwei Lampen und ein Schild, das ich nicht lesen kann.
+[T0575 · Erster Blick] Es war keine Presse. Es war eine Stanze, und der Unterschied hat mich später zwei Finger fast gekostet.
+[T0576 · M.] Sie läuft.
+[T0577 · M.] Ich könnte alles Mögliche drücken.
+[T0578 · M.] Am ersten Tag drückt man nichts, was man nicht versteht.
+[T0579 · M.] Die Skizze zeigt einen Schlüssel. Ich habe keinen.
+[T0580 · M.] Mutter lösen. Anschlag auf zwölf. Mutter fest.
+[T0581 · M.] Fußschalter.
+[T0582 · M.] Sie läuft.
+[T0583 · Erzaehler] Zwölf Millimeter. Nicht Maschine zwölf. Zwölf Millimeter Anschlag. Das ganze Wort war eine Maßangabe.
+
+  ── kisten_w ────────────────────────────────────────────────────
+[T0584 · Bezeichnung] Werkstückkisten
+[T0585 · Ansehen] Pappkisten mit Werkstücken. Auf der Seite ist Platz, auf den man mit Bleistift zeichnen kann.
+
+  ── kantine ─────────────────────────────────────────────────────
+[T0586 · Bezeichnung] Kantinentür
+[T0587 · Erster Blick] Hinter der Tür reden sie laut und alle gleichzeitig. Ich verstehe drei Wörter von hundert.
+[T0588 · Erster Blick] Zwei. Und eins davon habe ich falsch verstanden.
+[T0589 · M.] Pause ist, wenn die Maschine läuft. Nicht vorher.
+
+  ── meister_w ───────────────────────────────────────────────────
+[T0590 · Bezeichnung] Meister Krause
+[T0591 · Ansehen] Klemmbrett, Kittel, Bleistift hinterm Ohr. Er ist nicht unfreundlich, er ist nur schon woanders.
+
+  ── yilmaz_w ────────────────────────────────────────────────────
+[T0592 · Bezeichnung] Yılmaz
+[T0593 · Ansehen] Derselbe Overall wie meiner, nur eingelaufen. Er ist ein Jahr länger hier.
+
+  ── zelle ───────────────────────────────────────────────────────
+[T0594 · Bezeichnung] Telefonzelle
+[T0595 · Erster Blick] Gelb, verglast, innen wärmer als draußen. Der Hörer riecht nach allen, die vor mir da waren.
+[T0596 · Erster Blick] Sie war nicht wärmer. Sie war nur windstill, und das habe ich für Wärme gehalten.
+
+  ── apparat ─────────────────────────────────────────────────────
+[T0597 · Bezeichnung] Der Apparat
+[T0598 · M.] Münzschlitz, Wählscheibe, ein Hörer an einem Metallschlauch.
+[T0599 · M.] Ich habe noch 
+[T0600 · M.]  Markstücke. Jedes ist ungefähr eine Minute, wenn die Leitung steht.
+
+  ── paket ───────────────────────────────────────────────────────
+[T0601 · Bezeichnung] Das Paket
+[T0602 · M.] Zu, beschriftet, erklärt. Jetzt hängt es an anderen.
+[T0603 · M.] Ein leerer Karton. Alles, was hineinkommt, muss auch wieder herauskommen — drüben.
+[T0604 · M.] Drin sind: 
+[T0605 · M.] Es ist zu.
+[T0606 · M.] Noch nicht voll. Und ein halb volles Paket schickt man nicht über tausend Kilometer.
+[T0607 · M.] Ohne Zollerklärung bleibt es in Villach stehen.
+[T0608 · M.] Erst muss ich wissen, was auf das Formular gehört. Sonst kommt es zurück.
+[T0609 · M.] Zukleben. Schnur drum. Adresse.
+[T0610 · M.] „Gebrauchte Kleidung und Lebensmittel. Geschenk. Ohne Handelswert."
+[T0611 · Erzaehler] Es ist angekommen. Sechs Wochen später, aber es ist angekommen.
+
+  ── schaufenster ────────────────────────────────────────────────
+[T0612 · Bezeichnung] Schaufenster
+[T0613 · Erster Blick] Vier Fernseher, vier Mal dasselbe Bild. Ein Mann am Rednerpult, und darunter läuft Schrift durch.
+[T0614 · Erster Blick] Es war nicht dasselbe Bild. Auf einem lief Sport. Den habe ich nicht angesehen.
+[T0615 · M.] Ich habe genug gesehen.
+
+  ── post ────────────────────────────────────────────────────────
+[T0616 · Bezeichnung] Postamt
+[T0617 · Ansehen] Gelb, geheizt, und drinnen sitzt jemand, der die Regeln kennt.
+[T0618 · M.] Ich habe das Formular.
+[T0619 · M.] Ein grüner Vordruck. Zwei Zeilen, und in diesen zwei Zeilen steckt alles.
+
+  ── laden ───────────────────────────────────────────────────────
+[T0620 · Bezeichnung] Der Laden
+[T0621 · Ansehen] Ein Laden, in dem es alles gibt, was man einpacken kann.
+[T0622 · M.] Medikamente. Ich weiß nicht, welche, und ich weiß nicht, ob sie durchkommen.
+[T0623 · M.] Ich sollte fragen.
+[T0624 · M.] Mehr passt nicht in den Karton, und mehr wäre auch verdächtig.
+
+  ── heim ────────────────────────────────────────────────────────
+[T0625 · Bezeichnung] Nach Hause
+[T0626 · Ansehen] Zweihundert Meter, dritter Stock, und L. sitzt vor dem Fernseher, ohne ihn zu sehen.
+[T0627 · M.] Nicht so. Nicht bevor beides steht.
+
+  ── rohbau ──────────────────────────────────────────────────────
+[T0628 · Bezeichnung] Der Rohbau
+[T0629 · M.] Zwei Geschosse und ein Dach. Von hier aus sieht es aus wie ein Haus.
+[T0630 · Erster Blick] Bodenplatte, vier Stützen, eine Decke. Aus dem Dach stehen die Eisen in den Himmel, wie überall hier.
+[T0631 · Erster Blick] Die Eisen standen elf Jahre so. Das ist hier keine Bauruine, das ist eine Absichtserklärung.
+[T0632 · M.] Fertig für dieses Jahr.
+[T0633 · M.] Ohne Steine kein Mauerwerk.
+[T0634 · M.] Ohne Mörtel liegen die Steine nur nebeneinander.
+[T0635 · M.] Ich könnte mauern.
+[T0636 · M.] Aber wenn das Papier nicht kommt, mauere ich für den Bagger.
+[T0637 · M.] Erst die zwölf Zentimeter. Sonst mauere ich in Jures Garten.
+[T0638 · M.] Stein. Mörtel. Stein.
+[T0639 · Jure] Du legst sie zu eng.
+[T0640 · M.] Ich weiß.
+[T0641 · Jure] Und?
+[T0642 · M.] Und ich lege sie trotzdem so.
+[T0643 · Erzaehler] Es ist der einzige Streit, den wir in vierzehn Jahren hatten, und er hat vier Sätze gedauert.
+[T0644 · Erzaehler] Dann wurde es Abend.
+
+  ── mischer ─────────────────────────────────────────────────────
+[T0645 · Bezeichnung] Betonmischer
+[T0646 · M.] Er dreht sich. Solange er sich dreht, geht es voran.
+[T0647 · M.] Ein Mischer, geliehen. Er läuft, wenn man ihn anwirft und dabei etwas sagt, das man nicht aufschreibt.
+[T0648 · M.] Läuft.
+[T0649 · M.] Erst die Steine. Mörtel wartet nicht.
+[T0650 · M.] Zement, Sand, Wasser aus der Zisterne. Drei zu eins.
+[T0651 · Jure] Vier zu eins.
+[T0652 · M.] Drei.
+[T0653 · Jure] Bei dir zu Hause vielleicht.
+[T0654 · M.] Das hier ist zu Hause, Jure.
+
+  ── steine_b ────────────────────────────────────────────────────
+[T0655 · Bezeichnung] Steinhaufen
+[T0656 · M.] Genug für eine Wand. Mehr brauche ich dieses Jahr nicht.
+[T0657 · Erster Blick] Kalkstein aus dem Steinbruch bei Zaostrog. Es fehlt ungefähr ein Drittel.
+[T0658 · Erster Blick] Es fehlte die Hälfte. Und der Steinbruch war nicht bei Zaostrog.
+[T0659 · M.] Sie liegen gut da, wo sie liegen.
+[T0660 · M.] Allein bekomme ich sie nicht rüber.
+[T0661 · M.] Und fragen muss man hier richtig.
+[T0662 · Jure] Zu zweit. Du hebst, ich rede.
+[T0663 · M.] Wie immer.
+[T0664 · Erzaehler] Er hat gehoben. Er redet nur, damit man ihn nicht dabei lobt.
+
+  ── amtstisch ───────────────────────────────────────────────────
+[T0665 · Bezeichnung] Klapptisch
+[T0666 · M.] Ein Stempel, zwei Unterschriften und elf Jahre. Sie gilt rückwirkend.
+[T0667 · M.] Vier Papiere, mit Steinen beschwert.
+[T0668 · M.] Auf dreien steht dasselbe. Auf dem vierten fehlt eine Unterschrift.
+[T0669 · M.] Sie liegt hier und gilt.
+[T0670 · M.] Ich weiß nicht, wer unterschreiben muss. Jure weiß es.
+[T0671 · M.] Jure hat einen Neffen im Amt in Makarska.
+[T0672 · Jure] Kein Neffe. Der Sohn meiner Schwägerin.
+[T0673 · M.] Also ein Neffe.
+[T0674 · Jure] Also nicht.
+[T0675 · Erzaehler] Am Ende war es ein Neffe. Und es hat nichts gekostet außer zwei Nachmittage und einem Mittagessen.
+[T0676 · Nehmen] Die Papiere bleiben unter den Steinen. Hier weht es.
+
+  ── zollstock_b ─────────────────────────────────────────────────
+[T0677 · Bezeichnung] Zollstock
+[T0678 · Ansehen] Gelbes Holz, deutsche Marke. Seit 1974 dasselbe Stück.
+[T0679 · M.] Ich habe ihn.
+[T0680 · M.] Den nehme ich. Ohne ihn baue ich nichts.
+
+  ── grenze ──────────────────────────────────────────────────────
+[T0681 · Bezeichnung] Grundstücksgrenze
+[T0682 · M.] Zwölf Zentimeter. Die Mauer steht jetzt zwölf Zentimeter weiter innen.
+[T0683 · M.] Ein Stein im Boden mit einem eingehauenen Kreuz. Das ist die Grenze.
+[T0684 · M.] Die Bodenplatte ist ein Stück darüber hinaus.
+[T0685 · M.] Erledigt.
+[T0686 · M.] Messen wäre ehrlicher als schätzen.
+[T0687 · M.] Zwölf Zentimeter.
+[T0688 · Jure] Zwölf Zentimeter sieht kein Mensch.
+[T0689 · M.] Ich sehe sie.
+[T0690 · M.] Die Mauer geht zwölf Zentimeter nach innen.
+[T0691 · Erzaehler] Zwölf Zentimeter Wohnfläche. Und dreißig Jahre nichts, worüber man reden muss.
+
+  ── meer_b ──────────────────────────────────────────────────────
+[T0692 · Bezeichnung] Die Bucht
+[T0693 · Erster Blick] Von hier oben sieht man bis Hvar. Deswegen dieses Grundstück und kein anderes.
+[T0694 · Erster Blick] Man sieht nicht bis Hvar. Man sieht Brač. Ich habe es dreizehn Jahre falsch gesagt und niemand hat mich korrigiert.
+
+  ── gestalt_b ───────────────────────────────────────────────────
+[T0695 · Bezeichnung] Jemand am Hang
+
+  ── when ────────────────────────────────────────────────────────
+[T0696 · Ansehen] Da kommt einer den Hang herauf. Um diese Zeit kommt hier niemand herauf.
+
+══════════════════════════════════════════════════════════════════════════
+  SCHALTER, TELEFON, KOMBINATIONEN
+══════════════════════════════════════════════════════════════════════════
+
+  ── redeSchalter ────────────────────────────────────────────────
+[T0697 · Erzaehler] Zwei Zimmer, dritter Stock, Grbavica. Bezugsfertig in vier Monaten.
+[T0698 · M.] Vier Monate.
+[T0699 · Erzaehler] Es wurden neun. Aber ich hatte den Schlüssel schon in der Hand, und das ist ein Unterschied.
+[T0700 · M.] Ich muss es L. sagen.
+[T0701 · M.] Hier bin ich fertig. Jetzt zu L.
+[T0702 · Erzaehler] Der Mann hinter dem Schalter hat nicht aufgesehen.
+[T0703 · M.] Guten Tag. Ich wollte —
+[T0704 · Erzaehler] Formular. Ausfüllen. Nächster.
+[T0705 · M.] Ich habe es beim letzten Mal ausgefüllt.
+[T0706 · Erzaehler] Dann ist es abgelaufen. Formular. Ausfüllen. Nächster.
+[T0707 · Erzaehler] Ich habe es ausgefüllt. Es hat zwanzig Minuten gedauert, und die vierte Seite fragte nach dem, was auf der ersten stand.
+[T0708 · M.] Der Antrag ist ausgefüllt.
+[T0709 · Erzaehler] Stempel fehlt. Zimmer vierzehn.
+[T0710 · M.] Zimmer vierzehn hat zu.
+[T0711 · Erzaehler] Donnerstags.
+[T0712 · M.] Heute ist Donnerstag.
+[T0713 · Erzaehler] Er hat genickt. Zustimmend. Das Gespräch war für ihn damit beendet und logisch abgeschlossen.
+[T0714 · M.] Ich brauche einen Namen. Irgendwo in diesem Haus sitzt einer, der einen Namen hat.
+[T0715 · M.] Ich möchte zu Dževad.
+[T0716 · Erzaehler] Er hat zum ersten Mal aufgesehen.
+[T0717 · Erzaehler] Dževad bin ich.
+[T0718 · M.] ...
+[T0719 · Erzaehler] Und? Was wollen Sie?
+[T0720 · M.] Nichts. Noch nichts.
+[T0721 · Erzaehler] Man geht nicht mit leeren Händen zu jemandem, dessen Namen man gerade erst erfahren hat. Nicht weil er etwas erwartet. Weil man sonst wie ein Bittsteller aussieht, und Bittsteller bearbeitet man zuletzt.
+[T0722 · M.] Der Antrag. Und der Kaffee ist mir übrig geblieben, ich trinke keinen.
+[T0723 · Erzaehler] Ich trinke sechs Tassen am Tag. Er wusste das nicht und es war ihm auch egal.
+[T0724 · Erzaehler] Er hat den Kaffee weggeräumt, ohne ihn anzusehen, und den Antrag genommen.
+[T0725 · Erzaehler] Ein Stempel. Zwei Sekunden.
+[T0726 · Erzaehler] Elf Monate hatte es gedauert, bis diese zwei Sekunden möglich waren.
+[T0727 · Erzaehler] Kommen Sie Montag wegen der Zuweisung.
+[T0728 · M.] Ich komme Montag.
+[T0729 · Antwort] Rosko Polje. Der Nachbar hat ein Telefon.
+[T0730 · Antwort] Split. Die Nummer, die ich seit zehn Jahren habe.
+
+  ── when ────────────────────────────────────────────────────────
+[T0731 · Antwort] Split. Mit der neuen Vorwahl.
+[T0732 · Antwort] (Hörer auflegen.)
+
+  ── telefonieren ────────────────────────────────────────────────
+[T0733 · M.] Ich habe durchgekommen. Ein zweites Mal wäre Verschwendung.
+[T0734 · M.] Kein Geld mehr im Schlitz.
+[T0735 · Frau Sommer] Warten Sie. Ich wechsle Ihnen einen Schein.
+[T0736 · Erzaehler] Sie hat den Schalter verlassen, um mir vier Markstücke zu geben. Das durfte sie nicht.
+[T0737 · M.] Münze rein. Wählscheibe.
+[T0738 · Erzaehler] Kein Freizeichen. Nicht besetzt. Nichts.
+[T0739 · M.] Nach Bosnien geht gar nichts mehr.
+[T0740 · Erzaehler] Die Münze kam nicht zurück. Sie kam nie zurück, auch wenn niemand abhob.
+[T0741 · Erzaehler] Kein Anschluss unter dieser Nummer.
+[T0742 · M.] Die Nummer habe ich seit zehn Jahren.
+[T0743 · Erzaehler] Die Nummer stimmte. Das Land davor nicht mehr.
+[T0744 · M.] Vielleicht weiß die Frau von der Post etwas.
+[T0745 · Erzaehler] Es tutet. Zweimal. Dann nimmt jemand ab.
+[T0746 · M.] Ich bin es.
+[T0747 · Erzaehler] Sie leben. Alle sechs. Sie sind bei der Schwester in Makarska.
+[T0748 · M.] Und das Haus?
+[T0749 · Erzaehler] ...
+[T0750 · M.] Gut. Hauptsache, ihr seid alle da.
+[T0751 · Erzaehler] Das Tuten, das bedeutet, dass die Münze gleich alle ist.
+[T0752 · M.] Ich schicke ein Paket. Nächste Woche. Hörst du —
+[T0753 · Erzaehler] Sechzig Sekunden. Für sechzig Sekunden habe ich vier Wochen gebraucht.
+
+  ── useItemOn ───────────────────────────────────────────────────
+[T0754 · M.] Die ist gefettet.
+[T0755 · M.] Ich reibe die Schwarte über die Achse, bis sie glänzt.
+[T0756 · M.] Fertig. Jetzt geht das Rad drauf.
+[T0757 · Erzaehler] Die Schwarte habe ich zurückgebracht. Sie lag drei Tage später noch im Speiseplan.
+[T0758 · M.] Ich habe alles zusammen. Es fehlt nur noch etwas Blaues.
+[T0759 · M.] Ausgefüllt wird es hier draußen. Drinnen ist zu viel Publikum.
+[T0760 · M.] Hier gibt es nichts zu messen.
+[T0761 · M.] Das passt nicht zusammen.
+
+  ── useItemOnItem ───────────────────────────────────────────────
+[T0762 · M.] Es ist fertig.
+[T0763 · M.] Erst muss das Papier Farbe bekommen. Grau winkt niemand.
+[T0764 · M.] Rot und weiß habe ich. Blau fehlt, und der Stern auch.
+[T0765 · M.] Beides zusammen ergibt einen weißen Bordstein. Aber nicht hier in der Luft.
+[T0766 · M.] Nein.
+
+══════════════════════════════════════════════════════════════════════════
+  DIALOGE
+══════════════════════════════════════════════════════════════════════════
+
+  ── luka ────────────────────────────────────────────────────────
+[T0767 · Antwort] Was machst du da?
+[T0768 · Antwort] Wo ist dein Ball?
+
+  ── when ────────────────────────────────────────────────────────
+[T0769 · Antwort] Frag deine Baka, die weiß das besser.
+[T0770 · Antwort] Was ist in der Kiste, willst du wissen.
+[T0771 · Antwort] Setz dich. Ich erzähle dir etwas.
+[T0772 · Antwort] (Nichts sagen.)
+
+  ── otac ────────────────────────────────────────────────────────
+[T0773 · Antwort] Elf sind es.
+[T0774 · Antwort] Zwölf. Sie stand im Schatten.
+
+  ── when ────────────────────────────────────────────────────────
+[T0775 · Antwort] Was ist heute zu tun?
+[T0776 · Antwort] Sitzt du da den ganzen Tag?
+[T0777 · Antwort] (Nichts.)
+[T0778 · Antwort] Das Rad ist ab.
+[T0779 · Antwort] Womit soll ich es festmachen?
+[T0780 · Antwort] Es sitzt. Sieh es dir an.
+[T0781 · Antwort] Warum gehen wir nicht auch weg?
+[T0782 · Antwort] (Nichts.)
+
+  ── majka ───────────────────────────────────────────────────────
+[T0783 · Antwort] Ich hole das Mehl.
+[T0784 · Antwort] Die Achse ist trocken. Darf ich die Schwarte?
+
+  ── when ────────────────────────────────────────────────────────
+[T0785 · Antwort] Der Sack ist leer.
+[T0786 · Antwort] Wann gibt es etwas zu essen?
+[T0787 · Antwort] (Weitergehen.)
+
+  ── andrin ──────────────────────────────────────────────────────
+[T0788 · Antwort] Warten Sie auf jemanden?
+[T0789 · Antwort] Was steht in dem Buch?
+[T0790 · Antwort] Wer hat die Brücke gebaut?
+[T0791 · Antwort] Wohnen Sie hier?
+[T0792 · Antwort] Ich muss weiter. Das Mehl.
+
+  ── when ────────────────────────────────────────────────────────
+[T0793 · Antwort] (Nichts sagen.)
+
+  ── lehrer ──────────────────────────────────────────────────────
+[T0794 · Antwort] Ich habe kein Fähnchen.
+[T0795 · Antwort] Wo bekommt man denn eins?
+
+  ── when ────────────────────────────────────────────────────────
+[T0796 · Antwort] Darf ich Ihren Tintenstift?
+[T0797 · Antwort] Warum müssen wir überhaupt winken?
+[T0798 · Antwort] (Nichts.)
+
+  ── stand ───────────────────────────────────────────────────────
+[T0799 · Antwort] Was kostet die Zeitung?
+[T0800 · Antwort] Der Umzug kommt diese Straße herunter.
+
+  ── when ────────────────────────────────────────────────────────
+[T0801 · Antwort] Haben Sie etwas von gestern?
+[T0802 · Antwort] (Weitergehen.)
+
+  ── zdravko ─────────────────────────────────────────────────────
+[T0803 · Antwort] Befehle, Narednik?
+[T0804 · Antwort] Alle drei um neun Uhr?
+
+  ── when ────────────────────────────────────────────────────────
+[T0805 · Antwort] Der Kammerschlüssel.
+[T0806 · Antwort] Hier, der Schlüssel. Kammer ist zu.
+[T0807 · Antwort] Wer ist Admiral Pivopija?
+[T0808 · Antwort] (Stillgestanden.)
+
+  ── lena ────────────────────────────────────────────────────────
+[T0809 · Antwort] Ich gehe zum Amt.
+[T0810 · Antwort] Zwei Zimmer werden nicht reichen.
+[T0811 · Antwort] Was soll ich denen sagen?
+
+  ── when ────────────────────────────────────────────────────────
+[T0812 · Antwort] Ich habe den Schlüssel.
+[T0813 · Antwort] (Nichts.)
+
+  ── kiosk ───────────────────────────────────────────────────────
+[T0814 · Antwort] Was ist mit Ihrem Auto?
+[T0815 · Antwort] Ich hätte eine Düse. Zufällig.
+
+  ── when ────────────────────────────────────────────────────────
+[T0816 · Antwort] Kennen Sie jemanden im Wohnungsamt?
+[T0817 · Antwort] Einen Kaffee für den Herrn am Schalter.
+[T0818 · Antwort] (Weitergehen.)
+
+  ── safet ───────────────────────────────────────────────────────
+[T0819 · Antwort] Ein Autogramm für meine Jungs?
+
+  ── when ────────────────────────────────────────────────────────
+[T0820 · Antwort] Sie spielen gut.
+[T0821 · Antwort] (Weitergehen.)
+
+  ── krause ──────────────────────────────────────────────────────
+[T0822 · Antwort] (Ihn ansehen und warten.)
+[T0823 · Antwort] (Auf den Zettel zeigen.)
+
+  ── when ────────────────────────────────────────────────────────
+[T0824 · Antwort] (Auf die Maschine zeigen und nicken.)
+[T0825 · Antwort] (Nichts sagen.)
+
+  ── yilmaz ──────────────────────────────────────────────────────
+[T0826 · Antwort] (Den Zettel hinhalten.)
+
+  ── when ────────────────────────────────────────────────────────
+[T0827 · Antwort] Türkisch? Deutsch?
+[T0828 · Antwort] Wie lange sind Sie schon hier?
+[T0829 · Antwort] Was ist zwölf?
+[T0830 · Antwort] (Nichts.)
+
+  ── sommer ──────────────────────────────────────────────────────
+[T0831 · Antwort] Kommt ein Paket nach Split durch?
+[T0832 · Antwort] Was schreibt man in die Zollerklärung?
+
+  ── when ────────────────────────────────────────────────────────
+[T0833 · Antwort] Die Leitung nach Split ist tot.
+[T0834 · Antwort] Medikamente — darf ich die schicken?
+[T0835 · Antwort] (Weitergehen.)
+
+  ── lena_entscheidung ───────────────────────────────────────────
+[T0836 · Antwort] Ihm sagen, was im Radio kam.
+[T0837 · Antwort] Nichts sagen. Nicht heute.
+
+  ── dedo ────────────────────────────────────────────────────────
+[T0838 · Antwort] Was ist das für ein Hut?
+
+  ── when ────────────────────────────────────────────────────────
+[T0839 · Antwort] Was machst du hier?
+[T0840 · Antwort] Wie alt bist du eigentlich?
+[T0841 · Antwort] Kennen wir uns?
+[T0842 · Antwort] (Weitergehen.)
+
+  ── mann ────────────────────────────────────────────────────────
+[T0843 · Antwort] Und?
+[T0844 · Antwort] Du frierst.
+[T0845 · Antwort] (Nichts sagen.)
+
+  ── jure ────────────────────────────────────────────────────────
+[T0846 · Antwort] Die Steine liegen falsch.
+[T0847 · Antwort] Wer unterschreibt so etwas?
+[T0848 · Antwort] Jure. Ich brauche Hilfe.
+
+  ── when ────────────────────────────────────────────────────────
+[T0849 · Antwort] Warum bist du eigentlich geblieben?
+[T0850 · Antwort] (Nichts.)
+
+  ── gestalt ─────────────────────────────────────────────────────
+[T0851 · Antwort] Guten Abend.
+
+  ── l_was ───────────────────────────────────────────────────────
+[T0852 · Luka] Nichts. Ich langweile mich.
+[T0853 · M.] Das ist auch etwas.
+[T0854 · Luka] Papa sagt, du sagst so was, damit man aufhört zu fragen.
+[T0855 · M.] Dein Papa ist ein kluger Mann.
+
+  ── l_ball ──────────────────────────────────────────────────────
+[T0856 · Luka] In der Garage. Ich komme nicht dran, da ist alles zu.
+[T0857 · M.] In der Garage ist nichts, was du brauchst.
+[T0858 · Luka] Mein Ball.
+[T0859 · M.] ...
+[T0860 · M.] Also gut. Aber du fasst nichts an.
+[T0861 · Erzaehler] Er hat etwas angefasst.
+
+  ── l_baka ──────────────────────────────────────────────────────
+[T0862 · Luka] Baka sagt, ich soll dich fragen.
+[T0863 · M.] Baka sagt viel.
+[T0864 · Luka] Sie sagt, du erzählst nie was.
+[T0865 · M.] Es gibt nichts zu erzählen. Ich bin geboren, ich habe gearbeitet, jetzt sitze ich hier.
+[T0866 · Luka] Das war jetzt aber schnell.
+
+  ── l_kiste ─────────────────────────────────────────────────────
+[T0867 · Luka] Ja.
+[T0868 · M.] Nichts Besonderes.
+[T0869 · Luka] Warum machst du sie dann nicht auf?
+[T0870 · M.] Weil nichts Besonderes drin ist.
+[T0871 · Erzaehler] Er hat mich angesehen, wie ein Neunjähriger jemanden ansieht, der gerade schlecht gelogen hat.
+
+  ── l_finale ────────────────────────────────────────────────────
+[T0872 · Luka] Über was?
+[T0873 · M.] Über eine Kiste.
+[T0874 · Erzaehler] Er hat sich hingesetzt, ohne zu fragen, wie lange es dauert.
+
+  ── o_rad ───────────────────────────────────────────────────────
+[T0875 · Vater] Ich sehe es.
+[T0876 · M.] Machst du es?
+[T0877 · Vater] Nein.
+[T0878 · Vater] Ich habe zwölf Jahre gebraucht, bis mein Vater mich einen Karren hat richten lassen. Du bist elf. Du bist mir voraus.
+[T0879 · M.] Und wenn ich es falsch mache?
+[T0880 · Vater] Dann machst du es zweimal.
+
+  ── o_womit ─────────────────────────────────────────────────────
+[T0881 · Vater] Was hält Holz?
+[T0882 · M.] Holz?
+[T0883 · Vater] Bis zum ersten Stein.
+[T0884 · Vater] Was hält Eisen?
+[T0885 · M.] Eisen.
+[T0886 · Vater] Und wo ist auf diesem Hof Eisen, das man entbehren kann?
+[T0887 · M.] ...
+[T0888 · Vater] Denk nach. Und geh nicht ins Haus, deine Mutter hat genug zu tun.
+
+  ── o_fertig ────────────────────────────────────────────────────
+[T0889 · Vater] Hm.
+[T0890 · Vater] Der Splint vom Brunnen.
+[T0891 · M.] Der Eimer hängt an einer Schnur.
+[T0892 · Vater] Ich weiß.
+[T0893 · Vater] Fahr los. Und sag dem Müller, ich zähle mit.
+[T0894 · Erzaehler] Das war das Lob. Es hat mir für zwei Jahre gereicht.
+
+  ── o_weggehen ──────────────────────────────────────────────────
+[T0895 · Vater] Wohin?
+[T0896 · M.] Der Sohn vom Ivo ist in Deutschland.
+[T0897 · Vater] Der Sohn vom Ivo hat kein Feld.
+[T0898 · Vater] Wer weggeht, hat nichts zu verlieren. Wir haben das hier.
+[T0899 · Erzaehler] Achtzehn Jahre später bin ich weggegangen. Er hat mich zum Bus gebracht und nichts gesagt.
+
+  ── m_mehl ──────────────────────────────────────────────────────
+[T0900 · Mutter] Mit dem Karren?
+[T0901 · M.] Ja.
+[T0902 · Mutter] Der Karren steht schief seit Dienstag.
+[T0903 · M.] Ich mache ihn.
+[T0904 · Mutter] Dann mach ihn. Aber die Achse ist trocken, und trocken geht kein Rad drauf.
+[T0905 · Erzaehler] Sie hat nicht gesagt, womit man eine Achse fettet. Sie hat gewartet, ob ich es weiß.
+
+  ── m_achse ─────────────────────────────────────────────────────
+[T0906 · Mutter] Die Schwarte hängt am Haken.
+[T0907 · M.] Danke.
+[T0908 · Mutter] Und bring sie zurück. Die ist noch gut.
+[T0909 · M.] Zurückbringen? Nach dem Fetten?
+[T0910 · Mutter] Du hast mich verstanden.
+[T0911 · Erzaehler] Ich habe sie zurückgebracht. Sie lag drei Tage später noch im Speiseplan.
+
+  ── m_sack ──────────────────────────────────────────────────────
+[T0912 · Mutter] Ich weiß.
+[T0913 · M.] Für wie lange reicht es noch?
+[T0914 · Mutter] Bis du zurück bist.
+[T0915 · Erzaehler] Das war keine Aufmunterung. Das war eine Zeitangabe.
+
+  ── m_essen ─────────────────────────────────────────────────────
+[T0916 · Mutter] Wenn das Mehl da ist.
+[T0917 · M.] Und wenn es nicht kommt?
+[T0918 · Mutter] Dann gibt es Zwiebeln.
+[T0919 · Erzaehler] Es gab oft Zwiebeln. Ich esse sie bis heute gern, und ich weiß nicht, ob das trotzig ist oder ehrlich.
+
+  ── ow_elf ──────────────────────────────────────────────────────
+[T0920 · Vater] Zähl noch mal.
+[T0921 · M.] Ich habe zweimal gezählt.
+[T0922 · Vater] Dann hast du zweimal dasselbe falsch gemacht.
+[T0923 · Vater] Du zählst, was hell ist.
+[T0924 · M.] ...
+
+  ── ow_zwoelf ───────────────────────────────────────────────────
+[T0925 · Vater] Gut.
+[T0926 · Vater] Dann geh runter. Der Karren steht schief seit Dienstag, und im Sack ist nichts mehr.
+[T0927 · M.] Allein?
+[T0928 · Vater] Ich komme nach. Einer muss bei den Ziegen bleiben.
+[T0929 · Vater] Bei allen zwölf.
+[T0930 · Erzaehler] Er ist nachgekommen. Er ist immer nachgekommen, und immer erst dann, wenn nichts mehr zu machen war.
+
+  ── ow_auftrag ──────────────────────────────────────────────────
+[T0931 · Vater] Karren richten. Mehl holen. Vor dem Dunkeln zurück.
+[T0932 · M.] Und wenn ich den Karren nicht hinkriege?
+[T0933 · Vater] Dann kriegst du ihn morgen hin.
+[T0934 · Erzaehler] Es hat nie jemand gesagt, dass etwas nicht geht. Es hieß immer nur, dass es länger dauert.
+
+  ── ow_sitzen ───────────────────────────────────────────────────
+[T0935 · Vater] Nein.
+[T0936 · M.] Es sieht so aus.
+[T0937 · Vater] Ich passe auf.
+[T0938 · M.] Worauf?
+[T0939 · Vater] Darauf, dass du aufpasst.
+[T0940 · Erzaehler] Vierzig war er da. Er sah aus wie sechzig, und ich habe ihn für alt gehalten.
+
+  ── a_warten ────────────────────────────────────────────────────
+[T0941 · Der Fremde] Nein. Ich sehe nur.
+[T0942 · M.] Was denn?
+[T0943 · Der Fremde] Die Brücke.
+[T0944 · M.] Die ist immer da.
+[T0945 · Der Fremde] Eben.
+
+  ── a_buch ──────────────────────────────────────────────────────
+[T0946 · Der Fremde] Noch nichts. Ich schreibe es.
+[T0947 · M.] Worüber?
+[T0948 · Der Fremde] Über Leute, die an einem Fluss wohnen.
+[T0949 · M.] Das sind wir.
+[T0950 · Der Fremde] Ja.
+[T0951 · M.] Steht da auch was Gutes drin?
+[T0952 · Der Fremde] Es steht drin, was war. Das Gute muss der Leser selber finden.
+
+  ── a_bruecke ───────────────────────────────────────────────────
+[T0953 · Der Fremde] Leute, die schon lange tot sind.
+[T0954 · Der Fremde] Und sie haben sie nicht für sich gebaut. Eine Brücke baut man immer für die, die danach kommen.
+[T0955 · M.] Warum baut man dann eine?
+[T0956 · Der Fremde] Weil ein Fluss nur eine Sache kann: trennen.
+[T0957 · Der Fremde] Und weil es Leute gibt, die das nicht hinnehmen.
+[T0958 · Erzaehler] Ich war elf. Ich habe das Wort hinnehmen nicht gekannt. Ich habe es an diesem Tag gelernt.
+
+  ── a_wohnen ────────────────────────────────────────────────────
+[T0959 · Der Fremde] Ich habe hier gewohnt. Lange her.
+[T0960 · M.] Und jetzt?
+[T0961 · Der Fremde] Jetzt wohne ich in Belgrad und komme hierher, um nachzudenken.
+[T0962 · M.] Kann man nicht überall nachdenken?
+[T0963 · Der Fremde] Doch. Aber nicht über alles.
+
+  ── a_ende ──────────────────────────────────────────────────────
+[T0964 · Der Fremde] Geh nur.
+[T0965 · Der Fremde] Wie heißt du?
+[T0966 · M.] M.
+[T0967 · Der Fremde] Gut. Dann weiß ich, wer über die Brücke gegangen ist.
+[T0968 · Erzaehler] Neun Jahre später habe ich sein Bild in der Zeitung gesehen. Es stand etwas von einem Preis darunter.
+[T0969 · Erzaehler] Ich habe es niemandem erzählt. Wer hätte mir das geglaubt.
+
+  ── le_kein ─────────────────────────────────────────────────────
+[T0970 · Der Lehrer] Dann besorgst du dir eins.
+[T0971 · M.] Ich habe kein Geld.
+[T0972 · Der Lehrer] Das habe ich nicht gefragt.
+[T0973 · Der Lehrer] In zwanzig Minuten kommt er hier durch. Bis dahin hat jeder aus dieser Klasse ein Fähnchen.
+[T0974 · Der Lehrer] Jeder.
+
+  ── le_wo ───────────────────────────────────────────────────────
+[T0975 · Der Lehrer] Das ist nicht meine Aufgabe.
+[T0976 · M.] Was ist Ihre Aufgabe?
+[T0977 · Der Lehrer] Zählen.
+[T0978 · Erzaehler] Er hat uns dreimal gezählt und ist dreimal auf eine andere Zahl gekommen. Er hat es nie gemerkt.
+
+  ── le_stift ────────────────────────────────────────────────────
+[T0979 · Der Lehrer] Wozu.
+[T0980 · M.] Für das Fähnchen.
+[T0981 · Der Lehrer] Hm. Wenigstens einer denkt mit.
+[T0982 · M.] Der Stift ist blau.
+[T0983 · Der Lehrer] Tintenstifte sind immer blau. Zurückgeben.
+
+  ── le_warum ────────────────────────────────────────────────────
+[T0984 · Der Lehrer] Weil es Freude ist.
+[T0985 · M.] Und wenn man keine hat?
+[T0986 · Der Lehrer] ...
+[T0987 · Der Lehrer] Dann winkt man trotzdem, und am Montag reden wir nicht darüber.
+[T0988 · Erzaehler] Er war kein schlechter Mann. Er hatte drei Kinder und eine Frau, die krank war.
+
+  ── s_preis ─────────────────────────────────────────────────────
+[T0989 · M.] Was kostet die Zeitung?
+[T0990 · Erzaehler] Zehn Dinar. Ich hatte null.
+[T0991 · M.] Und wenn ich nur eine Seite nehme?
+[T0992 · Erzaehler] Er hat gelacht. Nicht böse. Aber er hat gelacht.
+
+  ── s_gestern ───────────────────────────────────────────────────
+[T0993 · Erzaehler] Gestern gehört dem Verlag, hat er gesagt. Was übrig bleibt, geht zurück.
+[T0994 · M.] Und was zerrissen ist?
+[T0995 · Erzaehler] Was zerrissen ist, geht auch zurück. Aber niemand zählt nach.
+[T0996 · M.] Aha.
+
+  ── s_tipp ──────────────────────────────────────────────────────
+[T0997 · M.] Der Umzug kommt hier herunter. Nicht über die Hauptstraße.
+[T0998 · Erzaehler] Er hat aufgehört, Zigaretten zu sortieren.
+[T0999 · M.] Ich habe es beim Lehrer gehört. In zwanzig Minuten.
+[T1000 · Erzaehler] Er hat den Stand um zwei Meter geschoben, an die Ecke. Dann hat er mir ein halbes Blatt hingelegt, ohne mich anzusehen.
+[T1001 · Erzaehler] So funktionierte das. Niemand schenkte etwas. Alle tauschten, und Information war die härteste Währung.
+
+  ── z_befehle ───────────────────────────────────────────────────
+[T1002 · Narednik Zdravko] MATROSE!
+[T1003 · Narednik Zdravko] Erstens: Die Flagge wird um Punkt neun Uhr gehisst. Punkt neun.
+[T1004 · Narednik Zdravko] Zweitens: Der Bordstein ist bis neun Uhr weiß. Bis neun.
+[T1005 · Narednik Zdravko] Drittens: Die Kammer ist um neun Uhr verschlossen und der Schlüssel bei mir. Um neun.
+[T1006 · M.] Narednik, das ist —
+[T1007 · Narednik Zdravko] WAS?
+[T1008 · M.] — vollkommen klar, Narednik.
+[T1009 · Erzaehler] Es war zehn vor neun.
+
+  ── z_drei ──────────────────────────────────────────────────────
+[T1010 · Narednik Zdravko] Um neun.
+[T1011 · M.] Ich bin einer.
+[T1012 · Narednik Zdravko] Und ich bin Narednik. Wir haben beide unser Kreuz zu tragen.
+[T1013 · Narednik Zdravko] Der Admiral kommt um neun Uhr fünf. Bis dahin sieht alles aus, als wäre es immer so gewesen.
+[T1014 · Erzaehler] Das ist die eigentliche Regel jeder Armee, und niemand schreibt sie auf.
+
+  ── z_schluessel ────────────────────────────────────────────────
+[T1015 · Narednik Zdravko] Hier. Und ich will ihn um neun zurück.
+[T1016 · M.] Um neun.
+[T1017 · Narednik Zdravko] Um neun.
+
+  ── z_abgabe ────────────────────────────────────────────────────
+[T1018 · Narednik Zdravko] ...
+[T1019 · Narednik Zdravko] Neun Uhr null.
+[T1020 · Narednik Zdravko] Matrose, ich weiß nicht, wie Sie das gemacht haben, und ich werde es nicht fragen.
+[T1021 · M.] Danke, Narednik.
+[T1022 · Narednik Zdravko] Das war kein Lob. Gehen Sie zum Steg, der Admiral will die Leute sehen.
+
+  ── z_admiral ───────────────────────────────────────────────────
+[T1023 · Narednik Zdravko] Pivopija ist nicht sein Name.
+[T1024 · M.] Sondern?
+[T1025 · Narednik Zdravko] Sein Name ist egal. Pivopija ist, was er ist.
+[T1026 · Narednik Zdravko] Und bevor Sie grinsen, Matrose: der Mann hat 1943 auf Vis vierzig Leute von einem brennenden Boot geholt.
+[T1027 · Narednik Zdravko] Man darf über ihn lachen. Aber man muss wissen, worüber man lacht.
+
+  ── n_amt ───────────────────────────────────────────────────────
+[T1028 · L.] Zum wievielten Mal?
+[T1029 · M.] Vierten.
+[T1030 · L.] Nimm den Antrag mit. Und geh nicht vor elf, vor elf ist er schlecht gelaunt.
+[T1031 · M.] Woher weißt du das?
+[T1032 · L.] Ich war schon dreimal dort, während du gearbeitet hast.
+[T1033 · Erzaehler] Sie hat nie gesagt, dass sie dort war. Ich habe es an diesem Tag zum ersten Mal erfahren.
+
+  ── n_zimmer ────────────────────────────────────────────────────
+[T1034 · L.] Nein.
+[T1035 · M.] Wir sind zu viert.
+[T1036 · L.] Wir werden zu fünft.
+[T1037 · M.] ...
+[T1038 · L.] Jetzt geh zum Amt.
+
+  ── n_sagen ─────────────────────────────────────────────────────
+[T1039 · L.] Nichts von uns. Die kennen uns nicht.
+[T1040 · L.] Sag ihnen, was in ihren Formularen steht. Wort für Wort.
+[T1041 · L.] Und wenn einer keine Zeit hat, dann hast du Zeit. Mehr als er.
+[T1042 · Erzaehler] Das ist die beste Verhandlungslehre, die ich je bekommen habe, und sie hat vier Sätze gedauert.
+
+  ── n_schluessel ────────────────────────────────────────────────
+[T1043 · L.] Zeig.
+[T1044 · L.] Dritter Stock.
+[T1045 · M.] Kein Aufzug.
+[T1046 · L.] Gut. Dann bleiben die Kinder schlank.
+
+  ── k_auto ──────────────────────────────────────────────────────
+[T1047 · Erzaehler] Er hat zwanzig Minuten geredet. Zusammengefasst: die Düse ist hin, es gibt keine, und ohne Auto kommt er nicht zum Bruder seiner Frau nach Ilidža.
+[T1048 · M.] Und was macht der Bruder Ihrer Frau?
+[T1049 · Erzaehler] Nichts, hat er gesagt. Er sitzt im Wohnungsamt und macht nichts.
+[T1050 · M.] ...
+[T1051 · Erzaehler] Manchmal ist ein Gespräch ein Türöffner, und man merkt es erst am letzten Satz.
+
+  ── k_duese ─────────────────────────────────────────────────────
+[T1052 · M.] Ich hätte eine Düse. Sie liegt seit einem Jahr in meiner Tasche.
+[T1053 · Erzaehler] Man wirft so etwas nicht weg. Man wartet, bis jemand kommt, der es braucht.
+[T1054 · M.] Ich baue sie ein. Und wir reden nicht über Geld.
+[T1055 · Erzaehler] Über Geld zu reden hätte alles kaputt gemacht. Geld ist eine Schuld, die man begleicht. Ein Gefallen ist eine, die bleibt.
+
+  ── k_amt ───────────────────────────────────────────────────────
+[T1056 · Erzaehler] Er hat genickt, ist in den Kiosk gegangen und hat telefoniert. Vier Minuten.
+[T1057 · Erzaehler] Dann kam er heraus und sagte: Geh morgen um elf. Frag nach Dževad. Sag nichts von mir.
+[T1058 · M.] Und wenn er fragt, wer mich schickt?
+[T1059 · Erzaehler] Dann schickt dich niemand, hat er gesagt. Genau das ist der Punkt.
+
+  ── k_kaffee ────────────────────────────────────────────────────
+[T1060 · Erzaehler] Er hat ein Päckchen auf den Tresen gelegt und weggesehen.
+[T1061 · M.] Das ist keine Bestechung.
+[T1062 · Erzaehler] Natürlich nicht. Es ist Kaffee. Bestechung ist, wenn man dafür etwas verlangt.
+[T1063 · Erzaehler] Man verlangt nichts. Man stellt ihn hin und geht.
+
+  ── sa_gut ──────────────────────────────────────────────────────
+[T1064 · Safet Susovic] Danke.
+[T1065 · Erzaehler] Er hat es gesagt, wie man Bescheid gibt. Nicht unhöflich. Nur fertig.
+
+  ── kr_warten ───────────────────────────────────────────────────
+[T1066 · Meister Krause] So, Herr... äh. Sie machen heute die Zwölfer, ja? Zettel hab ich Ihnen geschrieben.
+[T1067 · Meister Krause] Anschlag auf zwölf, Vorschub wie gehabt, und wenn was klemmt, holen Sie mich.
+[T1068 · M.] Ja.
+[T1069 · Meister Krause] Gut. Alles klar?
+[T1070 · M.] Ja.
+[T1071 · Erzaehler] Ja war das einzige Wort, das ich sicher konnte. Es hat mich das erste halbe Jahr durchgebracht und einmal fast einen Finger gekostet.
+
+  ── kr_zeigen ───────────────────────────────────────────────────
+[T1072 · Meister Krause] Ja, der Zettel. Steht doch alles drauf.
+[T1073 · Meister Krause] Zwölf. Da. Zwölf!
+[T1074 · Erzaehler] Er hat lauter gesprochen. Das machen alle. Als ob Lautstärke eine Sprache wäre.
+[T1075 · M.] Er geht.
+
+  ── kr_maschine ─────────────────────────────────────────────────
+[T1076 · Meister Krause] Sieh an.
+[T1077 · Meister Krause] Zwölf Komma null. Passt.
+[T1078 · Meister Krause] Sagen Sie mal, verstehen Sie mich eigentlich?
+[T1079 · M.] Ja.
+[T1080 · Meister Krause] Dachte ich mir.
+[T1081 · Erzaehler] Er hat es nicht böse gemeint. Er hat es einfach nie überprüft, und ich habe ihn nie gezwungen.
+
+  ── y_zettel ────────────────────────────────────────────────────
+[T1082 · Yilmaz] Hm.
+[T1083 · Yilmaz] Zwölf.
+[T1084 · M.] Maschine zwölf?
+[T1085 · Yilmaz] Nein.
+[T1086 · Erzaehler] Er hat den Zimmermannsbleistift genommen und auf die Pappe gezeichnet.
+[T1087 · Erzaehler] Ein Rechteck. Eine Linie. Ein kleiner Pfeil dazwischen, und daneben: 12.
+[T1088 · Yilmaz] Zwölf hier. Nicht Maschine. Hier.
+[T1089 · M.] Millimeter.
+[T1090 · Yilmaz] Millimeter.
+[T1091 · Yilmaz] Und Schlüssel dreizehn. Spind.
+[T1092 · Erzaehler] Zwei Zeichnungen und vier Wörter. Der Meister hatte sieben Wörter gebraucht und nichts erklärt.
+
+  ── y_sprache ───────────────────────────────────────────────────
+[T1093 · Yilmaz] Türkisch. Deutsch — so.
+[T1094 · Erzaehler] Er hat die Hand gewackelt. Das heißt in jeder Sprache dasselbe.
+[T1095 · M.] Bei mir auch so.
+[T1096 · Yilmaz] Gut. Dann verstehen wir uns.
+[T1097 · Erzaehler] Wir haben uns elf Jahre lang verstanden und nie herausgefunden, in welcher Sprache.
+
+  ── y_lange ─────────────────────────────────────────────────────
+[T1098 · Yilmaz] Ein Jahr. Zwei Monate.
+[T1099 · M.] Und?
+[T1100 · Yilmaz] Und drei Jahre noch. Dann Haus.
+[T1101 · M.] Wo?
+[T1102 · Yilmaz] Zu Hause.
+[T1103 · Erzaehler] Er ist 2009 in Duisburg gestorben. Seine Enkel wohnen dort. Das Haus steht und ist leer.
+
+  ── y_zwoelf ────────────────────────────────────────────────────
+[T1104 · Yilmaz] Kommt drauf an, wo es steht.
+[T1105 · Yilmaz] An der Wand: Maschine. Auf dem Zettel: Maß.
+[T1106 · M.] Woher weiß man das?
+[T1107 · Yilmaz] Man macht es falsch. Einmal.
+
+  ── so_paket ────────────────────────────────────────────────────
+[T1108 · Frau Sommer] Nach Split? Ja. Nach Split geht das noch.
+[T1109 · M.] Und weiter?
+[T1110 · Frau Sommer] Weiter... da kann ich Ihnen nichts sagen. Da ist die Post nicht mehr zuständig.
+[T1111 · Frau Sommer] Aber es kommt an, wenn es jemanden in Split gibt, der es abholt.
+[T1112 · M.] Es gibt jemanden in Split.
+[T1113 · Frau Sommer] Dann rufen Sie ihn an.
+
+  ── so_zoll ─────────────────────────────────────────────────────
+[T1114 · Frau Sommer] Ich darf Ihnen nicht sagen, was Sie schreiben sollen.
+[T1115 · M.] Verstehe.
+[T1116 · Frau Sommer] Ich kann Ihnen nur sagen, was zurückkommt.
+[T1117 · Frau Sommer] Alles, wo ein Wert drinsteht. Und alles, wo Arzneimittel steht.
+[T1118 · Frau Sommer] Was durchgeht, ist Gebrauchte Kleidung und Lebensmittel. Geschenk. Ohne Handelswert.
+[T1119 · M.] Und die Tabletten?
+[T1120 · Frau Sommer] Welche Tabletten?
+[T1121 · Erzaehler] Sie hat mich dabei angesehen. Sie war einundfünfzig, aus Recklinghausen, und sie hat nie in ihrem Leben eine Vorschrift gebrochen.
+[T1122 · Erzaehler] An diesem Nachmittag hat sie eine umschifft, ohne einen einzigen falschen Satz zu sagen.
+
+  ── so_leitung ──────────────────────────────────────────────────
+[T1123 · Frau Sommer] Nach Bosnien kommen Sie gar nicht durch, das ist seit Wochen so.
+[T1124 · M.] Und nach Split?
+[T1125 · Frau Sommer] Split ist Kroatien. Da geht manchmal was. Meistens morgens.
+[T1126 · Frau Sommer] Und die Vorwahl hat sich geändert. Das wissen viele nicht.
+[T1127 · Erzaehler] Das war die wichtigste Auskunft, die ich in diesem Winter bekommen habe, und sie hat nichts gekostet.
+
+  ── so_medi ─────────────────────────────────────────────────────
+[T1128 · Frau Sommer] Da drüben ist die Apotheke.
+[T1129 · Frau Sommer] Fragen Sie nicht mich. Fragen Sie den Apotheker, was man braucht, wenn es kalt ist und kein Arzt da.
+[T1130 · M.] Danke.
+
+  ── d_alter ─────────────────────────────────────────────────────
+[T1131 · M.] Letztes Mal war es eine andere Zahl.
+[T1132 · Dedo] Letztes Mal war es letztes Mal.
+
+  ── d_kennen ────────────────────────────────────────────────────
+[T1133 · Dedo] Kann sein.
+[T1134 · M.] Du warst schon einmal da.
+[T1135 · Dedo] Ich bin immer schon einmal da gewesen.
+[T1136 · Erzaehler] Ich habe nie herausgefunden, ob es derselbe Mann war. Ich habe auch nie ernsthaft danach gefragt.
+
+  ── mn_und ──────────────────────────────────────────────────────
+[T1137 · Der Mann] Alles gut.
+[T1138 · M.] Alles gut.
+[T1139 · Der Mann] Sie sind bei deiner Schwester. Alle sechs.
+[T1140 · M.] Und das Haus?
+[T1141 · Der Mann] Das Paket muss morgen zur Post.
+[T1142 · Erzaehler] Das war seine Art zu antworten. Ich habe sechsundvierzig Jahre gebraucht, um sie zu lernen, und dann konnte ich sie besser als er.
+
+  ── mn_frieren ──────────────────────────────────────────────────
+[T1143 · Der Mann] Nein.
+[T1144 · M.] Du frierst seit 1974.
+[T1145 · Der Mann] ...
+[T1146 · Der Mann] Ein bisschen.
+
+  ── j_steine ────────────────────────────────────────────────────
+[T1147 · Jure] Wer sagt das?
+[T1148 · M.] Ich.
+[T1149 · Jure] Du warst vierzig Jahre in Deutschland.
+[T1150 · M.] Und davor elf Jahre hier.
+[T1151 · Jure] ...
+[T1152 · Jure] Na gut. Dann leg sie um.
+
+  ── j_amt ───────────────────────────────────────────────────────
+[T1153 · Jure] Kommt drauf an, was fehlt.
+[T1154 · M.] Eine Unterschrift.
+[T1155 · Jure] Dann fehlt nichts. Dann fehlt nur ein Nachmittag.
+[T1156 · M.] Elf Jahre fehlen.
+[T1157 · Jure] Weil du nie gefragt hast.
+[T1158 · Erzaehler] Er hatte recht. Ich habe elf Jahre lang Formulare eingereicht und kein einziges Mal jemanden gefragt.
+
+  ── j_hilfe ─────────────────────────────────────────────────────
+[T1159 · Jure] ...
+[T1160 · Jure] Sag das noch mal.
+[T1161 · M.] Ich brauche Hilfe, Jure.
+[T1162 · Jure] Vierzehn Jahre. Vierzehn Jahre warte ich auf diesen Satz.
+[T1163 · Jure] Morgen um sechs. Bring Wasser mit, ich bring den Neffen.
+[T1164 · Erzaehler] In diesem Land ist Hilfe keine Frage von Können. Sie ist eine Frage davon, ob man richtig fragt, und richtig heißt: überhaupt.
+
+  ── j_geblieben ─────────────────────────────────────────────────
+[T1165 · Jure] Wer sollte auf die Ziegen aufpassen.
+[T1166 · M.] Du hast keine Ziegen.
+[T1167 · Jure] Jetzt nicht mehr.
+[T1168 · Erzaehler] Mehr hat er dazu nie gesagt, und ich habe nie wieder gefragt.
+
+  ── pruefeFaehnchen ─────────────────────────────────────────────
+[T1169 · M.] Papier auf den Stecken. Kleister drauf. Rot ist rot, weiß ist weiß.
+[T1170 · M.] Und der Stern kommt mit dem Tintenstift.
+[T1171 · M.] Er ist blau statt gelb. Aber er ist ein Stern.
+[T1172 · Erzaehler] Von hinten konnte man lesen: Sarajevo — Vardar 1:3.
+
+══════════════════════════════════════════════════════════════════════════
+  KAPITELWECHSEL UND SZENEN
+══════════════════════════════════════════════════════════════════════════
+
+  ── Allgemein ───────────────────────────────────────────────────────────
+[T1173 · Bildtext] ERSTES KAPITEL
+[T1174 · Bildtext] Rosko Polje
+[T1175 · Bildtext] 1953
+[T1176 · Zitat] Wir waren nicht arm. Arm waren die, die weggegangen sind.
+[T1177 · Bildtext] ZWEITES KAPITEL
+[T1178 · Bildtext] Mostar
+[T1179 · Bildtext] 1955
+[T1180 · Zitat] Begeisterung war eine Schulaufgabe. Man konnte sie bestehen oder nicht.
+[T1181 · Bildtext] DRITTES KAPITEL
+[T1182 · Bildtext] Die Marine
+[T1183 · Bildtext] Adria, 1960er
+[T1184 · Zitat] In der Armee gibt es für jedes Problem drei Vorschriften und keine Zeit.
+[T1185 · Bildtext] VIERTES KAPITEL
+[T1186 · Bildtext] Sarajevo
+[T1187 · Bildtext] 1970er
+[T1188 · Zitat] Eine Wohnung bekam man nicht. Eine Wohnung organisierte man.
+[T1189 · Bildtext] FÜNFTES KAPITEL
+[T1190 · Bildtext] Das Werk
+[T1191 · Bildtext] Deutschland, 1970er
+[T1192 · Zitat] Ich habe zwei Jahre gebraucht, bis ich gemerkt habe, dass sie nicht über mich reden.
+[T1193 · Bildtext] SECHSTES KAPITEL
+[T1194 · Bildtext] Vier Markstücke
+[T1195 · Bildtext] Deutschland, Winter 1991
+[T1196 · Zitat] Das Schlimmste war nicht, was im Fernsehen kam. Das Schlimmste war das Freizeichen.
+[T1197 · Bildtext] SIEBTES KAPITEL
+[T1198 · Bildtext] Der Hausbau
+[T1199 · Bildtext] Podaca, 2004 bis 2018
+[T1200 · Zitat] Ein Haus baut man nicht in einem Sommer. Man baut es in vierzehn.
+[T1201 · Erzaehler] Ich reibe ein Feigenblatt zwischen den Fingern.
+[T1202 · Erzaehler] Milchsaft. Bitter. Und plötzlich riecht es nach trockener Erde und nach Ochse.
+[T1203 · Erzaehler] Aus dem Radio kommt ein Marsch.
+[T1204 · Erzaehler] Blechbläser, drei Viertel, immer dieselben acht Takte.
+[T1205 · Erzaehler] Ich kenne ihn. Ich kenne ihn auswendig, und ich habe ihn nie gelernt.
+[T1206 · Erzaehler] Ich lege die Hand auf den Deckel.
+[T1207 · Erzaehler] Das Holz ist warm. Es war damals kalt, und es hat nach Farbe gerochen.
+[T1208 · Erzaehler] Der Ball rollt gegen meinen Fuß.
+[T1209 · Erzaehler] Ich stoppe ihn, ohne hinzusehen. Das kann ich noch.
+[T1210 · Erzaehler] Und auf einmal ist es kalt und ich stehe vor einem Betonring in Grbavica.
+[T1211 · Erzaehler] Ich sehe auf meine Hände.
+[T1212 · Erzaehler] Der Nagel am linken Zeigefinger ist seit 1974 anders gewachsen.
+[T1213 · Erzaehler] Drinnen klingelt das Telefon.
+[T1214 · Erzaehler] L. geht ran. Sie sagt zweimal ja und einmal gut.
+[T1215 · Erzaehler] Es gab eine Zeit, da war ein Telefon keine Selbstverständlichkeit, sondern eine Rechnung in Münzen.
+[T1216 · Erzaehler] Ich fahre mit der Hand über die Mauer.
+[T1217 · Erzaehler] Der dritte Stein von links wackelt. Er hat immer gewackelt.
+
+  ── beendeKapitel ───────────────────────────────────────────────
+[T1218 · Luka] Deda.
+[T1219 · Luka] Du hast die ganze Zeit auf die Kiste geschaut.
+[T1220 · M.] Habe ich?
+
+  ── tikoSzene ───────────────────────────────────────────────────
+[T1221 · Der Lehrer] Aufstellen! Und Fähnchen hoch, alle!
+[T1222 · M.] Ich halte ein Stück Zeitung an einem Stecken in die Luft.
+[T1223 · Erzaehler] Auf der Rückseite standen die Fußballergebnisse vom Sonntag. Sarajevo hatte eins zu drei verloren.
+[T1224 · Josip Broz Tiko] ...
+[T1225 · Josip Broz Tiko] Braver Junge.
+[T1226 · M.] Er hat mich angesehen. Zwei Sekunden. Vielleicht eine.
+[T1227 · Erzaehler] Er hat mich nicht angesehen. Ich stand in der dritten Reihe und war einen Meter fünfzig groß.
+[T1228 · Der Lehrer] Winken! Alle!
+[T1229 · M.] Ich winke.
+
+  ── admiralSzene ────────────────────────────────────────────────
+[T1230 · Narednik Zdravko] Der Admiral. Stillgestanden, Augen geradeaus, und niemand atmet.
+[T1231 · Admiral Pivopija] Männer.
+[T1232 · Admiral Pivopija] Disziplin ist wie Rakija.
+[T1233 · Admiral Pivopija] Zu wenig, und es passiert nichts. Zu viel, und es passiert alles gleichzeitig.
+[T1234 · Admiral Pivopija] Wer das begriffen hat, ist Soldat. Wer es nicht begriffen hat, ist Offizier.
+[T1235 · Narednik Zdravko] Genosse Admiral, Sie sind Offizier.
+[T1236 · Admiral Pivopija] Eben.
+[T1237 · Admiral Pivopija] Und wer hat heute die Fahne gehisst, den Bordstein gestrichen und die Kammer verschlossen? Gleichzeitig?
+[T1238 · M.] Matrose M., Genosse Admiral.
+[T1239 · Admiral Pivopija] Wie?
+[T1240 · M.] Nach Vorschrift.
+[T1241 · Admiral Pivopija] Narednik. Geben Sie dem Mann eine Kiste.
+[T1242 · Narednik Zdravko] Eine... Kiste, Genosse Admiral?
+[T1243 · Admiral Pivopija] Wir haben keine Orden. Wir haben Kisten.
+[T1244 · Erzaehler] Ich habe die Kiste bekommen und niemand hat je aufgeschrieben, wofür.
+[T1245 · Erzaehler] Sie steht heute auf meiner Terrasse.
+
+  ── safetSzene ──────────────────────────────────────────────────
+[T1246 · M.] Entschuldigung. Meine Jungs — könnten Sie...
+[T1247 · Safet Susovic] Ja ja.
+[T1248 · M.] Ich habe kein Papier dabei. Vielleicht auf den...
+[T1249 · Safet Susovic] Ich hab Training.
+[T1250 · M.] Er hat nicht gelogen. Er hatte wirklich Training.
+[T1251 · Erzaehler] Zwanzig Jahre später haben meine Söhne mir erzählt, was für ein großartiger Spieler er war. Ich habe zugestimmt.
+[T1252 · Erzaehler] Man kann beides gleichzeitig, und die meisten Leute merken es nicht einmal.
+
+  ── kantineSzene ────────────────────────────────────────────────
+[T1253 · M.] Ich mache die Tür einen Spalt auf.
+[T1254 · Erzaehler] „...schke hat gesagt, dass die Verhältnisse..."
+[T1255 · Erzaehler] „...quatsch, der liegt im Krankenhaus, das war doch..."
+[T1256 · Erzaehler] „...Springer... und ihr wollt mir erzählen..."
+[T1257 · M.] Ich verstehe: „gesagt". „Krankenhaus". „ihr".
+[T1258 · M.] Und dass sie sich streiten. Das versteht man in jeder Sprache.
+[T1259 · Yilmaz] Politik.
+[T1260 · M.] Über was?
+[T1261 · Yilmaz] Über Studenten. Studenten haben Zeit.
+[T1262 · Yilmaz] Wir haben Schicht.
+[T1263 · Meister Krause] Herr... M. So. Ihr Ausweis. Willkommen im Betrieb.
+[T1264 · M.] Danke.
+[T1265 · Erzaehler] Das war das erste deutsche Wort, das ich hundertprozentig richtig verwendet habe.
+
+  ── tudzmanicSzene ──────────────────────────────────────────────
+[T1266 · M.] Vier Geräte, vier Mal derselbe Mann.
+[T1267 · Erzaehler] Der Ton ist aus. Man sieht nur, wie er die Hand hebt und wieder senkt.
+[T1268 · Erzaehler] Unten läuft Schrift durch, auf Deutsch, und die verstehe ich inzwischen.
+[T1269 · M.] Ich stehe hier im Mantel vor einem Schaufenster und lese, was mit meinem Dorf passiert.
+[T1270 · M.] Hinter mir gehen Leute einkaufen.
+[T1271 · Erzaehler] Sie hätten auch nichts tun können. Ich war ja auch nur einkaufen.
+
+  ── lenaSzene ───────────────────────────────────────────────────
+[T1272 · M.] Er steht seit zwanzig Minuten bei der Zelle.
+[T1273 · M.] Ich habe von oben gesehen, wie er den Hörer aufgelegt hat und stehen geblieben ist.
+[T1274 · M.] Und?
+[T1275 · M.] Er sagt: alles gut. Er sagt immer alles gut.
+
+  ── lenaEnde ────────────────────────────────────────────────────
+[T1276 · M.] Ich habe es im Radio gehört. Vor dir.
+[T1277 · M.] Rosko Polje. Sie haben es im Radio gesagt.
+[T1278 · M.] Er hat nichts gesagt. Er hat mir den Karton gegeben, damit ich etwas zu tragen habe.
+[T1279 · Erzaehler] Sie hat es mir gesagt. Ich habe siebenundzwanzig Jahre so getan, als hätte ich es zuerst gewusst.
+[T1280 · M.] Ich sage nichts.
+[T1281 · M.] Er hat heute genug telefoniert.
+[T1282 · M.] Wir gehen zusammen hoch. Er trägt den Karton, ich die Tüte.
+[T1283 · Erzaehler] Sie hat es mir erst 2003 erzählt. Ich habe nicht gefragt, warum nicht früher.
+
+  ── gestaltSzene ────────────────────────────────────────────────
+[T1284 · M.] Guten Abend.
+[T1285 · Die Gestalt] Guten Abend. Sie bauen.
+[T1286 · M.] Seit elf Jahren.
+[T1287 · Die Gestalt] Das ist keine lange Zeit für ein Haus aus Stein.
+[T1288 · M.] Sind Sie vom Amt?
+[T1289 · Die Gestalt] Nein.
+[T1290 · Die Gestalt] Darf ich?
+[T1291 · Die Gestalt] Sie haben ihn nicht behauen.
+[T1292 · M.] Er passt so.
+[T1293 · Die Gestalt] Ja. Das ist der schwierigere Weg.
+[T1294 · Die Gestalt] Man muss länger suchen, welcher wohin gehört. Dafür muss man nichts wegnehmen.
+[T1295 · M.] Sind Sie Steinmetz?
+[T1296 · Die Gestalt] Ich war einer. Lange her.
+[T1297 · Die Gestalt] Gute Nacht.
+[T1298 · M.] Am Hang steht noch jemand.
+[T1299 · M.] Eine alte Frau mit einem Stock. Sie geht denselben Weg hinunter.
+[T1300 · Erzaehler] Als Kind habe ich mich vor ihr gefürchtet. An diesem Abend habe ich ihr nachgesehen und gedacht: sie sollte nicht allein im Dunkeln gehen.
+
+  ── oeffneKiste ─────────────────────────────────────────────────
+[T1301 · M.] Also gut.
+[T1302 · M.] Die Schnalle klemmt. Sie hat immer geklemmt.
+[T1303 · Luka] Was ist das?
+[T1304 · M.] Eine Mütze.
+[T1305 · Luka] Und das?
+[T1306 · M.] Briefe. Von deiner Baka, als ich in Deutschland war.
+[T1307 · Luka] Und das Foto?
+[T1308 · M.] Das sind elf Leute vor einem Steinhaus.
+[T1309 · Luka] Wer davon bist du?
+[T1310 · M.] Der Kleine links. Ohne Schuhe.
+[T1311 · Erzaehler] Und dann habe ich erzählt. Zum ersten Mal, und es hat vier Stunden gedauert.
+[T1312 · Luka] Deda. Können wir da mal hinfahren?
+[T1313 · M.] ...
+[T1314 · Erzaehler] Die Autoschlüssel liegen drinnen auf dem Kühlschrank. Sie liegen dort seit 2006.
+
+  ── nimmSchluessel ──────────────────────────────────────────────
+[T1315 · M.] Ich hole die Schlüssel.
+[T1316 · Luka] Jetzt?
+[T1317 · M.] Jetzt.
+[T1318 · Erzaehler] Von Podaca nach Rosko Polje sind es hundertsechzig Kilometer und vierundsechzig Jahre.
+[T1319 · Erzaehler] Wir sind am Nachmittag losgefahren. L. hat Wasser eingepackt und nichts gefragt.
+
+══════════════════════════════════════════════════════════════════════════
+  ZWISCHENSEQUENZEN
+══════════════════════════════════════════════════════════════════════════
+
+  ── shotGrab ────────────────────────────────────────────────────
+[T1320 · Bildtext] Sarajevo, Hauptbahnhof, 14. März 1970.
+[T1321 · Bildtext] Der Vertrag galt für zwei Jahre.
+[T1322 · Bildtext] Jesenice. Villach. München.
+[T1323 · Bildtext] Ich habe die ganze Nacht aus dem Fenster gesehen und nichts erkannt.
+[T1324 · Bildtext] Wohnheim, Zimmer 214. Vier Betten, vier Länder.
+[T1325 · Bildtext] Aus zwei Jahren wurden sechsunddreißig.
+[T1326 · Bildtext] Es fing damit an, dass die Karte im Fernsehen andere Farben bekam.
+[T1327 · Bildtext] Dann bekam sie Linien. Dann Lücken.
+[T1328 · Bildtext] Vier Wochen lang kam nur das Freizeichen.
+[T1329 · Bildtext] Man legt nicht auf, solange es tutet. Das ist das Schlimmste daran.
+[T1330 · Bildtext] Von Podaca nach Rosko Polje sind es hundertsechzig Kilometer.
+[T1331 · Bildtext] Die ersten vierzig fährt man am Meer entlang.
+[T1332 · Bildtext] Dann biegt man ab, und das Meer ist weg.
+[T1333 · Bildtext] Danach wird alles Stein, und der Stein kennt einen noch.
+[T1334 · Bildtext] Der Hof ist noch da. Kleiner, als ich ihn im Kopf hatte.
+[T1335 · Bildtext] Und mein Vater stand nicht am Rand und sah zu.
+[T1336 · Bildtext] Er stand daneben. Die ganze Zeit.
+[T1337 · Bildtext] Sie liegen nebeneinander, unter derselben Zypresse.
+[T1338 · Bildtext] Ich habe ihm gezeigt, welcher Stein wer ist. Mehr habe ich nicht gesagt.
+
+══════════════════════════════════════════════════════════════════════════
+  ENDE  ·  1338 Textstellen
+══════════════════════════════════════════════════════════════════════════

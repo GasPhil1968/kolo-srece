@@ -1,0 +1,38 @@
+M. Adventure · Visual V5
+=======================
+Stand: 3. September 2026
+
+KAPITEL 3 · MARINE
+------------------
+- Neue gemalte Pixelkulisse fuer den Marinestuetzpunkt an der Adria.
+- Neue transparente 4-x-3-Sprite-Sheets fuer M. als Matrose, Zdravko und
+  den Admiral.
+- Fahne, Farbeimer, Pinsel und gestrichener Bordstein bleiben als leichte,
+  zustandsabhaengige Spielebene animiert.
+- Materialkammer, Material, Steg, Boot, Wachtor, Mast und Bordstein wurden
+  auf die neue Architektur ausgerichtet.
+
+KAPITEL 4 · SARAJEVO
+--------------------
+- Neue gemalte Pixelkulisse mit Wohnungsamt, Schalter, Kiosk, Fica,
+  Strassenbahngleisen, Grbavica-Stadion und dichter Hangbebauung.
+- Neue transparente 4-x-3-Sprite-Sheets fuer M. in Sarajevo und Safet.
+- L. und Dedo verwenden weiter ihre bereits ueberarbeiteten Sheets;
+  Dedos Sombrero bleibt dynamisch.
+- Die Strassenbahn bleibt animiert, wird aber nur als kleine bewegliche
+  Ebene gezeichnet. Ihre Klickflaeche ist auf das Gleisband begrenzt und
+  blockiert Kiosk oder Fica nicht mehr.
+
+PERFORMANCE UND QA
+------------------
+- Beide detailreichen Hintergruende werden einmal dekodiert und danach aus
+  dem Bildspeicher gezeichnet; nur kleine dynamische Ebenen laufen pro Frame.
+- 300-Frame-Test: Kaserne ca. 4,26 ms/Frame, Sarajevo ca. 4,65 ms/Frame.
+- Zielbudget fuer 60 FPS: 16,67 ms/Frame.
+- 14 zentrale Hotspots der beiden Kapitel automatisch geprueft.
+- Alle neuen Sprite-Sheets: 512 x 480 Pixel, echte Transparenz, gemeinsames
+  4-x-3-Raster und einheitliche Fusslinie.
+
+START
+-----
+most.html doppelklicken. Kein Server und keine Installation erforderlich.
