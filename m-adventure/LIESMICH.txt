@@ -4,9 +4,11 @@ Stand: 3. September 2026
 
 VISUAL-V114 · MOSTAR
 --------------------
-M-Adventure-Visual-V114.html ist die aktuelle spielbare Fassung. Sie
-baut auf der Artefakt-Linie V113 auf (Patch-Bloecke V11 bis V57) und
-haengt einen Block V114 an, der Kapitel 2 neu ordnet: vier gleichzeitig
+M-Adventure-Visual-V114.html ist eine Mostar-Demo: gebaut auf dem
+Demo-Artefakt vom 6. September (Patch-Bloecke V11 bis V57, nur Kapitel 2
+enthalten), mit einem angehaengten Block V114, der Kapitel 2 neu ordnet.
+Die Uebertragung auf die vollstaendige V113-Datei mit allen sieben
+Kapiteln steht noch aus. Der Block V114 ordnet Kapitel 2 so: vier gleichzeitig
 offene Probleme (Fahne, Sperre, Sandale, Brankos System), Figuren, die
 im Lauf des Nachmittags weiterziehen, Dedos Stand KORISNE STVARI,
 der Plakatkleber, Brankos Stempel als Rotquelle, Parolen als Frage nach
