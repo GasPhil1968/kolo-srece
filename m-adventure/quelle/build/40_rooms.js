@@ -242,7 +242,9 @@ var ROOM_MOSTAR = {
   entry:{ x:180, y:450, dir:1 },
   npcs:[ { id:'lehrer', x:420, y:440, dir:1 },
           /* Kapitel 2: drei Faehnchen, ein Fez. */
-          { id:'dedo', x:560, y:446, dir:1, appearance:'fez', schlendert:130 } ],
+          { id:'dedo', x:560, y:446, dir:1, appearance:'fez', schlendert:130 },
+          /* Der Plakatkleber sitzt neben seinem Eimer und isst. Er geht nicht weg. */
+          { id:'kleber', x:988, y:452, dir:-1, sit:true, hoehe:16 } ],
   marks:{
     lehrer:  { x:490, y:442, dir:-1 },
     stand:   { x:650, y:444, dir:1 },
@@ -250,6 +252,7 @@ var ROOM_MOSTAR = {
     tribuene:{ x:1110, y:444, dir:1 },
     gasse:   { x:1300, y:450, dir:1 },
     rinne:   { x:520, y:452, dir:1 },
+    kleber:  { x:945, y:452, dir:1 },
     bruecke2:{ x:1100, y:440, dir:1 }
   }
 };

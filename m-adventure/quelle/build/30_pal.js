@@ -67,6 +67,10 @@ var PAL = {
   lehrer:  { skin:'#b8906a', hair:'#3a3028', mous:'#3a3028', coat:'#4a5240', vest:'#3c4436',
              sakko:'#4a5240', hemd:'#d8d4c0', krawatte:'#6a3a30',
              shirt:'#d8d4c0', trouser:'#38402f', shoe:'#241f18' },
+  /* Der Plakatkleber, Mostar 1955. Grauer Arbeitsanzug, Kleister bis zum
+     Ellbogen, ein Gesicht, das lieber isst als redet. */
+  kleber:  { skin:'#c49470', hair:'#3a3028', coat:'#8a8478', overall:'#5e6068', overallTief:'#484a52',
+             shirt:'#8a8478', trouser:'#4c4e56', shoe:'#2a2622', belt:'#3a3a40' },
   /* Josip Broz Tiko. Weisse Sommeruniform, Schirmmuetze, Sonnenbrille. */
   tiko:    { skin:'#c9a884', hair:'#d0cec6', coat:'#eceee8', uniform:'#eceee8', uniformTief:'#d4d8d0',
              kragen:'#e4e8e0', knopf:'#d8b048', muetze:'#eceee8', kokarde:'#d8b048',

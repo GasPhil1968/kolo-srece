@@ -114,6 +114,11 @@ function drawIcon(id, cx, cy){
     pRect(-16, -12, 32, 4, '#3a352c');
     for (var z = 0; z < 5; z++) pRect(-16, -4 + z*5, 14 + (z%3)*6, 2, '#6a6254');
     pRect(2, -4, 14, 12, '#8a8478');
+  } else if (id === 'kamm'){
+    ctx.rotate(-0.25);
+    pRect(-20, -6, 40, 7, '#6a5a3e');
+    for (var kz = 0; kz < 11; kz++) if (kz !== 3 && kz !== 4 && kz !== 8) pRect(-19 + kz*3.6, 1, 2, 9, '#6a5a3e');
+    pRect(-20, -6, 40, 2, '#8a7a58');
   } else if (id === 'stecken'){
     ctx.rotate(-0.4);
     pRect(-2, -22, 5, 44, '#8a7248');

@@ -40,6 +40,16 @@ Maschinenanzeigen, Fernsehflimmern, Paketstatus und Schnee bleiben als kleine
 dynamische Ebenen erhalten. Alle 15 zentralen Klickflaechen wurden an die
 neuen Bilder angepasst und automatisch geprueft.
 
+KAPITEL 2, RAETSEL
+------------------
+In Mostar liegt nichts mehr einfach herum, was M. braucht. Der Stecken
+kommt von Dedo Muratovic gegen einen Kamm aus der Rinne, das Papier vom
+Kiosk gegen den Tipp vom Lehrer (den man jetzt auch wirklich gehoert
+haben muss), der Kleister vom Plakatkleber gegen das Fussballergebnis
+von der Rueckseite des Blattes. Beide Tauschgeschaefte gehen ueber den
+Dialog oder ueber "Geben". Der Plakatkleber ist eine neue Nebenfigur
+und sitzt neben seinem Eimer vor der Tribuene.
+
 Visual V7 vereinheitlicht die gesamte Praesentation: Alle Texte verwenden
 nun dieselbe eingebettete, gut lesbare Monospace-Schrift. Dialogfenster holen
 M.s jeweiliges Alter und die Gesichter aller wichtigen Figuren direkt aus den

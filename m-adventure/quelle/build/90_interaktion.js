@@ -92,6 +92,13 @@ function interactNPC(npc, verb){
 }
 function gebeItem(item, npc){
   if (item === 'kaffee' && npc === NPC.lena){ say(PL, 'Sie trinkt keinen. Sie hat nie welchen getrunken.'); return; }
+  /* Kapitel 2: beide Tauschgeschaefte gehen auch ueber Geben, nicht
+     nur ueber den Dialog. Wer den Kamm hinhaelt, hat es verstanden. */
+  if (item === 'kamm' && npc === NPC.dedo){ dedoSteckenTausch(); return; }
+  if (item === 'zeitung' && npc === NPC.kleber){
+    if (FLAG.kleisterErlaubt){ say(NPC.kleber, 'Ich kann lesen. Ich habe nur keine Zeit dafür.'); return; }
+    kleberErgebnis(); return;
+  }
   if (item === 'faehnchen' && npc === NPC.lehrer){
     say(NPC.lehrer, 'Sehen Sie. Geht doch.');
     return;

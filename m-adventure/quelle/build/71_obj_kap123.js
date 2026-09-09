@@ -357,18 +357,32 @@ ROOM_POLJE.hinweisMitMehl = true;
    ------------------------------------------------------------
    Spielbares Ziel: ein Papierfaehnchen auftreiben, ohne Geld und
    ohne Beziehungen. Leise Satire auf verordnete Begeisterung.
+
+   Die Regel des Kapitels steht im Kapitel selbst: "Niemand schenkte
+   etwas. Alle tauschten." Also liegt hier nichts einfach herum, was
+   man braucht. Das einzige, was M. umsonst bekommt, ist ein Kamm
+   aus der Rinne -- und den braucht er nicht, sondern Dedo. Der
+   Stecken kommt von Dedo gegen den Kamm, das Papier vom Kiosk
+   gegen einen Tipp, der Kleister vom Plakatkleber gegen das
+   Fussballergebnis. Nur Rot und Blau muss er sich selbst holen:
+   an der Plakatwand und beim Lehrer.
    ============================================================ */
 var OBJ_MOSTAR = [
   { id:'rinne', name:'Straßenrinne', hs:[80,382,800,70], go:{x:520,y:456},
     ansehen:function(){
       schauen('rinne',
-        'In der Rinne liegt, was heute schon heruntergefallen ist. Ein Kamm, ein Schuhband, ein Stecken.',
+        'In der Rinne liegt, was heute schon heruntergefallen ist. Ein Kamm, ein Schuhband, ein Kronkorken.',
         'Kein Kamm. Ein Kamm wäre etwas wert gewesen, den hätte jemand aufgehoben.');
     },
     nehmen:function(){
-      if (INV.has('stecken') || FLAG.faehnchenFertig){ say(PL, 'Einer reicht.'); return; }
-      INV.add('stecken');
-      say(PL, 'Ein Stecken. Gerade genug für das, was ich vorhabe.');
+      if (FLAG.kammGetauscht || FLAG.faehnchenFertig){ say(PL, 'Da liegt nichts mehr, was jemand haben will.'); return; }
+      if (INV.has('kamm')){ say(PL, 'Ein Schuhband brauche ich nicht. Ich habe zwei.'); return; }
+      INV.add('kamm');
+      play([
+        { say:[PL, 'Ein Kamm. Drei Zähne fehlen.'] },
+        { wait:0.8 },
+        { say:[NARR, 'Ich hatte damals Haare wie eine Bürste. Ein Kamm hätte bei mir nichts ausgerichtet. Aber ich wusste, dass er etwas wert war.'] }
+      ]);
     } },
 
   { id:'stand', name:'Zeitungsstand', hs:[548,176,204,226], go:{x:650,y:450},
@@ -389,9 +403,24 @@ var OBJ_MOSTAR = [
     } },
 
   { id:'kleister', name:'Kleistereimer', hs:[918,404,58,52], go:{x:945,y:452},
-    ansehen:'Ein Eimer Kleister. Die Plakatkleber sind zum Essen und haben ihn stehen lassen.',
+    ansehen:function(){
+      schauen('kleister',
+        'Ein Eimer Kleister. Der Mann daneben isst. Er sieht nicht zu mir, er sieht zum Eimer.',
+        'Kleister war vom Betrieb. Der Betrieb hat alles gezählt, auch das, was man nicht zählen kann.');
+    },
     nehmen:function(){
       if (INV.has('klebstoff') || FLAG.faehnchenFertig){ say(PL, 'Ich habe genug.'); return; }
+      if (!FLAG.kleisterErlaubt){
+        play([
+          { fn:function(){ NPC.kleber.dir = -1; } },
+          { say:[NPC.kleber, 'Der Eimer ist vom Betrieb.'] },
+          { wait:0.8 },
+          { say:[PL, 'Ich habe nichts angefasst.'] },
+          { wait:0.8 },
+          { say:[NPC.kleber, 'Ich weiß. Ich habe zugesehen.'] }
+        ]);
+        return;
+      }
       INV.add('klebstoff');
       say(PL, 'Einen Finger voll. Mehr braucht kein Fähnchen.');
     } },
@@ -442,11 +471,14 @@ var OBJ_MOSTAR = [
 ROOM_MOSTAR.objects = OBJ_MOSTAR;
 ROOM_MOSTAR.hinweis = function(){
   if (!FLAG.lehrerGefragt) return { x:430, y:400 };
-  if (!INV.has('stecken')) return { x:520, y:430 };
   if (!FLAG.retoureBekommen) return { x:650, y:350 };
   if (!INV.has('zeitung')) return { x:650, y:360 };
+  if (!INV.has('stecken')){
+    if (!INV.has('kamm') && !FLAG.kammGetauscht) return { x:520, y:430 };
+    return { x:NPC.dedo.x, y:NPC.dedo.y - 70 };
+  }
   if (!FLAG.papierRot) return { x:880, y:270 };
-  if (!INV.has('klebstoff')) return { x:945, y:420 };
+  if (!INV.has('klebstoff')) return FLAG.kleisterErlaubt ? { x:945, y:420 } : { x:1005, y:380 };
   if (!FLAG.tintenstift) return { x:430, y:400 };
   if (!FLAG.faehnchenFertig) return { x:PL.x, y:PL.y - 60 };
   return { x:1110, y:400 };

@@ -33,6 +33,7 @@ SPRECHER = {
   'NPC.safet':'Safet Susovic', 'NPC.yilmaz':'Yilmaz', 'NPC.krause':'Meister Krause',
   'NPC.sommer':'Frau Sommer', 'NPC.jure':'Jure', 'NPC.dedo':'Dedo',
   'NPC.mann':'Der Mann', 'NPC.gestalt':'Die Gestalt', 'NPC.beamter':'Der Beamte',
+  'NPC.kleber':'Der Plakatkleber',
 }
 
 MUSTER = [
