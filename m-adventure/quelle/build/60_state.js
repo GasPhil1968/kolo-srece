@@ -33,10 +33,9 @@ var ITEMS = {
   mehl:{ name:'Sack Mehl', desc:'Fünfzehn Kilo aus dem Nachbardorf. Er riecht nach Staub und nach dem, was man daraus macht.' },
   /* Kapitel 2 */
   zeitung:{ name:'Zeitungsblatt', desc:'Ein halbes Blatt Oslobođenje, drei Tage alt. Eine Seite Politik, eine Seite Fußball.' },
-  kamm:{ name:'Kamm', desc:'Aus der Rinne. Drei Zähne fehlen. Für einen, der Haare hat, ist er noch etwas wert.' },
-  stecken:{ name:'Holzstecken', desc:'Dedos vierter Stecken. Das Papier hat der Wind gefressen, sagt er. Gerade genug, um etwas daran zu befestigen.' },
+  stecken:{ name:'Holzstecken', desc:'Aus der Rinne am Straßenrand. Gerade genug, um etwas daran zu befestigen.' },
   faehnchen:{ name:'Papierfähnchen', desc:'Rot, weiß, blau, ein Stern in der Mitte. Selbst gemacht, und man sieht es. Von hinten sieht man auch, aus welcher Zeitung.' },
-  klebstoff:{ name:'Kleister', desc:'Ein Finger voll aus dem Eimer der Plakatkleber. Kalt, klebrig und für Papier besser als für Menschen.' },
+  klebstoff:{ name:'Klebreis', desc:'Ein Löffel voll vom Stand. Kalt, klebrig und für Papier besser als für Menschen.' },
   /* Kapitel 3 */
   befehl1:{ name:'Befehl: Fahne', desc:'„Die Flagge ist um 0900 zu hissen." Unterschrift unleserlich. Es ist 0850.' },
   befehl2:{ name:'Befehl: Bordstein', desc:'„Der Bordstein ist bis 0900 weiß zu streichen." Dieselbe unleserliche Unterschrift.' },
@@ -277,13 +276,6 @@ var NPC_DEFS = {
     build:{ shirt:true, sakko:true, moustache:true, tall:1.08 }, speed:84, blend:8,
     fidgets:['zaehlen','scan','zaehlen'], dialog:'lehrer',
     look:'Er zählt uns dreimal, und dreimal kommt eine andere Zahl heraus.' },
-  /* Der Plakatkleber. Sitzt neben seinem Eimer und isst. Er bewacht
-     nichts, aber er sieht her -- das reicht in dieser Stadt. Was er
-     wissen will, steht nicht auf dem Plakat, das er geklebt hat. */
-  kleber:{ id:'kleber', name:'Der Plakatkleber', pal:PAL.kleber,
-    build:{ shirt:true, overall:true, stubble:true, tall:1.04 }, speed:70, blend:6,
-    fidgets:['ausatmen','look','weight','look'], dialog:'kleber',
-    look:'Er isst Brot mit Zwiebel und sieht dabei zu seinem Eimer. Nicht zu mir. Zum Eimer.' },
   tiko:{ id:'tiko', name:'Josip Broz Tiko', pal:PAL.tiko,
     build:{ shirt:true, uniform:true, schirmmuetze:true, brille:true, grey:true, tall:1.10 },
     speed:70, blend:5, fidgets:['winken','strammstehen','winken'], dialog:'tiko',

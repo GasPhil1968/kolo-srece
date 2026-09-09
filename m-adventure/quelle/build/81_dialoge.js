@@ -144,11 +144,8 @@ var DLGNODES = {
   stand: function(){
     return dialogOptions([
       { t:'Was kostet die Zeitung?', go:'s_preis', once:'q_s_preis' },
-      /* M. sagt im Gespraech "Ich habe es beim Lehrer gehört". Also muss
-         er es dort gehoert haben -- sonst verkauft er eine Information,
-         die er nicht hat. */
       { t:'Der Umzug kommt diese Straße herunter.', go:'s_tipp', unlock:'TIPP',
-        when:function(){ return !!FLAG.q_s_preis && !!FLAG.lehrerGefragt && !FLAG.retoureBekommen; } },
+        when:function(){ return !!FLAG.q_s_preis && !FLAG.retoureBekommen; } },
       { t:'Haben Sie etwas von gestern?', go:'s_gestern', once:'q_s_gestern',
         when:function(){ return !!FLAG.q_s_preis; } },
       { t:'(Weitergehen.)', go:null, repeatable:true }
@@ -259,31 +256,9 @@ var DLGNODES = {
       { t: DEDO_FRAGE[R.id] || 'Was machst du hier?', go:'d_hier', once:'q_d_hier_' + R.id },
       { t: DEDO_ORTFRAGE[R.id] || '', go:'d_ort', once:'q_d_ort_' + R.id,
         when:function(){ return !!DEDO_ORTFRAGE[R.id]; } },
-      /* Kapitel 2: Dedo hat drei Faehnchen und einen vierten Stecken
-         ohne Papier. Das Faehnchen bekommt M. nicht, den Stecken schon --
-         aber nicht geschenkt. Dedo tauscht. Immer. */
-      { t:'Verkaufst du mir eins?', go:'d_faehnchen', once:'q_d_faehnchen',
-        when:function(){ return R.id === 'mostar' && !!FLAG.q_d_hier_mostar && !FLAG.faehnchenFertig; } },
-      { t:'Und der vierte Stecken? Der ohne Papier.', go:'d_stecken', unlock:'STECKEN',
-        when:function(){ return R.id === 'mostar' && !!FLAG.q_d_faehnchen && !INV.has('stecken') && !FLAG.kammGetauscht && !FLAG.faehnchenFertig; } },
       { t:'Wie alt bist du eigentlich?', go:'d_alter', once:'q_d_alter' },
       { t:'Kennen wir uns?', go:'d_kennen', once:'q_d_kennen',
         when:function(){ return !!FLAG.dedoSchonGetroffen; } },
-      { t:'(Weitergehen.)', go:null, repeatable:true }
-    ]);
-  },
-
-  /* ---- Kapitel 2: der Plakatkleber ----
-     Er gibt nichts her, was dem Betrieb gehoert. Aber er war am Sonntag
-     auf der Leiter und weiss nicht, wie Sarajevo gespielt hat. Das steht
-     auf der Rueckseite von M.s Zeitungsblatt. */
-  kleber: function(){
-    return dialogOptions([
-      { t:'Darf ich etwas Kleister?', go:'k_kleister', once:'q_k_kleister' },
-      { t:'Sie essen.', go:'k_essen', once:'q_k_essen',
-        when:function(){ return !!FLAG.q_k_kleister; } },
-      { t:'Sarajevo hat eins zu drei verloren.', go:'k_ergebnis', unlock:'ERGEBNIS',
-        when:function(){ return !!FLAG.q_k_essen && INV.has('zeitung') && !FLAG.kleisterErlaubt; } },
       { t:'(Weitergehen.)', go:null, repeatable:true }
     ]);
   },
@@ -815,72 +790,6 @@ var DLG_RESP = {
       { say:[NARR, 'So funktionierte das. Niemand schenkte etwas. Alle tauschten, und Information war die härteste Währung.'] }
     ]);
   },
-  d_faehnchen: function(){
-    play([
-      { say:[NPC.dedo, 'Drei Fähnchen.'] },
-      { wait:0.6 },
-      { say:[NPC.dedo, 'Drei Käufer.'] },
-      { wait:1.0 },
-      { say:[PL, 'Wer?'] },
-      { wait:0.8 },
-      { say:[NPC.dedo, 'Dein Lehrer, zwei Stück.'] },
-      { wait:1.2 },
-      { say:[PL, 'Der Lehrer?'] },
-      { wait:0.8 },
-      { say:[NPC.dedo, 'Für seine eigenen Kinder. Begeisterung fängt zu Hause an.'] },
-      { wait:1.4 },
-      { say:[NARR, 'Das dritte hat er nie verkauft. Ich habe später gefragt. Er hat gesagt, das dritte sei für ihn.'] },
-      { dlg:'dedo' }
-    ]);
-  },
-  d_stecken: function(){
-    if (INV.has('kamm')){ dedoSteckenTausch(); return; }
-    play([
-      { say:[NPC.dedo, 'Den hat der Wind gefressen. Das Papier, nicht den Stecken.'] },
-      { wait:1.0 },
-      { say:[PL, 'Gibst du ihn mir?'] },
-      { wait:0.8 },
-      { say:[NPC.dedo, 'Was hast du?'] },
-      { wait:0.8 },
-      { say:[PL, 'Nichts.'] },
-      { wait:1.0 },
-      { say:[NPC.dedo, 'Dann schau in die Rinne. Da liegt, was die Stadt nicht mehr braucht.'] },
-      { wait:1.2 },
-      { say:[NPC.dedo, 'Was die Stadt nicht mehr braucht, brauche ich manchmal noch.'] },
-      { dlg:'dedo' }
-    ]);
-  },
-  k_kleister: function(){
-    play([
-      { say:[NPC.kleber, 'Nein.'] },
-      { wait:0.9 },
-      { say:[PL, 'Nur einen Finger voll.'] },
-      { wait:0.9 },
-      { say:[NPC.kleber, 'Der Kleister ist vom Betrieb. Der Betrieb zählt.'] },
-      { wait:1.2 },
-      { say:[PL, 'Kleister zählt man nicht.'] },
-      { wait:1.0 },
-      { say:[NPC.kleber, 'Hier zählt man alles.'] },
-      { dlg:'kleber' }
-    ]);
-  },
-  k_essen: function(){
-    play([
-      { say:[NPC.kleber, 'Bis das Plakat trocken ist. Dann kommt das nächste.'] },
-      { wait:1.2 },
-      { say:[PL, 'Was steht auf dem nächsten?'] },
-      { wait:1.0 },
-      { say:[NPC.kleber, 'Dasselbe. Was ich wissen will, steht auf keinem Plakat.'] },
-      { wait:1.2 },
-      { say:[PL, 'Und was wollen Sie wissen?'] },
-      { wait:1.0 },
-      { say:[NPC.kleber, 'Wie Sarajevo gespielt hat. Sonntag. Ich war auf der Leiter.'] },
-      { wait:1.4 },
-      { say:[NARR, 'Auf der Leiter, mit dem Plakat, das er gerade klebte. Sonntag um drei, als die ganze Stadt am Radio saß.'] },
-      { dlg:'kleber' }
-    ]);
-  },
-  k_ergebnis: function(){ kleberErgebnis(); },
 
   /* ---- Kapitel 3 ---- */
   z_befehle: function(){
@@ -1531,55 +1440,6 @@ var DLG_RESP = {
   },
   g_abend: function(){ gestaltSzene(); }
 };
-
-/* Der Stecken: Kamm gegen Holz. Erreichbar ueber den Dialog und ueber
-   Geben -- wer Dedo den Kamm hinhaelt, hat die Regel verstanden. */
-function dedoSteckenTausch(){
-  if (FLAG.kammGetauscht || INV.has('stecken')){ say(NPC.dedo, 'Einmal getauscht ist getauscht.'); return; }
-  if (!INV.has('kamm')){ say(NPC.dedo, 'Was hast du?'); return; }
-  setFlag('kammGetauscht', true);
-  INV.drop('kamm'); INV.add('stecken');
-  play([
-    { fn:function(){ PL.doAct('reach', 0.8); } },
-    { say:[PL, 'Einen Kamm.'] },
-    { wait:1.0 },
-    { say:[NPC.dedo, '...'] },
-    { wait:0.9 },
-    { say:[NPC.dedo, 'Ein Kamm. Für einen Stecken.'] },
-    { wait:1.2 },
-    { say:[NPC.dedo, 'Gut. Ich habe noch Haare.'] },
-    { wait:1.2 },
-    { say:[NARR, 'Er hatte einen Fez auf. Ich habe seine Haare nie gesehen. Vielleicht hatte er welche.'] },
-    { fn:function(){ pruefeFaehnchen(); } }
-  ]);
-}
-
-/* Der Kleister: das Fussballergebnis gegen einen Finger voll. M. liest
-   es von der Rueckseite seines Blattes ab -- derselben, die am Ende des
-   Kapitels jeder lesen kann. */
-function kleberErgebnis(){
-  if (FLAG.kleisterErlaubt) return;
-  if (!INV.has('zeitung')){ say(PL, 'Ich weiß es. Aber ohne das Blatt glaubt er mir nicht.'); return; }
-  setFlag('kleisterErlaubt', true);
-  play([
-    { fn:function(){ NPC.kleber.dir = -1; } },
-    { say:[PL, 'Sarajevo hat eins zu drei verloren. Gegen Vardar.'] },
-    { wait:1.2 },
-    { say:[NPC.kleber, '...'] },
-    { wait:0.8 },
-    { say:[NPC.kleber, 'Eins zu drei.'] },
-    { wait:1.0 },
-    { say:[PL, 'Steht hier. Auf der Rückseite.'] },
-    { wait:1.0 },
-    { say:[NPC.kleber, 'Zeig.'] },
-    { wait:1.4 },
-    { say:[NPC.kleber, 'Eins zu drei. Zu Hause.'] },
-    { wait:1.2 },
-    { say:[NPC.kleber, 'Nimm einen Finger voll. Einen.'] },
-    { wait:1.2 },
-    { say:[NARR, 'Er hat den Rest des Tages nicht mehr geredet. Ich weiß nicht, ob es am Ergebnis lag oder am Kleister.'] }
-  ]);
-}
 
 /* Das Faehnchen entsteht erst, wenn Papier, Stecken, Kleister, Rot und
    Blau zusammenkommen. Geprueft an einer Stelle, damit die Reihenfolge

@@ -222,7 +222,7 @@ function useItemOn(item, o){
     if (item === 'zeitung' && o.id === 'plakat'){ o.benutzen(); return; }
     if ((item === 'zeitung' || item === 'stecken' || item === 'klebstoff') &&
         (o.id === 'stand' || o.id === 'rinne' || o.id === 'kleister')){
-      say(PL, 'Zusammen kommt das in meiner Hand, nicht hier.');
+      say(PL, 'Ich habe alles zusammen. Es fehlt nur noch etwas Blaues.');
       return;
     }
   }
