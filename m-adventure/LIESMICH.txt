@@ -2,6 +2,17 @@ M.  ·  Erinnerungen zwischen den Zeiten
 =======================================
 Stand: 3. September 2026
 
+VISUAL-V114 · MOSTAR
+--------------------
+M-Adventure-Visual-V114.html ist die aktuelle spielbare Fassung. Sie
+baut auf der Artefakt-Linie V113 auf (Patch-Bloecke V11 bis V57) und
+haengt einen Block V114 an, der Kapitel 2 neu ordnet: vier gleichzeitig
+offene Probleme (Fahne, Sperre, Sandale, Brankos System), Figuren, die
+im Lauf des Nachmittags weiterziehen, Dedos Stand KORISNE STVARI,
+der Plakatkleber, Brankos Stempel als Rotquelle, Parolen als Frage nach
+der gedruckten Fassung, und der Namensaufruf am Ende. Der Quellordner
+quelle/ gehoert zur aelteren V7-Linie und kennt diese Bloecke nicht.
+
 VISUAL-V7
 ---------
 Die Terrasse und Rosko Polje verwenden jetzt eingebettete, gemalte
