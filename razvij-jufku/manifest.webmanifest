@@ -1,7 +1,7 @@
 {
-  "name": "EVOLUCIJA PITE",
-  "short_name": "Pita",
-  "description": "Od jufke do bureka. Puštaš pite u tepsiju, dvije iste postaju jedna veća. Ne prelazi crvenu liniju.",
+  "name": "RAZVIJ JUFKU",
+  "short_name": "Jufka",
+  "description": "Razvij jufku rukama preko cijelog stola — tanko da se kroz nju Trebević vidi, bez rupa. Nana gleda.",
   "id": "./",
   "start_url": "./",
   "scope": "./",

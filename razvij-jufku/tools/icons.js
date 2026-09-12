@@ -1,5 +1,4 @@
-/* Igra sama crta ikonu i naslovnu sliku — pokreni poslije promjene grafike.
-   node tools/icons.js                                                       */
+/* Igra sama crta ikonu i naslovnu sliku.  node razvij-jufku/tools/icons.js */
 const { chromium } = require('playwright');
 const path = require('path');
 const fs = require('fs');

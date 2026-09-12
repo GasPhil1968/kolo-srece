@@ -1,5 +1,4 @@
-# Deploy kao zaseban Netlify site: base = evolucija-pite, publish = "."
-# (ili u Netlify UI: Base directory "evolucija-pite", Publish directory "evolucija-pite").
+# Zaseban Netlify site: Base directory "razvij-jufku", Publish directory "razvij-jufku".
 [build]
   publish = "."
 
