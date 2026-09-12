@@ -437,7 +437,7 @@ function doughDemo(){
 /* ==========================================================================
    STANJE IGRE — ekrani i faze jedne pite
    ========================================================================== */
-var S = { MENU:0, PLAYING:1, PAUSED:2, OVER:3, HOWTO:4, STATS:5 };
+var S = { MENU:0, PLAYING:1, PAUSED:2, OVER:3, HOWTO:4, STATS:5, INTRO:6 };
 var PHASE = { OKL:0, RAZ:1, FIL:2, MOT:3, PEC:4, OCJ:5 };
 /* vrste pite: fil i boja fila */
 var PITE = [
@@ -668,6 +668,11 @@ function update(dt){
   G.flash = Math.max(0, G.flash - dt*1.8);
   updateParts(dt);
   updateNana(dt);
+  if(G.st === S.INTRO){
+    if(G.t > 3.05 && !G.introSaid){ G.introSaid = true; nanaSay('Sjedi. Danas učiš.', 2.6, 4); }
+    if(G.t > 5.6){ G.st = S.MENU; G.t = 1; }
+    return;
+  }
   if(G.st !== S.PLAYING) return;
   G.phT += dt;
   NANA.idleT += dt;
@@ -1557,9 +1562,91 @@ function drawSoundBtn(x, y){
   ctx.restore();
 }
 function drawWatermark(){
-  ctx.save(); ctx.globalAlpha = 0.42;
-  txt('© by FG', 360, HH-40, '600 18px '+FONT, '#ffe0b0');
+  ctx.save(); ctx.globalAlpha = 0.45;
+  txt('© by FG', W-18, HH-20, '600 19px '+FONT, '#ffe0b0', 'right');
   ctx.restore();
+}
+
+/* ---------- intro: televizor se pali, test slika, snijeg, naslov ---------- */
+var SNOW_SPR = null;
+function snowSprite(){
+  if(SNOW_SPR) return SNOW_SPR;
+  var c = document.createElement('canvas'); c.width = 240; c.height = 400;
+  var g = c.getContext('2d'), img = g.createImageData(240, 400), d = img.data;
+  for(var i=0;i<d.length;i+=4){ var v = 40 + (Math.random()*215)|0; d[i]=v; d[i+1]=v; d[i+2]=v; d[i+3]=255; }
+  g.putImageData(img, 0, 0);
+  SNOW_SPR = c; return c;
+}
+function drawSnijeg(a){
+  if(a <= 0.01) return;
+  var sp = snowSprite();
+  ctx.save(); ctx.globalAlpha = a; ctx.imageSmoothingEnabled = false;
+  var ox = (Math.random()*60)|0, oy = (Math.random()*100)|0;
+  ctx.drawImage(sp, ox, oy, 180, 300, 0, 0, W, HH);
+  ctx.imageSmoothingEnabled = true; ctx.restore();
+}
+function drawTestSlika(t){
+  var jit = (Math.random() < 0.06) ? rnd(-3, 3) : 0;
+  ctx.save(); ctx.translate(jit, 0);
+  ctx.fillStyle = '#111'; ctx.fillRect(-10, 0, W+20, HH);
+  var cols = ['#c0c0c0','#c0c000','#00c0c0','#00c000','#c000c0','#c00000','#0000c0','#101010'];
+  var bw = W/cols.length;
+  for(var i=0;i<cols.length;i++){ ctx.fillStyle = cols[i]; ctx.fillRect(i*bw, 0, bw+1, 760); }
+  var greys = ['#000','#333','#666','#999','#ccc','#fff'];
+  for(i=0;i<greys.length;i++){ ctx.fillStyle = greys[i]; ctx.fillRect(i*W/6, 760, W/6+1, 140); }
+  ctx.fillStyle = '#0b0b0b'; ctx.fillRect(0, 900, W, HH-900);
+  /* krug s križem */
+  ctx.strokeStyle = '#fff'; ctx.lineWidth = 6;
+  ctx.beginPath(); ctx.arc(360, 460, 250, 0, 6.284); ctx.stroke();
+  ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(360, 460, 244, 0, 6.284); ctx.fill();
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 2;
+  for(i=-4;i<=4;i++){ ctx.beginPath(); ctx.moveTo(360+i*60, 216); ctx.lineTo(360+i*60, 704); ctx.stroke(); ctx.beginPath(); ctx.moveTo(116, 460+i*60); ctx.lineTo(604, 460+i*60); ctx.stroke(); }
+  ctx.fillStyle = '#e8e8e8';
+  txt('NANA TV', 360, 380, '900 58px '+FONT, '#f2f2f2');
+  txt('PROGRAM ZA DOMAĆICE', 360, 440, '700 24px '+FONT, 'rgba(240,240,240,0.85)');
+  txt('SARAJEVO', 360, 480, '700 24px '+FONT, 'rgba(240,240,240,0.85)');
+  var sec = Math.floor(t*2) % 2;
+  txt(sec ? 'PROGRAM POČINJE' : '', 360, 560, '800 26px '+FONT, '#ffd479');
+  ctx.fillStyle = '#fff'; ctx.fillRect(330, 610, 60, 8);
+  txt('RAZVIJ JUFKU', 360, 1000, '700 22px '+FONT, 'rgba(255,255,255,0.5)');
+  ctx.restore();
+}
+function drawIntro(){
+  var t = G.t;
+  if(t < 0.85){
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,HH);
+    var k = clamp(t/0.85, 0, 1);
+    var lw = (k < 0.40) ? lerp(40, W, eoc(k/0.40)) : W;
+    var lh = (k < 0.40) ? 4 : lerp(4, HH, eoc((k-0.40)/0.60));
+    var la = (k < 0.40) ? 1 : 1 - eic((k-0.40)/0.60)*0.55;
+    ctx.fillStyle = 'rgba(232,255,250,'+la+')';
+    ctx.fillRect((W-lw)/2, 640-lh/2, lw, lh);
+    return;
+  }
+  if(t < 2.45){ drawTestSlika(t); return; }
+  if(t < 2.94){ drawTestSlika(t); drawSnijeg(1); return; }
+  /* scena je već nacrtana ispod; snijeg se raspline */
+  if(t < 3.22) drawSnijeg(1 - (t-2.94)/0.28);
+  if(NANA.sayT > 0) speechBubble(NANA.say, 360, 246, 520, NANA_X, 282, false);
+  /* naslov udara */
+  var tt = clamp((t-4.0)/0.30, 0, 1);
+  if(tt > 0){
+    ctx.save();
+    ctx.globalAlpha = clamp((t-4.0)*5, 0, 1);
+    ctx.fillStyle = 'rgba(10,8,14,0.45)'; ctx.fillRect(0, 60, W, 230);
+    ctx.translate(360, 170); var sc = lerp(3.2, 1, eoc(tt)); ctx.scale(sc, sc);
+    txtO('RAZVIJ', 0, -46, '900 92px '+FONT, '#ffd479', 14);
+    txtO('JUFKU', 0, 46, '900 96px '+FONT, '#ffe9b0', 14);
+    ctx.restore();
+  }
+  if(t > 4.5){
+    var a2 = clamp((t-4.5)/0.36, 0, 1);
+    ctx.save(); ctx.globalAlpha = a2;
+    ctx.strokeStyle = 'rgba(255,200,120,0.5)'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(360-210*a2, 266); ctx.lineTo(360+210*a2, 266); ctx.stroke();
+    txt('Da se kroz nju Trebević vidi.', 360, 296, '600 27px '+FONT, 'rgba(255,232,196,0.92)');
+    ctx.restore();
+  }
 }
 
 /* ---------- ocjena ---------- */
@@ -1622,7 +1709,6 @@ function drawMenu(){
   btn('stats', 140, 930, 440, 74, 'STATISTIKA', '', TAN, false);
   btn('sndbig', 140, 1024, 440, 74, AU.on ? 'ZVUK: ON' : 'ZVUK: OFF', '', AU.on ? TAN : GREY, false);
   ctx.restore();
-  drawWatermark();
 }
 
 /* ---------- kako se igra ---------- */
@@ -1748,7 +1834,7 @@ function render(){
   drawNana();
   drawTable();
   var playing = (G.st === S.PLAYING || G.st === S.PAUSED);
-  if(G.st === S.MENU || G.st === S.HOWTO || G.st === S.STATS){
+  if(G.st === S.MENU || G.st === S.HOWTO || G.st === S.STATS || G.st === S.INTRO){
     drawDough();
   } else if(playing || G.st === S.OVER){
     var ph = G.phase;
@@ -1789,7 +1875,9 @@ function render(){
   if(G.st === S.STATS) drawStats();
   if(G.st === S.PAUSED) drawPaused();
   if(G.st === S.OVER){ drawHUD(); drawOver(); }
+  if(G.st === S.INTRO) drawIntro();
 
+  if(!(G.st === S.INTRO && G.t < 2.94)) drawWatermark();
   drawCRT();
   ctx.restore();
   drawOkvir();
@@ -1815,6 +1903,7 @@ function onDown(cx,cy){
   if(id){ PRESS.id = id; return; }
   PRESS.id = null;
   PTR.down = true; PTR.x = v.x; PTR.y = v.y; PTR.t = now;
+  if(G.st === S.INTRO){ G.st = S.MENU; G.t = 0; NANA.sayT = 0; AU.click(); return; }
   if(G.st !== S.PLAYING) return;
   var p = toPlane(v.x, v.y);
   if(G.phase === PHASE.OKL){ G.okl.down = true; G.okl.x = v.x; G.okl.y = clamp(v.y, TCY - R_T*PERSP - 20, TCY + R_T*PERSP + 20); }
@@ -1889,7 +1978,8 @@ function handle(id){
 function onKey(e){
   if(e.key === ' ' || e.key === 'Enter'){
     AU.init();
-    if(G.st === S.MENU) handle('play');
+    if(G.st === S.INTRO){ G.st = S.MENU; G.t = 0; NANA.sayT = 0; }
+    else if(G.st === S.MENU) handle('play');
     else if(G.st === S.OVER) handle('again');
     else if(G.st === S.PAUSED) togglePause();
     else if(G.st === S.HOWTO || G.st === S.STATS) toMenu();
@@ -1997,6 +2087,7 @@ function boot(){
   window.addEventListener('keydown', onKey);
   bgSprite(); tableSprite(); doughLayer();
   doughDemo();
+  G.st = S.INTRO; G.t = 0;
   window.requestAnimationFrame(frame);
 }
 

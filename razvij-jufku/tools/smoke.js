@@ -38,7 +38,7 @@ const path = require('path');
     EP.render();
   }, [x0, y0, x1, y1, n, secPerStep]);
 
-  await step('meni', async () => page.evaluate(() => { EP.render(); return 'st=' + EP.G.st + ' btns=' + EP.btns().map(b => b.id).join(',') + ' thin=' + EP.D.thin.toFixed(2); }));
+  await step('intro → meni', async () => { await sim(6); return page.evaluate(() => { EP.render(); return 'st=' + EP.G.st + ' btns=' + EP.btns().map(b => b.id).join(',') + ' thin=' + EP.D.thin.toFixed(2); }); });
   await step('KAKO SE IGRA / NAZAD', async () => { await click('howto'); await sim(0.5); await click('back'); return page.evaluate(() => 'st=' + EP.G.st); });
   await step('STATISTIKA / NAZAD', async () => { await click('stats'); await sim(0.3); await click('back'); return page.evaluate(() => 'st=' + EP.G.st); });
   await step('IGRAJ → oklagija', async () => { await click('play'); return page.evaluate(() => 'st=' + EP.G.st + ' faza=' + EP.G.phase + ' pita=' + EP.PITE[EP.G.pita].name); });

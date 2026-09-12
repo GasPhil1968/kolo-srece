@@ -22,7 +22,11 @@ const fs = require('fs');
       for (let i = 1; i <= n; i++) { const t = i / n; EP.onMove(...S(x0 + (x1 - x0) * t, y0 + (y1 - y0) * t)); for (let k = 0; k < Math.max(1, Math.round(sps * 60)); k++) { EP.update(1/60); if (EP.G.phase === EP.PHASE.FIL) EP.filStep(1/60); } }
       EP.onUp(...S(x1, y1)); EP.render();
     }, [x0, y0, x1, y1, n, sps]);
-    await sim(1.2);
+    if (name === 'iphone') {
+      await sim(1.6); await page.screenshot({ path: path.join(outDir, name + '-intro-test.png') });
+      await sim(2.9); await page.screenshot({ path: path.join(outDir, name + '-intro-naslov.png') });
+    }
+    await sim(6);
     await page.screenshot({ path: path.join(outDir, name + '-menu.png') });
     await page.evaluate(() => EP.newGame());
     await sim(1);
