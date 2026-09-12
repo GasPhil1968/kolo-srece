@@ -60,7 +60,7 @@
   #stopBtn:hover{background:rgba(240,180,90,.15)}
 
   #staffWrap{flex:0 0 auto;margin-top:1px;position:relative;
-             height:clamp(64px,19.5%,110px);background:#0d0b09}
+             height:clamp(70px,21%,124px);background:#0d0b09}
   #staff{display:block;width:100%;height:100%}
   #vatra{position:absolute;left:0;right:0;bottom:-3px;height:3px;
     background:rgba(244,234,214,.08)}
@@ -1037,11 +1037,11 @@ function refTone(p){
    hingehört, Fell rechts unter dem Bogen. Der Blick geht dem Guslar über
    die Schulter.                                                           */
 const NS="http://www.w3.org/2000/svg";
-const NUTX=150, NUTY=100, ANG=17;
+const NUTX=150, NUTY=112, ANG=12;
 const SLEN=590;                       // Sattel bis Steg
 const NECK_END=372, BODY_X0=350, BODY_X1=745, BODY_W=118, BODY_W0=24;
 const TAIL_X=728, BOWX=470;
-const INST_CX=470, INST_CY=232, INST_W=900, INST_H=352;
+const INST_CX=465, INST_CY=200, INST_W=820, INST_H=290;
 const COS=Math.cos(ANG*Math.PI/180), SIN=Math.sin(ANG*Math.PI/180);
 
 function neckHalf(x){ return 15+Math.max(0,Math.min(1,(x+10)/(NECK_END+10)))*6; }
@@ -1331,16 +1331,16 @@ function buildFretHand(){
 let bowStick=null, bowHair=null, bowG=null;
 function buildBow(){
   const L=document.getElementById("bow"); L.innerHTML=""; bowG=L;
-  el("path",{d:"M"+(BOWX-8)+" -168 Q"+(BOWX-44)+" -20 "+(BOWX-8)+" 132",fill:"none",
+  el("path",{d:"M"+(BOWX-8)+" -146 Q"+(BOWX-44)+" -20 "+(BOWX-8)+" 132",fill:"none",
     stroke:"#0b0704",opacity:".5","stroke-width":"7","stroke-linecap":"round",transform:"translate(4,6)"},L);
-  bowStick=el("path",{d:"M"+(BOWX-8)+" -168 Q"+(BOWX-44)+" -20 "+(BOWX-8)+" 132",fill:"none",
+  bowStick=el("path",{d:"M"+(BOWX-8)+" -146 Q"+(BOWX-44)+" -20 "+(BOWX-8)+" 132",fill:"none",
     stroke:"#2a1608","stroke-width":"5.4","stroke-linecap":"round"},L);
-  el("path",{d:"M"+(BOWX-8)+" -168 Q"+(BOWX-44)+" -20 "+(BOWX-8)+" 132",fill:"none",
+  el("path",{d:"M"+(BOWX-8)+" -146 Q"+(BOWX-44)+" -20 "+(BOWX-8)+" 132",fill:"none",
     stroke:"url(#edgeG)","stroke-width":"1.6","stroke-linecap":"round"},L);
-  bowHair=el("path",{d:"M"+BOWX+" -164 L"+BOWX+" 126",fill:"none",stroke:"#f4ead6",
+  bowHair=el("path",{d:"M"+BOWX+" -142 L"+BOWX+" 126",fill:"none",stroke:"#f4ead6",
     "stroke-width":"2.2",opacity:".8"},L);
   // Bindungen an beiden Enden
-  el("path",{d:"M"+(BOWX-14)+" -166 L"+(BOWX+5)+" -162 M"+(BOWX-14)+" 130 L"+(BOWX+5)+" 126",
+  el("path",{d:"M"+(BOWX-14)+" -144 L"+(BOWX+5)+" -140 M"+(BOWX-14)+" 130 L"+(BOWX+5)+" 126",
     stroke:"#c9a24a","stroke-width":"2.6"},L);
   const h=el("g",{transform:"translate("+(BOWX+4)+",128)"},L);
   limb("M156 250 L44 96",36,h);
@@ -2509,7 +2509,7 @@ function loop(t){
   if(bowPid===null&&S.mode!=="demo"&&!introT) S.bowPos*=Math.pow(.9,f);
   if(bowStick){
     const bend=v*6+S.scratch*4;
-    sattr(bowStick,"d","M"+(BOWX-8)+" -168 Q"+(BOWX-44-bend).toFixed(1)+" -20 "+(BOWX-8)+" 132");
+    sattr(bowStick,"d","M"+(BOWX-8)+" -146 Q"+(BOWX-44-bend).toFixed(1)+" -20 "+(BOWX-8)+" 132");
   }
   if(bowG) sattr(bowG,"transform","translate("+(v*1.5).toFixed(1)+","+S.bowPos.toFixed(1)+") rotate("+S.bowAng.toFixed(1)+" "+BOWX+" 0)");
   sattr(fretHand,"transform","translate("+xFromPos(S.visPos).toFixed(1)+",0)");
