@@ -13,7 +13,7 @@ const path = require('path');
   page.on('pageerror', e => errs.push('PAGEERROR: ' + e.message + '\n' + (e.stack || '').split('\n')[1]));
   page.on('console', m => { if (m.type() === 'error') errs.push('CONSOLE: ' + m.text()); });
   await page.goto('file://' + path.resolve('index.html'));
-  await page.waitForTimeout(400);
+  await page.waitForTimeout(500);
 
   const steps = [];
   const step = async (name, fn) => {
@@ -22,82 +22,84 @@ const path = require('path');
     await page.waitForTimeout(260);
     steps.push(`${errs.length === before ? 'ok  ' : 'FEHL'} ${name}`);
   };
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  await step('entsperren + Intro beenden', () => page.evaluate(() => { __H.unlock(); __H.closeGate(); __H.endIntro(); }));
-  await step('Menue', () => page.evaluate(() => __H.showScreen('main')));
-  for (const scr of ['songs', 'drill', 'howto', 'setup', 'demo']) {
-    await step('Bildschirm ' + scr, () => page.evaluate(s => __H.showScreen(s), scr));
+  await step('Startschirm + Intro', () => page.evaluate(() => { __G.closeGate(); }));
+  await step('Intro laeuft 1 s', () => page.waitForTimeout(1000));
+  await step('Intro beenden', () => page.evaluate(() => __G.endIntro()));
+  await step('Worklet steht', () => page.evaluate(async () => {
+    for (let i = 0; i < 40 && !__G.workletOn; i++) await new Promise(r => setTimeout(r, 50));
+    if (!__G.workletOn) throw new Error('AudioWorklet nicht gestartet');
+  }));
+  for (const scr of ['songs', 'drills', 'howto', 'setup', 'main']) {
+    await step('Bildschirm ' + scr, () => page.evaluate(s => __G.showScreen(s), scr));
   }
   await step('alle Lieder starten + spielen', () => page.evaluate(async () => {
-    for (let i = 0; i < __H.SONGS.length; i++) {
-      __H.startSong(i, 0);
-      for (let k = 0; k < 10; k++) {
-        __H.press(k % 8); __H.moveBellows(k % 2 ? .09 : -.09);
-        await new Promise(r => setTimeout(r, 16));
-        __H.releaseBtn(k % 8);
+    for (let i = 0; i < __G.SONGS.length; i++) {
+      __G.startSong(i);
+      for (let k = 0; k < 12; k++) {
+        __G.pitch(k % 6); __G.bow(.8, k % 2 ? 1 : -1); __G.onStroke(k % 2 ? 1 : -1, 1);
+        await new Promise(r => setTimeout(r, 60));
       }
+      __G.bow(0);
     }
   }));
-  await step('Register durchschalten', () => page.evaluate(async () => {
-    for (let r = 0; r < __H.REGISTERS.length; r++) {
-      __H.S.reg = r; __H.applyRegister();
-      const h = __H.noteOn(3, 1); await new Promise(r2 => setTimeout(r2, 60)); __H.noteOff(h);
+  await step('Instrumente durchschalten', () => page.evaluate(async () => {
+    for (let i = 0; i < __G.INSTRUMENTS.length; i++) {
+      __G.S.inst = i; __G.rebuild(); __G.applyInstrument();
+      __G.pitch(3); __G.bow(.7, 1); await new Promise(r => setTimeout(r, 80)); __G.bow(0);
     }
-    __H.S.reg = 0; __H.applyRegister();
+    __G.S.inst = 0; __G.rebuild(); __G.applyInstrument();
   }));
   await step('alle Uebungen', () => page.evaluate(async () => {
-    for (let i = 0; i < __H.DRILLS.length; i++) { __H.startDrill(i); await new Promise(r => setTimeout(r, 90)); }
+    for (let i = 0; i < __G.DRILLS.length; i++) { __G.startDrill(i); __G.pitch(2); __G.bow(.6, 1); await new Promise(r => setTimeout(r, 120)); __G.bow(0); }
   }));
   await step('Schwierigkeitsgrade', () => page.evaluate(async () => {
-    for (let l = 0; l < __H.LEVELS.length; l++) { __H.S.level = l; __H.startSong(0, 0); await new Promise(r => setTimeout(r, 90)); }
-    __H.S.level = 0;
+    for (let l = 0; l < __G.LEVELS.length; l++) { __G.S.level = l; __G.startSong(0); await new Promise(r => setTimeout(r, 120)); }
+    __G.S.level = 0;
   }));
-  await step('Sprachen', () => page.evaluate(() => { ['de', 'sr', 'en'].forEach(l => { __H.setLang(l); __H.showScreen('setup'); }); __H.setLang('de'); }));
-  await step('Demo mit Veselje', () => page.evaluate(() => __H.startDemo(2, 0, true)));
-  await step('Demo beenden', () => page.evaluate(() => __H.endDemo()));
-  await step('frei spielen', () => page.evaluate(async () => {
-    __H.startFree();
-    for (let k = 0; k < 16; k++) { __H.press(k % 8); await new Promise(r => setTimeout(r, 12)); __H.releaseBtn(k % 8); }
+  await step('Demo', () => page.evaluate(() => __G.startDemo(0)));
+  await step('Demo laeuft 2,5 s', () => page.waitForTimeout(2500));
+  await step('Demo beenden', () => page.evaluate(() => __G.endDemo()));
+  await step('frei spielen mit Zeiger', async () => {
+    await page.evaluate(() => __G.startFree());
+    const pt = await page.evaluate(() => {
+      const svg = document.getElementById('inst'), g = document.getElementById('local');
+      const m = g.getScreenCTM(), p = svg.createSVGPoint();
+      p.x = 520; p.y = 0; const q = p.matrixTransform(m);
+      p.x = 150; p.y = 0; const n = p.matrixTransform(m);
+      return { bx: q.x, by: q.y, nx: n.x, ny: n.y };
+    });
+    await page.mouse.move(pt.bx, pt.by); await page.mouse.down();
+    for (let k = 0; k < 12; k++) { await page.mouse.move(pt.bx, pt.by + (k % 2 ? 40 : -40), { steps: 5 }); }
+    await page.mouse.up();
+    const revs = await page.evaluate(() => __G.S.revs);
+    if (revs < 8) throw new Error('zu wenige Striche erkannt: ' + revs);
+  });
+  await step('Pause + weiter', () => page.evaluate(() => { __G.startSong(0); __G.goPause(); __G.goResume(); }));
+  await step('Ergebnis', () => page.evaluate(() => { __G.startSong(0); __G.finish(); }));
+  await step('Wertung: Strich im Fenster ist ČISTO', () => page.evaluate(async () => {
+    __G.S.level = 1; __G.startSong(0);
+    const n = __G.S.notes[0];
+    __G.S.t0 = performance.now() - n.t;             // die erste Note ist jetzt faellig
+    __G.pitch(n.pos); __G.bow(.8, 1); __G.onStroke(1, 1);
+    if (n.grade !== 2) throw new Error('erwartet ČISTO, bekam ' + n.grade);
+    __G.bow(0); __G.S.level = 0; __G.toMenu();
   }));
-  await step('Pause + weiter', () => page.evaluate(() => { __H.goPause(); __H.goResume(); }));
-  await step('Ergebnis', () => page.evaluate(() => { __H.startSong(0, 0); __H.finish(); }));
-  await step('Bassbelegung Stradella', () => page.evaluate(() => {
-    __H.startSong(4, 0);
-    for (let d = 0; d < 7; d++) {
-      const c = __H.stradella(d), b = __H.bassRoot(d, d % 2);
-      if (!c.every(f => f > 40 && f < 2000)) throw new Error('Akkord ausserhalb: ' + c);
-      if (!(b > 25 && b < 200)) throw new Error('Bass ausserhalb: ' + b);
-    }
+  await step('Wertung: kein Strich ist PROMAŠAJ', () => page.evaluate(async () => {
+    __G.S.level = 1; __G.startSong(0);
+    const n = __G.S.notes[0];
+    __G.S.t0 = performance.now() - n.t - 600;
+    __G.judgeFrame(performance.now() - __G.S.t0, performance.now());
+    if (n.grade !== 0) throw new Error('erwartet PROMAŠAJ, bekam ' + n.grade);
+    __G.S.level = 0; __G.toMenu();
   }));
-  await step('lebende Toene aufgeraeumt', () => page.evaluate(async () => {
-    __H.startFree();
-    for (let k = 0; k < 40; k++) { __H.press(k % 8); __H.releaseBtn(k % 8); }
-    await new Promise(r => setTimeout(r, 400));
-  }));
+  await step('Grafikstufen', () => page.evaluate(() => { ['full', 'lite', 'auto'].forEach(m => { __G.GFX.mode = m; }); }));
+  await step('zurueck ins Menue', () => page.evaluate(() => __G.toMenu()));
+  await page.waitForTimeout(300);
 
-  await step('Lautstaerke, Raum, Tempo', () => page.evaluate(async () => {
-    for (let i = 0; i < 3; i++) {
-      __H.S.vol = i; __H.setVolume([.55, .9, 1.35][i]);
-      __H.S.room = i; __H.setRoom([.06, .20, .42][i]);
-      __H.S.tempo = i;
-      __H.startSong(0, 0);
-      const b = __H.S.song.beat, want = Math.round(240 / [.85, 1, 1.18][i]);
-      if (b !== want) throw new Error(`Tempo ${i}: Schlag ${b}, erwartet ${want}`);
-      __H.showScreen('setup');
-      await new Promise(r => setTimeout(r, 60));
-    }
-    __H.S.tempo = 1; __H.S.vol = 1; __H.S.room = 1;
-  }));
-
-  const frames = await page.evaluate(() => new Promise(res => {
-    let n = 0; const t0 = performance.now();
-    const f = () => { n++; performance.now() - t0 < 2000 ? requestAnimationFrame(f) : res(n / 2); };
-    requestAnimationFrame(f);
-  }));
-
-  await browser.close();
-  steps.forEach(s => console.log(s));
-  console.log(`\nBildrate im Leerlauf: ${frames.toFixed(1)} fps`);
-  if (errs.length) { console.log('\n--- Fehler ---'); [...new Set(errs)].slice(0, 25).forEach(e => console.log(e)); process.exitCode = 1; }
+  console.log(steps.join('\n'));
+  if (errs.length) { console.log('--- Fehler ---'); errs.slice(0, 20).forEach(e => console.log(e)); process.exitCode = 1; }
   else console.log('keine Fehler');
+  await browser.close();
 })();

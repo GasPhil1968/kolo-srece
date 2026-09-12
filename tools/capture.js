@@ -1,6 +1,7 @@
 /* Nimmt den echten Ausgang des Spiels auf und schreibt eine WAV-Datei.
    Nur zum Prüfen des Klangs — gehört nicht zum Spiel selbst.
-   Aufruf: node tools/capture.js <szene> <sekunden> <ziel.wav>          */
+   Aufruf: node tools/capture.js <szene> <sekunden> <ziel.wav>
+   Szenen: demo:<lied>  tone:<griff>  scale  strokes                       */
 const { chromium } = require('playwright');
 const path = require('path'), fs = require('fs');
 
@@ -13,7 +14,7 @@ const out   = process.argv[4] || 'out.wav';
     executablePath: process.env.PW_CHROME || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
     args: ['--autoplay-policy=no-user-gesture-required', '--mute-audio']
   });
-  const page = await browser.newPage();
+  const page = await browser.newPage({ viewport: { width: 900, height: 430 } });
   const errs = [];
   page.on('pageerror', e => errs.push('PAGEERROR: ' + e.message));
   page.on('console', m => { if (m.type() === 'error') errs.push('CONSOLE: ' + m.text()); });
@@ -22,14 +23,16 @@ const out   = process.argv[4] || 'out.wav';
   await page.waitForTimeout(500);
 
   const pcm = await page.evaluate(async ({ scene, secs }) => {
-    const H = window.__H;
-    if (!H) throw new Error('window.__H fehlt');
-    H.unlock();
-    const AC = H.ac();
+    const G = window.__G;
+    if (!G) throw new Error('window.__G fehlt');
+    G.closeGate(); G.endIntro();
+    const AC = G.ac();
     if (!AC) throw new Error('kein AudioContext');
     await AC.resume();
+    for (let i = 0; i < 60 && !G.workletOn; i++) await new Promise(r => setTimeout(r, 50));
+    if (!G.workletOn) throw new Error('AudioWorklet nicht gestartet');
 
-    // Abgriff direkt hinter dem Kompressor
+    // Abgriff hinter dem Begrenzer
     const buf = [];
     const sp = AC.createScriptProcessor(4096, 2, 2);
     sp.onaudioprocess = e => {
@@ -39,26 +42,25 @@ const out   = process.argv[4] || 'out.wav';
       buf.push(c);
       const o = e.outputBuffer.getChannelData(0); for (let i = 0; i < o.length; i++) o[i] = 0;
     };
-    H.tap(sp);
+    G.tap(sp);
     sp.connect(AC.destination);
 
-    const [kind, arg, vol] = scene.split(':');
-    if (vol !== undefined) H.setVolume(parseFloat(vol));
-    if (kind === 'demo') H.startDemo(+arg, 0, false);
-    else if (kind === 'fest') H.startDemo(+arg, 0, true);
-    else if (kind === 'note') { H.S.mode = 'free'; H.S.air = 1; H.S.press = 1; H.noteOn(+arg, 1); }
-    else if (kind === 'reg') {
-      H.S.reg = +arg; H.applyRegister();
-      H.S.mode = 'free'; H.S.air = 1; H.S.press = 1;
-      const h = H.noteOn(0, 1); setTimeout(() => H.noteOff(h), 1600);
+    const [kind, arg] = scene.split(':');
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    if (kind === 'demo') G.startDemo(+arg || 0);
+    else if (kind === 'tone') {
+      G.startFree(); G.pitch(+arg || 0);
+      (async () => { let d = 1; while (true) { G.bow(.75, d); G.onStroke(d, 1); await sleep(700); d = -d; } })();
+    } else if (kind === 'scale') {
+      G.startFree();
+      (async () => { for (let i = 0; i <= 6; i++) { G.pitch(i); G.bow(.75, i % 2 ? -1 : 1); G.onStroke(i % 2 ? -1 : 1, 1); await sleep(650); } G.bow(0); })();
+    } else if (kind === 'strokes') {
+      G.startFree(); G.pitch(2);
+      (async () => { let d = 1; for (let i = 0; i < 40; i++) { G.bow(.9, d); G.onStroke(d, 1.1); await sleep(220); d = -d; } G.bow(0); })();
     }
-    else if (kind === 'scale') {
-      H.S.mode = 'free'; H.S.air = 1; H.S.press = 1;
-      let i = 0;
-      const iv = setInterval(() => { const h = H.noteOn(i, 1); setTimeout(() => H.noteOff(h), 380); if (++i > 7) clearInterval(iv); }, 420);
-    }
-    await new Promise(r => setTimeout(r, secs * 1000));
+    await sleep(secs * 1000);
     sp.onaudioprocess = null;
+    G.bow(0);
 
     let n = 0; for (const c of buf) n += c.length;
     const all = new Float32Array(n); let k = 0;
