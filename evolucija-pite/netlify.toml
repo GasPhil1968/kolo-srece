@@ -1,0 +1,30 @@
+# Deploy kao zaseban Netlify site: base = evolucija-pite, publish = "."
+# (ili u Netlify UI: Base directory "evolucija-pite", Publish directory "evolucija-pite").
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+    Content-Type = "application/manifest+json"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/og-cover.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
