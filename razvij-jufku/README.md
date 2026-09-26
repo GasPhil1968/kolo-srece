@@ -32,3 +32,10 @@ Test-kuka `window.EP` postoji samo kad je prije učitavanja postavljen `window._
 - vrste pite i boje fila: tabela `PITE`
 - Nanine replike i ocjene: objekt `L`; bodovanje: `gradePita()`
 - sušenje i ljepljivost po redu pite: `startPita()`
+
+## Comic kit (jufka_comic_kit/)
+
+PNG sprite-ovi leže u `jufka_comic_kit/` i učitavaju se prije starta (`loadAssets`).
+Svaka deko-funkcija ima dispečer: sprite ako je slika stigla, inače staro
+proceduralno crtanje (`…Proc`). Ako neka slika fali (404), igra se ne ruši.
+Mreža jufke, ruka, faze, bodovanje, zvuk, spremanje i tekstovi ostaju u kodu.

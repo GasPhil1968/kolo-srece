@@ -1,0 +1,13 @@
+RAZVIJ JUFKU — comic art kit
+Style: flat fills, bold dark-brown outlines, 2-3 shade steps.
+Replacement candidates. Game still owns mesh dough, animation, text, particles logic.
+
+props/      kitchen tools + fillings + pita bake states
+character/  Nana full + 4 bust moods
+scene/      window, stove, table, kilim, shelf, clock, hand, 720x1280 kitchen
+ui/         HUD bar, buttons, meters, speech bubble, flour puffs
+icons_64/ icons_32/  matching icons for prop IDs
+textures/   seamless dough grain overlay
+
+UI text is NOT baked in. Draw labels in-engine.
+Nana sprites are stills; blink/look stays code-driven unless you swap busts.

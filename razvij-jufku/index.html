@@ -488,7 +488,8 @@ function updateParts(dt){
 /* ==========================================================================
    NANA — stoji iza stola, gleda, komentariše. Rijetko, suho, s razlogom.
    ========================================================================== */
-var NANA = { say:'', sayT:0, prio:0, cd:0, lookA:0, lookY:0, brow:0, blink:0, blinkT:2.5, mouth:0, idleT:0, hands:0 };
+var NANA = { say:'', sayT:0, prio:0, cd:0, lookA:0, lookY:0, brow:0, blink:0, blinkT:2.5, mouth:0, idleT:0, hands:0, mood:'' };
+var MOOD_MAD = {RUPA1:1, RUPA:1, SNAP:1, V0:1, V40:1, DRY:1, SIDE:1, FILH:1, OVER:1}, MOOD_HAPPY = {V90:1, V70:1, THIN:1, FLOUR:1, BEST:1};
 var L = {
   OKL:   ['Prvo oklagijom. Ne žuri.', 'Oklagijom, pa rukama.'],
   RAZ:   ['Sad rukama. Ispod, polako.', 'Ruke ispod jufke. Vuci prema sebi, pa okolo.'],
@@ -513,18 +514,18 @@ var L = {
   OVER:  ['Idi ti sjedi, ja ću.', 'Za ovo treba ruka, ne lopata.', 'Sutra ćemo opet. Možda.', 'Neka, naučit ćeš. Za deset godina.'],
   BEST:  ['Dobro. Nemoj sad pokvariti.']
 };
-function nanaSay(s, dur, prio){
+function nanaSay(s, dur, prio, mood){
   prio = prio||1;
   if(NANA.sayT > 0 && prio <= NANA.prio) return false;
   if(prio < 2 && NANA.cd > 0) return false;
-  NANA.say = s; NANA.sayT = dur||2.8; NANA.prio = prio;
+  NANA.say = s; NANA.sayT = dur||2.8; NANA.prio = prio; NANA.mood = mood||'';
   NANA.cd = (dur||2.8) + rnd(5, 9);
   NANA.brow = 1; NANA.idleT = 0;
   return true;
 }
-function nanaEvent(key, prio, dur){ return nanaSay(pick(L[key]), dur||2.8, prio||1); }
+function nanaEvent(key, prio, dur){ return nanaSay(pick(L[key]), dur||2.8, prio||1, MOOD_MAD[key] ? 'mad' : (MOOD_HAPPY[key] ? 'happy' : '')); }
 function updateNana(dt){
-  if(NANA.sayT > 0){ NANA.sayT -= dt; if(NANA.sayT <= 0){ NANA.sayT = 0; NANA.prio = 0; } }
+  if(NANA.sayT > 0){ NANA.sayT -= dt; if(NANA.sayT <= 0){ NANA.sayT = 0; NANA.prio = 0; NANA.mood = ''; } }
   if(NANA.cd > 0) NANA.cd -= dt;
   NANA.brow = Math.max(0, NANA.brow - dt*0.9);
   NANA.blinkT -= dt;
@@ -597,7 +598,7 @@ function gradePita(){
   G.verdict = pick(L[key]);
   if(g.total < 40){ G.strikes++; AU.bad(); }
   else if(g.total >= 70) AU.good(); else AU.meh();
-  nanaSay(G.verdict, 4, 4);
+  nanaSay(G.verdict, 4, 4, g.total < 40 ? 'mad' : (g.total >= 70 ? 'happy' : ''));
 }
 function gameOver(){
   G.st = S.OVER; G.t = 0;
@@ -694,7 +695,7 @@ function update(dt){
     doughTearCheck(dt);
     if(D.thin > 0.5 && !G.raz.thinSaid){ G.raz.thinSaid = true; nanaEvent('THIN', 2, 2.8); }
     if(D.dry > 0.75 && !G.raz.drySaid){ G.raz.drySaid = true; nanaEvent('DRY', 2, 2.6); }
-    if(D.dry >= 1){ G.raz.dryOut = true; nanaSay('Osušila se. Dosta.', 3, 4); endRaz(); return; }
+    if(D.dry >= 1){ G.raz.dryOut = true; nanaSay('Osušila se. Dosta.', 3, 4, 'mad'); endRaz(); return; }
     if(NANA.idleT > 9 && Math.random() < dt*0.25){ nanaEvent('IDLE', 1, 2.8); }
     /* vuče ukrug umjesto prema rubu */
     if(HAND.on && HAND.moved > 260 && HAND.strokeCarry < 12 && !G.raz.circSaid){ G.raz.circSaid = true; nanaSay('Prema rubu vuci, ne ukrug.', 2.8, 2); }
@@ -895,7 +896,7 @@ function tableSprite(){
   TBL_SPR = { c:c, size:size };
   return TBL_SPR;
 }
-function drawTable(){
+function drawTableProc(){
   var T = tableSprite();
   ctx.save();
   /* sjena na podu */
@@ -927,7 +928,7 @@ function drawTableFront(){
 }
 
 /* živi dio pozadine: vatra u šporetu, para, sat, svjetlo */
-function drawBackLive(){
+function drawBackLiveProc(){
   ctx.drawImage(bgSprite(), 0, 0, W, HH);
   var zar = 0.6 + 0.4*Math.abs(Math.sin(G.gt*3.1)) * (0.7 + 0.3*Math.sin(G.gt*7.3));
   /* ložište */
@@ -962,7 +963,7 @@ function drawBackLive(){
 }
 
 /* ---------- Nana: šamija, naočale, pregača, ruke u brašnu ---------- */
-function drawNana(){
+function drawNanaProc(){
   var cx = NANA_X, hy = NANA_HY;
   var breathe = Math.sin(G.gt*1.4)*3;
   var look = NANA.lookA, lookY = NANA.lookY;
@@ -1066,7 +1067,7 @@ function drawNana(){
 }
 
 /* ---------- ruka igrača ispod jufke ---------- */
-function drawHand(x, y, under){
+function drawHandProc(x, y, under){
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(1, 0.8);
@@ -1103,9 +1104,11 @@ function doughLayer(){
 }
 function opacityOf(t){ return clamp(0.25 + t*1.75, 0.25, 1); }
 /* zrnasta tekstura tijesta i brašna — jedna pločica, ponavlja se */
-var DOUGH_P = null;
+var DOUGH_P = null, DOUGH_TEX = false;
 function doughPattern(g){
   if(DOUGH_P) return DOUGH_P;
+  if(img('tex')){ DOUGH_P = g.createPattern(img('tex'), 'repeat'); DOUGH_TEX = true; return DOUGH_P; }
+  DOUGH_TEX = false;
   var c = document.createElement('canvas'); c.width = c.height = 96;
   var q = c.getContext('2d');
   srand2(7);
@@ -1137,7 +1140,10 @@ function drawDough(clipY){
   }
   /* tekstura samo tamo gdje ima tijesta */
   g.globalCompositeOperation = 'source-atop';
-  g.fillStyle = doughPattern(g); g.fillRect(0, DL_Y0, W, DL_H);
+  g.fillStyle = doughPattern(g);
+  if(DOUGH_TEX) g.globalAlpha = 0.4;
+  g.fillRect(0, DL_Y0, W, DL_H);
+  g.globalAlpha = 1;
   g.globalCompositeOperation = 'source-over';
   /* vanjski rub */
   g.strokeStyle = 'rgba(150,120,80,0.7)'; g.lineWidth = 2; g.lineJoin = 'round';
@@ -1180,7 +1186,7 @@ function drawDough(clipY){
   ctx.restore();
 }
 /* lopta tijesta prije oklagije / disk koji raste */
-function drawBall(p){
+function drawBallProc(p){
   var r = lerp(50, R0, p), h = lerp(1, 0.2, p);   /* visina lopte */
   var s = toScr(0, 0);
   ctx.save();
@@ -1196,7 +1202,7 @@ function drawBall(p){
   for(var i=0;i<6;i++){ ctx.beginPath(); ctx.arc(s.x + Math.cos(i*1.1)*r*0.5, s.y - r*0.45*h + Math.sin(i*1.1)*r*0.3, 2, 0, 6.284); ctx.fill(); }
   ctx.restore();
 }
-function drawOklagija(x, y){
+function drawOklagijaProc(x, y){
   ctx.save();
   ctx.translate(x, y);
   ctx.fillStyle = 'rgba(0,0,0,0.25)'; rr(ctx, -110, -4, 220, 26, 12); ctx.fill();
@@ -1226,7 +1232,7 @@ function drawFil(){
   for(i=0;i<pts.length;i+=2){ q = pts[i]; p = toScr(q.u, q.v); ctx.beginPath(); ctx.ellipse(p.x - q.r*0.3, p.y - q.r*0.25, q.r*0.35, q.r*0.18, q.a, 0, 6.284); ctx.fill(); }
   ctx.restore();
 }
-function drawSpoon(x, y){
+function drawSpoonProc(x, y){
   ctx.save(); ctx.translate(x, y); ctx.rotate(0.5);
   ctx.fillStyle = '#b9b3a6'; rr(ctx, -6, 0, 12, 90, 6); ctx.fill();
   ctx.beginPath(); ctx.ellipse(0, -14, 20, 26, 0, 0, 6.284); ctx.fill();
@@ -1279,7 +1285,7 @@ function drawRoll(){
   if(m.done) drawCoil(m.coil, 0);
 }
 /* tepsija sa spiralom: k = koliko je zamotano (0–1), bake = boja pečenja */
-function drawCoil(k, bake, x, y, scale){
+function drawCoilProc(k, bake, x, y, scale){
   x = (x === undefined) ? TCX : x; y = (y === undefined) ? TCY : y; scale = scale || 1;
   var R = 150*scale;
   ctx.save();
@@ -1345,7 +1351,7 @@ function steamSprite(){
   g.fillStyle = sg; g.fillRect(0, 0, 96, 96);
   STEAM_SPR = c; return c;
 }
-function drawParts(){
+function drawPartsProc(){
   var spr = steamSprite();
   for(var i=0;i<PART_N;i++){
     var p = PARTS[i];
@@ -1356,7 +1362,7 @@ function drawParts(){
   }
   ctx.globalAlpha = 1;
 }
-function speechBubble(s, x, y, maxw, tailX, tailY, small){
+function speechBubbleProc(s, x, y, maxw, tailX, tailY, small){
   if(!s) return;
   var font = (small?'600 22px':'700 26px')+' '+FONT;
   var lines = wrap(s, maxw-44, font);
@@ -1449,7 +1455,7 @@ function drawOkvir(){
    ========================================================================== */
 var BTN = [];
 var PRESS = {id:null};
-function btn(id,x,y,w,h,label,sub,col,dis){
+function btnProc(id,x,y,w,h,label,sub,col,dis){
   BTN.push({id:id,x:x,y:y,w:w,h:h,dis:dis});
   var pressed = (PRESS.id===id);
   var off = pressed?3:0;
@@ -1470,7 +1476,7 @@ function btn(id,x,y,w,h,label,sub,col,dis){
 }
 var GOLD = ['#f0c46a','#d09540'], TAN = ['#c9b38a','#8c7653'], RED = ['#e8734a','#bf4a2a'], GREEN = ['#8fd48f','#4f9c5a'], GREY = ['#8a7a6a','#5a4d42'];
 
-function drawHUD(){
+function drawHUDProc(){
   ctx.save();
   var g = ctx.createLinearGradient(0,0,0,HUD_H+40);
   g.addColorStop(0,'rgba(8,5,10,0.88)'); g.addColorStop(0.75,'rgba(8,5,10,0.55)'); g.addColorStop(1,'rgba(8,5,10,0)');
@@ -1494,7 +1500,7 @@ function drawHUD(){
   }
   ctx.restore();
 }
-function meter(x, y, w, label, val, col, right){
+function meterProc(x, y, w, label, val, col, right){
   txt(label, x, y-14, '700 15px '+FONT, 'rgba(255,220,170,0.7)', 'left');
   if(right !== undefined) txt(right, x+w, y-14, '700 15px '+FONT, 'rgba(255,220,170,0.7)', 'right');
   ctx.fillStyle = 'rgba(0,0,0,0.45)'; rr(ctx, x, y, w, 12, 6); ctx.fill();
@@ -1519,35 +1525,42 @@ function drawBottomBar(){
     txt('RUPE', 520, y0+38, '700 15px '+FONT, 'rgba(255,220,170,0.7)', 'left');
     txt(String(D.holes), 520, y0+62, '900 26px '+FONT, D.holes ? '#ff8a6a' : '#f0e0c8', 'left');
     btn('flour', 40, y0+84, 210, 70, 'BRAŠNO', '× '+D.flour, D.flour > 0 ? TAN : GREY, D.flour <= 0);
+    if(img('icBrasno')){ ctx.save(); ctx.globalAlpha = D.flour > 0 ? 1 : 0.4; ctx.drawImage(img('icBrasno'), 48, y0+92, 54, 54); ctx.restore(); }
     btn('done', 270, y0+84, 300, 70, 'GOTOVO', '', GOLD, false);
   }
   else if(ph === PHASE.FIL){
     meter(40, y0+52, 300, 'FIL U ZDJELI', G.fil.bowl, '#f0c46a', Math.round(G.fil.bowl*100)+'%');
+    var fic = img('icFil_' + PITE[G.pita].fil); if(fic) ctx.drawImage(fic, 350, y0+28, 52, 52);
     btn('done', 380, y0+40, 210, 64, 'GOTOVO', '', GOLD, false);
   }
   else if(ph === PHASE.MOT){
     meter(200, y0+52, 320, 'ZAMOTANO', G.mot.p, '#f0c46a');
   }
   else if(ph === PHASE.PEC){
-    /* mjerač pečenja: zeleno je "taman" */
-    var x = 60, w = 600, y = y0+56;
-    txt('BLIJEDA', x, y-16, '700 14px '+FONT, 'rgba(255,220,170,0.6)', 'left');
-    txt('TAMAN', x+w*0.70, y-16, '800 15px '+FONT, '#9fe8a0');
-    txt('ZAGORJELA', x+w, y-16, '700 14px '+FONT, 'rgba(255,140,110,0.8)', 'right');
-    var mg = ctx.createLinearGradient(x, 0, x+w, 0);
-    mg.addColorStop(0, '#efe1c4'); mg.addColorStop(0.55, '#e6c27a'); mg.addColorStop(0.75, '#cf8a3a'); mg.addColorStop(0.9, '#8a4a1a'); mg.addColorStop(1, '#2e1c12');
-    ctx.fillStyle = mg; rr(ctx, x, y, w, 22, 8); ctx.fill();
-    ctx.fillStyle = 'rgba(120,230,120,0.35)'; ctx.fillRect(x+w*0.59, y-4, w*0.22, 30);
-    ctx.strokeStyle = '#9fe8a0'; ctx.lineWidth = 2; ctx.strokeRect(x+w*0.59, y-4, w*0.22, 30);
-    var nx = x + w*G.pec.needle;
-    ctx.fillStyle = '#fff'; ctx.strokeStyle = '#241a12'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(nx, y-12); ctx.lineTo(nx+9, y-24); ctx.lineTo(nx-9, y-24); ctx.closePath(); ctx.fill(); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(nx, y+34); ctx.lineTo(nx+9, y+46); ctx.lineTo(nx-9, y+46); ctx.closePath(); ctx.fill(); ctx.stroke();
+    drawBakeMeter(60, 600, y0+56);
     if(!G.pec.taken) txt('DODIRNI = SKINI', 360, y0+120, '800 22px '+FONT, 'rgba(255,224,176,'+(0.5+0.5*Math.abs(Math.sin(G.gt*4)))+')');
   }
   ctx.restore();
 }
-function drawSmallBtns(){
+/* mjerač pečenja — proceduralno; zeleno je "taman" (0.59–0.81 odgovara bodovanju) */
+function drawBakeMeterProc(x, w, y){
+  txt('BLIJEDA', x, y-16, '700 14px '+FONT, 'rgba(255,220,170,0.6)', 'left');
+  txt('TAMAN', x+w*0.70, y-16, '800 15px '+FONT, '#9fe8a0');
+  txt('ZAGORJELA', x+w, y-16, '700 14px '+FONT, 'rgba(255,140,110,0.8)', 'right');
+  var mg = ctx.createLinearGradient(x, 0, x+w, 0);
+  mg.addColorStop(0, '#efe1c4'); mg.addColorStop(0.55, '#e6c27a'); mg.addColorStop(0.75, '#cf8a3a'); mg.addColorStop(0.9, '#8a4a1a'); mg.addColorStop(1, '#2e1c12');
+  ctx.fillStyle = mg; rr(ctx, x, y, w, 22, 8); ctx.fill();
+  ctx.fillStyle = 'rgba(120,230,120,0.35)'; ctx.fillRect(x+w*0.59, y-4, w*0.22, 30);
+  ctx.strokeStyle = '#9fe8a0'; ctx.lineWidth = 2; ctx.strokeRect(x+w*0.59, y-4, w*0.22, 30);
+  drawBakeNeedle(x, w, y);
+}
+function drawBakeNeedle(x, w, y){
+  var nx = x + w*G.pec.needle;
+  ctx.fillStyle = '#fff'; ctx.strokeStyle = '#241a12'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(nx, y-12); ctx.lineTo(nx+9, y-24); ctx.lineTo(nx-9, y-24); ctx.closePath(); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(nx, y+34); ctx.lineTo(nx+9, y+46); ctx.lineTo(nx-9, y+46); ctx.closePath(); ctx.fill(); ctx.stroke();
+}
+function drawSmallBtnsProc(){
   BTN.push({id:'pause', x:300, y:22, w:58, h:58});
   ctx.save(); ctx.globalAlpha = 0.65;
   ctx.fillStyle = 'rgba(0,0,0,0.4)'; ctx.beginPath(); ctx.arc(329, 51, 29, 0, 6.284); ctx.fill();
@@ -1672,6 +1685,7 @@ function drawOcjena(){
   ctx.strokeStyle = 'rgba(255,212,121,0.35)'; ctx.lineWidth = 3; rr(ctx, px, py, pw, ph, 22); ctx.stroke();
   var col = g.total >= 70 ? '#9fe8a0' : (g.total >= 40 ? '#ffd479' : '#ff8a6a');
   txt('NANINA OCJENA', 360, py+34, '700 18px '+FONT, 'rgba(255,220,170,0.65)');
+  var pic = img(pitaKey(G.pec.bake).replace('pita', 'icPita')); if(pic) ctx.drawImage(pic, px+pw-92, py+16, 64, 64);
   ctx.save();
   var pu = 1 + Math.sin(G.gt*5)*0.03;
   ctx.translate(360, py+92); ctx.scale(pu, pu);
@@ -1712,6 +1726,7 @@ function drawMenu(){
   ctx.beginPath(); ctx.moveTo(150, 266); ctx.lineTo(570, 266); ctx.stroke();
   txt('Da se kroz nju Trebević vidi.', 360, 296, '600 27px '+FONT, 'rgba(255,232,196,0.92)');
   if(META.best > 0) txt('REKORD ' + fmt(META.best) + '   ·   ' + META.pite + ' pita', 360, 332, '600 20px '+FONT, 'rgba(255,225,180,0.55)');
+  for(var mi=0; mi<PITE.length; mi++){ var mic = img('icFil_' + PITE[mi].fil); if(mic) ctx.drawImage(mic, 360 - 150 + mi*60 - 24, 1130, 48, 48); }
   var puls = 1 + Math.sin(G.gt*3.0)*0.02;
   ctx.save(); ctx.translate(360, 760); ctx.scale(puls, puls); ctx.translate(-360, -760);
   btn('play', 140, 712, 440, 96, 'IGRAJ', '', GOLD, false);
@@ -1892,6 +1907,307 @@ function render(){
   drawCRT();
   ctx.restore();
   drawOkvir();
+}
+
+/* ==========================================================================
+   COMIC KIT — PNG sprite-ovi preko postojećeg crtanja (jufka_comic_kit/).
+   Svaka draw* funkcija ima dispečer: ako je slika učitana, ide sprite,
+   inače staro proceduralno crtanje (…Proc). Mreža jufke, ruka, faze,
+   bodovanje i tekst ostaju u kodu.
+   ========================================================================== */
+var KIT_DIR = './jufka_comic_kit/';
+var KIT_FILES = {
+  kitchen:'scene/jufka_scene_kitchen_720x1280.png', table:'scene/jufka_scene_table.png',
+  clock:'scene/jufka_scene_clock.png', hand:'scene/jufka_scene_hand.png',
+  nanaFull:'character/jufka_nana_full.png', nanaIdle:'character/jufka_nana_idle.png',
+  nanaHappy:'character/jufka_nana_happy.png', nanaMad:'character/jufka_nana_mad.png', nanaTalk:'character/jufka_nana_talk.png',
+  hud:'ui/jufka_ui_hud.png', buttons:'ui/jufka_ui_buttons.png', meter:'ui/jufka_ui_meter.png',
+  bakeMeter:'ui/jufka_ui_bake_meter.png', bubble:'ui/jufka_ui_bubble.png', puffs:'ui/jufka_ui_flour_puffs.png',
+  oklagija:'props/jufka_prop_oklagija_576x160.png', oklagijaBroken:'props/jufka_prop_oklagija_broken_576x160.png',
+  brasno:'props/jufka_prop_brasno_240x220.png', tijesto:'props/jufka_prop_tijesto_280x240.png',
+  kasika:'props/jufka_prop_kasika_120x320.png', krpa:'props/jufka_prop_krpa_280x160.png',
+  tepsija:'props/jufka_prop_tepsija_512x512.png',
+  pitaRaw:'props/jufka_prop_pita_raw_512x512.png', pitaPale:'props/jufka_prop_pita_pale_512x512.png',
+  pitaGolden:'props/jufka_prop_pita_golden_512x512.png', pitaBurnt:'props/jufka_prop_pita_burnt_512x512.png',
+  tex:'textures/jufka_texture_dough_96.png',
+  icBrasno:'icons_64/jufka_icon_brasno_64.png',
+  icFil_sir:'icons_64/jufka_icon_fil_sir_64.png', icFil_zelje:'icons_64/jufka_icon_fil_zelje_64.png',
+  icFil_krompir:'icons_64/jufka_icon_fil_krompir_64.png', icFil_meso:'icons_64/jufka_icon_fil_meso_64.png',
+  icFil_tikva:'icons_64/jufka_icon_fil_tikva_64.png',
+  icPitaRaw:'icons_64/jufka_icon_pita_raw_64.png', icPitaPale:'icons_64/jufka_icon_pita_pale_64.png',
+  icPitaGolden:'icons_64/jufka_icon_pita_golden_64.png', icPitaBurnt:'icons_64/jufka_icon_pita_burnt_64.png'
+};
+var ASSETS = {}, KIT_READY = false;
+function loadAssets(){
+  var ps = [];
+  Object.keys(KIT_FILES).forEach(function(k){
+    var im = new Image(); ASSETS[k] = im;
+    ps.push(new Promise(function(res){ im.onload = res; im.onerror = res; im.src = KIT_DIR + KIT_FILES[k]; }));
+  });
+  return Promise.all(ps).then(function(){ KIT_READY = true; });
+}
+/* slika samo ako je stvarno stigla; inače null → fallback */
+function img(k){ var i = ASSETS[k]; return (i && i.complete && i.naturalWidth > 0) ? i : null; }
+/* 9-slice: uglovi ostaju oštri, sredina se rasteže */
+function nine(im, sx, sy, sw, sh, ins, x, y, w, h){
+  var l = ins, r = ins, t = ins, b = ins;
+  var cw = Math.max(1, w - l - r), ch = Math.max(1, h - t - b);
+  var ssw = sw - l - r, ssh = sh - t - b;
+  ctx.drawImage(im, sx, sy, l, t, x, y, l, t);
+  ctx.drawImage(im, sx+l, sy, ssw, t, x+l, y, cw, t);
+  ctx.drawImage(im, sx+sw-r, sy, r, t, x+w-r, y, r, t);
+  ctx.drawImage(im, sx, sy+t, l, ssh, x, y+t, l, ch);
+  ctx.drawImage(im, sx+l, sy+t, ssw, ssh, x+l, y+t, cw, ch);
+  ctx.drawImage(im, sx+sw-r, sy+t, r, ssh, x+w-r, y+t, r, ch);
+  ctx.drawImage(im, sx, sy+sh-b, l, b, x, y+h-b, l, b);
+  ctx.drawImage(im, sx+l, sy+sh-b, ssw, b, x+l, y+h-b, cw, b);
+  ctx.drawImage(im, sx+sw-r, sy+sh-b, r, b, x+w-r, y+h-b, r, b);
+}
+function pitaKey(b){ return b < 0.12 ? 'pitaRaw' : (b < 0.55 ? 'pitaPale' : (b < 0.88 ? 'pitaGolden' : 'pitaBurnt')); }
+
+/* ---------- dispečeri ---------- */
+function drawBackLive(){ if(img('kitchen')) drawBackLiveKit(); else drawBackLiveProc(); }
+function drawTable(){ if(img('table')) drawTableKit(); else drawTableProc(); }
+function drawNana(){ if(img('nanaFull')) drawNanaKit(); else drawNanaProc(); }
+function drawHand(x, y, under){ if(img('hand')) drawHandKit(x, y); else drawHandProc(x, y, under); }
+function drawBall(p){ if(img('tijesto')) drawBallKit(p); else drawBallProc(p); }
+function drawOklagija(x, y){ if(img('oklagija')) drawOklagijaKit(x, y); else drawOklagijaProc(x, y); }
+function drawSpoon(x, y){ if(img('kasika')) drawSpoonKit(x, y); else drawSpoonProc(x, y); }
+function drawCoil(k, bake, x, y, scale){ if(img('tepsija')) drawCoilKit(k, bake, x, y, scale); else drawCoilProc(k, bake, x, y, scale); }
+function drawParts(){ if(img('puffs')) drawPartsKit(); else drawPartsProc(); }
+function speechBubble(s, x, y, maxw, tailX, tailY, small){ if(img('bubble')) speechBubbleKit(s, x, y, maxw, tailX, tailY, small); else speechBubbleProc(s, x, y, maxw, tailX, tailY, small); }
+function btn(id,x,y,w,h,label,sub,col,dis){ if(img('buttons')) btnKit(id,x,y,w,h,label,sub,col,dis); else btnProc(id,x,y,w,h,label,sub,col,dis); }
+function meter(x, y, w, label, val, col, right){ if(img('meter')) meterKit(x, y, w, label, val, col, right); else meterProc(x, y, w, label, val, col, right); }
+function drawHUD(){ if(img('hud')) drawHUDKit(); else drawHUDProc(); }
+function drawSmallBtns(){ if(img('hud')) drawSmallBtnsKit(); else drawSmallBtnsProc(); }
+function drawBakeMeter(x, w, y){ if(img('bakeMeter')) drawBakeMeterKit(x, w, y); else drawBakeMeterProc(x, w, y); }
+
+/* ---------- scena ---------- */
+function drawBackLiveKit(){
+  ctx.drawImage(img('kitchen'), 0, 0, W, HH);
+  if(img('clock')) ctx.drawImage(img('clock'), 478, 246, 80, 140);
+  if(img('krpa')) ctx.drawImage(img('krpa'), 588, 688, 96, 55);
+  /* rerna svijetli dok se peče (vrata šporeta u pozadinskoj slici) */
+  var zar = 0.6 + 0.4*Math.abs(Math.sin(G.gt*3.1));
+  if(G.st === S.PLAYING && G.phase === PHASE.PEC && !G.pec.taken){
+    ctx.fillStyle = 'rgba(255,140,40,'+(0.35*zar)+')'; rr(ctx, 574, 574, 112, 112, 8); ctx.fill();
+  }
+  /* para uz cijev */
+  ctx.save(); ctx.globalAlpha = 0.22;
+  ctx.strokeStyle = 'rgba(240,236,226,0.9)'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(620, 442);
+  for(var n=1;n<=6;n++) ctx.lineTo(620 + Math.sin(G.gt*1.4 + n*0.9)*(2+n*2), 442 - n*12);
+  ctx.stroke(); ctx.restore();
+}
+/* sto: PNG elipsa sjedne tačno na hit-elipsu (TCX, TCY, R_T, PERSP) — mijenja se samo slika */
+var TBL_PNG = { cx:210, cy:140, rx:188, ry:102 };
+function drawTableKit(){
+  var im = img('table');
+  var sx = (R_T+16)/TBL_PNG.rx, sy = (R_T+16)*PERSP/TBL_PNG.ry;
+  ctx.fillStyle = 'rgba(0,0,0,0.35)';
+  ctx.beginPath(); ctx.ellipse(TCX+6, TCY+40, R_T+30, (R_T+30)*PERSP, 0, 0, 6.284); ctx.fill();
+  ctx.fillStyle = '#4a3222';
+  ctx.fillRect(TCX-210, TCY+40, 22, 170); ctx.fillRect(TCX+188, TCY+40, 22, 170);
+  ctx.fillStyle = '#5a3d26';
+  ctx.beginPath(); ctx.ellipse(TCX, TCY+22, R_T+16, (R_T+16)*PERSP, 0, 0, 6.284); ctx.fill();
+  ctx.drawImage(im, TCX - TBL_PNG.cx*sx, TCY - TBL_PNG.cy*sy, im.width*sx, im.height*sy);
+}
+/* Nana: cijela figura + bista po raspoloženju; lice je u sprite-u, treptanje ostaje isključeno */
+function drawNanaKit(){
+  var full = img('nanaFull');
+  var breathe = Math.sin(G.gt*1.4)*3;
+  var s = 0.85, sb = 0.8;
+  var look = NANA.lookA;
+  /* tijelo bez glave iz cijele figure (glava dolazi iz biste), tako da brada sjedne na kragnu */
+  ctx.drawImage(full, 0, 240, 360, 400, NANA_X - 180*s, NANA_HY + 50 + breathe, 360*s, 400*s);
+  var key = 'nanaIdle';
+  if(NANA.mood === 'mad') key = 'nanaMad';
+  else if(NANA.mood === 'happy') key = 'nanaHappy';
+  else if(NANA.sayT > 0) key = 'nanaTalk';
+  var bust = img(key);
+  if(bust){
+    ctx.save();
+    ctx.translate(NANA_X + look*4, NANA_HY + breathe);
+    ctx.rotate(look*0.04 + (NANA.mood === 'mad' ? -0.03 : 0));
+    ctx.drawImage(bust, -160*sb, -180*sb, 320*sb, 360*sb);
+    ctx.restore();
+  }
+}
+function drawHandKit(x, y){
+  var im = img('hand'), s = 0.66;
+  ctx.drawImage(im, x - 110*s, y - 118*s, im.width*s, im.height*s);
+}
+/* oblačić: 9-slice tijelo + rep; tekst ostaje fillText */
+function speechBubbleKit(s, x, y, maxw, tailX, tailY, small){
+  if(!s) return;
+  var im = img('bubble');
+  var font = (small?'600 22px':'700 26px')+' '+FONT;
+  var lines = wrap(s, maxw-44, font);
+  var lh = small?28:34;
+  /* PNG ima 8 px prozirnog ruba gore/dolje — tekst centriramo u vidljivu kutiju */
+  var h = lines.length*lh + 44;
+  var w = 0;
+  ctx.font = font;
+  for(var i=0;i<lines.length;i++) w = Math.max(w, ctx.measureText(lines[i]).width);
+  w = Math.min(maxw, w+56);
+  var bx = clamp(x-w/2, 18, W-w-18), by = y-h;
+  ctx.save();
+  if(small) ctx.globalAlpha = 0.95;
+  nine(im, 0, 0, 360, 152, 34, bx, by, w, h);
+  var tx = clamp(tailX, bx+40, bx+w-40);
+  ctx.drawImage(im, 126, 146, 68, 54, tx-30, by+h-8, 60, 44);
+  for(i=0;i<lines.length;i++) txt(lines[i], bx+w/2, by+22+lh/2+i*lh, font, '#2b1a10');
+  ctx.restore();
+}
+
+/* ---------- rekviziti ---------- */
+function drawOklagijaKit(x, y){
+  var im = img('oklagija');
+  ctx.save(); ctx.translate(x, y);
+  ctx.fillStyle = 'rgba(0,0,0,0.22)'; rr(ctx, -132, 8, 264, 30, 14); ctx.fill();
+  ctx.drawImage(im, -144, -40, 288, 80);
+  ctx.restore();
+}
+function drawBallKit(p){
+  var im = img('tijesto');
+  var r = lerp(50, R0, p), h = lerp(1, 0.28, p);
+  var s = toScr(0, 0);
+  var w = r*2*1.35, hh = w*(im.height/im.width)*lerp(1, 0.62, p);
+  ctx.fillStyle = 'rgba(0,0,0,0.25)';
+  ctx.beginPath(); ctx.ellipse(s.x+4, s.y+6, r, r*PERSP, 0, 0, 6.284); ctx.fill();
+  ctx.drawImage(im, s.x - w/2, s.y - hh*0.62 - r*0.3*h, w, hh);
+  if(img('brasno')) ctx.drawImage(img('brasno'), TCX-290, TCY-60, 120, 110);
+}
+function drawSpoonKit(x, y){
+  var im = img('kasika'), s = 0.46;
+  ctx.save(); ctx.translate(x, y); ctx.rotate(0.5);
+  ctx.drawImage(im, -im.width*s/2, -34, im.width*s, im.height*s);
+  ctx.restore();
+}
+/* tepsija i pita odozgo — bez perspektivnog stiskanja. Dok se mota: proceduralna spirala;
+   gotova pita: raw / pale / golden / burnt po stepenu pečenja, fil preko nje u boji sorte. */
+function drawCoilKit(k, bake, x, y, scale){
+  x = (x === undefined) ? TCX : x; y = (y === undefined) ? TCY : y; scale = scale || 1;
+  var R = 150*scale, i, t, a, rad;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = 'rgba(0,0,0,0.3)'; ctx.beginPath(); ctx.ellipse(6, 14, R+20, (R+20)*0.7, 0, 0, 6.284); ctx.fill();
+  ctx.drawImage(img('tepsija'), -(R+22), -(R+22), (R+22)*2, (R+22)*2);
+  if(k < 1){
+    var turns = 4.2, n = Math.floor(turns*40*clamp(k,0,1));
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#b9a37a'; ctx.lineWidth = 34*scale;
+    ctx.beginPath();
+    for(i=0;i<=n;i++){ t = i/(turns*40); a = t*turns*6.283; rad = 6 + t*(R-26); if(i===0) ctx.moveTo(Math.cos(a)*rad, Math.sin(a)*rad); else ctx.lineTo(Math.cos(a)*rad, Math.sin(a)*rad); }
+    if(n > 0) ctx.stroke();
+    ctx.strokeStyle = '#efe1c4'; ctx.lineWidth = 26*scale;
+    ctx.beginPath();
+    for(i=0;i<=n;i++){ t = i/(turns*40); a = t*turns*6.283; rad = 6 + t*(R-26); if(i===0) ctx.moveTo(Math.cos(a)*rad, Math.sin(a)*rad); else ctx.lineTo(Math.cos(a)*rad, Math.sin(a)*rad); }
+    if(n > 0) ctx.stroke();
+  } else {
+    var pim = img(pitaKey(bake)) || img('pitaRaw');
+    if(pim) ctx.drawImage(pim, -R*1.02, -R*1.02, R*2.04, R*2.04);
+    var PP = PITE[G.pita];
+    ctx.globalAlpha = bake > 0.9 ? 0.45 : 0.85;
+    ctx.lineWidth = 1.5*scale; ctx.strokeStyle = PP.edge;
+    for(i=0;i<22;i++){
+      t = 0.16 + (i/22)*0.8; a = t*4.2*6.283 + 0.5 + (i%3)*0.4; rad = 8 + t*(R-30) + ((i%2) ? 7 : -7)*scale;
+      ctx.fillStyle = (i%3) ? PP.c : PP.c2;
+      ctx.beginPath(); ctx.ellipse(Math.cos(a)*rad, Math.sin(a)*rad, 10*scale, 6*scale, a, 0, 6.284); ctx.fill(); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+  ctx.restore();
+}
+/* brašno i mrvice iz sprite-atlasa oblačića; para ostaje proceduralna */
+var PUFF_CROPS = [[113,46,84,84],[32,48,60,60],[243,43,50,50],[76,134,32,32],[184,134,34,34]];
+function drawPartsKit(){
+  var spr = steamSprite(), puffs = img('puffs');
+  for(var i=0;i<PART_N;i++){
+    var p = PARTS[i];
+    if(!p.on) continue;
+    var k = clamp(p.life/p.max, 0, 1);
+    if(p.k === 2){ ctx.globalAlpha = k*0.5; ctx.drawImage(spr, p.x-p.r, p.y-p.r, p.r*2, p.r*2); }
+    else {
+      var c = PUFF_CROPS[p.r >= 4 ? 0 : (p.r >= 3 ? 1 : (p.r >= 2.2 ? 2 : (i%2 ? 3 : 4)))];
+      var d = p.r*2.6;
+      ctx.globalAlpha = k;
+      ctx.drawImage(puffs, c[0], c[1], c[2], c[3], p.x-d/2, p.y-d/2, d, d);
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+/* ---------- UI ---------- */
+var BTN_FACE = { GOLD:0, TAN:1, RED:2, GREEN:3 };
+function btnKit(id,x,y,w,h,label,sub,col,dis){
+  BTN.push({id:id,x:x,y:y,w:w,h:h,dis:dis});
+  var pressed = (PRESS.id===id);
+  var off = pressed?3:0;
+  var face = (col === GOLD) ? 0 : (col === RED ? 2 : (col === GREEN ? 3 : 1));
+  var sx = [15,140,265,390][face];
+  ctx.save();
+  ctx.globalAlpha = dis?0.35:1;
+  ctx.fillStyle = 'rgba(0,0,0,0.45)'; rr(ctx,x,y+6,w,h,16); ctx.fill();
+  nine(img('buttons'), sx, 30, 110, 80, 22, x, y+off, w, h-off);
+  if(col === GREY){ ctx.fillStyle = 'rgba(40,30,20,0.35)'; rr(ctx,x+3,y+off+3,w-6,h-off-6,14); ctx.fill(); }
+  var fs = sub ? 30 : Math.min(34, h*0.48);
+  txt(label, x+w/2, y+h/2+off-(sub?9:0), '800 '+fs+'px '+FONT, '#2a1408');
+  if(sub) txt(sub, x+w/2, y+h/2+off+17, '700 17px '+FONT, 'rgba(42,20,8,0.75)');
+  ctx.restore();
+}
+function meterKit(x, y, w, label, val, col, right){
+  var im = img('meter');
+  txt(label, x, y-14, '700 15px '+FONT, 'rgba(255,220,170,0.7)', 'left');
+  if(right !== undefined) txt(right, x+w, y-14, '700 15px '+FONT, 'rgba(255,220,170,0.7)', 'right');
+  var h = 18, yy = y - 3;
+  ctx.drawImage(im, 262, 18, 200, 44, x, yy, w, h);                          /* tamna staza */
+  var fw = Math.max(12, w*clamp(val,0,1));
+  ctx.drawImage(im, 10, 18, 244, 44, x, yy, fw, h);                          /* zlatno punjenje */
+  if(col !== '#f0c46a'){ ctx.save(); ctx.globalAlpha = 0.55; ctx.fillStyle = col; rr(ctx, x+2, yy+2, Math.max(8, fw-4), h-4, 7); ctx.fill(); ctx.restore(); }
+}
+/* mjerač pečenja iz PNG-a: tri komada, da zeleno polje sjedne na 0.59–0.81 — bodovanje ostaje isto */
+function drawBakeMeterKit(x, w, y){
+  var im = img('bakeMeter');
+  txt('BLIJEDA', x, y-16, '700 14px '+FONT, 'rgba(255,220,170,0.6)', 'left');
+  txt('TAMAN', x+w*0.70, y-16, '800 15px '+FONT, '#9fe8a0');
+  txt('ZAGORJELA', x+w, y-16, '700 14px '+FONT, 'rgba(255,140,110,0.8)', 'right');
+  var yy = y-6, hh = 34;
+  ctx.drawImage(im, 14, 22, 286, 56, x, yy, w*0.59, hh);                     /* lijevo do zelenog */
+  ctx.drawImage(im, 300, 22, 122, 56, x+w*0.59, yy, w*0.22, hh);             /* zeleno polje */
+  ctx.drawImage(im, 422, 22, 124, 56, x+w*0.81, yy, w*0.19, hh);             /* desno */
+  drawBakeNeedle(x, w, y);
+}
+/* HUD-traka iz PNG-a: brojevi i naziv pite u kodu; pauza/zvuk sjede na kružiće iz slike */
+function drawHUDKit(){
+  ctx.drawImage(img('hud'), 0, -10, 720, 140);
+  txt('BODOVI', 40, 32, '700 18px '+FONT, 'rgba(255,220,170,0.65)', 'left');
+  txt(fmt(G.score), 40, 66, '900 42px '+FONT, G.newBest ? '#9fe8a0' : '#ffd479', 'left');
+  txt('REKORD ' + fmt(Math.max(META.best, G.score)), 40, 100, '600 16px '+FONT, 'rgba(255,220,170,0.5)', 'left');
+  var fic = img('icFil_' + PITE[G.pita].fil);
+  if(fic) ctx.drawImage(fic, 262, 26, 44, 44);
+  txt('PITA ' + G.idx, 316, 38, '800 22px '+FONT, '#f0e0c8', 'left');
+  txt(PITE[G.pita].name, 316, 64, '700 18px '+FONT, 'rgba(255,190,110,0.92)', 'left');
+  /* tri prilike na crticama iz slike */
+  for(var i=0;i<3;i++){
+    var broken = i < G.strikes;
+    ctx.fillStyle = broken ? '#5a4a3a' : '#e8a840';
+    rr(ctx, 402 + i*36, 82, 26, 12, 5); ctx.fill();
+    if(broken){ ctx.strokeStyle = '#ff8a6a'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(408+i*36, 80); ctx.lineTo(422+i*36, 96); ctx.stroke(); }
+  }
+}
+function drawSmallBtnsKit(){
+  BTN.push({id:'pause', x:520, y:16, w:84, h:84});
+  BTN.push({id:'snd', x:613, y:16, w:84, h:84});
+  if(G.st === S.PAUSED){
+    ctx.fillStyle = '#2b1e14'; ctx.beginPath(); ctx.arc(562, 58, 26, 0, 6.284); ctx.fill();
+    ctx.fillStyle = '#ffe0b0'; ctx.beginPath(); ctx.moveTo(552, 42); ctx.lineTo(578, 58); ctx.lineTo(552, 74); ctx.closePath(); ctx.fill();
+  }
+  if(!AU.on){
+    ctx.strokeStyle = '#ff8a6a'; ctx.lineWidth = 5; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(640, 42); ctx.lineTo(672, 74); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(672, 42); ctx.lineTo(640, 74); ctx.stroke();
+  }
 }
 
 /* ==========================================================================
@@ -2099,10 +2415,18 @@ function boot(){
   }
   cv.addEventListener('contextmenu', function(e){ e.preventDefault(); });
   window.addEventListener('keydown', onKey);
-  bgSprite(); tableSprite(); doughLayer();
-  doughDemo();
-  G.st = S.INTRO; G.t = 0;
-  window.requestAnimationFrame(frame);
+  /* comic kit: prvo slike, pa start — ako koja fali, ostaje staro crtanje */
+  var started = false;
+  function start(){
+    if(started) return; started = true;
+    bgSprite(); tableSprite(); doughLayer();
+    doughDemo();
+    G.st = S.INTRO; G.t = 0;
+    window.requestAnimationFrame(frame);
+  }
+  ctx.fillStyle = '#0b0705'; ctx.fillRect(0, 0, cv.width, cv.height);
+  loadAssets().then(start, start);
+  setTimeout(start, 6000);
 }
 
 /* ---------- ikona i naslovna slika — crta ih sama igra (tools/icons.js) ---------- */
@@ -2158,6 +2482,7 @@ if(window.__EPTEST) window.EP = {
   onDown:onDown, onMove:onMove, onUp:onUp, filStep:filStep, toScr:toScr, toPlane:toPlane, projV:projV,
   mjere:function(){ return {SC:SC, OX:OX, OY:OY, DPR:DPR, VW:VW, VH:VH}; },
   icon:renderIcon, cover:renderCover, save:save, load:load,
+  kit:function(){ var n=0,m=0; for(var k in ASSETS){ m++; if(img(k)) n++; } return n+'/'+m; }, ASSETS:ASSETS,
   R_T:R_T, R0:R0, TCX:TCX, TCY:TCY, PERSP:PERSP, T_THIN:T_THIN
 };
 
