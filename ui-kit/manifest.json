@@ -1,0 +1,808 @@
+[
+  {
+    "file": "shargija_menu_primary_normal.png",
+    "family": "menu_primary",
+    "state": "normal",
+    "export_px": [
+      640,
+      80
+    ],
+    "logical_px": [
+      320,
+      40
+    ],
+    "nine_slice_export_px": {
+      "left": 16,
+      "top": 16,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 8.0,
+      "top": 8.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Main menu rows: songs, practice, free play, instructions, settings (left label + right status)."
+  },
+  {
+    "file": "shargija_menu_primary_highlighted.png",
+    "family": "menu_primary",
+    "state": "highlighted",
+    "export_px": [
+      640,
+      80
+    ],
+    "logical_px": [
+      320,
+      40
+    ],
+    "nine_slice_export_px": {
+      "left": 16,
+      "top": 16,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 8.0,
+      "top": 8.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Main menu rows: songs, practice, free play, instructions, settings (left label + right status)."
+  },
+  {
+    "file": "shargija_menu_primary_pressed.png",
+    "family": "menu_primary",
+    "state": "pressed",
+    "export_px": [
+      640,
+      80
+    ],
+    "logical_px": [
+      320,
+      40
+    ],
+    "nine_slice_export_px": {
+      "left": 16,
+      "top": 16,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 8.0,
+      "top": 8.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Main menu rows: songs, practice, free play, instructions, settings (left label + right status)."
+  },
+  {
+    "file": "shargija_menu_quiet_normal.png",
+    "family": "menu_quiet",
+    "state": "normal",
+    "export_px": [
+      640,
+      80
+    ],
+    "logical_px": [
+      320,
+      40
+    ],
+    "nine_slice_export_px": {
+      "left": 16,
+      "top": 16,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 8.0,
+      "top": 8.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Secondary / quiet menu rows."
+  },
+  {
+    "file": "shargija_menu_quiet_highlighted.png",
+    "family": "menu_quiet",
+    "state": "highlighted",
+    "export_px": [
+      640,
+      80
+    ],
+    "logical_px": [
+      320,
+      40
+    ],
+    "nine_slice_export_px": {
+      "left": 16,
+      "top": 16,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 8.0,
+      "top": 8.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Secondary / quiet menu rows."
+  },
+  {
+    "file": "shargija_menu_quiet_pressed.png",
+    "family": "menu_quiet",
+    "state": "pressed",
+    "export_px": [
+      640,
+      80
+    ],
+    "logical_px": [
+      320,
+      40
+    ],
+    "nine_slice_export_px": {
+      "left": 16,
+      "top": 16,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 8.0,
+      "top": 8.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Secondary / quiet menu rows."
+  },
+  {
+    "file": "shargija_action_primary_normal.png",
+    "family": "action_primary",
+    "state": "normal",
+    "export_px": [
+      640,
+      72
+    ],
+    "logical_px": [
+      320,
+      36
+    ],
+    "nine_slice_export_px": {
+      "left": 15,
+      "top": 15,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 7.5,
+      "top": 7.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Primary wide actions: replay, repeat song, repeat verse, practise weak passages."
+  },
+  {
+    "file": "shargija_action_primary_highlighted.png",
+    "family": "action_primary",
+    "state": "highlighted",
+    "export_px": [
+      640,
+      72
+    ],
+    "logical_px": [
+      320,
+      36
+    ],
+    "nine_slice_export_px": {
+      "left": 15,
+      "top": 15,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 7.5,
+      "top": 7.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Primary wide actions: replay, repeat song, repeat verse, practise weak passages."
+  },
+  {
+    "file": "shargija_action_primary_pressed.png",
+    "family": "action_primary",
+    "state": "pressed",
+    "export_px": [
+      640,
+      72
+    ],
+    "logical_px": [
+      320,
+      36
+    ],
+    "nine_slice_export_px": {
+      "left": 15,
+      "top": 15,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 7.5,
+      "top": 7.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Primary wide actions: replay, repeat song, repeat verse, practise weak passages."
+  },
+  {
+    "file": "shargija_action_secondary_normal.png",
+    "family": "action_secondary",
+    "state": "normal",
+    "export_px": [
+      640,
+      72
+    ],
+    "logical_px": [
+      320,
+      36
+    ],
+    "nine_slice_export_px": {
+      "left": 15,
+      "top": 15,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 7.5,
+      "top": 7.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Secondary wide actions on result screens and navigation."
+  },
+  {
+    "file": "shargija_action_secondary_highlighted.png",
+    "family": "action_secondary",
+    "state": "highlighted",
+    "export_px": [
+      640,
+      72
+    ],
+    "logical_px": [
+      320,
+      36
+    ],
+    "nine_slice_export_px": {
+      "left": 15,
+      "top": 15,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 7.5,
+      "top": 7.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Secondary wide actions on result screens and navigation."
+  },
+  {
+    "file": "shargija_action_secondary_pressed.png",
+    "family": "action_secondary",
+    "state": "pressed",
+    "export_px": [
+      640,
+      72
+    ],
+    "logical_px": [
+      320,
+      36
+    ],
+    "nine_slice_export_px": {
+      "left": 15,
+      "top": 15,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 7.5,
+      "top": 7.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Secondary wide actions on result screens and navigation."
+  },
+  {
+    "file": "shargija_card_play_normal.png",
+    "family": "card_play",
+    "state": "normal",
+    "export_px": [
+      224,
+      64
+    ],
+    "logical_px": [
+      112,
+      32
+    ],
+    "nine_slice_export_px": {
+      "left": 13,
+      "top": 13,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 6.5,
+      "top": 6.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Song-card PLAY button."
+  },
+  {
+    "file": "shargija_card_play_highlighted.png",
+    "family": "card_play",
+    "state": "highlighted",
+    "export_px": [
+      224,
+      64
+    ],
+    "logical_px": [
+      112,
+      32
+    ],
+    "nine_slice_export_px": {
+      "left": 13,
+      "top": 13,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 6.5,
+      "top": 6.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Song-card PLAY button."
+  },
+  {
+    "file": "shargija_card_play_pressed.png",
+    "family": "card_play",
+    "state": "pressed",
+    "export_px": [
+      224,
+      64
+    ],
+    "logical_px": [
+      112,
+      32
+    ],
+    "nine_slice_export_px": {
+      "left": 13,
+      "top": 13,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 6.5,
+      "top": 6.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Song-card PLAY button."
+  },
+  {
+    "file": "shargija_card_demo_normal.png",
+    "family": "card_demo",
+    "state": "normal",
+    "export_px": [
+      80,
+      64
+    ],
+    "logical_px": [
+      40,
+      32
+    ],
+    "nine_slice_export_px": {
+      "left": 13,
+      "top": 13,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 6.5,
+      "top": 6.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Song-card DEMO / listen button (icon added in HTML)."
+  },
+  {
+    "file": "shargija_card_demo_highlighted.png",
+    "family": "card_demo",
+    "state": "highlighted",
+    "export_px": [
+      80,
+      64
+    ],
+    "logical_px": [
+      40,
+      32
+    ],
+    "nine_slice_export_px": {
+      "left": 13,
+      "top": 13,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 6.5,
+      "top": 6.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Song-card DEMO / listen button (icon added in HTML)."
+  },
+  {
+    "file": "shargija_card_demo_pressed.png",
+    "family": "card_demo",
+    "state": "pressed",
+    "export_px": [
+      80,
+      64
+    ],
+    "logical_px": [
+      40,
+      32
+    ],
+    "nine_slice_export_px": {
+      "left": 13,
+      "top": 13,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 6.5,
+      "top": 6.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Song-card DEMO / listen button (icon added in HTML)."
+  },
+  {
+    "file": "shargija_back_normal.png",
+    "family": "back",
+    "state": "normal",
+    "export_px": [
+      160,
+      56
+    ],
+    "logical_px": [
+      80,
+      28
+    ],
+    "nine_slice_export_px": {
+      "left": 11,
+      "top": 11,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 5.5,
+      "top": 5.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "BACK / MENU button for subscreens and in-play menu."
+  },
+  {
+    "file": "shargija_back_highlighted.png",
+    "family": "back",
+    "state": "highlighted",
+    "export_px": [
+      160,
+      56
+    ],
+    "logical_px": [
+      80,
+      28
+    ],
+    "nine_slice_export_px": {
+      "left": 11,
+      "top": 11,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 5.5,
+      "top": 5.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "BACK / MENU button for subscreens and in-play menu."
+  },
+  {
+    "file": "shargija_back_pressed.png",
+    "family": "back",
+    "state": "pressed",
+    "export_px": [
+      160,
+      56
+    ],
+    "logical_px": [
+      80,
+      28
+    ],
+    "nine_slice_export_px": {
+      "left": 11,
+      "top": 11,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 5.5,
+      "top": 5.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "BACK / MENU button for subscreens and in-play menu."
+  },
+  {
+    "file": "shargija_settings_chip_normal.png",
+    "family": "settings_chip",
+    "state": "normal",
+    "export_px": [
+      192,
+      96
+    ],
+    "logical_px": [
+      96,
+      48
+    ],
+    "nine_slice_export_px": {
+      "left": 19,
+      "top": 19,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 9.5,
+      "top": 9.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Settings / language chips: difficulty, instrument, sound colour, effects, language (title + subtitle)."
+  },
+  {
+    "file": "shargija_settings_chip_highlighted.png",
+    "family": "settings_chip",
+    "state": "highlighted",
+    "export_px": [
+      192,
+      96
+    ],
+    "logical_px": [
+      96,
+      48
+    ],
+    "nine_slice_export_px": {
+      "left": 19,
+      "top": 19,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 9.5,
+      "top": 9.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Settings / language chips: difficulty, instrument, sound colour, effects, language (title + subtitle)."
+  },
+  {
+    "file": "shargija_settings_chip_pressed.png",
+    "family": "settings_chip",
+    "state": "pressed",
+    "export_px": [
+      192,
+      96
+    ],
+    "logical_px": [
+      96,
+      48
+    ],
+    "nine_slice_export_px": {
+      "left": 19,
+      "top": 19,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 9.5,
+      "top": 9.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Settings / language chips: difficulty, instrument, sound colour, effects, language (title + subtitle)."
+  },
+  {
+    "file": "shargija_settings_chip_selected.png",
+    "family": "settings_chip",
+    "state": "selected",
+    "export_px": [
+      192,
+      96
+    ],
+    "logical_px": [
+      96,
+      48
+    ],
+    "nine_slice_export_px": {
+      "left": 19,
+      "top": 19,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 9.5,
+      "top": 9.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Settings / language chips: difficulty, instrument, sound colour, effects, language (title + subtitle)."
+  },
+  {
+    "file": "shargija_settings_chip_disabled.png",
+    "family": "settings_chip",
+    "state": "disabled",
+    "export_px": [
+      192,
+      96
+    ],
+    "logical_px": [
+      96,
+      48
+    ],
+    "nine_slice_export_px": {
+      "left": 19,
+      "top": 19,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 9.5,
+      "top": 9.5,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Settings / language chips: difficulty, instrument, sound colour, effects, language (title + subtitle)."
+  },
+  {
+    "file": "shargija_song_option_chip_normal.png",
+    "family": "song_option_chip",
+    "state": "normal",
+    "export_px": [
+      96,
+      48
+    ],
+    "logical_px": [
+      48,
+      24
+    ],
+    "nine_slice_export_px": {
+      "left": 10,
+      "top": 10,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 5.0,
+      "top": 5.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Compact song option chips inside song cards."
+  },
+  {
+    "file": "shargija_song_option_chip_highlighted.png",
+    "family": "song_option_chip",
+    "state": "highlighted",
+    "export_px": [
+      96,
+      48
+    ],
+    "logical_px": [
+      48,
+      24
+    ],
+    "nine_slice_export_px": {
+      "left": 10,
+      "top": 10,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 5.0,
+      "top": 5.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Compact song option chips inside song cards."
+  },
+  {
+    "file": "shargija_song_option_chip_pressed.png",
+    "family": "song_option_chip",
+    "state": "pressed",
+    "export_px": [
+      96,
+      48
+    ],
+    "logical_px": [
+      48,
+      24
+    ],
+    "nine_slice_export_px": {
+      "left": 10,
+      "top": 10,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 5.0,
+      "top": 5.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Compact song option chips inside song cards."
+  },
+  {
+    "file": "shargija_song_option_chip_selected.png",
+    "family": "song_option_chip",
+    "state": "selected",
+    "export_px": [
+      96,
+      48
+    ],
+    "logical_px": [
+      48,
+      24
+    ],
+    "nine_slice_export_px": {
+      "left": 10,
+      "top": 10,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 5.0,
+      "top": 5.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Compact song option chips inside song cards."
+  },
+  {
+    "file": "shargija_song_option_chip_disabled.png",
+    "family": "song_option_chip",
+    "state": "disabled",
+    "export_px": [
+      96,
+      48
+    ],
+    "logical_px": [
+      48,
+      24
+    ],
+    "nine_slice_export_px": {
+      "left": 10,
+      "top": 10,
+      "right": 6,
+      "bottom": 6
+    },
+    "nine_slice_logical_px": {
+      "left": 5.0,
+      "top": 5.0,
+      "right": 3.0,
+      "bottom": 3.0
+    },
+    "usage": "Compact song option chips inside song cards."
+  }
+]
