@@ -1,0 +1,6 @@
+/preview.jpg
+  Cache-Control: public, max-age=86400
+  Content-Type: image/jpeg
+
+/assets/*
+  Cache-Control: public, max-age=604800

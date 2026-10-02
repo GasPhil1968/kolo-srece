@@ -14,5 +14,14 @@ Abweichungen von der Lieferung:
   korrekt verkleinert. Ohne diese Regel verdecken die Karten bei 667×375 den BACK-Button
   (betrifft auch das Original).
 
+- Notenbahn: Rauten, offene Ringe und Vorschlagsnoten werden mit den `note_*`-PNGs gezeichnet
+  (Rückfall auf die Vektorform, solange ein Bild nicht geladen ist); Bahn, Trefferlinie,
+  Hochformat-Hinweis und theme-color sind auf die neue Palette umgefärbt.
+- `_headers`: Cache-Regeln für `preview.jpg` und `/assets/*`.
+
+Für Netlify (shargija.netlify.app) reicht der Inhalt dieses Ordners ohne `README.md`; nicht geladen
+werden `environment_full`, `dancer_female`, `dancer_male`, `fx_*`, `instrument_peg`,
+`instrument_head_base_*` und `note_pointer_*`.
+
 Prüfung: `node tools/shargija-check.js <ausgabeordner> [BxH]` öffnet das Spiel in Chromium,
 besucht alle Menüs, startet ein Lied und meldet Fehler und fehlende Bilder.

@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0a0908">
+<meta name="theme-color" content="#253451">
 <meta name="color-scheme" content="dark">
 <title>ŠARGIJA — Žica i trzalica</title>
 
@@ -2701,18 +2701,32 @@ function setSylLane(song){
 /* Der Hintergrundverlauf wird einmal je Höhe gebaut; die veränderliche
    Stärke läuft über globalAlpha statt über einen frischen Gradient.      */
 let staffGrad=null, staffGradH=0;
+/* Notenmarker aus assets/: 20x20 logisch, die Form selbst hat Radius 6,5
+   (Vorschlag 2,6). Solange ein Bild nicht geladen ist, malt drawStaff die
+   Vektorform wie bisher.                                                 */
+const NOTE_IMG={}, NOTE_BASE={diamond:6.5,open:6.5,grace:2.6};
+function noteArt(kind,grade,x,y,r){
+  const g=grade===2?"clean":grade===1?"near":grade===0?"miss":"normal";
+  const id=kind+"_"+g;
+  let im=NOTE_IMG[id];
+  if(!im){ im=NOTE_IMG[id]=new Image(); im.src="assets/note_"+id+".png"; }
+  if(!im.complete||!im.naturalWidth) return false;
+  const s=20*r/NOTE_BASE[kind];
+  g2.drawImage(im,x-s/2,y-s/2,s,s);
+  return true;
+}
 function drawStaff(now){
   /* Die Bahn malt ihren dunklen Grund selbst, deckend — sie hängt damit
      nicht mehr am Seitenhintergrund. Browser mit erzwungenem Hell-Modus
      oder Invertierung fassen Canvas-Pixel nicht an; die Noten stehen
      immer auf Dunkel.                                                    */
-  g2.fillStyle="#0d0b09"; g2.fillRect(0,0,W,H);
+  g2.fillStyle="#1b2640"; g2.fillRect(0,0,W,H);
   g2.lineCap="round"; g2.lineJoin="round";
 
   if(!staffGrad||staffGradH!==H){
     staffGrad=g2.createLinearGradient(0,0,0,H);
-    staffGrad.addColorStop(0,"rgba(10,9,8,0)");
-    staffGrad.addColorStop(1,"rgb(107,17,25)");
+    staffGrad.addColorStop(0,"rgba(37,52,81,0)");
+    staffGrad.addColorStop(1,"rgb(80,59,88)");
     staffGradH=H;
   }
   g2.globalAlpha=Math.min(1,.12+S.energy*.2+S.solo*.18);
@@ -2793,14 +2807,18 @@ function drawStaff(now){
         const oy=ny(n.orn);
         g2.strokeStyle="rgba(240,168,60,.5)"; g2.lineWidth=1;
         g2.beginPath(); g2.moveTo(x-9,oy); g2.lineTo(x-2,y); g2.stroke();
-        g2.fillStyle="rgba(240,168,60,.6)";
-        g2.beginPath(); g2.arc(x-9,oy,2.6,0,6.284); g2.fill();
+        if(!noteArt("grace",null,x-9,oy,2.6)){
+          g2.fillStyle="rgba(240,168,60,.6)";
+          g2.beginPath(); g2.arc(x-9,oy,2.6,0,6.284); g2.fill();
+        }
       }
       g2.shadowBlur=(n.grade===2)?14:0;
       g2.shadowColor="rgba(240,168,60,.95)";
       g2.fillStyle=col; g2.strokeStyle=col;
       const r=(n.type===1?4.5:6.5)*(n.acc?1.16:1);
-      if(n.pos===0){
+      if(noteArt(n.pos===0?"open":"diamond",n.grade,x,y,r)){
+        /* gemalter Marker aus assets/ (Engine-Grafiken v2) */
+      }else if(n.pos===0){
         g2.lineWidth=n.acc?2.6:2; g2.beginPath(); g2.arc(x,y,r,0,6.284); g2.stroke();
       }else{
         g2.beginPath(); g2.moveTo(x,y-r); g2.lineTo(x+r,y);
@@ -2818,8 +2836,8 @@ function drawStaff(now){
   }
 
   // Trefferlinie
-  g2.shadowBlur=10+S.solo*14; g2.shadowColor="rgba(212,58,42,.9)";
-  g2.strokeStyle="rgba(230,70,50,"+(.62+S.solo*.32).toFixed(2)+")"; g2.lineWidth=2;
+  g2.shadowBlur=10+S.solo*14; g2.shadowColor="rgba(217,144,131,.9)";
+  g2.strokeStyle="rgba(217,144,131,"+(.7+S.solo*.28).toFixed(2)+")"; g2.lineWidth=2;
   g2.beginPath(); g2.moveTo(HITX+.5,2); g2.lineTo(HITX+.5,H-1); g2.stroke();
   g2.shadowBlur=0;
 
@@ -4325,6 +4343,7 @@ document.addEventListener("visibilitychange",function(){
     .card,.row button,.card .crow button,.chip,button.big,button.quiet,button.p,button.d,button.ghost,button.back{
       background-size:100% 100%;background-repeat:no-repeat;background-position:center}
     .card{padding-left:14px}
+    #rotate{background:#1b2640}
     /* Kartenraster nie unter seinen Inhalt druecken: fitVeil() skaliert dann korrekt. */
     #veilInner{justify-content:safe center} #veilInner .cards{flex-shrink:0;min-height:auto}
     .card .crow button.p{border:0;background-image:url(assets/ui_control_normal.png);color:#253451}
