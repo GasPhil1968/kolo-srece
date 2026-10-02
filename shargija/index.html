@@ -1144,19 +1144,27 @@ class Zica {
     this.dcx=0; this.dcy=0;
     this.gl=.5; this.gr=.5;
     this.live=false; this.idle=0; this.o=0;
+    this.D=200; this.Dcur=200; this.dD=0; this.gN=0;   // Gleiten
+    this.bend=0; this.bendK=1; this.tick=0;            // Anschlagsbiegung
+    this.thr=1e9; this.bg=0; this.nzp=0; this.bh=0;   // Schnarren am Bund
   }
   hush(){
     this.buf.fill(0); this.lp=this.apx=this.apy=this.dcx=this.dcy=0;
     this.excN=this.excI=0; this.wait=0; this.pending=null;
-    this.live=false; this.o=0;
+    this.live=false; this.o=0; this.bend=0; this.gN=0;
   }
   /* f = Tonhöhe, t60 = Ausklang des Grundtons in Sekunden,
      fc = Eckfrequenz des Verlustfilters: je höher, desto länger bleibt
      die Saite hell.                                                     */
-  tune(f,t60,fc){
+  tune(f,t60,fc,glide){
     const sr=this.sr;
     let D=sr/Math.max(20,f);
     if(D>this.L-8) D=this.L-8;
+    /* Greift die Hand um, während die Saite klingt, rutscht der Finger
+       über den Bund: die Länge wandert in glide Abtastwerten zum Ziel.  */
+    if(glide>0&&this.live&&Math.abs(D-this.Dcur)>.01){
+      this.D=D; this.gN=glide|0; this.dD=(D-this.Dcur)/this.gN;
+    }else{ this.D=D; this.Dcur=D; this.gN=0; }
     const a=Math.min(.93,Math.max(.02,Math.exp(-6.2831853*fc/sr)));
     this.a=a;
     const w=6.2831853*f/sr, ca=Math.cos(w);
@@ -1164,8 +1172,12 @@ class Zica {
     const G=Math.pow(10,-3/(Math.max(.08,t60)*f));
     // Der Steg koppelt Energie zurück; ohne Reserve schaukelt sich das auf.
     this.R=Math.min(.9955,G/Math.max(1e-6,mag));
-    const dlp=a/(1-a);
-    let rem=D-dlp; if(rem<4) rem=4;
+    this.dlp=a/(1-a);
+    this.len(this.Dcur/(1+this.bend));
+  }
+  /* Schleifenlänge D (in Abtastwerten) auf ganze Verzögerung + Allpass. */
+  len(D){
+    let rem=D-this.dlp; if(rem<4) rem=4;
     let Ni=Math.floor(rem)-1, frac=rem-Ni;    // frac liegt in [1,2)
     if(Ni<2){ Ni=2; frac=1; }
     this.Ni=Ni;
@@ -1175,7 +1187,13 @@ class Zica {
      Kamm der Anschlagstelle. Er wird nicht in den Puffer geschrieben,
      sondern über die nächsten Abtastwerte eingespeist — dadurch addiert
      er sich zu dem, was noch schwingt.                                  */
-  strike(amp,pick,edge,damp,dly){
+  strike(amp,pick,edge,damp,dly,bend,thr,bg){
+    /* Ein kräftiger Anriss dehnt die Stahlsaite: der Ton beginnt ein paar
+       Cent zu hoch und sinkt in gut 0,1 s auf seine Höhe.               */
+    this.bend=bend>0?Math.pow(2,bend/1200)-1:0;
+    this.bendK=Math.exp(-16/(this.sr*.07));
+    if(thr>0){ this.thr=thr; this.bg=bg; }
+    this.len(this.Dcur/(1+this.bend));
     const N=Math.min(this.exc.length,Math.max(12,this.Ni));
     const e=this.exc;
     let s=0;
@@ -1203,6 +1221,12 @@ class Zica {
     if(this.wait>0){ this.wait--; }
     let x2=0;
     if(this.wait===0&&this.excI<this.excN) x2=this.exc[this.excI++];
+    if((this.gN>0||this.bend!==0)&&++this.tick>=16){
+      this.tick=0;
+      if(this.gN>0){ this.gN=Math.max(0,this.gN-16); this.Dcur=this.gN?this.Dcur+this.dD*16:this.D; }
+      if(this.bend!==0){ this.bend*=this.bendK; if(this.bend<1e-5) this.bend=0; }
+      this.len(this.Dcur/(1+this.bend));
+    }
     let rp=this.wp-this.Ni; if(rp<0) rp+=this.L;
     const x=this.buf[rp];
     const y=this.c*x+this.apx-this.c*this.apy;
@@ -1214,6 +1238,16 @@ class Zica {
     this.buf[this.wp]=d+x2+inj;
     this.wp++; if(this.wp>=this.L) this.wp=0;
     this.o=d;
+    /* Schnarren: schwingt die Saite weit genug aus, schlägt sie in jeder
+       Periode kurz an den Bund — ein Sirren im Takt des Grundtons, das
+       mit dem Ausschlag wächst und verschwindet, sobald der Ton leiser
+       wird. Es geht nach außen, nicht zurück in die Schleife.           */
+    const av=d<0?-d:d;
+    if(av>this.thr){
+      const nz=Math.random()*2-1, e=av-this.thr;
+      this.bh=(nz-this.nzp)*e*this.bg; this.nzp=nz;
+      return d+this.bh;
+    }
     return d;
   }
 }
@@ -1268,7 +1302,7 @@ class Sargija extends AudioWorkletProcessor {
         }
       }else if(m.t==="tune"){
         // Umgreifen bei klingender Saite: der Ton läuft weiter
-        if(m.at>=0) this.q.push(m); else this.Z[m.i].tune(m.f,m.t60,m.fc);
+        if(m.at>=0) this.q.push(m); else this.Z[m.i].tune(m.f,m.t60,m.fc,m.glide||0);
       }else if(m.t==="strum"){
         /* Ein Schlag kommt als eine Nachricht, damit der Versatz zwischen
            den Saiten abtastgenau bleibt. Mit "at" wird er auf einen festen
@@ -1285,12 +1319,13 @@ class Sargija extends AudioWorkletProcessor {
     k.set(amp,freq,ms,dly);
   }
   fire(m,dly){
-    if(m.t==="tune"){ this.Z[m.i].tune(m.f,m.t60,m.fc); return; }
+    if(m.t==="tune"){ this.Z[m.i].tune(m.f,m.t60,m.fc,m.glide||0); return; }
     const L=m.v;
     for(let k=0;k<L.length;k+=7){
       const z=this.Z[L[k]];
-      z.tune(L[k+1],L[k+2],L[k+3]);
-      z.strike(L[k+4],m.pick,m.edge,L[k+6],L[k+5]+dly);
+      z.tune(L[k+1],L[k+2],L[k+3],0);
+      z.strike(L[k+4],m.pick,m.edge,L[k+6],L[k+5]+dly,
+               (m.bend||0)*Math.min(1.6,L[k+4]/.34),m.thr?m.thr[L[k]]:0,m.bg||0);
     }
     if(m.klik) this.klik(m.klik,m.kf||3000,m.kms||42,dly+(L[5]||0));
     if(m.buzz) this.klik(m.buzz,2600+Math.random()*1400,55,dly+(L[5]||0));
@@ -1580,6 +1615,15 @@ function unlock(){
 /* Der Saitensatz: die Melodie läuft über ein Chorpaar in Einklang, leicht
    gegeneinander verstimmt — dieses langsame Schweben ist das Erkennungs-
    zeichen der Šargija. Darunter liegen die Bordune.                     */
+/* Regler für den Saitenklang — 0 schaltet eine Zutat ab, 1 ist der
+   abgestimmte Wert, darüber wird sie deutlicher.
+   buzz   Schnarren am Bund, solange die Saite laut schwingt
+   bend   Anschlagsbiegung: kräftige Schläge beginnen leicht zu hoch
+   glide  Rutschen beim Umgreifen auf der klingenden Saite (ms)
+   trem   schnelles Tremolo dämpft die Melodiesaite weniger              */
+const SOUND={buzz:1, bend:1, glide:1, trem:1};
+const BUZZ={sar:1, kra:.7, saz:.45};
+let lastPluckT=-1;
 function stringSet(I){
   const set=[], k=TONES[TONE].fc;
   set.push({mel:1, mult:1, cents:-3.2, pan:-.16, t60:I.t60mel, fc:I.fcMel*k});
@@ -1726,7 +1770,8 @@ function fretChange(fresh,when){
     if(!s.mel) continue;
     const fr=f*cents(s.cents);
     if(fresh) v.push(i,fr,s.t60*.8,s.fc*.85,.055+Math.random()*.02,(i*40)|0,.5);
-    else strNode.port.postMessage({t:"tune",i:i,f:fr,t60:s.t60,fc:s.fc,at:at});
+    else strNode.port.postMessage({t:"tune",i:i,f:fr,t60:s.t60,fc:s.fc,at:at,
+      glide:Math.round(AC.sampleRate*.022*SOUND.glide)});
   }
   if(v.length) strNode.port.postMessage({t:"strum",v:v,at:at,pick:.22,edge:.5});
 }
@@ -1750,6 +1795,9 @@ function pluck(dir,power,when){
     const mel=freqOfFret(S.fret);
     // Grundversatz zwischen zwei Saiten; der Aufschlag ist eiliger.
     const step=(up?.0058:.0079)*(1.42-p*.5);
+    let gap=t0-lastPluckT; if(lastPluckT<0||gap<0) gap=1; lastPluckT=t0;
+    const trem=1-SOUND.trem*.45*Math.max(0,Math.min(1,(.16-gap)/.1));
+    const bz=SOUND.buzz*(BUZZ[I.id]||0);
     const order=[];
     for(let i=0;i<STRSET.length;i++) order.push(i);
     if(up) order.reverse();
@@ -1768,7 +1816,10 @@ function pluck(dir,power,when){
       const t60=s.t60*(.9+p*.14)*Math.pow(I.base/Math.max(40,f),.35);
       /* Die Trzalica löscht die Melodiesaite fast, die Bordune streift
          sie nur — sonst bricht der Teppich bei jedem Schlag ab.         */
-      const dmp=s.mel?Math.min(.86,.34+p*.32):Math.min(.3,.08+p*.14);
+      let dmp=s.mel?Math.min(.86,.34+p*.32):Math.min(.3,.08+p*.14);
+      /* Beim Prebir liegt die Trzalica kaum auf: je dichter die Schläge,
+         desto weniger nimmt sie der Melodiesaite weg.                   */
+      if(s.mel&&trem<1) dmp*=trem;
       v.push(i,f,t60,s.fc*(.74+p*.42),g,Math.round(tt*sr),dmp);
     }
     strNode.port.postMessage({t:"strum", v:v,
@@ -1778,6 +1829,8 @@ function pluck(dir,power,when){
       /* Anstrich und Schnarren rechnet der Worklet mit — abtastgenau
          zum Schlag und ohne für jeden Anschlag Knoten anzulegen.       */
       klik:p*(up?.5:.62), kf:(up?3400:2500)+Math.random()*1600, kms:40,
+      bend:SOUND.bend*(up?5:8),
+      thr:STRSET.map(function(s){ return bz>0?(s.mel?.05:.07):0; }), bg:bz*1.2,
       buzz:p*(fresh?.5:.14)*(S.fret>0?.8:.4)});
   }else{
     // Rückfallweg
@@ -4403,7 +4456,7 @@ if(location.hash==="#dev") window.SARGIJA={
   worklet:function(){ return workletOn; },
   init:initAudio, pluck:pluck, setFret:setFret, buildSong:buildSong,
   buildDrill:buildDrill, startSong:startSong, startDemo:startDemo,
-  begin:begin, render:devRender
+  begin:begin, render:devRender, SOUND:SOUND
 };
 })();
 </script>

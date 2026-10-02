@@ -23,5 +23,14 @@ Für Netlify (shargija.netlify.app) reicht der Inhalt dieses Ordners ohne `READM
 werden `environment_full`, `dancer_female`, `dancer_male`, `fx_*`, `instrument_peg`,
 `instrument_head_base_*` und `note_pointer_*`.
 
+- Saitenklang (AudioWorklet): Schnarren am Bund, das jede Periode neu einsetzt, solange die Saite laut
+  schwingt; Anschlagsbiegung (kräftige Schläge beginnen bis ~8 Cent zu hoch und sinken in ~0,15 s);
+  Gleiten beim Umgreifen auf der klingenden Saite (22 ms); schnelles Tremolo dämpft die Melodiesaite
+  weniger. Regler in `SOUND` (`buzz`, `bend`, `glide`, `trem`; 0 = aus, 1 = abgestimmt); mit `#dev`
+  im Browser über `SARGIJA.SOUND` live änderbar.
+
 Prüfung: `node tools/shargija-check.js <ausgabeordner> [BxH]` öffnet das Spiel in Chromium,
 besucht alle Menüs, startet ein Lied und meldet Fehler und fehlende Bilder.
+
+Klang: `node tools/shargija-render.js <datei.wav> [0|1|2] [html]` rendert eine feste Testphrase
+(Melodie, Tremolo, Legato, harte Schläge) offline; `SOUND='{"buzz":0}'` setzt Regler für den Lauf.
