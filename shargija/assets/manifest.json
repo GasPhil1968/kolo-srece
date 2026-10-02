@@ -1,0 +1,1802 @@
+{
+  "version": 2,
+  "density": 2,
+  "coordinates": {
+    "scene": [
+      0,
+      0,
+      1000,
+      420
+    ],
+    "instrument_viewbox": [
+      18,
+      24,
+      894,
+      376
+    ],
+    "instrument_transform": {
+      "translate": [
+        160,
+        130
+      ],
+      "rotation_degrees": 10.597638
+    },
+    "strings": "Retain stringRows(), updateStrings(), CENTS and FX",
+    "SLEN": 630.7582738260355
+  },
+  "assets": [
+    {
+      "id": "environment_full",
+      "file": "assets/environment_full.png",
+      "export": [
+        2000,
+        840
+      ],
+      "rect": [
+        0,
+        0,
+        1000,
+        420
+      ],
+      "logical_size": [
+        1000,
+        420
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 0,
+      "usage": "Alternative flattened stage; do not draw with sky/floor pair",
+      "premultiplied": false
+    },
+    {
+      "id": "environment_sky",
+      "file": "assets/environment_sky.png",
+      "export": [
+        2000,
+        840
+      ],
+      "rect": [
+        0,
+        0,
+        1000,
+        420
+      ],
+      "logical_size": [
+        1000,
+        420
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 0,
+      "usage": "Sky, ridge village, poplars; paired with floor",
+      "premultiplied": false
+    },
+    {
+      "id": "environment_floor",
+      "file": "assets/environment_floor.png",
+      "export": [
+        2000,
+        840
+      ],
+      "rect": [
+        0,
+        0,
+        1000,
+        420
+      ],
+      "logical_size": [
+        1000,
+        420
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 1,
+      "usage": "Separate stage floor; opaque from y240 down",
+      "premultiplied": false
+    },
+    {
+      "id": "instrument_peg",
+      "file": "assets/instrument_peg.png",
+      "export": [
+        22,
+        38
+      ],
+      "rect": [
+        -5.5,
+        -19,
+        11,
+        19
+      ],
+      "logical_size": [
+        11,
+        19
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Independent upper peg with stem; lower peg is vertical reflection",
+      "premultiplied": false
+    },
+    {
+      "id": "instrument_body_sar",
+      "file": "assets/instrument_body_sar.png",
+      "export": [
+        740,
+        404
+      ],
+      "rect": [
+        388,
+        -101,
+        370,
+        202
+      ],
+      "logical_size": [
+        370,
+        202
+      ],
+      "pivot": [
+        388,
+        0
+      ],
+      "layer": 30,
+      "usage": "Soundboard without bridge; exact source outline",
+      "premultiplied": false,
+      "variant": "sar"
+    },
+    {
+      "id": "instrument_neck_sar",
+      "file": "assets/instrument_neck_sar.png",
+      "export": [
+        856,
+        120
+      ],
+      "rect": [
+        -10,
+        -30,
+        428,
+        60
+      ],
+      "logical_size": [
+        428,
+        60
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 31,
+      "usage": "Blank source-shaped neck; dynamic frets/strings rendered above",
+      "premultiplied": false,
+      "variant": "sar"
+    },
+    {
+      "id": "instrument_head_base_sar",
+      "file": "assets/instrument_head_base_sar.png",
+      "export": [
+        270,
+        110
+      ],
+      "rect": [
+        -133,
+        -28,
+        135,
+        55
+      ],
+      "logical_size": [
+        135,
+        55
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Bare source-shaped headstock; separate pegs",
+      "premultiplied": false,
+      "variant": "sar"
+    },
+    {
+      "id": "instrument_head_4_sar",
+      "file": "assets/instrument_head_4_sar.png",
+      "export": [
+        276,
+        240
+      ],
+      "rect": [
+        -138,
+        -60,
+        138,
+        120
+      ],
+      "logical_size": [
+        138,
+        120
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Complete 4-peg head; source peg anchors",
+      "premultiplied": false,
+      "variant": "sar",
+      "peg_count": 4
+    },
+    {
+      "id": "instrument_head_6_sar",
+      "file": "assets/instrument_head_6_sar.png",
+      "export": [
+        276,
+        240
+      ],
+      "rect": [
+        -138,
+        -60,
+        138,
+        120
+      ],
+      "logical_size": [
+        138,
+        120
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Complete 6-peg head; source peg anchors",
+      "premultiplied": false,
+      "variant": "sar",
+      "peg_count": 6
+    },
+    {
+      "id": "instrument_body_kra",
+      "file": "assets/instrument_body_kra.png",
+      "export": [
+        740,
+        404
+      ],
+      "rect": [
+        388,
+        -101,
+        370,
+        202
+      ],
+      "logical_size": [
+        370,
+        202
+      ],
+      "pivot": [
+        388,
+        0
+      ],
+      "layer": 30,
+      "usage": "Soundboard without bridge; exact source outline",
+      "premultiplied": false,
+      "variant": "kra"
+    },
+    {
+      "id": "instrument_neck_kra",
+      "file": "assets/instrument_neck_kra.png",
+      "export": [
+        856,
+        120
+      ],
+      "rect": [
+        -10,
+        -30,
+        428,
+        60
+      ],
+      "logical_size": [
+        428,
+        60
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 31,
+      "usage": "Blank source-shaped neck; dynamic frets/strings rendered above",
+      "premultiplied": false,
+      "variant": "kra"
+    },
+    {
+      "id": "instrument_head_base_kra",
+      "file": "assets/instrument_head_base_kra.png",
+      "export": [
+        270,
+        110
+      ],
+      "rect": [
+        -133,
+        -28,
+        135,
+        55
+      ],
+      "logical_size": [
+        135,
+        55
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Bare source-shaped headstock; separate pegs",
+      "premultiplied": false,
+      "variant": "kra"
+    },
+    {
+      "id": "instrument_head_4_kra",
+      "file": "assets/instrument_head_4_kra.png",
+      "export": [
+        276,
+        240
+      ],
+      "rect": [
+        -138,
+        -60,
+        138,
+        120
+      ],
+      "logical_size": [
+        138,
+        120
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Complete 4-peg head; source peg anchors",
+      "premultiplied": false,
+      "variant": "kra",
+      "peg_count": 4
+    },
+    {
+      "id": "instrument_head_6_kra",
+      "file": "assets/instrument_head_6_kra.png",
+      "export": [
+        276,
+        240
+      ],
+      "rect": [
+        -138,
+        -60,
+        138,
+        120
+      ],
+      "logical_size": [
+        138,
+        120
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Complete 6-peg head; source peg anchors",
+      "premultiplied": false,
+      "variant": "kra",
+      "peg_count": 6
+    },
+    {
+      "id": "instrument_body_saz",
+      "file": "assets/instrument_body_saz.png",
+      "export": [
+        740,
+        404
+      ],
+      "rect": [
+        388,
+        -101,
+        370,
+        202
+      ],
+      "logical_size": [
+        370,
+        202
+      ],
+      "pivot": [
+        388,
+        0
+      ],
+      "layer": 30,
+      "usage": "Soundboard without bridge; exact source outline",
+      "premultiplied": false,
+      "variant": "saz"
+    },
+    {
+      "id": "instrument_neck_saz",
+      "file": "assets/instrument_neck_saz.png",
+      "export": [
+        856,
+        120
+      ],
+      "rect": [
+        -10,
+        -30,
+        428,
+        60
+      ],
+      "logical_size": [
+        428,
+        60
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 31,
+      "usage": "Blank source-shaped neck; dynamic frets/strings rendered above",
+      "premultiplied": false,
+      "variant": "saz"
+    },
+    {
+      "id": "instrument_head_base_saz",
+      "file": "assets/instrument_head_base_saz.png",
+      "export": [
+        270,
+        110
+      ],
+      "rect": [
+        -133,
+        -28,
+        135,
+        55
+      ],
+      "logical_size": [
+        135,
+        55
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Bare source-shaped headstock; separate pegs",
+      "premultiplied": false,
+      "variant": "saz"
+    },
+    {
+      "id": "instrument_head_4_saz",
+      "file": "assets/instrument_head_4_saz.png",
+      "export": [
+        276,
+        240
+      ],
+      "rect": [
+        -138,
+        -60,
+        138,
+        120
+      ],
+      "logical_size": [
+        138,
+        120
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Complete 4-peg head; source peg anchors",
+      "premultiplied": false,
+      "variant": "saz",
+      "peg_count": 4
+    },
+    {
+      "id": "instrument_head_6_saz",
+      "file": "assets/instrument_head_6_saz.png",
+      "export": [
+        276,
+        240
+      ],
+      "rect": [
+        -138,
+        -60,
+        138,
+        120
+      ],
+      "logical_size": [
+        138,
+        120
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 32,
+      "usage": "Complete 6-peg head; source peg anchors",
+      "premultiplied": false,
+      "variant": "saz",
+      "peg_count": 6
+    },
+    {
+      "id": "instrument_bridge",
+      "file": "assets/instrument_bridge.png",
+      "export": [
+        24,
+        108
+      ],
+      "rect": [
+        624.758,
+        -27,
+        12,
+        54
+      ],
+      "logical_size": [
+        12,
+        54
+      ],
+      "pivot": [
+        630.758,
+        0
+      ],
+      "layer": 33,
+      "usage": "Independent bridge anchored at SLEN=630.758",
+      "premultiplied": false
+    },
+    {
+      "id": "instrument_tailpiece",
+      "file": "assets/instrument_tailpiece.png",
+      "export": [
+        36,
+        88
+      ],
+      "rect": [
+        736,
+        -22,
+        18,
+        44
+      ],
+      "logical_size": [
+        18,
+        44
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 33,
+      "usage": "Tailpiece",
+      "premultiplied": false
+    },
+    {
+      "id": "hand_fret",
+      "file": "assets/hand_fret.png",
+      "export": [
+        492,
+        328
+      ],
+      "rect": [
+        -163.2,
+        -64.8,
+        245.76,
+        163.84
+      ],
+      "logical_size": [
+        245.76,
+        163.84
+      ],
+      "pivot": [
+        0,
+        8
+      ],
+      "layer": 35,
+      "usage": "Single continuous-transform pose; no arbitrary animation frames",
+      "premultiplied": false,
+      "coordinate_space": "instrument-local"
+    },
+    {
+      "id": "hand_pick",
+      "file": "assets/hand_pick.png",
+      "export": [
+        492,
+        328
+      ],
+      "rect": [
+        529.6,
+        -2.8,
+        245.76,
+        163.84
+      ],
+      "logical_size": [
+        245.76,
+        163.84
+      ],
+      "pivot": [
+        540,
+        10
+      ],
+      "layer": 36,
+      "usage": "Single continuous-transform pose; no arbitrary animation frames",
+      "premultiplied": false,
+      "coordinate_space": "instrument-local"
+    },
+    {
+      "id": "player",
+      "file": "assets/player.png",
+      "export": [
+        588,
+        820
+      ],
+      "rect": [
+        616,
+        10,
+        294,
+        410
+      ],
+      "logical_size": [
+        294,
+        410
+      ],
+      "pivot": [
+        763,
+        116
+      ],
+      "layer": 20,
+      "usage": "Seated musician behind instrument; face above body; lower edge at stage boundary",
+      "premultiplied": false,
+      "coordinate_space": "instrument-parent"
+    },
+    {
+      "id": "dancer_male",
+      "file": "assets/dancer_male.png",
+      "export": [
+        156,
+        196
+      ],
+      "rect": [
+        -39,
+        -84,
+        78,
+        98
+      ],
+      "logical_size": [
+        78,
+        98
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 10,
+      "usage": "Full dancer for rigid bobbing",
+      "premultiplied": false
+    },
+    {
+      "id": "dancer_male_body",
+      "file": "assets/dancer_male_body.png",
+      "export": [
+        156,
+        196
+      ],
+      "rect": [
+        -39,
+        -84,
+        78,
+        98
+      ],
+      "logical_size": [
+        78,
+        98
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 10,
+      "usage": "Upper dancer body: apply bob rotation",
+      "premultiplied": false
+    },
+    {
+      "id": "dancer_male_legs",
+      "file": "assets/dancer_male_legs.png",
+      "export": [
+        156,
+        196
+      ],
+      "rect": [
+        -39,
+        -84,
+        78,
+        98
+      ],
+      "logical_size": [
+        78,
+        98
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 11,
+      "usage": "Lower dancer legs: source rotate around (0,0); same canvas",
+      "premultiplied": false
+    },
+    {
+      "id": "dancer_female",
+      "file": "assets/dancer_female.png",
+      "export": [
+        156,
+        196
+      ],
+      "rect": [
+        -39,
+        -84,
+        78,
+        98
+      ],
+      "logical_size": [
+        78,
+        98
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 10,
+      "usage": "Full dancer for rigid bobbing",
+      "premultiplied": false
+    },
+    {
+      "id": "dancer_female_body",
+      "file": "assets/dancer_female_body.png",
+      "export": [
+        156,
+        196
+      ],
+      "rect": [
+        -39,
+        -84,
+        78,
+        98
+      ],
+      "logical_size": [
+        78,
+        98
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 10,
+      "usage": "Upper dancer body: apply bob rotation",
+      "premultiplied": false
+    },
+    {
+      "id": "dancer_female_legs",
+      "file": "assets/dancer_female_legs.png",
+      "export": [
+        156,
+        196
+      ],
+      "rect": [
+        -39,
+        -84,
+        78,
+        98
+      ],
+      "logical_size": [
+        78,
+        98
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 11,
+      "usage": "Lower dancer legs: source rotate around (0,0); same canvas",
+      "premultiplied": false
+    },
+    {
+      "id": "prop_banknote",
+      "file": "assets/prop_banknote.png",
+      "export": [
+        68,
+        36
+      ],
+      "rect": [
+        -17,
+        -9,
+        34,
+        18
+      ],
+      "logical_size": [
+        34,
+        18
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 50,
+      "usage": "Blank banknote pool; rotate around center",
+      "premultiplied": false
+    },
+    {
+      "id": "prop_bulb",
+      "file": "assets/prop_bulb.png",
+      "export": [
+        52,
+        48
+      ],
+      "rect": [
+        -13,
+        -15,
+        26,
+        24
+      ],
+      "logical_size": [
+        26,
+        24
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 15,
+      "usage": "Bulb with cable; anchor near glass center",
+      "premultiplied": false
+    },
+    {
+      "id": "fx_strum",
+      "file": "assets/fx_strum.png",
+      "export": [
+        40,
+        108
+      ],
+      "rect": [
+        -10,
+        -27,
+        20,
+        54
+      ],
+      "logical_size": [
+        20,
+        54
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 34,
+      "usage": "Optional strum accent; translate to current strike",
+      "premultiplied": false
+    },
+    {
+      "id": "ui_control_normal",
+      "file": "assets/ui_control_normal.png",
+      "export": [
+        480,
+        88
+      ],
+      "rect": [
+        0,
+        0,
+        240,
+        44
+      ],
+      "logical_size": [
+        240,
+        44
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "normal",
+      "ui_family": "control",
+      "nine_slice": false,
+      "text_padding": [
+        34,
+        9,
+        34,
+        9
+      ]
+    },
+    {
+      "id": "ui_control_highlighted",
+      "file": "assets/ui_control_highlighted.png",
+      "export": [
+        480,
+        88
+      ],
+      "rect": [
+        0,
+        0,
+        240,
+        44
+      ],
+      "logical_size": [
+        240,
+        44
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "highlighted",
+      "ui_family": "control",
+      "nine_slice": false,
+      "text_padding": [
+        34,
+        9,
+        34,
+        9
+      ]
+    },
+    {
+      "id": "ui_control_pressed",
+      "file": "assets/ui_control_pressed.png",
+      "export": [
+        480,
+        88
+      ],
+      "rect": [
+        0,
+        0,
+        240,
+        44
+      ],
+      "logical_size": [
+        240,
+        44
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "pressed",
+      "ui_family": "control",
+      "nine_slice": false,
+      "text_padding": [
+        34,
+        9,
+        34,
+        9
+      ]
+    },
+    {
+      "id": "ui_control_selected",
+      "file": "assets/ui_control_selected.png",
+      "export": [
+        480,
+        88
+      ],
+      "rect": [
+        0,
+        0,
+        240,
+        44
+      ],
+      "logical_size": [
+        240,
+        44
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "selected",
+      "ui_family": "control",
+      "nine_slice": false,
+      "text_padding": [
+        34,
+        9,
+        34,
+        9
+      ]
+    },
+    {
+      "id": "ui_control_disabled",
+      "file": "assets/ui_control_disabled.png",
+      "export": [
+        480,
+        88
+      ],
+      "rect": [
+        0,
+        0,
+        240,
+        44
+      ],
+      "logical_size": [
+        240,
+        44
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "disabled",
+      "ui_family": "control",
+      "nine_slice": false,
+      "text_padding": [
+        34,
+        9,
+        34,
+        9
+      ]
+    },
+    {
+      "id": "ui_card_normal",
+      "file": "assets/ui_card_normal.png",
+      "export": [
+        640,
+        320
+      ],
+      "rect": [
+        0,
+        0,
+        320,
+        160
+      ],
+      "logical_size": [
+        320,
+        160
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "normal",
+      "ui_family": "card",
+      "nine_slice": false,
+      "text_padding": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "ui_card_highlighted",
+      "file": "assets/ui_card_highlighted.png",
+      "export": [
+        640,
+        320
+      ],
+      "rect": [
+        0,
+        0,
+        320,
+        160
+      ],
+      "logical_size": [
+        320,
+        160
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "highlighted",
+      "ui_family": "card",
+      "nine_slice": false,
+      "text_padding": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "ui_card_pressed",
+      "file": "assets/ui_card_pressed.png",
+      "export": [
+        640,
+        320
+      ],
+      "rect": [
+        0,
+        0,
+        320,
+        160
+      ],
+      "logical_size": [
+        320,
+        160
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "pressed",
+      "ui_family": "card",
+      "nine_slice": false,
+      "text_padding": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "ui_card_selected",
+      "file": "assets/ui_card_selected.png",
+      "export": [
+        640,
+        320
+      ],
+      "rect": [
+        0,
+        0,
+        320,
+        160
+      ],
+      "logical_size": [
+        320,
+        160
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "selected",
+      "ui_family": "card",
+      "nine_slice": false,
+      "text_padding": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "ui_card_disabled",
+      "file": "assets/ui_card_disabled.png",
+      "export": [
+        640,
+        320
+      ],
+      "rect": [
+        0,
+        0,
+        320,
+        160
+      ],
+      "logical_size": [
+        320,
+        160
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "disabled",
+      "ui_family": "card",
+      "nine_slice": false,
+      "text_padding": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "ui_panel_normal",
+      "file": "assets/ui_panel_normal.png",
+      "export": [
+        1600,
+        800
+      ],
+      "rect": [
+        0,
+        0,
+        800,
+        400
+      ],
+      "logical_size": [
+        800,
+        400
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 100,
+      "usage": "Shared master: exact alpha and texture registration across states",
+      "premultiplied": false,
+      "state": "normal",
+      "ui_family": "panel",
+      "nine_slice": false,
+      "text_padding": [
+        26,
+        20,
+        26,
+        20
+      ]
+    },
+    {
+      "id": "note_diamond_normal",
+      "file": "assets/note_diamond_normal.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=normal",
+      "premultiplied": false,
+      "grade": "normal",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_open_normal",
+      "file": "assets/note_open_normal.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=normal",
+      "premultiplied": false,
+      "grade": "normal",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_grace_normal",
+      "file": "assets/note_grace_normal.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=normal",
+      "premultiplied": false,
+      "grade": "normal",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_pointer_normal",
+      "file": "assets/note_pointer_normal.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=normal",
+      "premultiplied": false,
+      "grade": "normal",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_diamond_clean",
+      "file": "assets/note_diamond_clean.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=clean",
+      "premultiplied": false,
+      "grade": "clean",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_open_clean",
+      "file": "assets/note_open_clean.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=clean",
+      "premultiplied": false,
+      "grade": "clean",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_grace_clean",
+      "file": "assets/note_grace_clean.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=clean",
+      "premultiplied": false,
+      "grade": "clean",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_pointer_clean",
+      "file": "assets/note_pointer_clean.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=clean",
+      "premultiplied": false,
+      "grade": "clean",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_diamond_near",
+      "file": "assets/note_diamond_near.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=near",
+      "premultiplied": false,
+      "grade": "near",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_open_near",
+      "file": "assets/note_open_near.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=near",
+      "premultiplied": false,
+      "grade": "near",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_grace_near",
+      "file": "assets/note_grace_near.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=near",
+      "premultiplied": false,
+      "grade": "near",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_pointer_near",
+      "file": "assets/note_pointer_near.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=near",
+      "premultiplied": false,
+      "grade": "near",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_diamond_miss",
+      "file": "assets/note_diamond_miss.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=miss",
+      "premultiplied": false,
+      "grade": "miss",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_open_miss",
+      "file": "assets/note_open_miss.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=miss",
+      "premultiplied": false,
+      "grade": "miss",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_grace_miss",
+      "file": "assets/note_grace_miss.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=miss",
+      "premultiplied": false,
+      "grade": "miss",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "note_pointer_miss",
+      "file": "assets/note_pointer_miss.png",
+      "export": [
+        40,
+        40
+      ],
+      "rect": [
+        -10,
+        -10,
+        20,
+        20
+      ],
+      "logical_size": [
+        20,
+        20
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 60,
+      "usage": "Precise marker; geometry from drawStaff, grade=miss",
+      "premultiplied": false,
+      "grade": "miss",
+      "coordinate_space": "staff",
+      "geometry": "source-derived"
+    },
+    {
+      "id": "fx_timing_line",
+      "file": "assets/fx_timing_line.png",
+      "export": [
+        16,
+        208
+      ],
+      "rect": [
+        -4,
+        -52,
+        8,
+        104
+      ],
+      "logical_size": [
+        8,
+        104
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 61,
+      "usage": "Optional decorative timing-line glow",
+      "premultiplied": false
+    },
+    {
+      "id": "fx_halo",
+      "file": "assets/fx_halo.png",
+      "export": [
+        80,
+        80
+      ],
+      "rect": [
+        -20,
+        -20,
+        40,
+        40
+      ],
+      "logical_size": [
+        40,
+        40
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 14,
+      "usage": "Lamp/performance halo",
+      "premultiplied": false
+    },
+    {
+      "id": "fx_haze",
+      "file": "assets/fx_haze.png",
+      "export": [
+        512,
+        256
+      ],
+      "rect": [
+        -128,
+        -64,
+        256,
+        128
+      ],
+      "logical_size": [
+        256,
+        128
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "layer": 54,
+      "usage": "Atmospheric alpha texture, opacity driven by source",
+      "premultiplied": false
+    },
+    {
+      "0": 0,
+      "1": 0,
+      "id": "fx_beam",
+      "file": "assets/fx_beam.png",
+      "export": [
+        256,
+        512
+      ],
+      "rect": [
+        -64,
+        -128,
+        128,
+        256
+      ],
+      "logical_size": [
+        128,
+        256
+      ],
+      "pivot": [
+        0,
+        -128
+      ],
+      "layer": 53,
+      "usage": "Light beam; pivot top center",
+      "premultiplied": false
+    }
+  ]
+}
