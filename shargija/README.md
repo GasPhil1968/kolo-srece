@@ -29,6 +29,12 @@ werden `environment_full`, `dancer_female`, `dancer_male`, `fx_*`, `instrument_p
   weniger. Regler in `SOUND` (`buzz`, `bend`, `glide`, `trem`; 0 = aus, 1 = abgestimmt); mit `#dev`
   im Browser über `SARGIJA.SOUND` live änderbar.
 
+- Lieder: die Zeilen schließen ohne die frühere Pause von 1,6 Schlägen (und 2,2 zwischen den Runden)
+  im Takt aneinander an. Krajiško kolo (230 → 192 ms) und Brzo kolo (220 → 183 ms) sind getanzte Lieder
+  (`dance`, `accel`): sie ziehen über das Stück gleichmäßig an; in der Demo füllen leichte Schläge die
+  Pausen. Taktraster, Tänzer und Scheinwerfer folgen dem aktuellen Tempo (`beatAt`); zum Sevdah wiegen
+  die Tänzer nur.
+
 Prüfung: `node tools/shargija-check.js <ausgabeordner> [BxH]` öffnet das Spiel in Chromium,
 besucht alle Menüs, startet ein Lied und meldet Fehler und fehlende Bilder.
 
