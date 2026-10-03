@@ -20,19 +20,19 @@
 <meta property="og:title" content="ŠARGIJA — Žica i trzalica">
 <meta property="og:description" content="Šargija na ekranu: prag lijevo, trzalica desno. Sevdalinke, izvorne pjesme i krajiško kolo — bez instalacije, odmah u pregledniku.">
 <meta property="og:url" content="https://shargija.netlify.app/">
-<meta property="og:image" content="https://shargija.netlify.app/preview.jpg?v=2">
-<meta property="og:image:secure_url" content="https://shargija.netlify.app/preview.jpg?v=2">
+<meta property="og:image" content="https://shargija.netlify.app/preview.jpg?v=3">
+<meta property="og:image:secure_url" content="https://shargija.netlify.app/preview.jpg?v=3">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Svirač šargije pred kolom na seoskoj pozornici, pod mjesečinom i lampionima">
+<meta property="og:image:alt" content="Šargija pred kolom na seoskoj pozornici, pod mjesečinom i lampionima">
 <meta property="og:locale" content="sr_BA">
 <meta property="og:locale:alternate" content="de_DE">
 <meta property="og:locale:alternate" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ŠARGIJA — Žica i trzalica">
 <meta name="twitter:description" content="Prag lijevo, trzalica desno. Sevdalinke, izvorne pjesme i krajiško kolo.">
-<meta name="twitter:image" content="https://shargija.netlify.app/preview.jpg?v=2">
+<meta name="twitter:image" content="https://shargija.netlify.app/preview.jpg?v=3">
 <style>
   :root{
     color-scheme:dark;
@@ -291,6 +291,21 @@
   .chip[aria-pressed="true"]{border-color:var(--ember);background:rgba(212,58,42,.1);color:var(--ember)}
   .chip[aria-pressed="true"] .cn{color:var(--cream)}
   .chip[disabled]{opacity:.26;cursor:default}
+  /* Einstellungen: groß genug, um sie am Telefon ohne Lupe zu lesen.     */
+  .setup .eyebrow{font-size:12px;letter-spacing:.22em;color:rgba(244,234,214,.72);margin:0 0 7px}
+  .setup .row{gap:8px;margin-bottom:14px}
+  .setup .chip{padding:10px 6px 9px;font-size:11px;letter-spacing:.06em;line-height:1.35;
+    color:rgba(244,234,214,.78)}
+  .setup .chip .cn{font-size:17px;margin-bottom:4px;transform:none;color:#F7EDD5}
+  .setup .chip[disabled]{opacity:.5}
+  .setup .howto{font-size:12.5px;color:rgba(244,234,214,.66)!important}
+  .setup .big{font-size:12.5px;padding:12px}
+  .setup{flex:0 0 auto!important;min-height:auto!important}
+  @media (max-height:420px){
+    .setup .chip{padding:7px 5px 6px;font-size:10.5px} .setup .chip .cn{font-size:15px;margin-bottom:2px}
+    .setup .row{margin-bottom:10px} .setup .eyebrow{margin-bottom:5px}
+    .setup .howto{font-size:11px;margin-bottom:4px!important} .setup .big{padding:8px;font-size:11px;margin-top:6px}
+  }
   .big{display:block;width:100%;margin-top:8px;padding:10px;background:rgba(212,58,42,.12);
     border:1px solid var(--ember);color:var(--cream);font-family:var(--cond);
     font-size:10.5px;font-weight:700;letter-spacing:.3em;cursor:pointer;border-radius:1px}
@@ -965,7 +980,7 @@ en:{
  silent:"If it stays quiet: turn off the silent switch on your iPhone."
 }};
 const LANGS=["de","sr","en"];
-const LANGNAME={de:"DEUTSCH", sr:"SRPSKI", en:"ENGLISH"};
+const LANGNAME={de:"DEUTSCH", sr:"BKS", en:"ENGLISH"};
 let LANG="de";
 function detectLang(){
   let l="";
@@ -4073,12 +4088,12 @@ function scrHowto(){
 
 function scrSetup(){
   let h=shead(TR("mSet"),"");
-  h+='<div class="cols"><div>';
+  h+='<div class="cols setup"><div>';
   h+='<p class="eyebrow">'+TR("setDiff")+'</p><div class="row" id="lvlRow"></div>';
   h+='<p class="eyebrow">'+TR("setInst")+'</p><div class="row" id="instRow"></div>';
   h+='<p class="eyebrow">'+TR("setTone")+'</p><div class="row" id="toneRow"></div>';
-  h+='<p class="eyebrow">'+TR("setLang")+'</p><div class="row" id="langRow"></div>';
   h+='</div><div>';
+  h+='<p class="eyebrow">'+TR("setLang")+'</p><div class="row" id="langRow"></div>';
   h+='<p class="eyebrow">'+TR("setFx")+'</p><div class="row" id="gfxRow"></div>';
   h+='<p class="howto" style="color:rgba(244,234,214,.38);margin-bottom:6px">'+
      TR("fxNote")+'</p>';
@@ -4093,7 +4108,7 @@ function scrSetup(){
   LEVELS.forEach(function(L,i){
     const b=document.createElement("button");
     b.className="chip"; b.setAttribute("aria-pressed",i===S.level);
-    b.innerHTML='<span class="cn">'+TR("lvlName"+i)+'</span>'+TR("lvl"+i)+'<br>±'+L.cleanMs+' ms · BEĆAR '+L.soloAt;
+    b.innerHTML='<span class="cn">'+TR("lvlName"+i)+'</span>'+TR("lvl"+i)+' · ±'+L.cleanMs+' ms';
     b.onclick=function(){ S.level=i; prefsSave(); scrSetup(); };
     lr.appendChild(b);
   });
@@ -4411,7 +4426,8 @@ document.addEventListener("visibilitychange",function(){
     const im=art('instrument_neck_'+kind(),L,-10,-30,428,60);L.insertBefore(im,L.firstChild);
   };
   buildHead=function(){const L=document.getElementById('headLayer');L.innerHTML='';art('instrument_head_'+INST().pegs+'_'+kind(),L,-138,-60,138,120);};
-  buildPlayer=function(){const L=document.getElementById('playerLayer');L.innerHTML='';art('player',L,616,10,294,410);};
+  /* Kein Musiker hinter dem Instrument: die Hände tragen ihre Ärmel selbst. */
+  buildPlayer=function(){document.getElementById('playerLayer').innerHTML='';};
   buildFretHand=function(){const L=document.getElementById('fretHand');L.innerHTML='';art('hand_fret',L,-163.2,-64.8,245.76,163.84);};
   buildPickHand=function(){const L=document.getElementById('pickHand');L.innerHTML='';pickTip=art('hand_pick',L,529.6,-2.8,245.76,163.84);};
   buildScene=function(){
@@ -4450,6 +4466,13 @@ document.addEventListener("visibilitychange",function(){
       background-size:100% 100%;background-repeat:no-repeat;background-position:center}
     .card{padding-left:14px}
     #rotate{background:#1b2640}
+    /* Einstellungen ohne Ornament: ruhige Fläche, klarer Rand, lesbarer Text */
+    .setup .row button,.setup .row button:hover,.setup .row button:active{background:#1b2640;border:1px solid rgba(156,170,133,.6)}
+    .setup .row button:hover{background:#26324f}
+    .setup .row button[aria-pressed="true"]{background:#503B58;border:2px solid #F6D690}
+    .setup .row button:disabled{background:#1b2640}
+    .setup button.big,.setup button.big:hover,.setup button.big:active{background:#1b2640;border:1px solid #F6D690;color:#F7EDD5}
+    .setup button.big:hover{background:#26324f}
     /* Kartenraster nie unter seinen Inhalt druecken: fitVeil() skaliert dann korrekt. */
     #veilInner{justify-content:safe center} #veilInner .cards{flex-shrink:0;min-height:auto}
     .card .crow button.p{border:0;background-image:url(assets/ui_control_normal.png);color:#253451}

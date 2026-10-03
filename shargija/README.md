@@ -35,6 +35,10 @@ werden `environment_full`, `dancer_female`, `dancer_male`, `fx_*`, `instrument_p
   Pausen. Taktraster, Tänzer und Scheinwerfer folgen dem aktuellen Tempo (`beatAt`); zum Sevdah wiegen
   die Tänzer nur.
 
+- Kein Musiker hinter dem Instrument (`buildPlayer` bleibt leer, die Hände tragen ihre Ärmel selbst);
+  Sprache heißt „BKS“ statt „SRPSKI“; Einstellungen mit größerer Schrift, schlichten, kontrastreichen
+  Chips und Sprache in der rechten Spalte.
+
 Prüfung: `node tools/shargija-check.js <ausgabeordner> [BxH]` öffnet das Spiel in Chromium,
 besucht alle Menüs, startet ein Lied und meldet Fehler und fehlende Bilder.
 
