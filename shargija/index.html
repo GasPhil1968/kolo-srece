@@ -20,8 +20,8 @@
 <meta property="og:title" content="ŠARGIJA — Žica i trzalica">
 <meta property="og:description" content="Šargija na ekranu: prag lijevo, trzalica desno. Sevdalinke, izvorne pjesme i krajiško kolo — bez instalacije, odmah u pregledniku.">
 <meta property="og:url" content="https://shargija.netlify.app/">
-<meta property="og:image" content="https://shargija.netlify.app/preview.jpg?v=4">
-<meta property="og:image:secure_url" content="https://shargija.netlify.app/preview.jpg?v=4">
+<meta property="og:image" content="https://shargija.netlify.app/preview.jpg?v=5">
+<meta property="og:image:secure_url" content="https://shargija.netlify.app/preview.jpg?v=5">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -32,7 +32,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ŠARGIJA — Žica i trzalica">
 <meta name="twitter:description" content="Prag lijevo, trzalica desno. Sevdalinke, izvorne pjesme i krajiško kolo.">
-<meta name="twitter:image" content="https://shargija.netlify.app/preview.jpg?v=4">
+<meta name="twitter:image" content="https://shargija.netlify.app/preview.jpg?v=5">
 <style>
   :root{
     color-scheme:dark;
@@ -291,21 +291,17 @@
   .chip[aria-pressed="true"]{border-color:var(--ember);background:rgba(212,58,42,.1);color:var(--ember)}
   .chip[aria-pressed="true"] .cn{color:var(--cream)}
   .chip[disabled]{opacity:.26;cursor:default}
-  /* Einstellungen: groß genug, um sie am Telefon ohne Lupe zu lesen.     */
-  .setup .eyebrow{font-size:12px;letter-spacing:.22em;color:rgba(244,234,214,.72);margin:0 0 7px}
-  .setup .row{gap:8px;margin-bottom:14px}
-  .setup .chip{padding:10px 6px 9px;font-size:11px;letter-spacing:.06em;line-height:1.35;
-    color:rgba(244,234,214,.78)}
-  .setup .chip .cn{font-size:17px;margin-bottom:4px;transform:none;color:#F7EDD5}
-  .setup .chip[disabled]{opacity:.5}
-  .setup .howto{font-size:12.5px;color:rgba(244,234,214,.66)!important}
-  .setup .big{font-size:12.5px;padding:12px}
-  .setup{flex:0 0 auto!important;min-height:auto!important}
-  @media (max-height:420px){
-    .setup .chip{padding:7px 5px 6px;font-size:10.5px} .setup .chip .cn{font-size:15px;margin-bottom:2px}
-    .setup .row{margin-bottom:10px} .setup .eyebrow{margin-bottom:5px}
-    .setup .howto{font-size:11px;margin-bottom:4px!important} .setup .big{padding:8px;font-size:11px;margin-top:6px}
-  }
+  /* Einstellungen: groß genug, um sie am Telefon ohne Lupe zu lesen —
+     auch quer auf dem iPhone, ohne dass fitVeil() verkleinern muss.      */
+  .setup{flex:0 0 auto!important;min-height:auto!important;gap:22px!important}
+  .setup .eyebrow{font-size:14px;font-weight:700;letter-spacing:.16em;color:rgba(244,234,214,.8);margin:0 0 6px}
+  .setup .row{gap:8px;margin-bottom:12px}
+  .setup .chip{padding:8px 5px 8px;font-size:13.5px;letter-spacing:.02em;line-height:1.25;
+    color:rgba(244,234,214,.85)}
+  .setup .chip .cn{font-size:20px;line-height:1.15;margin-bottom:3px;transform:none;color:#F7EDD5}
+  .setup .chip[disabled]{opacity:.55}
+  .setup .acts{display:flex;gap:8px;margin-top:4px}
+  .setup .acts .big{flex:1;margin:0;font-size:14px;letter-spacing:.12em;padding:12px 6px;line-height:1.25}
   .big{display:block;width:100%;margin-top:8px;padding:10px;background:rgba(212,58,42,.12);
     border:1px solid var(--ember);color:var(--cream);font-family:var(--cond);
     font-size:10.5px;font-weight:700;letter-spacing:.3em;cursor:pointer;border-radius:1px}
@@ -495,6 +491,7 @@
             <g id="playerLayer"></g>
             <g id="local">
               <g id="bodyLayer"></g>
+              <g id="fretHandBack" opacity="0"></g>
               <g id="neckLayer"></g>
               <g id="headLayer"></g>
               <g id="stringLayer"></g>
@@ -796,14 +793,14 @@ de:{
  setDiff:"SCHWIERIGKEIT", setInst:"INSTRUMENT", setFx:"EFFEKTE", setLang:"SPRACHE",
  setTone:"KLANGFARBE",
  tn0:"WARM", tn1:"WIE AM TISCH", tn2:"HELL",
- td0:"ältere Saiten, trockener Raum", td1:"so ist es gedacht",
- td2:"frisch bezogen, große Bühne",
+ td0:"alte Saiten", td1:"wie gedacht",
+ td2:"neue Saiten",
  lvl0:"weit", lvl1:"genau", lvl2:"nach Ohr",
  inst0:"Javor · hell", inst1:"Dud · voller", inst2:"Orah · tief",
  fx0:"AUTO", fx0d:"passt sich an", fx1:"VOLL", fx1d:"alles an",
  fx2:"SPARSAM", fx2d:"ruhiger",
  fxNote:"AUTO senkt die Effekte selbst, wenn die Bildrate einbricht. SPARSAM schaltet Spiegelbilder und Weichzeichner dauerhaft ab.",
- btnIntro:"INTRO NOCH EINMAL", btnBecar:"BEĆAR ANSEHEN — 14 SEKUNDEN",
+ btnIntro:"INTRO NOCH EINMAL", btnBecar:"BEĆAR ANSEHEN",
  resAgain:"NOCH EINMAL", perfect:"PERFEKT — KEIN FEHLER",
  btnRepeatSong:"LIED WIEDERHOLEN", btnRepeatVerse:"STROPHE %1 WIEDERHOLEN",
  btnWhole:"GANZES LIED", btnOther:"ANDERES LIED",
@@ -865,14 +862,14 @@ sr:{
  setDiff:"TEŽINA", setInst:"INSTRUMENT", setFx:"EFEKTI", setLang:"JEZIK",
  setTone:"BOJA TONA",
  tn0:"TOPLO", tn1:"KAO ZA SOFROM", tn2:"SVIJETLO",
- td0:"starije žice, suha soba", td1:"onako kako treba",
- td2:"nove žice, velika bina",
+ td0:"stare žice", td1:"kako treba",
+ td2:"nove žice",
  lvl0:"široko", lvl1:"tačno", lvl2:"po sluhu",
  inst0:"Javor · svijetlo", inst1:"Dud · punije", inst2:"Orah · duboko",
  fx0:"AUTO", fx0d:"sam se prilagodi", fx1:"PUNO", fx1d:"sve uključeno",
  fx2:"ŠTEDLJIVO", fx2d:"mirnije",
  fxNote:"AUTO sam spušta efekte kad slika zapne. ŠTEDLJIVO trajno gasi odsjaje i zamućenje.",
- btnIntro:"INTRO PONOVO", btnBecar:"POGLEDAJ BEĆAR — 14 SEKUNDI",
+ btnIntro:"INTRO PONOVO", btnBecar:"POGLEDAJ BEĆAR",
  resAgain:"JOŠ JEDNOM", perfect:"SAVRŠENO — BEZ GREŠKE",
  btnRepeatSong:"PONOVI PJESMU", btnRepeatVerse:"PONOVI KITICU %1",
  btnWhole:"CIJELA PJESMA", btnOther:"DRUGA PJESMA",
@@ -935,14 +932,14 @@ en:{
  setDiff:"DIFFICULTY", setInst:"INSTRUMENT", setFx:"EFFECTS", setLang:"LANGUAGE",
  setTone:"TONE COLOUR",
  tn0:"WARM", tn1:"AS INTENDED", tn2:"BRIGHT",
- td0:"older strings, dry room", td1:"the way it is meant",
- td2:"fresh strings, big stage",
+ td0:"old strings", td1:"as meant",
+ td2:"new strings",
  lvl0:"wide", lvl1:"tight", lvl2:"by ear",
  inst0:"Maple · bright", inst1:"Mulberry · fuller", inst2:"Walnut · deep",
  fx0:"AUTO", fx0d:"adapts itself", fx1:"FULL", fx1d:"everything on",
  fx2:"THRIFTY", fx2d:"quieter",
  fxNote:"AUTO lowers the effects on its own when the frame rate drops. THRIFTY turns off the mirrored doubles and the blur for good.",
- btnIntro:"PLAY THE INTRO AGAIN", btnBecar:"WATCH BEĆAR — 14 SECONDS",
+ btnIntro:"INTRO AGAIN", btnBecar:"WATCH BEĆAR",
  resAgain:"ONCE MORE", perfect:"PERFECT — NOT ONE MISS",
  btnRepeatSong:"PLAY THE SONG AGAIN", btnRepeatVerse:"PLAY VERSE %1 AGAIN",
  btnWhole:"THE WHOLE SONG", btnOther:"ANOTHER SONG",
@@ -3477,6 +3474,7 @@ stopBtn.addEventListener("pointerdown",function(e){
 
 /* ═══════════ Schleife ═══════════ */
 const strumFx=document.getElementById("strumFx");
+const fretHandBackG=document.getElementById("fretHandBack");
 const fretHandG=document.getElementById("fretHand"),
       pickHandG=document.getElementById("pickHand"),
       camG=document.getElementById("cam"),
@@ -3685,8 +3683,12 @@ function loop(t){
   { const i=Math.max(0,Math.min(FX.length-1,Math.floor(S.visFret)));
     const j=Math.min(FX.length-1,i+1);
     hx=FX[i]+(FX[j]-FX[i])*(S.visFret-i); }
-  sattr(fretHandG,"transform","translate("+hx.toFixed(1)+",0)");
-  sattr(fretHandG,"opacity",S.holding?"1":(S.visFret>.06?".5":"0"));
+  const handTransform="translate("+hx.toFixed(1)+",0)";
+  const handOpacity=S.holding?"1":(S.visFret>.06?".5":"0");
+  for(const handLayer of [fretHandBackG,fretHandG]){
+    sattr(handLayer,"transform",handTransform);
+    sattr(handLayer,"opacity",handOpacity);
+  }
   sattr(pickHandG,"transform","translate(0,"+S.pickY.toFixed(1)+")");
 
   /* Die Trzalica hinterlässt einen kurzen Streifen über den Saiten —
@@ -4094,12 +4096,9 @@ function scrSetup(){
   h+='<p class="eyebrow">'+TR("setTone")+'</p><div class="row" id="toneRow"></div>';
   h+='</div><div>';
   h+='<p class="eyebrow">'+TR("setLang")+'</p><div class="row" id="langRow"></div>';
-  h+='<p class="eyebrow">'+TR("setFx")+'</p><div class="row" id="gfxRow"></div>';
-  h+='<p class="howto" style="color:rgba(244,234,214,.38);margin-bottom:6px">'+
-     TR("fxNote")+'</p>';
-  h+='<button class="big q" id="introBtn">'+TR("btnIntro")+'</button>';
-  h+='<button class="big q" id="soloBtn" style="border-color:rgba(240,168,60,.6);color:var(--amber)">'+
-     TR("btnBecar")+'</button>';
+  h+='<p class="eyebrow">'+TR("setFx")+'</p><div class="row" id="gfxRow" title="'+TR("fxNote")+'"></div>';
+  h+='<div class="acts"><button class="big q" id="introBtn">'+TR("btnIntro")+'</button>';
+  h+='<button class="big q" id="soloBtn" style="color:var(--amber)">'+TR("btnBecar")+'</button></div>';
   h+='</div></div>';
   inner.innerHTML=h;
   wireBack("main");
@@ -4428,7 +4427,14 @@ document.addEventListener("visibilitychange",function(){
   buildHead=function(){const L=document.getElementById('headLayer');L.innerHTML='';art('instrument_head_'+INST().pegs+'_'+kind(),L,-138,-60,138,120);};
   /* Kein Musiker hinter dem Instrument: die Hände tragen ihre Ärmel selbst. */
   buildPlayer=function(){document.getElementById('playerLayer').innerHTML='';};
-  buildFretHand=function(){const L=document.getElementById('fretHand');L.innerHTML='';art('hand_fret',L,-163.2,-56.8,245.76,163.84);};
+  /* Greifhand in zwei Lagen: Handfläche und Daumen hinter dem Hals,
+     die Finger davor — so umgreift die Hand den Hals wirklich.         */
+  buildFretHand=function(){
+    for(const [id,part] of [['fretHandBack','back'],['fretHand','front']]){
+      const L=document.getElementById(id);L.innerHTML='';
+      art('hand_fret_'+part,L,-163.2,-64.8,245.76,163.84);
+    }
+  };
   buildPickHand=function(){const L=document.getElementById('pickHand');L.innerHTML='';pickTip=art('hand_pick',L,529.6,-2.8,245.76,163.84);};
   buildScene=function(){
     originalScene();
@@ -4465,6 +4471,8 @@ document.addEventListener("visibilitychange",function(){
     .card,.row button,.card .crow button,.chip,button.big,button.quiet,button.p,button.d,button.ghost,button.back{
       background-size:100% 100%;background-repeat:no-repeat;background-position:center}
     .card{padding-left:14px}
+    /* ZURÜCK/MENÜ gut treffbar und lesbar */
+    button.back{font-size:12.5px!important;letter-spacing:.16em!important;padding:9px 18px!important;min-height:36px}
     #rotate{background:#1b2640}
     /* Einstellungen ohne Ornament: ruhige Fläche, klarer Rand, lesbarer Text */
     .setup .row button,.setup .row button:hover,.setup .row button:active{background:#1b2640;border:1px solid rgba(156,170,133,.6)}

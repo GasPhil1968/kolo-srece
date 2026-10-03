@@ -39,6 +39,9 @@ werden `environment_full`, `dancer_female`, `dancer_male`, `fx_*`, `instrument_p
   Sprache heißt „BKS“ statt „SRPSKI“; Einstellungen mit größerer Schrift, schlichten, kontrastreichen
   Chips und Sprache in der rechten Spalte.
 
+- Greifhand in zwei Lagen (`hand_fret_back` hinter dem Hals, `hand_fret_front` davor), Einstellungen
+  mit 20-px-Namen und 13–14-px-Untertiteln, Intro/Bećar nebeneinander, größerer ZURÜCK-Knopf.
+
 Prüfung: `node tools/shargija-check.js <ausgabeordner> [BxH]` öffnet das Spiel in Chromium,
 besucht alle Menüs, startet ein Lied und meldet Fehler und fehlende Bilder.
 

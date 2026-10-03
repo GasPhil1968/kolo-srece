@@ -575,12 +575,12 @@
    "id": "hand_fret",
    "file": "assets/hand_fret.png",
    "export": [
-    738,
-    492
+    492,
+    328
    ],
    "rect": [
     -163.2,
-    -56.8,
+    -64.8,
     245.76,
     163.84
    ],
@@ -596,7 +596,7 @@
    "usage": "Single continuous-transform pose; no arbitrary animation frames",
    "premultiplied": false,
    "coordinate_space": "instrument-local",
-   "note": "neue Greifhand (Daumen oben am Hals), 3-fache Pixeldichte"
+   "note": "Gesamtbild; im Spiel werden hand_fret_back (hinter dem Hals) und hand_fret_front (davor) verwendet"
   },
   {
    "id": "hand_pick",
@@ -1798,6 +1798,54 @@
    "layer": 53,
    "usage": "Light beam; pivot top center",
    "premultiplied": false
+  },
+  {
+   "id": "hand_fret_back",
+   "file": "assets/hand_fret_back.png",
+   "export": [
+    492,
+    328
+   ],
+   "rect": [
+    -163.2,
+    -64.8,
+    245.76,
+    163.84
+   ],
+   "logical_size": [
+    245.76,
+    163.84
+   ],
+   "pivot": [
+    0,
+    0
+   ],
+   "layer": 31,
+   "usage": "Greifhand, Handfläche und Daumen hinter dem Hals"
+  },
+  {
+   "id": "hand_fret_front",
+   "file": "assets/hand_fret_front.png",
+   "export": [
+    492,
+    328
+   ],
+   "rect": [
+    -163.2,
+    -64.8,
+    245.76,
+    163.84
+   ],
+   "logical_size": [
+    245.76,
+    163.84
+   ],
+   "pivot": [
+    0,
+    0
+   ],
+   "layer": 60,
+   "usage": "Greifhand, Finger vor dem Hals"
   }
  ]
 }
