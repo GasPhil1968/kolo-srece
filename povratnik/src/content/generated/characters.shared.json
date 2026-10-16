@@ -1,0 +1,2494 @@
+{
+ "alessandro": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 207
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/alessandro",
+  "frames": {
+   "stand_0": {
+    "ax": 0.47253,
+    "ay": 1.0,
+    "h": 207,
+    "w": 91
+   },
+   "walk_0": {
+    "ax": 0.43956,
+    "ay": 1.0,
+    "h": 178,
+    "w": 91
+   },
+   "walk_1": {
+    "ax": 0.44565,
+    "ay": 1.0,
+    "h": 178,
+    "w": 92
+   },
+   "walk_2": {
+    "ax": 0.46154,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_3": {
+    "ax": 0.47619,
+    "ay": 1.0,
+    "h": 178,
+    "w": 63
+   },
+   "walk_4": {
+    "ax": 0.46237,
+    "ay": 1.0,
+    "h": 178,
+    "w": 93
+   },
+   "walk_5": {
+    "ax": 0.45556,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_6": {
+    "ax": 0.49275,
+    "ay": 1.0,
+    "h": 178,
+    "w": 69
+   },
+   "walk_7": {
+    "ax": 0.47312,
+    "ay": 1.0,
+    "h": 178,
+    "w": 93
+   }
+  },
+  "source": {
+   "stand": "sprites/char_02.webp row 3 col 0",
+   "walk": "sprites/walk_02.webp row 3"
+  },
+  "walkSpeed": 150
+ },
+ "andja": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 194
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/andja",
+  "frames": {
+   "stand_0": {
+    "ax": 0.4875,
+    "ay": 1.0,
+    "h": 194,
+    "w": 80
+   },
+   "walk_0": {
+    "ax": 0.42708,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_1": {
+    "ax": 0.42105,
+    "ay": 1.0,
+    "h": 178,
+    "w": 95
+   },
+   "walk_2": {
+    "ax": 0.43519,
+    "ay": 1.0,
+    "h": 178,
+    "w": 108
+   },
+   "walk_3": {
+    "ax": 0.48454,
+    "ay": 1.0,
+    "h": 178,
+    "w": 97
+   },
+   "walk_4": {
+    "ax": 0.45455,
+    "ay": 1.0,
+    "h": 178,
+    "w": 99
+   },
+   "walk_5": {
+    "ax": 0.47826,
+    "ay": 1.0,
+    "h": 178,
+    "w": 69
+   },
+   "walk_6": {
+    "ax": 0.49351,
+    "ay": 1.0,
+    "h": 178,
+    "w": 77
+   },
+   "walk_7": {
+    "ax": 0.47368,
+    "ay": 1.0,
+    "h": 178,
+    "w": 76
+   }
+  },
+  "source": {
+   "stand": "sprites/char_03.webp row 3 col 0",
+   "walk": "sprites/walk_03.webp row 3"
+  },
+  "walkSpeed": 150
+ },
+ "bauer": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 198
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/bauer",
+  "frames": {
+   "stand_0": {
+    "ax": 0.45833,
+    "ay": 1.0,
+    "h": 198,
+    "w": 96
+   },
+   "walk_0": {
+    "ax": 0.46316,
+    "ay": 1.0,
+    "h": 178,
+    "w": 95
+   },
+   "walk_1": {
+    "ax": 0.44792,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_2": {
+    "ax": 0.49474,
+    "ay": 1.0,
+    "h": 178,
+    "w": 95
+   },
+   "walk_3": {
+    "ax": 0.46835,
+    "ay": 1.0,
+    "h": 178,
+    "w": 79
+   },
+   "walk_4": {
+    "ax": 0.44444,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_5": {
+    "ax": 0.52874,
+    "ay": 1.0,
+    "h": 178,
+    "w": 87
+   },
+   "walk_6": {
+    "ax": 0.45122,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_7": {
+    "ax": 0.49367,
+    "ay": 1.0,
+    "h": 178,
+    "w": 79
+   }
+  },
+  "source": {
+   "stand": "sprites/char_06.webp row 1 col 0",
+   "walk": "sprites/walk_06.webp row 1"
+  },
+  "walkSpeed": 150
+ },
+ "braut": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 203
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/braut",
+  "frames": {
+   "stand_0": {
+    "ax": 0.4875,
+    "ay": 1.0,
+    "h": 203,
+    "w": 80
+   },
+   "walk_0": {
+    "ax": 0.54545,
+    "ay": 1.0,
+    "h": 178,
+    "w": 99
+   },
+   "walk_1": {
+    "ax": 0.50962,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_2": {
+    "ax": 0.51042,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_3": {
+    "ax": 0.47727,
+    "ay": 1.0,
+    "h": 178,
+    "w": 88
+   },
+   "walk_4": {
+    "ax": 0.51042,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_5": {
+    "ax": 0.53608,
+    "ay": 1.0,
+    "h": 178,
+    "w": 97
+   },
+   "walk_6": {
+    "ax": 0.5,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_7": {
+    "ax": 0.43333,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   }
+  },
+  "source": {
+   "stand": "sprites/char_07.webp row 1 col 0",
+   "walk": "sprites/walk_07.webp row 1"
+  },
+  "walkSpeed": 150
+ },
+ "dorfalter": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 196
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/dorfalter",
+  "frames": {
+   "stand_0": {
+    "ax": 0.44776,
+    "ay": 1.0,
+    "h": 196,
+    "w": 67
+   },
+   "walk_0": {
+    "ax": 0.53012,
+    "ay": 1.0,
+    "h": 178,
+    "w": 83
+   },
+   "walk_1": {
+    "ax": 0.53261,
+    "ay": 1.0,
+    "h": 178,
+    "w": 92
+   },
+   "walk_2": {
+    "ax": 0.57317,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_3": {
+    "ax": 0.52439,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_4": {
+    "ax": 0.51316,
+    "ay": 1.0,
+    "h": 178,
+    "w": 76
+   },
+   "walk_5": {
+    "ax": 0.57317,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_6": {
+    "ax": 0.53571,
+    "ay": 1.0,
+    "h": 178,
+    "w": 84
+   },
+   "walk_7": {
+    "ax": 0.49315,
+    "ay": 1.0,
+    "h": 178,
+    "w": 73
+   }
+  },
+  "source": {
+   "stand": "sprites/char_07.webp row 3 col 0",
+   "walk": "sprites/walk_07.webp row 3"
+  },
+  "walkSpeed": 150
+ },
+ "emin": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 198
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/emin",
+  "frames": {
+   "stand_0": {
+    "ax": 0.47436,
+    "ay": 1.0,
+    "h": 198,
+    "w": 78
+   },
+   "walk_0": {
+    "ax": 0.44792,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_1": {
+    "ax": 0.4375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_2": {
+    "ax": 0.46078,
+    "ay": 1.0,
+    "h": 178,
+    "w": 102
+   },
+   "walk_3": {
+    "ax": 0.48454,
+    "ay": 1.0,
+    "h": 178,
+    "w": 97
+   },
+   "walk_4": {
+    "ax": 0.45,
+    "ay": 1.0,
+    "h": 178,
+    "w": 100
+   },
+   "walk_5": {
+    "ax": 0.45631,
+    "ay": 1.0,
+    "h": 178,
+    "w": 103
+   },
+   "walk_6": {
+    "ax": 0.45455,
+    "ay": 1.0,
+    "h": 178,
+    "w": 99
+   },
+   "walk_7": {
+    "ax": 0.43421,
+    "ay": 1.0,
+    "h": 178,
+    "w": 76
+   }
+  },
+  "source": {
+   "stand": "sprites/char_04.webp row 1 col 0",
+   "walk": "sprites/walk_04.webp row 1"
+  },
+  "walkSpeed": 150
+ },
+ "frano": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 179
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/frano",
+  "frames": {
+   "stand_0": {
+    "ax": 0.48,
+    "ay": 1.0,
+    "h": 179,
+    "w": 75
+   },
+   "walk_0": {
+    "ax": 0.43137,
+    "ay": 1.0,
+    "h": 178,
+    "w": 102
+   },
+   "walk_1": {
+    "ax": 0.45122,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_2": {
+    "ax": 0.43617,
+    "ay": 1.0,
+    "h": 178,
+    "w": 94
+   },
+   "walk_3": {
+    "ax": 0.43182,
+    "ay": 1.00565,
+    "h": 177,
+    "w": 88
+   },
+   "walk_4": {
+    "ax": 0.46875,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_5": {
+    "ax": 0.42105,
+    "ay": 1.0,
+    "h": 178,
+    "w": 95
+   },
+   "walk_6": {
+    "ax": 0.375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_7": {
+    "ax": 0.44928,
+    "ay": 1.0,
+    "h": 178,
+    "w": 69
+   }
+  },
+  "source": {
+   "stand": "sprites/char_04.webp row 3 col 0",
+   "walk": "sprites/walk_04.webp row 3"
+  },
+  "walkSpeed": 150
+ },
+ "haendler": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 203
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/haendler",
+  "frames": {
+   "stand_0": {
+    "ax": 0.48718,
+    "ay": 1.0,
+    "h": 203,
+    "w": 78
+   },
+   "walk_0": {
+    "ax": 0.47115,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_1": {
+    "ax": 0.50962,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_2": {
+    "ax": 0.57447,
+    "ay": 1.0,
+    "h": 178,
+    "w": 94
+   },
+   "walk_3": {
+    "ax": 0.48387,
+    "ay": 1.0,
+    "h": 178,
+    "w": 93
+   },
+   "walk_4": {
+    "ax": 0.52222,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_5": {
+    "ax": 0.5,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_6": {
+    "ax": 0.51042,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_7": {
+    "ax": 0.50602,
+    "ay": 1.0,
+    "h": 178,
+    "w": 83
+   }
+  },
+  "source": {
+   "stand": "sprites/char_07.webp row 2 col 0",
+   "walk": "sprites/walk_07.webp row 2"
+  },
+  "walkSpeed": 150
+ },
+ "halil": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 194
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/halil",
+  "frames": {
+   "stand_0": {
+    "ax": 0.46575,
+    "ay": 1.0,
+    "h": 194,
+    "w": 73
+   },
+   "walk_0": {
+    "ax": 0.40476,
+    "ay": 1.0,
+    "h": 178,
+    "w": 84
+   },
+   "walk_1": {
+    "ax": 0.40244,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_2": {
+    "ax": 0.40952,
+    "ay": 1.0,
+    "h": 178,
+    "w": 105
+   },
+   "walk_3": {
+    "ax": 0.48958,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_4": {
+    "ax": 0.43689,
+    "ay": 1.0,
+    "h": 178,
+    "w": 103
+   },
+   "walk_5": {
+    "ax": 0.45588,
+    "ay": 1.0,
+    "h": 178,
+    "w": 68
+   },
+   "walk_6": {
+    "ax": 0.47297,
+    "ay": 1.0,
+    "h": 178,
+    "w": 74
+   },
+   "walk_7": {
+    "ax": 0.46575,
+    "ay": 1.0,
+    "h": 178,
+    "w": 73
+   }
+  },
+  "source": {
+   "stand": "sprites/char_03.webp row 1 col 0",
+   "walk": "sprites/walk_03.webp row 1"
+  },
+  "walkSpeed": 150
+ },
+ "hauptmann": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 180
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/hauptmann",
+  "frames": {
+   "stand_0": {
+    "ax": 0.20732,
+    "ay": 1.0,
+    "h": 180,
+    "w": 164
+   },
+   "walk_0": {
+    "ax": 0.37333,
+    "ay": 1.0,
+    "h": 178,
+    "w": 75
+   },
+   "walk_1": {
+    "ax": 0.34091,
+    "ay": 1.0,
+    "h": 178,
+    "w": 88
+   },
+   "walk_2": {
+    "ax": 0.36842,
+    "ay": 1.0,
+    "h": 178,
+    "w": 76
+   },
+   "walk_3": {
+    "ax": 0.47706,
+    "ay": 1.0,
+    "h": 178,
+    "w": 109
+   },
+   "walk_4": {
+    "ax": 0.42157,
+    "ay": 1.0,
+    "h": 178,
+    "w": 102
+   },
+   "walk_5": {
+    "ax": 0.52475,
+    "ay": 1.0,
+    "h": 178,
+    "w": 101
+   },
+   "walk_6": {
+    "ax": 0.40278,
+    "ay": 1.0,
+    "h": 178,
+    "w": 72
+   },
+   "walk_7": {
+    "ax": 0.41667,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   }
+  },
+  "source": {
+   "stand": "sprites/char_05.webp row 3 col 0",
+   "walk": "sprites/walk_05.webp row 3"
+  },
+  "walkSpeed": 150
+ },
+ "ivan": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 193
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/ivan",
+  "frames": {
+   "stand_0": {
+    "ax": 0.18831,
+    "ay": 1.0,
+    "h": 193,
+    "w": 154
+   },
+   "walk_0": {
+    "ax": 0.41333,
+    "ay": 1.0,
+    "h": 178,
+    "w": 75
+   },
+   "walk_1": {
+    "ax": 0.37778,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_2": {
+    "ax": 0.39744,
+    "ay": 1.0,
+    "h": 178,
+    "w": 78
+   },
+   "walk_3": {
+    "ax": 0.45192,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_4": {
+    "ax": 0.43,
+    "ay": 1.0,
+    "h": 178,
+    "w": 100
+   },
+   "walk_5": {
+    "ax": 0.49038,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_6": {
+    "ax": 0.45556,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_7": {
+    "ax": 0.43878,
+    "ay": 1.0,
+    "h": 178,
+    "w": 98
+   }
+  },
+  "source": {
+   "stand": "sprites/char_05.webp row 0 col 0",
+   "walk": "sprites/walk_05.webp row 0"
+  },
+  "walkSpeed": 150
+ },
+ "katib": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 196
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/katib",
+  "frames": {
+   "stand_0": {
+    "ax": 0.5,
+    "ay": 1.0,
+    "h": 196,
+    "w": 72
+   },
+   "walk_0": {
+    "ax": 0.43478,
+    "ay": 1.0,
+    "h": 178,
+    "w": 92
+   },
+   "walk_1": {
+    "ax": 0.44828,
+    "ay": 1.00565,
+    "h": 177,
+    "w": 87
+   },
+   "walk_2": {
+    "ax": 0.46429,
+    "ay": 1.0,
+    "h": 178,
+    "w": 98
+   },
+   "walk_3": {
+    "ax": 0.46465,
+    "ay": 1.0,
+    "h": 178,
+    "w": 99
+   },
+   "walk_4": {
+    "ax": 0.43617,
+    "ay": 1.0,
+    "h": 178,
+    "w": 94
+   },
+   "walk_5": {
+    "ax": 0.43956,
+    "ay": 1.0,
+    "h": 178,
+    "w": 91
+   },
+   "walk_6": {
+    "ax": 0.42697,
+    "ay": 1.0,
+    "h": 178,
+    "w": 89
+   },
+   "walk_7": {
+    "ax": 0.43056,
+    "ay": 1.0,
+    "h": 178,
+    "w": 72
+   }
+  },
+  "source": {
+   "stand": "sprites/char_04.webp row 2 col 0",
+   "walk": "sprites/walk_04.webp row 2"
+  },
+  "walkSpeed": 150
+ },
+ "komsija": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 189
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/komsija",
+  "frames": {
+   "stand_0": {
+    "ax": 0.47368,
+    "ay": 1.0,
+    "h": 189,
+    "w": 76
+   },
+   "walk_0": {
+    "ax": 0.4375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_1": {
+    "ax": 0.45556,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_2": {
+    "ax": 0.43956,
+    "ay": 1.0,
+    "h": 178,
+    "w": 91
+   },
+   "walk_3": {
+    "ax": 0.43158,
+    "ay": 1.0,
+    "h": 178,
+    "w": 95
+   },
+   "walk_4": {
+    "ax": 0.46465,
+    "ay": 1.0,
+    "h": 178,
+    "w": 99
+   },
+   "walk_5": {
+    "ax": 0.44086,
+    "ay": 1.0,
+    "h": 178,
+    "w": 93
+   },
+   "walk_6": {
+    "ax": 0.39583,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_7": {
+    "ax": 0.42105,
+    "ay": 1.0,
+    "h": 178,
+    "w": 76
+   }
+  },
+  "source": {
+   "stand": "sprites/char_04.webp row 0 col 0",
+   "walk": "sprites/walk_04.webp row 0"
+  },
+  "walkSpeed": 150
+ },
+ "macleod": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 206
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/macleod",
+  "frames": {
+   "stand_0": {
+    "ax": 0.46667,
+    "ay": 1.0,
+    "h": 206,
+    "w": 75
+   },
+   "walk_0": {
+    "ax": 0.43011,
+    "ay": 1.0,
+    "h": 178,
+    "w": 93
+   },
+   "walk_1": {
+    "ax": 0.4375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_2": {
+    "ax": 0.47,
+    "ay": 1.0,
+    "h": 178,
+    "w": 100
+   },
+   "walk_3": {
+    "ax": 0.47423,
+    "ay": 1.0,
+    "h": 178,
+    "w": 97
+   },
+   "walk_4": {
+    "ax": 0.47917,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_5": {
+    "ax": 0.4375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_6": {
+    "ax": 0.46,
+    "ay": 1.0,
+    "h": 178,
+    "w": 100
+   },
+   "walk_7": {
+    "ax": 0.5119,
+    "ay": 1.0,
+    "h": 178,
+    "w": 84
+   }
+  },
+  "source": {
+   "stand": "sprites/char_01.webp row 0 col 0",
+   "walk": "sprites/walk_01.webp row 0"
+  },
+  "walkSpeed": 150
+ },
+ "major": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 201
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/major",
+  "frames": {
+   "stand_0": {
+    "ax": 0.47917,
+    "ay": 1.0,
+    "h": 201,
+    "w": 96
+   },
+   "walk_0": {
+    "ax": 0.43269,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_1": {
+    "ax": 0.42857,
+    "ay": 1.0,
+    "h": 178,
+    "w": 105
+   },
+   "walk_2": {
+    "ax": 0.41584,
+    "ay": 1.0,
+    "h": 178,
+    "w": 101
+   },
+   "walk_3": {
+    "ax": 0.47778,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_4": {
+    "ax": 0.40625,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_5": {
+    "ax": 0.48101,
+    "ay": 1.0,
+    "h": 178,
+    "w": 79
+   },
+   "walk_6": {
+    "ax": 0.44048,
+    "ay": 1.0,
+    "h": 178,
+    "w": 84
+   },
+   "walk_7": {
+    "ax": 0.42424,
+    "ay": 1.0,
+    "h": 177,
+    "w": 99
+   }
+  },
+  "source": {
+   "stand": "sprites/char_06.webp row 2 col 0",
+   "walk": "sprites/walk_06.webp row 2"
+  },
+  "walkSpeed": 150
+ },
+ "mijo1467": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 188
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/mijo1467",
+  "frames": {
+   "stand_0": {
+    "ax": 0.46667,
+    "ay": 1.0,
+    "h": 188,
+    "w": 60
+   },
+   "walk_0": {
+    "ax": 0.41463,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_1": {
+    "ax": 0.42683,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_2": {
+    "ax": 0.45556,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_3": {
+    "ax": 0.45833,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_4": {
+    "ax": 0.43421,
+    "ay": 1.0,
+    "h": 178,
+    "w": 76
+   },
+   "walk_5": {
+    "ax": 0.45882,
+    "ay": 1.0,
+    "h": 178,
+    "w": 85
+   },
+   "walk_6": {
+    "ax": 0.41463,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_7": {
+    "ax": 0.46552,
+    "ay": 1.0,
+    "h": 178,
+    "w": 58
+   }
+  },
+  "source": {
+   "stand": "sprites/char_01.webp row 1 col 0",
+   "walk": "sprites/walk_01.webp row 1"
+  },
+  "walkSpeed": 150
+ },
+ "mijo1473": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 192
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/mijo1473",
+  "frames": {
+   "stand_0": {
+    "ax": 0.46269,
+    "ay": 1.0,
+    "h": 192,
+    "w": 67
+   },
+   "walk_0": {
+    "ax": 0.43182,
+    "ay": 1.0,
+    "h": 178,
+    "w": 88
+   },
+   "walk_1": {
+    "ax": 0.4,
+    "ay": 1.0,
+    "h": 178,
+    "w": 75
+   },
+   "walk_2": {
+    "ax": 0.45098,
+    "ay": 1.0,
+    "h": 178,
+    "w": 102
+   },
+   "walk_3": {
+    "ax": 0.44792,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_4": {
+    "ax": 0.41935,
+    "ay": 1.0,
+    "h": 178,
+    "w": 93
+   },
+   "walk_5": {
+    "ax": 0.44318,
+    "ay": 1.0,
+    "h": 178,
+    "w": 88
+   },
+   "walk_6": {
+    "ax": 0.45745,
+    "ay": 1.00565,
+    "h": 177,
+    "w": 94
+   },
+   "walk_7": {
+    "ax": 0.5,
+    "ay": 1.0,
+    "h": 178,
+    "w": 72
+   }
+  },
+  "source": {
+   "stand": "sprites/char_01.webp row 2 col 0",
+   "walk": "sprites/walk_01.webp row 2"
+  },
+  "walkSpeed": 150
+ },
+ "mijo1507": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 207
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/mijo1507",
+  "frames": {
+   "stand_0": {
+    "ax": 0.525,
+    "ay": 1.0,
+    "h": 207,
+    "w": 80
+   },
+   "walk_0": {
+    "ax": 0.42857,
+    "ay": 1.0,
+    "h": 178,
+    "w": 91
+   },
+   "walk_1": {
+    "ax": 0.40426,
+    "ay": 1.0,
+    "h": 178,
+    "w": 94
+   },
+   "walk_2": {
+    "ax": 0.42453,
+    "ay": 1.0,
+    "h": 178,
+    "w": 106
+   },
+   "walk_3": {
+    "ax": 0.42188,
+    "ay": 1.0,
+    "h": 178,
+    "w": 64
+   },
+   "walk_4": {
+    "ax": 0.4375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_5": {
+    "ax": 0.46809,
+    "ay": 1.0,
+    "h": 178,
+    "w": 94
+   },
+   "walk_6": {
+    "ax": 0.46154,
+    "ay": 1.0,
+    "h": 178,
+    "w": 65
+   },
+   "walk_7": {
+    "ax": 0.41304,
+    "ay": 1.0,
+    "h": 178,
+    "w": 92
+   }
+  },
+  "source": {
+   "stand": "sprites/char_02.webp row 0 col 0",
+   "walk": "sprites/walk_02.webp row 0"
+  },
+  "walkSpeed": 150
+ },
+ "mijo1512": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 207
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/mijo1512",
+  "frames": {
+   "stand_0": {
+    "ax": 0.46602,
+    "ay": 1.0,
+    "h": 207,
+    "w": 103
+   },
+   "walk_0": {
+    "ax": 0.49123,
+    "ay": 1.0,
+    "h": 178,
+    "w": 114
+   },
+   "walk_1": {
+    "ax": 0.54545,
+    "ay": 1.0,
+    "h": 178,
+    "w": 110
+   },
+   "walk_2": {
+    "ax": 0.55285,
+    "ay": 1.0,
+    "h": 178,
+    "w": 123
+   },
+   "walk_3": {
+    "ax": 0.45833,
+    "ay": 1.0,
+    "h": 178,
+    "w": 120
+   },
+   "walk_4": {
+    "ax": 0.53571,
+    "ay": 1.0,
+    "h": 178,
+    "w": 112
+   },
+   "walk_5": {
+    "ax": 0.45238,
+    "ay": 1.0,
+    "h": 178,
+    "w": 126
+   },
+   "walk_6": {
+    "ax": 0.49194,
+    "ay": 1.0,
+    "h": 178,
+    "w": 124
+   },
+   "walk_7": {
+    "ax": 0.51327,
+    "ay": 1.0,
+    "h": 178,
+    "w": 113
+   }
+  },
+  "source": {
+   "stand": "sprites/char_02.webp row 1 col 0",
+   "walk": "sprites/walk_02.webp row 1"
+  },
+  "walkSpeed": 150
+ },
+ "mijo1878": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 213
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/mijo1878",
+  "frames": {
+   "stand_0": {
+    "ax": 0.52688,
+    "ay": 1.0,
+    "h": 213,
+    "w": 93
+   },
+   "walk_0": {
+    "ax": 0.49038,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_1": {
+    "ax": 0.53061,
+    "ay": 1.0,
+    "h": 178,
+    "w": 98
+   },
+   "walk_2": {
+    "ax": 0.504,
+    "ay": 1.0,
+    "h": 178,
+    "w": 125
+   },
+   "walk_3": {
+    "ax": 0.50667,
+    "ay": 1.0,
+    "h": 178,
+    "w": 75
+   },
+   "walk_4": {
+    "ax": 0.47115,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_5": {
+    "ax": 0.5,
+    "ay": 1.0,
+    "h": 178,
+    "w": 110
+   },
+   "walk_6": {
+    "ax": 0.51304,
+    "ay": 1.0,
+    "h": 178,
+    "w": 115
+   },
+   "walk_7": {
+    "ax": 0.49515,
+    "ay": 1.0,
+    "h": 178,
+    "w": 103
+   }
+  },
+  "source": {
+   "stand": "sprites/char_02.webp row 2 col 0",
+   "walk": "sprites/walk_02.webp row 2"
+  },
+  "walkSpeed": 150
+ },
+ "mijo1996": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 193
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/mijo1996",
+  "frames": {
+   "stand_0": {
+    "ax": 0.47945,
+    "ay": 1.0,
+    "h": 193,
+    "w": 73
+   },
+   "walk_0": {
+    "ax": 0.42353,
+    "ay": 1.0,
+    "h": 178,
+    "w": 85
+   },
+   "walk_1": {
+    "ax": 0.43478,
+    "ay": 1.0,
+    "h": 178,
+    "w": 92
+   },
+   "walk_2": {
+    "ax": 0.46465,
+    "ay": 1.0,
+    "h": 178,
+    "w": 99
+   },
+   "walk_3": {
+    "ax": 0.45161,
+    "ay": 1.0,
+    "h": 178,
+    "w": 93
+   },
+   "walk_4": {
+    "ax": 0.44578,
+    "ay": 1.0,
+    "h": 178,
+    "w": 83
+   },
+   "walk_5": {
+    "ax": 0.46067,
+    "ay": 1.0,
+    "h": 178,
+    "w": 89
+   },
+   "walk_6": {
+    "ax": 0.45833,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_7": {
+    "ax": 0.53165,
+    "ay": 1.0,
+    "h": 178,
+    "w": 79
+   }
+  },
+  "source": {
+   "stand": "sprites/char_01.webp row 3 col 0",
+   "walk": "sprites/walk_01.webp row 3"
+  },
+  "walkSpeed": 150
+ },
+ "nedzad": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 191
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/nedzad",
+  "frames": {
+   "stand_0": {
+    "ax": 0.47826,
+    "ay": 1.0,
+    "h": 191,
+    "w": 69
+   },
+   "walk_0": {
+    "ax": 0.40206,
+    "ay": 1.0,
+    "h": 178,
+    "w": 97
+   },
+   "walk_1": {
+    "ax": 0.38889,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   },
+   "walk_2": {
+    "ax": 0.42991,
+    "ay": 1.0,
+    "h": 178,
+    "w": 107
+   },
+   "walk_3": {
+    "ax": 0.47525,
+    "ay": 1.0,
+    "h": 178,
+    "w": 101
+   },
+   "walk_4": {
+    "ax": 0.42857,
+    "ay": 1.0,
+    "h": 178,
+    "w": 105
+   },
+   "walk_5": {
+    "ax": 0.44444,
+    "ay": 1.0,
+    "h": 178,
+    "w": 72
+   },
+   "walk_6": {
+    "ax": 0.4878,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_7": {
+    "ax": 0.4359,
+    "ay": 1.0,
+    "h": 178,
+    "w": 78
+   }
+  },
+  "source": {
+   "stand": "sprites/char_03.webp row 0 col 0",
+   "walk": "sprites/walk_03.webp row 0"
+  },
+  "walkSpeed": 150
+ },
+ "nikephoros": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 201
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/nikephoros",
+  "frames": {
+   "stand_0": {
+    "ax": 0.58095,
+    "ay": 1.0,
+    "h": 201,
+    "w": 105
+   },
+   "walk_0": {
+    "ax": 0.54264,
+    "ay": 1.0,
+    "h": 178,
+    "w": 129
+   },
+   "walk_1": {
+    "ax": 0.56429,
+    "ay": 1.0,
+    "h": 178,
+    "w": 140
+   },
+   "walk_2": {
+    "ax": 0.59559,
+    "ay": 1.0,
+    "h": 178,
+    "w": 136
+   },
+   "walk_3": {
+    "ax": 0.58716,
+    "ay": 1.0,
+    "h": 178,
+    "w": 109
+   },
+   "walk_4": {
+    "ax": 0.58772,
+    "ay": 1.0,
+    "h": 178,
+    "w": 114
+   },
+   "walk_5": {
+    "ax": 0.60484,
+    "ay": 1.0,
+    "h": 178,
+    "w": 124
+   },
+   "walk_6": {
+    "ax": 0.56522,
+    "ay": 1.0,
+    "h": 178,
+    "w": 138
+   },
+   "walk_7": {
+    "ax": 0.57692,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   }
+  },
+  "source": {
+   "stand": "sprites/char_07.webp row 0 col 0",
+   "walk": "sprites/walk_07.webp row 0"
+  },
+  "walkSpeed": 150
+ },
+ "otac": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 196
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/otac",
+  "frames": {
+   "stand_0": {
+    "ax": 0.47059,
+    "ay": 1.0,
+    "h": 196,
+    "w": 85
+   },
+   "walk_0": {
+    "ax": 0.41053,
+    "ay": 1.0,
+    "h": 178,
+    "w": 95
+   },
+   "walk_1": {
+    "ax": 0.41573,
+    "ay": 1.0,
+    "h": 178,
+    "w": 89
+   },
+   "walk_2": {
+    "ax": 0.41346,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_3": {
+    "ax": 0.47573,
+    "ay": 1.0,
+    "h": 178,
+    "w": 103
+   },
+   "walk_4": {
+    "ax": 0.43689,
+    "ay": 1.0,
+    "h": 178,
+    "w": 103
+   },
+   "walk_5": {
+    "ax": 0.4557,
+    "ay": 1.0,
+    "h": 178,
+    "w": 79
+   },
+   "walk_6": {
+    "ax": 0.4375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 80
+   },
+   "walk_7": {
+    "ax": 0.45,
+    "ay": 1.0,
+    "h": 178,
+    "w": 80
+   }
+  },
+  "source": {
+   "stand": "sprites/char_03.webp row 2 col 0",
+   "walk": "sprites/walk_03.webp row 2"
+  },
+  "walkSpeed": 150
+ },
+ "rehberger": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 197
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/rehberger",
+  "frames": {
+   "stand_0": {
+    "ax": 0.18239,
+    "ay": 1.0,
+    "h": 197,
+    "w": 159
+   },
+   "walk_0": {
+    "ax": 0.39474,
+    "ay": 1.0,
+    "h": 178,
+    "w": 76
+   },
+   "walk_1": {
+    "ax": 0.3587,
+    "ay": 1.0,
+    "h": 178,
+    "w": 92
+   },
+   "walk_2": {
+    "ax": 0.375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 80
+   },
+   "walk_3": {
+    "ax": 0.43519,
+    "ay": 1.0,
+    "h": 178,
+    "w": 108
+   },
+   "walk_4": {
+    "ax": 0.44,
+    "ay": 1.0,
+    "h": 178,
+    "w": 100
+   },
+   "walk_5": {
+    "ax": 0.50962,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_6": {
+    "ax": 0.38202,
+    "ay": 1.0,
+    "h": 178,
+    "w": 89
+   },
+   "walk_7": {
+    "ax": 0.40816,
+    "ay": 1.0,
+    "h": 178,
+    "w": 98
+   }
+  },
+  "source": {
+   "stand": "sprites/char_05.webp row 1 col 0",
+   "walk": "sprites/walk_05.webp row 1"
+  },
+  "walkSpeed": 150
+ },
+ "slaven": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 178
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/slaven",
+  "frames": {
+   "stand_0": {
+    "ax": 0.47619,
+    "ay": 1.0,
+    "h": 178,
+    "w": 63
+   },
+   "walk_0": {
+    "ax": 0.4375,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_1": {
+    "ax": 0.44,
+    "ay": 1.0,
+    "h": 178,
+    "w": 100
+   },
+   "walk_2": {
+    "ax": 0.40659,
+    "ay": 1.0,
+    "h": 178,
+    "w": 91
+   },
+   "walk_3": {
+    "ax": 0.51685,
+    "ay": 1.0,
+    "h": 177,
+    "w": 89
+   },
+   "walk_4": {
+    "ax": 0.41758,
+    "ay": 1.0,
+    "h": 178,
+    "w": 91
+   },
+   "walk_5": {
+    "ax": 0.52055,
+    "ay": 1.0,
+    "h": 178,
+    "w": 73
+   },
+   "walk_6": {
+    "ax": 0.44118,
+    "ay": 1.0,
+    "h": 178,
+    "w": 68
+   },
+   "walk_7": {
+    "ax": 0.40625,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   }
+  },
+  "source": {
+   "stand": "sprites/char_06.webp row 0 col 0",
+   "walk": "sprites/walk_06.webp row 0"
+  },
+  "walkSpeed": 150
+ },
+ "soldat": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 191
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/soldat",
+  "frames": {
+   "stand_0": {
+    "ax": 0.475,
+    "ay": 1.0,
+    "h": 191,
+    "w": 80
+   },
+   "walk_0": {
+    "ax": 0.43269,
+    "ay": 1.0,
+    "h": 178,
+    "w": 104
+   },
+   "walk_1": {
+    "ax": 0.42991,
+    "ay": 1.0,
+    "h": 178,
+    "w": 107
+   },
+   "walk_2": {
+    "ax": 0.37634,
+    "ay": 1.0,
+    "h": 178,
+    "w": 93
+   },
+   "walk_3": {
+    "ax": 0.52439,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_4": {
+    "ax": 0.40206,
+    "ay": 1.0,
+    "h": 178,
+    "w": 97
+   },
+   "walk_5": {
+    "ax": 0.4878,
+    "ay": 1.0,
+    "h": 178,
+    "w": 82
+   },
+   "walk_6": {
+    "ax": 0.41975,
+    "ay": 1.0,
+    "h": 178,
+    "w": 81
+   },
+   "walk_7": {
+    "ax": 0.45556,
+    "ay": 1.0,
+    "h": 178,
+    "w": 90
+   }
+  },
+  "source": {
+   "stand": "sprites/char_06.webp row 3 col 0",
+   "walk": "sprites/walk_06.webp row 3"
+  },
+  "walkSpeed": 150
+ },
+ "zeman": {
+  "anims": {
+   "stand": {
+    "fps": 1,
+    "frames": [
+     "stand_0"
+    ],
+    "loop": true,
+    "refH": 176
+   },
+   "walk": {
+    "fps": 9,
+    "frames": [
+     "walk_0",
+     "walk_1",
+     "walk_2",
+     "walk_3",
+     "walk_4",
+     "walk_5",
+     "walk_6",
+     "walk_7"
+    ],
+    "loop": true,
+    "refH": 180.7
+   }
+  },
+  "atlas": "chars/zeman",
+  "frames": {
+   "stand_0": {
+    "ax": 0.21605,
+    "ay": 1.0,
+    "h": 176,
+    "w": 162
+   },
+   "walk_0": {
+    "ax": 0.44048,
+    "ay": 1.0,
+    "h": 178,
+    "w": 84
+   },
+   "walk_1": {
+    "ax": 0.36458,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_2": {
+    "ax": 0.4125,
+    "ay": 1.0,
+    "h": 178,
+    "w": 80
+   },
+   "walk_3": {
+    "ax": 0.46364,
+    "ay": 1.0,
+    "h": 178,
+    "w": 110
+   },
+   "walk_4": {
+    "ax": 0.4434,
+    "ay": 1.0,
+    "h": 178,
+    "w": 106
+   },
+   "walk_5": {
+    "ax": 0.51364,
+    "ay": 1.0,
+    "h": 178,
+    "w": 110
+   },
+   "walk_6": {
+    "ax": 0.44792,
+    "ay": 1.0,
+    "h": 178,
+    "w": 96
+   },
+   "walk_7": {
+    "ax": 0.45098,
+    "ay": 1.0,
+    "h": 178,
+    "w": 102
+   }
+  },
+  "source": {
+   "stand": "sprites/char_05.webp row 2 col 0",
+   "walk": "sprites/walk_05.webp row 2"
+  },
+  "walkSpeed": 150
+ }
+}

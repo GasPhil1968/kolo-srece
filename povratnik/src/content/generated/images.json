@@ -1,0 +1,314 @@
+{
+ "bg_dorf_1476_nacht": {
+  "file": "bg/bg_dorf_1476_nacht.webp",
+  "h": 470,
+  "source": "povratnik1476/bg_dorf_1476_nacht.webp",
+  "w": 1440
+ },
+ "bg_dorfabend": {
+  "file": "bg/bg_dorfabend.webp",
+  "h": 470,
+  "source": "bg/bg_dorfabend.webp",
+  "w": 1240
+ },
+ "bg_dorfgasse": {
+  "file": "bg/bg_dorfgasse.webp",
+  "h": 470,
+  "source": "wedding-polish/dorfgasse-1878.webp",
+  "w": 1320
+ },
+ "bg_dorfplatz": {
+  "file": "bg/bg_dorfplatz.webp",
+  "h": 470,
+  "source": "bg/bg_dorfplatz.webp",
+  "w": 1100
+ },
+ "bg_ending": {
+  "file": "bg/bg_ending.webp",
+  "h": 470,
+  "source": "bg/bg_ending.webp",
+  "w": 1180
+ },
+ "bg_enge": {
+  "file": "bg/bg_enge.webp",
+  "h": 470,
+  "source": "bg/bg_enge.webp",
+  "w": 1180
+ },
+ "bg_et_brand": {
+  "file": "bg/bg_et_brand.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_haus_brand.png",
+  "w": 960
+ },
+ "bg_et_feld": {
+  "file": "bg/bg_et_feld.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_feld.png",
+  "w": 960
+ },
+ "bg_et_feld_gemaeht": {
+  "file": "bg/bg_et_feld_gemaeht.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_feld_gemaeht.png",
+  "w": 960
+ },
+ "bg_et_hof": {
+  "file": "bg/bg_et_hof.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_hof.png",
+  "w": 960
+ },
+ "bg_et_innen": {
+  "file": "bg/bg_et_innen.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_rauch_innen.png",
+  "w": 960
+ },
+ "bg_et_kirche": {
+  "file": "bg/bg_et_kirche.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_kirchstufe.png",
+  "w": 960
+ },
+ "bg_et_kirche_nacht": {
+  "file": "bg/bg_et_kirche_nacht.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_kirchstufe_nacht.png",
+  "w": 960
+ },
+ "bg_et_stall_nacht": {
+  "file": "bg/bg_et_stall_nacht.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_stall_nacht.png",
+  "w": 960
+ },
+ "bg_et_stall_tag": {
+  "file": "bg/bg_et_stall_tag.webp",
+  "h": 470,
+  "source": "elf-tage-v5/backgrounds/bg_stall_tag.png",
+  "w": 960
+ },
+ "bg_feldzelt": {
+  "file": "bg/bg_feldzelt.webp",
+  "h": 470,
+  "source": "bg/bg_feldzelt.webp",
+  "w": 980
+ },
+ "bg_fremdesdorf": {
+  "file": "bg/bg_fremdesdorf.webp",
+  "h": 470,
+  "source": "village-polish/bg_fremdesdorf_1878.webp",
+  "w": 1420
+ },
+ "bg_gasse": {
+  "file": "bg/bg_gasse.webp",
+  "h": 470,
+  "source": "sarajevo-v3/gasse.webp",
+  "w": 1400
+ },
+ "bg_gaststube": {
+  "file": "bg/bg_gaststube.webp",
+  "h": 470,
+  "source": "bg/bg_gaststube_clean.webp",
+  "w": 1060
+ },
+ "bg_hafen": {
+  "file": "bg/bg_hafen.webp",
+  "h": 470,
+  "source": "ancona-v2/port-clean.webp",
+  "w": 1300
+ },
+ "bg_hochzeit": {
+  "file": "bg/bg_hochzeit.webp",
+  "h": 470,
+  "source": "bg/bg_hochzeit.webp",
+  "w": 1220
+ },
+ "bg_hof": {
+  "file": "bg/bg_hof.webp",
+  "h": 470,
+  "source": "bg/bg_hof.webp",
+  "w": 1080
+ },
+ "bg_kafana": {
+  "file": "bg/bg_kafana.webp",
+  "h": 470,
+  "source": "sarajevo-v6/kafana-room.webp",
+  "w": 1160
+ },
+ "bg_kolonnespitze": {
+  "file": "bg/bg_kolonnespitze.webp",
+  "h": 470,
+  "source": "bg/bg_kolonnespitze.webp",
+  "w": 1220
+ },
+ "bg_kuca": {
+  "file": "bg/bg_kuca.webp",
+  "h": 470,
+  "source": "bg/bg_kuca.webp",
+  "w": 900
+ },
+ "bg_lager": {
+  "file": "bg/bg_lager.webp",
+  "h": 470,
+  "source": "bg/bg_lager.webp",
+  "w": 1240
+ },
+ "bg_lagerhaus": {
+  "file": "bg/bg_lagerhaus.webp",
+  "h": 470,
+  "source": "bg/bg_lagerhaus.webp",
+  "w": 1040
+ },
+ "bg_lagerhaus_zerstoert": {
+  "file": "bg/bg_lagerhaus_zerstoert.webp",
+  "h": 470,
+  "source": "ancona-v6/bg_lagerhaus_zerstoert.png",
+  "w": 960
+ },
+ "bg_landing": {
+  "file": "bg/bg_landing.webp",
+  "h": 470,
+  "source": "sarajevo-v4/landing.webp",
+  "w": 1080
+ },
+ "bg_pass_grab": {
+  "file": "bg/bg_pass_grab.webp",
+  "h": 470,
+  "source": "povratnik1476/bg_pass_grab.webp",
+  "w": 1440
+ },
+ "bg_pass_senke": {
+  "file": "bg/bg_pass_senke.webp",
+  "h": 470,
+  "source": "povratnik1476/bg_pass_senke.webp",
+  "w": 1440
+ },
+ "bg_pass_senke_vorher": {
+  "file": "bg/bg_pass_senke_vorher.webp",
+  "h": 470,
+  "source": "povratnik1476/bg_pass_senke_vorher.webp",
+  "w": 1440
+ },
+ "bg_prolog": {
+  "file": "bg/bg_prolog.webp",
+  "h": 470,
+  "source": "sarajevo-v3/prolog.webp",
+  "w": 1280
+ },
+ "bg_rueckweg": {
+  "file": "bg/bg_rueckweg.webp",
+  "h": 470,
+  "source": "povratnik1476/bg_rueckweg.webp",
+  "w": 1440
+ },
+ "bg_sebilj": {
+  "file": "bg/bg_sebilj.webp",
+  "h": 470,
+  "source": "bg/bg_sebilj_no_pigeons.webp",
+  "w": 1180
+ },
+ "bg_stabszelt": {
+  "file": "bg/bg_stabszelt.webp",
+  "h": 470,
+  "source": "bg/bg_stabszelt_scaled.webp",
+  "w": 980
+ },
+ "bg_steinblock78": {
+  "file": "bg/bg_steinblock78.webp",
+  "h": 470,
+  "source": "village-polish/bg_steinblock78_1878.webp",
+  "w": 1180
+ },
+ "bg_taltest": {
+  "file": "bg/bg_taltest.webp",
+  "h": 470,
+  "source": "bg/bg_taltest.webp",
+  "w": 1760
+ },
+ "bg_weide": {
+  "file": "bg/bg_weide.webp",
+  "h": 470,
+  "source": "bg/bg_weide.webp",
+  "w": 1180
+ },
+ "intro_akt2": {
+  "file": "screens/intro_akt2.webp",
+  "h": 600,
+  "source": "intros/intro_akt2.webp",
+  "w": 960
+ },
+ "intro_fremdesdorf": {
+  "file": "screens/intro_fremdesdorf.webp",
+  "h": 600,
+  "source": "intros/intro_fremdesdorf.webp",
+  "w": 960
+ },
+ "intro_hochzeit": {
+  "file": "screens/intro_hochzeit.webp",
+  "h": 600,
+  "source": "intros/intro_hochzeit.webp",
+  "w": 960
+ },
+ "intro_hof": {
+  "file": "screens/intro_hof.webp",
+  "h": 600,
+  "source": "intros/intro_hof.webp",
+  "w": 960
+ },
+ "intro_kap1": {
+  "file": "screens/intro_kap1.webp",
+  "h": 600,
+  "source": "intros/intro_kap1.webp",
+  "w": 960
+ },
+ "intro_kap2": {
+  "file": "screens/intro_kap2.webp",
+  "h": 600,
+  "source": "intros/intro_kap2.webp",
+  "w": 960
+ },
+ "intro_kolonne": {
+  "file": "screens/intro_kolonne.webp",
+  "h": 600,
+  "source": "intros/intro_kolonne.webp",
+  "w": 960
+ },
+ "intro_lager": {
+  "file": "screens/intro_lager.webp",
+  "h": 600,
+  "source": "intros/intro_lager.webp",
+  "w": 960
+ },
+ "intro_opening": {
+  "file": "screens/intro_opening.webp",
+  "h": 600,
+  "source": "intros/intro_opening.webp",
+  "w": 960
+ },
+ "intro_prolog": {
+  "file": "screens/intro_prolog.webp",
+  "h": 600,
+  "source": "intros/intro_prolog.webp",
+  "w": 960
+ },
+ "intro_zaesur": {
+  "file": "screens/intro_zaesur.webp",
+  "h": 600,
+  "source": "intros/intro_zaesur.webp",
+  "w": 960
+ },
+ "logo": {
+  "file": "screens/logo.webp",
+  "h": 218,
+  "source": "intros/cine_title.webp",
+  "w": 1200
+ },
+ "menu_keyart": {
+  "file": "screens/menu_keyart.webp",
+  "h": 600,
+  "source": "menu/menu-keyart.webp",
+  "w": 960
+ }
+}

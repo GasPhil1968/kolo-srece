@@ -1,0 +1,21 @@
+// Quick visual smoke check during development: open the game, start, screenshot.
+import { chromium } from 'playwright';
+const url = process.argv[2] ?? 'http://localhost:5173/';
+const out = process.argv[3] ?? 'smoke.png';
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader'] });
+const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+const logs = [];
+page.on('console', (m) => logs.push(`${m.type()}: ${m.text()}`));
+page.on('pageerror', (e) => logs.push(`pageerror: ${e.message}`));
+page.on('requestfailed', (r) => logs.push(`requestfailed: ${r.url()}`));
+await page.goto(url);
+await page.waitForSelector('[data-testid=title]', { timeout: 20000 });
+await page.screenshot({ path: out.replace('.png', '-title.png') });
+await page.click('[data-testid=title-new]');
+await page.waitForTimeout(800);
+await page.screenshot({ path: out.replace('.png', '-card.png') });
+await page.keyboard.press('Escape');
+await page.waitForTimeout(2500);
+await page.screenshot({ path: out });
+console.log(logs.join('\n'));
+await browser.close();
