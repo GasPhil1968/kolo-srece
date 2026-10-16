@@ -69,8 +69,8 @@ export const solveSarajevo: Solver = (sim) => {
     const opts = sim.options();
     if (opts.includes('tell')) return choose('tell');
     if (opts.includes('calm')) return choose(opts.includes('rose') ? 'rose' : 'calm'); // report
-    if (opts.includes('what') || opts.includes('war')) return pickOption(sim, fl('halilRose') ? [] : ['rose']);
-    return pickOption(sim, []);
+    // Halil's dialogue: ask about the crater once it has been seen; otherwise leave.
+    return pickOption(sim, fl('halilRose') ? [] : ['rose']);
   }
   if (!fl('band')) return go(sim, 'sa_zimmer') ?? use('band', 'couchtisch');
   if (!fl('task')) return go(sim, 'sa_zimmer') ?? act('actor:mijo96', 'talk');
@@ -114,7 +114,33 @@ export const solveWeide: Solver = (sim) => {
   return act('pfad', 'go');
 };
 
+// ----------------------------------------------------------------------------------- chapter 3
+
+export const solveDorf: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`do.${n}`];
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const want of ['larger', 'silent']) if (opts.includes(want)) return choose(want);
+    if (opts.includes('holz') && !fl('ivanAsked')) return choose('holz');
+    if (opts.includes('give') && fl('ivanAsked')) return choose('give');
+    return pickOption(sim, []);
+  }
+  if (s.room === 'do_abend') {
+    if (!fl('taken')) return act('bank', 'take');
+    if (!fl('ivanAsked')) return act('actor:ivan73', 'talk');
+    if (!fl('given')) return use('kerbhoelzer', 'actor:otac73');
+    return act('platz', 'go');
+  }
+  if (!fl('sawLuka') || !fl('sawStjepan')) return act('stall', 'watch');
+  if (!fl('sawKatib')) return act('actor:katib73', 'look');
+  if (!fl('rule')) return { k: 'examine', item: 'kerbholz' };
+  return act('stall', 'watch');
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
+  dorf: solveDorf,
 };

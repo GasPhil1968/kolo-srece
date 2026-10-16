@@ -509,6 +509,12 @@
   "source": "props/prop_cheese.webp",
   "w": 80
  },
+ "prop_counting_stall": {
+  "file": "props/prop_counting_stall.webp",
+  "h": 400,
+  "source": "props/prop_counting_stall.webp",
+  "w": 412
+ },
  "prop_dzezva": {
   "file": "props/prop_dzezva.webp",
   "h": 256,
@@ -526,6 +532,12 @@
   "h": 38,
   "source": "props/prop_hausnummer3.webp",
   "w": 54
+ },
+ "prop_herd_return": {
+  "file": "props/prop_herd_return.webp",
+  "h": 216,
+  "source": "props/prop_herd_return.webp",
+  "w": 492
  },
  "prop_juniper": {
   "file": "props/prop_juniper.webp",
@@ -611,11 +623,29 @@
   "source": "props/prop_stone_sitters.webp",
   "w": 380
  },
+ "prop_stool": {
+  "file": "props/prop_stool.webp",
+  "h": 90,
+  "source": "props/prop_stool.webp",
+  "w": 84
+ },
  "prop_strassenschild": {
   "file": "props/prop_strassenschild.webp",
   "h": 94,
   "source": "props/prop_strassenschild.webp",
   "w": 208
+ },
+ "prop_tally13": {
+  "file": "props/prop_tally13.webp",
+  "h": 80,
+  "source": "props/prop_tally13.webp",
+  "w": 228
+ },
+ "prop_tally9": {
+  "file": "props/prop_tally9.webp",
+  "h": 72,
+  "source": "props/prop_tally9.webp",
+  "w": 244
  },
  "prop_tasse_kafana": {
   "file": "props/prop_tasse_kafana.webp",

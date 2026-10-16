@@ -108,6 +108,25 @@ SHEETS = {
         'src': 'fx/fx_smoke_cycle.webp', 'grid': (4, 2), 'refH': 128, 'anchor': 'bottom', 'anchor_x': 64, 'defringe': False, 'clean': False,
         'anims': {'stand': {'frames': list(range(8)), 'fps': 5, 'loop': True}},
     },
+    # --- Dorf 1473 ------------------------------------------------------------------------------
+    # The Katib sitting down and writing (actors/katib_sit.webp, 4x3 cells of 192x240, native facing
+    # left, feet on y=224). refH = his standing height in the same cells (frame 0).
+    'katib_sit': {
+        'src': 'actors/katib_sit.webp', 'grid': (4, 3), 'refH': 180, 'anchor': (114, 224), 'facing': -1,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'sit': {'frames': timed([0, 1, 2, 3, 4, 5], [.18, .24, .28, .28, .30, .32], 25), 'fps': 25},
+            'write': {'frames': timed([6, 7, 8, 9, 6, 7, 8, 9, 10, 11], [.34] * 8 + [.7, .6], 25), 'fps': 25, 'loop': True},
+            'wait': {'frames': [5], 'loop': True},
+            'pause': {'frames': timed([10, 11], [.9, .9], 25), 'fps': 25, 'loop': True},
+        },
+    },
+    # Villagers waiting on the square (props/prop_village_crowd_fear.webp, 2x3 cells of 280x186):
+    # the same six people with changing glances, timed as in the original timeline.
+    'crowd': {
+        'src': 'props/prop_village_crowd_fear.webp', 'grid': (2, 3), 'refH': 172, 'anchor': 'bottom', 'anchor_x': 140, 'clean': False,
+        'anims': {'stand': {'frames': timed([0, 1, 0, 2, 5, 0, 3, 5, 0, 4, 5], [4.3, 1.4, 3.1, 2.1, 2.0, 3.7, 1.8, 1.6, 4.9, 1.1, 1.6], 10), 'fps': 10, 'loop': True}},
+    },
 }
 
 PROPS = {
@@ -139,6 +158,12 @@ PROPS = {
     'prop_bread': 'props/prop_bread.webp',
     'prop_cheese': 'props/prop_cheese.webp',
     'fx_dust_mote': 'fx/fx_dust_mote.webp',
+    # Dorf 1473
+    'prop_counting_stall': 'props/prop_counting_stall.webp',
+    'prop_stool': 'props/prop_stool.webp',
+    'prop_tally13': 'props/prop_tally13.webp',
+    'prop_tally9': 'props/prop_tally9.webp',
+    'prop_herd_return': 'props/prop_herd_return.webp',
 }
 
 ICONS = {
@@ -148,4 +173,6 @@ ICONS = {
     'tasse': {'src': 'ui/inv.webp', 'cell': (4, 4, 11)},
     'dzezva': {'src': 'props/prop_sarajevo_dzezva.webp'},
     'wacholder': {'src': 'ui/inv.webp', 'cell': (4, 4, 9)},
+    'kerbhoelzer': {'src': 'ui/inv.webp', 'cell': (4, 4, 13)},
+    'kerbholz': {'src': 'props/prop_tally13.webp'},
 }
