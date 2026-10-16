@@ -1,6 +1,7 @@
 // Asset metadata shared by the engine (animation lengths) and the renderer (files, anchors).
 // The JSON files are produced by tools/assets/*.py from the original artwork.
 import sharedChars from './generated/characters.shared.json';
+import sheetChars from './generated/characters.sheets.json';
 import images from './generated/images.json';
 import type { AssetMeta } from '../core/engine';
 
@@ -29,6 +30,8 @@ export interface CharMeta {
   frames: Record<string, FrameMeta>;
   /** Extra atlases whose frames this character uses (key -> frames). */
   extra?: Record<string, Record<string, FrameMeta>>;
+  /** Native facing of the art (1 = right, -1 = left). */
+  facing?: number;
 }
 
 export interface ImageMeta {
@@ -45,11 +48,15 @@ export function registerChars(c: Record<string, CharMeta>): void {
 }
 
 export function charMeta(key: string): CharMeta | undefined {
-  return extraChars[key] ?? (sharedChars as unknown as Record<string, CharMeta>)[key];
+  return (
+    extraChars[key] ??
+    (sheetChars as unknown as Record<string, CharMeta>)[key] ??
+    (sharedChars as unknown as Record<string, CharMeta>)[key]
+  );
 }
 
 export function allCharKeys(): string[] {
-  return [...new Set([...Object.keys(sharedChars), ...Object.keys(extraChars)])];
+  return [...new Set([...Object.keys(sharedChars), ...Object.keys(sheetChars), ...Object.keys(extraChars)])];
 }
 
 export function imageMeta(key: string): ImageMeta | undefined {

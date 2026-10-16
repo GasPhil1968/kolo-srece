@@ -25,7 +25,7 @@ export type Cmd =
   | { k: 'camera'; x: number | null; t: number }
   | { k: 'choice'; options: ChoiceOption[] }
   | { k: 'card'; title: string; lines: string[]; image?: string; cine?: string; t?: number }
-  | { k: 'vignette'; image: string; frames: number; fps: number; caption?: string; t: number }
+  | { k: 'vignette'; image: string; frames: number; fps: number; captions: string[]; t: number; loop: boolean }
   | { k: 'fx'; name: string; on: boolean; params?: Record<string, number | string | boolean> }
   | { k: 'checkpoint'; resume: string | null }
   | { k: 'shake'; t: number; amp: number }
@@ -66,13 +66,15 @@ export const card = (title: string, lines: string[], opts: { image?: string; cin
   lines,
   ...opts,
 });
-export const vignette = (image: string, opts: { frames?: number; fps?: number; caption?: string; t?: number } = {}): Cmd => ({
+/** Animated cinematic strip (4 x 2 frames of 384 x 216). Plays once and holds unless loop. */
+export const vignette = (image: string, opts: { frames?: number; fps?: number; caption?: string; captions?: string[]; t?: number; loop?: boolean } = {}): Cmd => ({
   k: 'vignette',
   image,
   frames: opts.frames ?? 8,
   fps: opts.fps ?? 6,
-  caption: opts.caption,
+  captions: opts.captions ?? (opts.caption ? [opts.caption] : []),
   t: opts.t ?? 4,
+  loop: opts.loop ?? false,
 });
 export const fx = (name: string, on: boolean, params?: Record<string, number | string | boolean>): Cmd => ({ k: 'fx', name, on, params });
 export const checkpoint = (resume: string | null = null): Cmd => ({ k: 'checkpoint', resume });

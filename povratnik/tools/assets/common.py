@@ -45,6 +45,82 @@ def bbox(alpha: np.ndarray, thr: int = 24):
     return int(xs.min()), int(ys.min()), int(xs.max()) + 1, int(ys.max()) + 1
 
 
+def label(mask: np.ndarray) -> tuple[np.ndarray, int]:
+    """8-connected component labelling (numpy + BFS; sprite cells are small)."""
+    from collections import deque
+    H, W = mask.shape
+    lab = np.zeros((H, W), np.int32)
+    n = 0
+    ys, xs = np.nonzero(mask)
+    for y0, x0 in zip(ys, xs):
+        if lab[y0, x0]:
+            continue
+        n += 1
+        lab[y0, x0] = n
+        q = deque([(y0, x0)])
+        while q:
+            y, x = q.popleft()
+            for dy in (-1, 0, 1):
+                for dx in (-1, 0, 1):
+                    ny, nx = y + dy, x + dx
+                    if 0 <= ny < H and 0 <= nx < W and mask[ny, nx] and not lab[ny, nx]:
+                        lab[ny, nx] = n
+                        q.append((ny, nx))
+    return lab, n
+
+
+def dilate(mask: np.ndarray, iterations: int) -> np.ndarray:
+    m = mask.copy()
+    for _ in range(iterations):
+        g = m.copy()
+        g[1:] |= m[:-1]
+        g[:-1] |= m[1:]
+        g[:, 1:] |= m[:, :-1]
+        g[:, :-1] |= m[:, 1:]
+        m = g
+    return m
+
+
+def keep_main_blob(rgba: np.ndarray, near: int = 6, thr: int = 24) -> tuple[np.ndarray, int]:
+    """Remove stray fragments: keep the largest opaque component and pieces within `near` px of it."""
+    a = rgba[:, :, 3] > thr
+    lab, n = label(a)
+    if n <= 1:
+        return rgba, 0
+    sizes = np.bincount(lab.ravel())[1:]
+    main = int(np.argmax(sizes)) + 1
+    grown = dilate(lab == main, near)
+    keep = np.zeros(n + 1, bool)
+    keep[main] = True
+    touching = np.unique(lab[grown & (lab > 0)])
+    keep[touching] = True
+    mask = keep[lab]
+    out = rgba.copy()
+    removed = int((a & ~mask).sum())
+    out[~mask] = 0
+    return out, removed
+
+
+def flat_top(alpha: np.ndarray, thr: int = 127) -> float:
+    """Ratio of the opaque width in the top rows to the head width just below.
+
+    A natural head (hair, hat, turban) is rounded at the top, so the first opaque rows are narrow.
+    Art whose crown was cut off in the source sheet starts with a straight, wide edge.
+    """
+    a = alpha > thr
+    rows = np.nonzero(a.any(1))[0]
+    if len(rows) < 20:
+        return 0.0
+    top = rows[0]
+    h = rows[-1] - top
+    def width(y: int) -> int:
+        xs = np.nonzero(a[y])[0]
+        return int(xs.max() - xs.min() + 1) if len(xs) else 0
+    w_top = max(width(top), width(top + 1))
+    w_head = max(width(top + int(h * 0.05)), width(top + int(h * 0.07)), 1)
+    return w_top / w_head
+
+
 def defringe(rgba: np.ndarray, lum_jump: float = 55.0, sat_max: float = 0.22) -> tuple[np.ndarray, int]:
     """Remove light matte remnants on silhouette edges.
 

@@ -536,15 +536,20 @@ export class GameUI implements SceneHooks {
       this.vignetteRef = v;
       const box = el('div', { class: 'overlay vignette', 'data-testid': 'vignette' });
       box.append(el('div', { class: 'strip', style: `background-image:url(assets/cine/${v.image}.webp)` }));
-      if (v.caption) box.append(el('div', { class: 'cap', text: v.caption }));
+      box.append(el('div', { class: 'cap', 'data-testid': 'vignette-caption' }));
       box.append(el('div', { class: 'cont', text: UI.card.clickToContinue }));
       box.addEventListener('click', () => this.engine.intent({ k: 'advance' }));
       this.root.append(box);
       this.vignetteEl = box;
     }
     const strip = this.vignetteEl!.querySelector('.strip') as HTMLElement;
-    const f = this.engine.settings.reducedMotion ? 0 : Math.floor(v.t * v.fps) % v.frames;
+    const raw = Math.floor(v.t * v.fps);
+    const f = this.engine.settings.reducedMotion ? v.frames - 1 : v.loop ? raw % v.frames : Math.min(v.frames - 1, raw);
     strip.style.backgroundPosition = `${-(f % 4) * 768}px ${-Math.floor(f / 4) * 432}px`;
+    const cap = this.vignetteEl!.querySelector('.cap') as HTMLElement;
+    const ci = v.captions.length ? Math.min(v.captions.length - 1, Math.floor((v.t / Math.max(0.01, v.dur)) * v.captions.length)) : -1;
+    const ct = ci >= 0 ? v.captions[ci] : '';
+    if (cap.textContent !== ct) cap.textContent = ct;
   }
 
   private renderCombat(): void {

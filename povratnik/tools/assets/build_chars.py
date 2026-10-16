@@ -12,8 +12,31 @@ import os
 import sys
 
 import numpy as np
+from PIL import Image
 
-from common import GENERATED, PUBLIC, Atlas, Frame, bbox, defringe, ensure_dir, load_rgba, pack, ref, torso_center_x
+from common import GENERATED, PUBLIC, ROOT, Atlas, Frame, bbox, defringe, ensure_dir, flat_top, keep_main_blob, load_rgba, pack, ref, torso_center_x
+from crown_patch import restore_crown
+
+CACHE = os.path.join(ROOT, '.cache', 'crowns')
+
+
+def patched_idle(key: str, idle: np.ndarray, walk_cells: list[np.ndarray]) -> tuple[np.ndarray, dict]:
+    """Idle cell with its cut-off crown restored from the best-matching walk frame (cached)."""
+    ensure_dir(CACHE)
+    cpath = os.path.join(CACHE, f'{key}.png')
+    ipath = os.path.join(CACHE, f'{key}.json')
+    if os.path.exists(cpath) and os.path.exists(ipath):
+        return np.array(Image.open(cpath).convert('RGBA')), json.load(open(ipath))
+    best = None
+    for col, w in enumerate(walk_cells):
+        out, info = restore_crown(idle, w)
+        if info.get('patched') and (best is None or info['score'] < best[1]['score']):
+            best = (out, {**info, 'walkCol': col})
+    if best is None:
+        return idle, {'patched': False}
+    Image.fromarray(best[0]).save(cpath)
+    json.dump(best[1], open(ipath, 'w'))
+    return best
 
 # key: (sheet number, row)  -- mapping verified against the old art.js table and visually
 SHARED = {
@@ -29,10 +52,20 @@ SHARED = {
 WALK_FPS = 9
 WALK_SPEED = 150  # world px / s at perspective scale 1
 WALK_SHORTEN = 0.985  # a walking figure is slightly shorter than the same figure standing
+FLAT_TOP_LIMIT = 0.62  # crown cut off in the idle cell (straight wide top edge)
+FORCE_WALK_STAND: set[str] = set()
+# Hats, turbans and tied-back hair have naturally flat tops; their idle cells were checked visually and are complete.
+FORCE_IDLE = {'macleod', 'emin', 'katib', 'soldat', 'dorfalter'}
 
 
 def cell(img: np.ndarray, cx: int, cy: int, cw: int, ch: int) -> np.ndarray:
     return img[cy * ch:(cy + 1) * ch, cx * cw:(cx + 1) * cw]
+
+
+def clean(c: np.ndarray, stats: dict) -> np.ndarray:
+    c, r = keep_main_blob(c)
+    stats['fragments'] += r
+    return c
 
 
 def frame_from_cell(name: str, c: np.ndarray, ground: int, ax_cell: float, stats: dict) -> Frame:
@@ -57,23 +90,34 @@ def build(keys: list[str] | None = None) -> dict:
         if n not in sheets:
             sheets[n] = (load_rgba(ref(f'sprites/char_0{n}.webp')), load_rgba(ref(f'sprites/walk_0{n}.webp')))
         char, walk = sheets[n]
-        stats = {'defringed': 0}
+        stats = {'defringed': 0, 'fragments': 0}
         atlas = Atlas(key)
-        # stand
-        sc = cell(char, 0, row, 220, 220)
-        b = bbox(sc[:, :, 3])
-        assert b, key
-        stand_h = b[3] - b[1]
-        ax = torso_center_x(sc[:, :, 3], b[1], b[3])
-        atlas.frames.append(frame_from_cell('stand_0', sc, b[3], ax, stats))
-        # walk
-        cells = [cell(walk, i, row, 200, 200) for i in range(8)]
+        # walk (eight phases)
+        cells = [clean(cell(walk, i, row, 200, 200), stats) for i in range(8)]
         boxes = [bbox(c[:, :, 3]) for c in cells]
         ground = max(bb[3] for bb in boxes if bb)
         walk_h = max(bb[3] - bb[1] for bb in boxes if bb)
         for i, (c, bb) in enumerate(zip(cells, boxes)):
             axw = torso_center_x(c[:, :, 3], bb[1], bb[3])
             atlas.frames.append(frame_from_cell(f'walk_{i}', c, ground, axw, stats))
+        # stand: the idle cell, unless its crown is cut off in the source art; then the walk phase
+        # with the feet closest together (passing pose) stands in, at the walk sheet's scale.
+        sc = clean(cell(char, 0, row, 220, 220), stats)
+        b = bbox(sc[:, :, 3])
+        assert b, key
+        ft = flat_top(sc[:, :, 3])
+        stand_source = f'sprites/char_0{n}.webp row {row} col 0'
+        if (ft > FLAT_TOP_LIMIT and key not in FORCE_IDLE) or key in FORCE_WALK_STAND:
+            # The crown is cut off in the source art: restore it from the character's own walk frame.
+            fixed, info = patched_idle(key, sc, cells)
+            if info.get('patched'):
+                sc = fixed
+                stand_source = (f'sprites/char_0{n}.webp row {row} col 0, crown ({info["rows"]} rows) restored from '
+                                f'walk_0{n} col {info["walkCol"]} at scale {info["scale"]}')
+            b = bbox(sc[:, :, 3])
+        stand_h = b[3] - b[1]
+        ax = torso_center_x(sc[:, :, 3], b[1], b[3])
+        atlas.frames.append(frame_from_cell('stand_0', sc, b[3], ax, stats))
         frames = pack(atlas, out_dir)
         meta[key] = {
             'atlas': f'chars/{key}',
@@ -84,9 +128,9 @@ def build(keys: list[str] | None = None) -> dict:
                          'refH': round(walk_h / WALK_SHORTEN, 1)},
             },
             'frames': frames,
-            'source': {'stand': f'sprites/char_0{n}.webp row {row} col 0', 'walk': f'sprites/walk_0{n}.webp row {row}'},
+            'source': {'stand': stand_source, 'walk': f'sprites/walk_0{n}.webp row {row}'},
         }
-        print(f'{key:12s} stand_h={stand_h} walk_h={walk_h} ground={ground} defringed={stats["defringed"]}')
+        print(f'{key:12s} stand_h={stand_h} walk_h={walk_h} flat={ft:.2f} fragments={stats["fragments"]} defringed={stats["defringed"]}  stand<-{stand_source}')
     return meta
 
 

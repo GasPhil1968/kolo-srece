@@ -96,7 +96,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 194
+    "refH": 203
    },
    "walk": {
     "fps": 9,
@@ -119,7 +119,7 @@
    "stand_0": {
     "ax": 0.4875,
     "ay": 1.0,
-    "h": 194,
+    "h": 203,
     "w": 80
    },
    "walk_0": {
@@ -172,7 +172,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_03.webp row 3 col 0",
+   "stand": "sprites/char_03.webp row 3 col 0, crown (9 rows) restored from walk_03 col 3 at scale 1.1",
    "walk": "sprites/walk_03.webp row 3"
   },
   "walkSpeed": 150
@@ -185,7 +185,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 198
+    "refH": 215
    },
    "walk": {
     "fps": 9,
@@ -206,9 +206,9 @@
   "atlas": "chars/bauer",
   "frames": {
    "stand_0": {
-    "ax": 0.45833,
+    "ax": 0.44792,
     "ay": 1.0,
-    "h": 198,
+    "h": 215,
     "w": 96
    },
    "walk_0": {
@@ -261,7 +261,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_06.webp row 1 col 0",
+   "stand": "sprites/char_06.webp row 1 col 0, crown (17 rows) restored from walk_06 col 2 at scale 1.11",
    "walk": "sprites/walk_06.webp row 1"
   },
   "walkSpeed": 150
@@ -541,7 +541,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 179
+    "refH": 194
    },
    "walk": {
     "fps": 9,
@@ -564,7 +564,7 @@
    "stand_0": {
     "ax": 0.48,
     "ay": 1.0,
-    "h": 179,
+    "h": 194,
     "w": 75
    },
    "walk_0": {
@@ -617,7 +617,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_04.webp row 3 col 0",
+   "stand": "sprites/char_04.webp row 3 col 0, crown (15 rows) restored from walk_04 col 0 at scale 1.02",
    "walk": "sprites/walk_04.webp row 3"
   },
   "walkSpeed": 150
@@ -808,7 +808,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 180
+    "refH": 211
    },
    "walk": {
     "fps": 9,
@@ -829,10 +829,10 @@
   "atlas": "chars/hauptmann",
   "frames": {
    "stand_0": {
-    "ax": 0.20732,
+    "ax": 0.47692,
     "ay": 1.0,
-    "h": 180,
-    "w": 164
+    "h": 211,
+    "w": 65
    },
    "walk_0": {
     "ax": 0.37333,
@@ -884,7 +884,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_05.webp row 3 col 0",
+   "stand": "sprites/char_05.webp row 3 col 0, crown (31 rows) restored from walk_05 col 6 at scale 1.14",
    "walk": "sprites/walk_05.webp row 3"
   },
   "walkSpeed": 150
@@ -918,10 +918,10 @@
   "atlas": "chars/ivan",
   "frames": {
    "stand_0": {
-    "ax": 0.18831,
+    "ax": 0.43939,
     "ay": 1.0,
     "h": 193,
-    "w": 154
+    "w": 66
    },
    "walk_0": {
     "ax": 0.41333,
@@ -1253,7 +1253,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 201
+    "refH": 213
    },
    "walk": {
     "fps": 9,
@@ -1274,9 +1274,9 @@
   "atlas": "chars/major",
   "frames": {
    "stand_0": {
-    "ax": 0.47917,
+    "ax": 0.46875,
     "ay": 1.0,
-    "h": 201,
+    "h": 213,
     "w": 96
    },
    "walk_0": {
@@ -1329,7 +1329,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_06.webp row 2 col 0",
+   "stand": "sprites/char_06.webp row 2 col 0, crown (12 rows) restored from walk_06 col 6 at scale 1.12",
    "walk": "sprites/walk_06.webp row 2"
   },
   "walkSpeed": 150
@@ -1431,7 +1431,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 192
+    "refH": 200
    },
    "walk": {
     "fps": 9,
@@ -1454,7 +1454,7 @@
    "stand_0": {
     "ax": 0.46269,
     "ay": 1.0,
-    "h": 192,
+    "h": 200,
     "w": 67
    },
    "walk_0": {
@@ -1507,7 +1507,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_01.webp row 2 col 0",
+   "stand": "sprites/char_01.webp row 2 col 0, crown (8 rows) restored from walk_01 col 7 at scale 1.1",
    "walk": "sprites/walk_01.webp row 2"
   },
   "walkSpeed": 150
@@ -1787,7 +1787,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 193
+    "refH": 210
    },
    "walk": {
     "fps": 9,
@@ -1808,9 +1808,9 @@
   "atlas": "chars/mijo1996",
   "frames": {
    "stand_0": {
-    "ax": 0.47945,
+    "ax": 0.46575,
     "ay": 1.0,
-    "h": 193,
+    "h": 210,
     "w": 73
    },
    "walk_0": {
@@ -1863,7 +1863,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_01.webp row 3 col 0",
+   "stand": "sprites/char_01.webp row 3 col 0, crown (17 rows) restored from walk_01 col 1 at scale 1.16",
    "walk": "sprites/walk_01.webp row 3"
   },
   "walkSpeed": 150
@@ -2054,7 +2054,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 196
+    "refH": 200
    },
    "walk": {
     "fps": 9,
@@ -2077,7 +2077,7 @@
    "stand_0": {
     "ax": 0.47059,
     "ay": 1.0,
-    "h": 196,
+    "h": 200,
     "w": 85
    },
    "walk_0": {
@@ -2130,7 +2130,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_03.webp row 2 col 0",
+   "stand": "sprites/char_03.webp row 2 col 0, crown (4 rows) restored from walk_03 col 7 at scale 1.05",
    "walk": "sprites/walk_03.webp row 2"
   },
   "walkSpeed": 150
@@ -2143,7 +2143,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 197
+    "refH": 199
    },
    "walk": {
     "fps": 9,
@@ -2164,10 +2164,10 @@
   "atlas": "chars/rehberger",
   "frames": {
    "stand_0": {
-    "ax": 0.18239,
+    "ax": 0.45312,
     "ay": 1.0,
-    "h": 197,
-    "w": 159
+    "h": 199,
+    "w": 64
    },
    "walk_0": {
     "ax": 0.39474,
@@ -2219,7 +2219,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_05.webp row 1 col 0",
+   "stand": "sprites/char_05.webp row 1 col 0, crown (2 rows) restored from walk_05 col 3 at scale 1.02",
    "walk": "sprites/walk_05.webp row 1"
   },
   "walkSpeed": 150
@@ -2410,7 +2410,7 @@
      "stand_0"
     ],
     "loop": true,
-    "refH": 176
+    "refH": 186
    },
    "walk": {
     "fps": 9,
@@ -2431,10 +2431,10 @@
   "atlas": "chars/zeman",
   "frames": {
    "stand_0": {
-    "ax": 0.21605,
+    "ax": 0.5,
     "ay": 1.0,
-    "h": 176,
-    "w": 162
+    "h": 186,
+    "w": 68
    },
    "walk_0": {
     "ax": 0.44048,
@@ -2486,7 +2486,7 @@
    }
   },
   "source": {
-   "stand": "sprites/char_05.webp row 2 col 0",
+   "stand": "sprites/char_05.webp row 2 col 0, crown (10 rows) restored from walk_05 col 5 at scale 1.0",
    "walk": "sprites/walk_05.webp row 2"
   },
   "walkSpeed": 150

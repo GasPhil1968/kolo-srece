@@ -233,6 +233,162 @@
   "source": "bg/bg_weide.webp",
   "w": 1180
  },
+ "cine_akt2_a": {
+  "file": "cine/cine_akt2_a.webp",
+  "h": 432,
+  "source": "intros/cine_akt2_a.webp",
+  "w": 1536
+ },
+ "cine_akt2_b": {
+  "file": "cine/cine_akt2_b.webp",
+  "h": 432,
+  "source": "intros/cine_akt2_b.webp",
+  "w": 1536
+ },
+ "cine_fremdesdorf_a": {
+  "file": "cine/cine_fremdesdorf_a.webp",
+  "h": 432,
+  "source": "intros/cine_fremdesdorf_a.webp",
+  "w": 1536
+ },
+ "cine_fremdesdorf_b": {
+  "file": "cine/cine_fremdesdorf_b.webp",
+  "h": 432,
+  "source": "intros/cine_fremdesdorf_b.webp",
+  "w": 1536
+ },
+ "cine_hochzeit_a": {
+  "file": "cine/cine_hochzeit_a.webp",
+  "h": 432,
+  "source": "intros/cine_hochzeit_a.webp",
+  "w": 1536
+ },
+ "cine_hochzeit_b": {
+  "file": "cine/cine_hochzeit_b.webp",
+  "h": 432,
+  "source": "intros/cine_hochzeit_b.webp",
+  "w": 1536
+ },
+ "cine_hof_a": {
+  "file": "cine/cine_hof_a.webp",
+  "h": 432,
+  "source": "intros/cine_hof_a.webp",
+  "w": 1536
+ },
+ "cine_hof_b": {
+  "file": "cine/cine_hof_b.webp",
+  "h": 432,
+  "source": "intros/cine_hof_b.webp",
+  "w": 1536
+ },
+ "cine_kap1_a": {
+  "file": "cine/cine_kap1_a.webp",
+  "h": 432,
+  "source": "intros/cine_kap1_a.webp",
+  "w": 1536
+ },
+ "cine_kap1_b": {
+  "file": "cine/cine_kap1_b.webp",
+  "h": 432,
+  "source": "intros/cine_kap1_b.webp",
+  "w": 1536
+ },
+ "cine_kap2_a": {
+  "file": "cine/cine_kap2_a.webp",
+  "h": 432,
+  "source": "intros/cine_kap2_a.webp",
+  "w": 1536
+ },
+ "cine_kap2_b": {
+  "file": "cine/cine_kap2_b.webp",
+  "h": 432,
+  "source": "intros/cine_kap2_b.webp",
+  "w": 1536
+ },
+ "cine_kolonne_a": {
+  "file": "cine/cine_kolonne_a.webp",
+  "h": 432,
+  "source": "intros/cine_kolonne_a.webp",
+  "w": 1536
+ },
+ "cine_kolonne_b": {
+  "file": "cine/cine_kolonne_b.webp",
+  "h": 432,
+  "source": "intros/cine_kolonne_b.webp",
+  "w": 1536
+ },
+ "cine_lager_a": {
+  "file": "cine/cine_lager_a.webp",
+  "h": 432,
+  "source": "intros/cine_lager_a.webp",
+  "w": 1536
+ },
+ "cine_lager_b": {
+  "file": "cine/cine_lager_b.webp",
+  "h": 432,
+  "source": "intros/cine_lager_b.webp",
+  "w": 1536
+ },
+ "cine_opening_duel_a": {
+  "file": "cine/cine_opening_duel_a.webp",
+  "h": 432,
+  "source": "intros/cine_opening_duel_a.webp",
+  "w": 1536
+ },
+ "cine_opening_duel_b": {
+  "file": "cine/cine_opening_duel_b.webp",
+  "h": 432,
+  "source": "intros/cine_opening_duel_b.webp",
+  "w": 1536
+ },
+ "cine_opening_energy_a": {
+  "file": "cine/cine_opening_energy_a.webp",
+  "h": 432,
+  "source": "intros/cine_opening_energy_a.webp",
+  "w": 1536
+ },
+ "cine_opening_energy_b": {
+  "file": "cine/cine_opening_energy_b.webp",
+  "h": 432,
+  "source": "intros/cine_opening_energy_b.webp",
+  "w": 1536
+ },
+ "cine_opening_face_a": {
+  "file": "cine/cine_opening_face_a.webp",
+  "h": 432,
+  "source": "intros/cine_opening_face_a.webp",
+  "w": 1536
+ },
+ "cine_opening_face_b": {
+  "file": "cine/cine_opening_face_b.webp",
+  "h": 432,
+  "source": "intros/cine_opening_face_b.webp",
+  "w": 1536
+ },
+ "cine_prolog_a": {
+  "file": "cine/cine_prolog_a.webp",
+  "h": 432,
+  "source": "intros/cine_prolog_a.webp",
+  "w": 1536
+ },
+ "cine_prolog_b": {
+  "file": "cine/cine_prolog_b.webp",
+  "h": 432,
+  "source": "intros/cine_prolog_b.webp",
+  "w": 1536
+ },
+ "cine_zaesur_a": {
+  "file": "cine/cine_zaesur_a.webp",
+  "h": 432,
+  "source": "intros/cine_zaesur_a.webp",
+  "w": 1536
+ },
+ "cine_zaesur_b": {
+  "file": "cine/cine_zaesur_b.webp",
+  "h": 432,
+  "source": "intros/cine_zaesur_b.webp",
+  "w": 1536
+ },
  "intro_akt2": {
   "file": "screens/intro_akt2.webp",
   "h": 600,
@@ -310,5 +466,125 @@
   "h": 600,
   "source": "menu/menu-keyart.webp",
   "w": 960
+ },
+ "prop_band": {
+  "file": "props/prop_band.webp",
+  "h": 88,
+  "source": "ui/inv.webp",
+  "w": 88
+ },
+ "prop_dzezva": {
+  "file": "props/prop_dzezva.webp",
+  "h": 256,
+  "source": "props/prop_sarajevo_dzezva.webp",
+  "w": 256
+ },
+ "prop_fensterplane": {
+  "file": "props/prop_fensterplane.webp",
+  "h": 154,
+  "source": "props/prop_fensterplane.webp",
+  "w": 62
+ },
+ "prop_hausnummer3": {
+  "file": "props/prop_hausnummer3.webp",
+  "h": 38,
+  "source": "props/prop_hausnummer3.webp",
+  "w": 54
+ },
+ "prop_kafana_counter": {
+  "file": "props/prop_kafana_counter.webp",
+  "h": 743,
+  "source": "sarajevo-v6/kafana-counter.webp",
+  "w": 2116
+ },
+ "prop_kafana_schild": {
+  "file": "props/prop_kafana_schild.webp",
+  "h": 48,
+  "source": "props/prop_kafana_schild.webp",
+  "w": 152
+ },
+ "prop_kaffeestand": {
+  "file": "props/prop_kaffeestand.webp",
+  "h": 266,
+  "source": "props/prop_kaffeestand.webp",
+  "w": 300
+ },
+ "prop_lampe_an": {
+  "file": "props/prop_lampe_an.webp",
+  "h": 266,
+  "source": "props/prop_lampe_an.webp",
+  "w": 386
+ },
+ "prop_lampe_aus": {
+  "file": "props/prop_lampe_aus.webp",
+  "h": 266,
+  "source": "props/prop_lampe_aus.webp",
+  "w": 386
+ },
+ "prop_lupe": {
+  "file": "props/prop_lupe.webp",
+  "h": 42,
+  "source": "props/prop_lupe.webp",
+  "w": 162
+ },
+ "prop_muelltonne": {
+  "file": "props/prop_muelltonne.webp",
+  "h": 260,
+  "source": "props/prop_muelltonne.webp",
+  "w": 198
+ },
+ "prop_notes": {
+  "file": "props/prop_notes.webp",
+  "h": 64,
+  "source": "props/prop_sarajevo_notes.webp",
+  "w": 256
+ },
+ "prop_radio_an": {
+  "file": "props/prop_radio_an.webp",
+  "h": 72,
+  "source": "props/prop_radio_an.webp",
+  "w": 176
+ },
+ "prop_radio_aus": {
+  "file": "props/prop_radio_aus.webp",
+  "h": 72,
+  "source": "props/prop_radio_aus.webp",
+  "w": 176
+ },
+ "prop_rose": {
+  "file": "props/prop_rose.webp",
+  "h": 78,
+  "source": "props/prop_sarajevo_rose.webp",
+  "w": 168
+ },
+ "prop_strassenschild": {
+  "file": "props/prop_strassenschild.webp",
+  "h": 94,
+  "source": "props/prop_strassenschild.webp",
+  "w": 208
+ },
+ "prop_tasse_kafana": {
+  "file": "props/prop_tasse_kafana.webp",
+  "h": 58,
+  "source": "props/prop_tasse_kafana.webp",
+  "w": 94
+ },
+ "prop_tasse_leer": {
+  "file": "props/prop_tasse_leer.webp",
+  "h": 56,
+  "source": "props/prop_tasse_leer.webp",
+  "w": 94
+ },
+ "prop_tasse_voll": {
+  "file": "props/prop_tasse_voll.webp",
+  "h": 56,
+  "source": "props/prop_tasse_voll.webp",
+  "w": 94
+ },
+ "prop_zeitung": {
+  "file": "props/prop_zeitung.webp",
+  "h": 106,
+  "source": "props/prop_zeitung.webp",
+  "w": 206
  }
 }

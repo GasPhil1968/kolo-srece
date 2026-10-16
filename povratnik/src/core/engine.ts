@@ -84,7 +84,8 @@ export interface VignetteView {
   image: string;
   frames: number;
   fps: number;
-  caption?: string;
+  captions: string[];
+  loop: boolean;
   t: number;
   dur: number;
 }
@@ -281,11 +282,11 @@ export class Engine {
     return mesh;
   }
 
-  /** Perspective scale for a standard adult at y. */
+  /** Perspective scale for a standard adult standing at y (linear, as a pinhole camera over flat ground). */
   scaleAt(y: number, room: RoomDef = this.room): number {
     const p = room.perspective;
     const t = (y - p.farY) / (p.nearY - p.farY || 1);
-    return p.farScale + (p.nearScale - p.farScale) * clamp(t, -0.2, 1.2);
+    return Math.max(0.05, p.farScale + (p.nearScale - p.farScale) * t);
   }
 
   actorDef(id: string): ActorDef | undefined {
@@ -776,6 +777,7 @@ export class Engine {
       const a = this.state.actors[id];
       const def = this.actorDef(id);
       if (!a || a.room !== this.state.room || a.hidden || !def) return undefined;
+      if (def.talkSpot) return dyn(def.talkSpot, this.state);
       const pc = this.state.actors[PC];
       const off = (def.talkOffset ?? 80) * this.scaleAt(a.y);
       const side = pc.x <= a.x ? -1 : 1;
@@ -1143,7 +1145,7 @@ export class Engine {
         };
       }
       case 'vignette': {
-        const view: VignetteView = { image: cmd.image, frames: cmd.frames, fps: cmd.fps, caption: cmd.caption, t: 0, dur: cmd.t };
+        const view: VignetteView = { image: cmd.image, frames: cmd.frames, fps: cmd.fps, captions: cmd.captions, loop: cmd.loop, t: 0, dur: cmd.t };
         this.vignetteView = view;
         return {
           cmd,
@@ -1280,7 +1282,7 @@ export class Engine {
       update: (dt, instant) => {
         t += dt;
         if (!instant && (this.fadeLevel < 0.999 || t < 1.4)) return false;
-        if (next) {
+        if (next && this.content.chapters.has(next)) {
           const keep = this.state;
           // newChapter resets the runtime; this runner is replaced by the chapter's own.
           this.newChapter(next, keep);

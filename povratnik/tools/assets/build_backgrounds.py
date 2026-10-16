@@ -81,10 +81,20 @@ SCREENS = {
 }
 
 
+# Cinematic strips (4 x 2 frames of 384 x 216) for chapter cards and vignettes.
+CINES = {k: f'intros/{k}.webp' for k in [
+    'cine_prolog_a', 'cine_prolog_b', 'cine_kap1_a', 'cine_kap1_b', 'cine_kap2_a', 'cine_kap2_b',
+    'cine_zaesur_a', 'cine_zaesur_b', 'cine_akt2_a', 'cine_akt2_b', 'cine_hof_a', 'cine_hof_b',
+    'cine_kolonne_a', 'cine_kolonne_b', 'cine_lager_a', 'cine_lager_b', 'cine_hochzeit_a', 'cine_hochzeit_b',
+    'cine_fremdesdorf_a', 'cine_fremdesdorf_b', 'cine_opening_face_a', 'cine_opening_face_b',
+    'cine_opening_duel_a', 'cine_opening_duel_b', 'cine_opening_energy_a', 'cine_opening_energy_b',
+]}
+
+
 def main() -> None:
     only = set(sys.argv[1:])
     meta = {}
-    for group, table, sub in (('bg', BACKGROUNDS, 'bg'), ('screen', SCREENS, 'screens')):
+    for group, table, sub in (('bg', BACKGROUNDS, 'bg'), ('screen', SCREENS, 'screens'), ('cine', CINES, 'cine')):
         for key, src in table.items():
             if only and key not in only:
                 continue

@@ -77,6 +77,27 @@ export interface LayerDef {
   /** Animated layer: frame keys cycled at fps. */
   frames?: string[];
   fps?: number;
+  /** Place the image into this rectangle (x, y, w, h) instead of x/y + scale. */
+  rect?: [number, number, number, number];
+}
+
+/** Non-interactive figure drawn like an actor (perspective scale, planted anchor, y-sorted). */
+export interface DecorDef {
+  id: string;
+  character: string;
+  anim?: string;
+  x: number;
+  y: number;
+  facing?: Facing;
+  relHeight?: number;
+  visible?: Cond;
+  /** Fixed depth (otherwise its y). */
+  depth?: number;
+  /** Fixed scale multiplier instead of the room perspective (e.g. birds in the sky). */
+  scale?: number;
+  alpha?: number;
+  /** Animation clock offset in seconds, so neighbours do not move in sync. */
+  phase?: number;
 }
 
 export interface AmbientDef {
@@ -107,6 +128,7 @@ export interface RoomDef {
   entries: Record<string, Spot>;
   hotspots: HotspotDef[];
   layers?: LayerDef[];
+  decor?: DecorDef[];
   ambient?: AmbientDef[];
   /** Multiply tint for actors in this room (night scenes), e.g. 0x9aa6c8. */
   actorTint?: Dyn<number>;
@@ -133,6 +155,8 @@ export interface ActorDef {
   anyItem?: (item: string, s: GameState) => Handler | undefined;
   /** Where the player stands to talk: offset from the actor (x is mirrored to the player's side). */
   talkOffset?: number;
+  /** Fixed spot to stand at instead (e.g. in front of a counter). */
+  talkSpot?: Dyn<Spot>;
 }
 
 export interface ItemDef {

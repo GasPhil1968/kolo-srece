@@ -42,6 +42,15 @@ game.events.once(Phaser.Core.Events.READY, () => {
   });
   game.scene.add('game', scene, true, { engine, hooks: ui });
   window.__pov = { engine, ui, scene, game };
+  // Development helper (used by visual tests): jump to a room entry without running scripts.
+  (window as unknown as { __povGoto: (room: string, entry: string) => void }).__povGoto = (room: string, entry: string) => {
+    const r = engine.roomDef(room);
+    if (!r) return;
+    const e = r.entries[entry] ?? Object.values(r.entries)[0];
+    engine.state.room = room;
+    engine.placeActor('pc', { room, x: e.x, y: e.y, facing: e.face ?? 1 });
+    engine.snapCamera();
+  };
   ui.fit();
   ui.menus.openTitle();
   void VIEW_H;

@@ -4,7 +4,7 @@
 import Phaser from 'phaser';
 import type { Engine } from '../core/engine';
 import { dyn, LayerDef, RoomDef } from '../core/content';
-import { ADULT_H, charMeta, imageMeta, CharMeta } from '../content/assets';
+import { ADULT_H, charMeta, imageMeta, CharMeta, FrameMeta } from '../content/assets';
 import { pointInPoly, toPoints } from '../core/geom';
 import { Ambience } from './ambience';
 
@@ -132,6 +132,10 @@ export class GameScene extends Phaser.Scene {
         for (const k of Object.keys(m.extra ?? {})) keys.add(k);
       }
     }
+    for (const d of room.decor ?? []) {
+      const m = charMeta(d.character);
+      if (m) keys.add(m.atlas);
+    }
     for (const k of room.assets ?? []) keys.add(k);
     for (const k of this.ambience.textures(room)) keys.add(k);
     return [...keys];
@@ -212,6 +216,8 @@ export class GameScene extends Phaser.Scene {
     this.bg = null;
     for (const v of this.actorViews.values()) v.sprite.destroy();
     this.actorViews.clear();
+    for (const v of this.decorViews.values()) v.destroy();
+    this.decorViews.clear();
     for (const v of this.layerViews.values()) v.destroy();
     this.layerViews.clear();
     this.ambience.clear();
@@ -281,12 +287,21 @@ export class GameScene extends Phaser.Scene {
         this.layerViews.set(l.id, v);
       } else if (v.texture.key !== tf.texture || (tf.frame && v.frame.name !== tf.frame)) v.setTexture(tf.texture, tf.frame);
       v.setVisible(true);
-      v.setPosition(l.x, l.y);
-      v.setOrigin(l.origin?.[0] ?? 0, l.origin?.[1] ?? 0);
       v.setAlpha(l.alpha ?? 1);
-      v.setScale(l.scale ?? 1);
       v.setFlipX(!!l.flipX);
       v.setDepth(layerDepth(l));
+      if (l.rect) {
+        v.setOrigin(0, 0);
+        v.setPosition(l.rect[0], l.rect[1]);
+        v.setDisplaySize(l.rect[2], l.rect[3]);
+      } else {
+        v.setPosition(l.x, l.y);
+        const fm = tf.frame ? atlasFrameMeta(tf.texture, tf.frame) : undefined;
+        if (l.origin) v.setOrigin(l.origin[0], l.origin[1]);
+        else if (fm) v.setOrigin(l.flipX ? 1 - fm.ax : fm.ax, fm.ay);
+        else v.setOrigin(0, 0);
+        v.setScale(l.scale ?? 1);
+      }
     }
   }
 
@@ -311,33 +326,9 @@ export class GameScene extends Phaser.Scene {
         this.actorViews.set(id, v);
       }
       const anim = engine.actorAnim(id);
-      const am = meta.anims[anim.name] ?? meta.anims.stand;
-      const n = am.frames.length;
-      const total = n * Math.max(1, anim.times);
-      let fi = Math.floor(anim.t * am.fps + 1e-6);
-      if (anim.loop) fi = ((fi % n) + n) % n;
-      else fi = Math.min(fi, total - 1) % n;
-      if (!anim.loop && Math.floor(anim.t * am.fps + 1e-6) >= total) fi = n - 1;
-      const frameName = am.frames[fi];
-      const atlas = am.atlas ?? meta.atlas;
-      if (!this.textures.exists(atlas)) {
-        this.ensure([atlas]);
-        continue;
-      }
-      const fm = (am.atlas ? meta.extra?.[am.atlas]?.[frameName] : meta.frames[frameName]) ?? meta.frames[frameName];
-      const sp = v.sprite;
-      if (sp.texture.key !== atlas || sp.frame.name !== frameName) sp.setTexture(atlas, frameName);
-      const flip = a.facing < 0;
-      sp.setFlipX(flip);
-      if (fm) sp.setOrigin(flip ? 1 - fm.ax : fm.ax, fm.ay);
       const def = engine.actorDef(id);
       const rel = id === 'pc' ? engine.chapter.pc.relHeight ?? 1 : def?.relHeight ?? 1;
-      const scale = (ADULT_H * engine.scaleAt(a.y) * rel) / am.refH;
-      sp.setScale(scale);
-      sp.setPosition(a.x, a.y);
-      sp.setDepth(a.y);
-      sp.setTint(tint);
-      sp.setVisible(true);
+      this.applyFigure(v.sprite, meta, anim.name, anim.t, anim.loop, anim.times, a.x, a.y, a.facing, rel, tint);
     }
     for (const [id, v] of this.actorViews) {
       if (!seen.has(id)) {
@@ -345,6 +336,72 @@ export class GameScene extends Phaser.Scene {
         this.actorViews.delete(id);
       }
     }
+    // Decor figures (non-interactive).
+    const dseen = new Set<string>();
+    for (const d of room.decor ?? []) {
+      if (d.visible && !d.visible(s)) continue;
+      const meta = charMeta(d.character);
+      if (!meta || !this.textures.exists(meta.atlas)) continue;
+      dseen.add(d.id);
+      let sp = this.decorViews.get(d.id);
+      if (!sp) {
+        sp = this.add.sprite(d.x, d.y, meta.atlas, firstFrame(meta));
+        this.decorViews.set(d.id, sp);
+      }
+      const name = d.anim ?? 'stand';
+      this.applyFigure(sp, meta, name, engine.clock + (d.phase ?? 0), true, 1, d.x, d.y, d.facing ?? 1, d.relHeight ?? 1, tint, d.scale);
+      if (d.depth !== undefined) sp.setDepth(d.depth);
+      sp.setAlpha(d.alpha ?? 1);
+    }
+    for (const [id, sp] of this.decorViews) {
+      if (!dseen.has(id)) {
+        sp.destroy();
+        this.decorViews.delete(id);
+      }
+    }
+  }
+
+  private decorViews = new Map<string, Phaser.GameObjects.Sprite>();
+
+  /** Set frame, anchor, facing, perspective scale and depth of a figure sprite. */
+  private applyFigure(
+    sp: Phaser.GameObjects.Sprite,
+    meta: CharMeta,
+    animName: string,
+    t: number,
+    loop: boolean,
+    times: number,
+    x: number,
+    y: number,
+    facing: number,
+    rel: number,
+    tint: number,
+    fixedScale?: number,
+  ): void {
+    const am = meta.anims[animName] ?? meta.anims.stand;
+    const n = am.frames.length;
+    const total = n * Math.max(1, times);
+    const raw = Math.floor(t * am.fps + 1e-6);
+    let fi: number;
+    if (loop) fi = ((raw % n) + n) % n;
+    else fi = raw >= total ? n - 1 : raw % n;
+    const frameName = am.frames[fi];
+    const atlas = am.atlas ?? meta.atlas;
+    if (!this.textures.exists(atlas)) {
+      this.ensure([atlas]);
+      return;
+    }
+    const fm = (am.atlas ? meta.extra?.[am.atlas]?.[frameName] : meta.frames[frameName]) ?? meta.frames[frameName];
+    if (sp.texture.key !== atlas || sp.frame.name !== frameName) sp.setTexture(atlas, frameName);
+    const flip = facing !== (meta.facing ?? 1);
+    sp.setFlipX(flip);
+    if (fm) sp.setOrigin(flip ? 1 - fm.ax : fm.ax, fm.ay);
+    const scale = fixedScale ?? (ADULT_H * this.engine.scaleAt(y) * rel) / am.refH;
+    sp.setScale(scale);
+    sp.setPosition(x, y);
+    sp.setDepth(y);
+    sp.setTint(tint);
+    sp.setVisible(true);
   }
 
   // ---------------------------------------------------------------- queries for the UI
@@ -430,9 +487,54 @@ export class GameScene extends Phaser.Scene {
     else this.hooks.click(t, wx, wy, sx, sy);
   }
 
+  /** Authoring overlay (?debug=1 or F9): walk areas, hotspot shapes, entries. */
+  debug = typeof location !== 'undefined' && new URLSearchParams(location.search).has('debug');
+
+  private drawDebug(room: RoomDef): void {
+    const g = this.highlightGfx;
+    const s = this.engine.state;
+    for (const area of dyn(room.walk, s)) {
+      for (const ring of [area.outer, ...(area.holes ?? [])]) {
+        g.lineStyle(2, ring === area.outer ? 0x00ff66 : 0xff3366, 0.9);
+        g.beginPath();
+        for (let i = 0; i < ring.length; i += 2) {
+          if (i === 0) g.moveTo(ring[i], ring[i + 1]);
+          else g.lineTo(ring[i], ring[i + 1]);
+        }
+        g.closePath();
+        g.strokePath();
+      }
+    }
+    for (const h of room.hotspots) {
+      if (!h.shape) continue;
+      const vis = !h.visible || h.visible(s);
+      g.lineStyle(1, vis ? 0xffcc00 : 0x777777, 0.9);
+      if ('poly' in h.shape) {
+        const p = h.shape.poly;
+        g.beginPath();
+        for (let i = 0; i < p.length; i += 2) {
+          if (i === 0) g.moveTo(p[i], p[i + 1]);
+          else g.lineTo(p[i], p[i + 1]);
+        }
+        g.closePath();
+        g.strokePath();
+      } else g.strokeRect(h.shape.x, h.shape.y, h.shape.w, h.shape.h);
+      const w = h.walkTo !== undefined ? dyn(h.walkTo, s) : null;
+      if (w) {
+        g.fillStyle(0x33aaff, 1);
+        g.fillCircle(w.x, w.y, 3);
+      }
+    }
+    for (const e of Object.values(room.entries)) {
+      g.fillStyle(0xff66ff, 1);
+      g.fillRect(e.x - 3, e.y - 3, 6, 6);
+    }
+  }
+
   private drawHighlight(room: RoomDef): void {
     const g = this.highlightGfx;
     g.clear();
+    if (this.debug) this.drawDebug(room);
     if (!this.highlight || this.engine.inputMode() !== 'free') return;
     for (const h of this.engine.visibleHotspots()) {
       if (!h.shape) continue;
@@ -480,4 +582,11 @@ function layerDepth(l: LayerDef): number {
 
 function firstFrame(m: CharMeta): string {
   return m.anims.stand?.frames[0] ?? Object.keys(m.frames)[0];
+}
+
+/** Frame metadata of an atlas frame ('atlas/<key>' + frame name), if the atlas is a known sheet. */
+function atlasFrameMeta(texture: string, frame: string): FrameMeta | undefined {
+  if (!texture.startsWith('atlas/') && !texture.startsWith('chars/')) return undefined;
+  const key = texture.slice(texture.indexOf('/') + 1);
+  return charMeta(key)?.frames[frame];
 }
