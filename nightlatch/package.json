@@ -1,0 +1,31 @@
+{
+  "name": "night-latch",
+  "private": true,
+  "version": "1.0.0",
+  "description": "NIGHT LATCH - a noir point-and-click detective adventure (Phaser 3 + TypeScript + Vite)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "assets": "python3 art/build_all.py && python3 audio/build_audio.py",
+    "art": "python3 art/build_all.py",
+    "audio": "python3 audio/build_audio.py",
+    "validate": "tsx tools/validate.ts",
+    "playtest": "tsx tools/playtest.ts --runs 2000",
+    "e2e": "node tests/e2e/run.mjs"
+  },
+  "dependencies": {
+    "phaser": "3.90.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.18.0",
+    "playwright": "1.56.1",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "vite": "6.4.1",
+    "vitest": "3.2.4"
+  }
+}

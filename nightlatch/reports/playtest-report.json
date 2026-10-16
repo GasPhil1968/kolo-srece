@@ -1,0 +1,143 @@
+{
+ "generated": "2026-10-16T19:02:47.711Z",
+ "seed": 11,
+ "runs": 400,
+ "workers": 4,
+ "node": "v22.22.0",
+ "totals": {
+  "runs": 400,
+  "passed": 400,
+  "failed": 0,
+  "actions": 197759,
+  "dialogChoices": 36594,
+  "saves": 7573,
+  "loads": 10260,
+  "autosaves": 7589,
+  "roomChanges": 60682,
+  "chapterTransitions": 2037,
+  "wrongItemTries": 34713,
+  "outOfOrderTries": 16380,
+  "endingsReached": 314,
+  "exceptions": 0,
+  "runsWithViolations": 0,
+  "failedTransitions": 0,
+  "softlocks": 0,
+  "saveLoadFailures": 0,
+  "avgActionsToFinish": 598,
+  "avgStepsToFinish": 147,
+  "durationSec": 4
+ },
+ "categories": [
+  {
+   "id": "critical",
+   "desc": "Critical path: walkthrough steps executed in a random valid order, no detours.",
+   "runs": 32,
+   "passed": 32,
+   "failed": 0,
+   "avgActions": 177,
+   "avgSteps": 139,
+   "avgMs": 9
+  },
+  {
+   "id": "explorer",
+   "desc": "Random valid order plus bursts of random actions between steps: every hotspot and NPC, wrong items on everything, wrong item combinations, repeated and random dialogue, random evidence, random deductions and timeline orders, wrong codes.",
+   "runs": 88,
+   "passed": 88,
+   "failed": 0,
+   "avgActions": 776,
+   "avgSteps": 126,
+   "avgMs": 66
+  },
+  {
+   "id": "saveload",
+   "desc": "Save and load into a brand-new Game after milestones, reload the latest autosave, and roll back to older saves.",
+   "runs": 56,
+   "passed": 56,
+   "failed": 0,
+   "avgActions": 369,
+   "avgSteps": 291,
+   "avgMs": 37
+  },
+  {
+   "id": "chapter",
+   "desc": "Start from each chapter’s opening save, play randomly for 40–250 actions, then the solver must still finish the chapter (softlock detection).",
+   "runs": 96,
+   "passed": 96,
+   "failed": 0,
+   "avgActions": 167,
+   "avgSteps": 13,
+   "avgMs": 11
+  },
+  {
+   "id": "chaos",
+   "desc": "Long random sessions (150–600 actions incl. rapid travel and save/load) from a random chapter; the solver must then finish the whole game.",
+   "runs": 48,
+   "passed": 48,
+   "failed": 0,
+   "avgActions": 428,
+   "avgSteps": 53,
+   "avgMs": 42
+  },
+  {
+   "id": "rapid",
+   "desc": "Rapid location switching: 10–40 random exits/map hops between every step.",
+   "runs": 32,
+   "passed": 32,
+   "failed": 0,
+   "avgActions": 1574,
+   "avgSteps": 131,
+   "avgMs": 42
+  },
+  {
+   "id": "outoforder",
+   "desc": "Before each step, try the actions of up to three steps that are not available yet (out-of-order triggers), then continue.",
+   "runs": 48,
+   "passed": 48,
+   "failed": 0,
+   "avgActions": 338,
+   "avgSteps": 130,
+   "avgMs": 17
+  }
+ ],
+ "failureReasons": [],
+ "failures": [],
+ "coverage": {
+  "rooms": 27,
+  "clues": 86,
+  "deds": 6,
+  "docs": 21,
+  "items": 51,
+  "options": 149,
+  "hotspots": 248,
+  "travel": 14,
+  "sfx": 49,
+  "music": 7
+ },
+ "unreachable": {
+  "rooms": [],
+  "locations": [],
+  "clues": [],
+  "deductions": [],
+  "items": [],
+  "docs": [
+   "gus_statement"
+  ],
+  "dialogOptions": [
+   "deacon.piano",
+   "deacon.lullaby_early",
+   "mabel.drugged",
+   "mabel.pad",
+   "mabel.fake",
+   "mabel.nurse",
+   "mabel.frank",
+   "mabel.escaped",
+   "mabel.plan",
+   "sal.sorry",
+   "pruett.pad",
+   "frank_talkback.wait"
+  ],
+  "hotspots": [
+   "ledge"
+  ]
+ }
+}

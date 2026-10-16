@@ -1,0 +1,38 @@
+# NIGHT LATCH
+
+A Brackwater Mystery
+
+# Story & Design
+Written, designed and directed by Claude
+
+# Art
+All backgrounds, characters and interface
+painted in code, pixel by pixel
+
+# Music & Sound
+Composed and synthesized from scratch
+
+# Engine
+Phaser 3, TypeScript and Vite
+
+# Cast
+Thomas Rook
+Nora Marsh
+Mabel Finch
+Frank Delaney
+Dr. Lucian Vey
+Vivian Hale
+Deacon Boone
+Augustus Crane
+and the people of Brackwater
+
+# In memory of
+the fourteen men of the SS Meridian
+(who never existed, and should not have died)
+
+# Thanks for playing
+
+There's a moment, just before you open your eyes,
+when you're nobody in particular.
+
+These days it passes quicker.

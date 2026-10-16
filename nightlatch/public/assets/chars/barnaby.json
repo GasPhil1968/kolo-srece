@@ -1,0 +1,1 @@
+{"id": "barnaby", "frameW": 64, "frameH": 64, "anchorX": 32, "anchorY": 62, "sizes": [{"k": 1.0, "file": "chars/barnaby@100.png"}], "anims": {"idle_down": {"frames": [0, 1], "fps": 1, "loop": true}, "talk_down": {"frames": [2, 3, 4, 5], "fps": 8, "loop": true}}, "color": "#b8d8c8"}

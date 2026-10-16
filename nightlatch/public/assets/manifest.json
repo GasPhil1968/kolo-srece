@@ -1,0 +1,48 @@
+{
+ "rooms": [
+  "cold_store",
+  "darkroom",
+  "gazette",
+  "halcyon_cell",
+  "halcyon_corridor",
+  "halcyon_office",
+  "hotel_room",
+  "lantern",
+  "office"
+ ],
+ "chars": [
+  "abernathy",
+  "agnes",
+  "barnaby",
+  "cobb",
+  "crane",
+  "deacon",
+  "deacon_stand",
+  "delaney",
+  "evelyn",
+  "gus",
+  "hask",
+  "kerrigan",
+  "kessler",
+  "kroll",
+  "lillian",
+  "mabel",
+  "morrow",
+  "nora",
+  "nora_volunteer",
+  "pettibone",
+  "pike",
+  "pruett",
+  "pruitt",
+  "rook",
+  "rook_nohat",
+  "sal",
+  "vey",
+  "vivian"
+ ],
+ "items": [],
+ "ui": [
+  "ui"
+ ],
+ "docs": []
+}

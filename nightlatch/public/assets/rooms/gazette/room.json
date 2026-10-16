@@ -1,0 +1,655 @@
+{
+ "name": "gazette",
+ "w": 400,
+ "h": 144,
+ "hotspots": {
+  "press_card": {
+   "poly": [
+    [
+     305,
+     49
+    ],
+    [
+     318,
+     49
+    ],
+    [
+     318,
+     58
+    ],
+    [
+     305,
+     58
+    ]
+   ],
+   "walk": [
+    316,
+    94
+   ],
+   "face": "up"
+  },
+  "pike_drawer": {
+   "poly": [
+    [
+     334,
+     86
+    ],
+    [
+     350,
+     86
+    ],
+    [
+     350,
+     97
+    ],
+    [
+     334,
+     97
+    ]
+   ],
+   "walk": [
+    346,
+    120
+   ],
+   "face": "up"
+  },
+  "clock": {
+   "poly": [
+    [
+     201,
+     14
+    ],
+    [
+     220,
+     14
+    ],
+    [
+     220,
+     58
+    ],
+    [
+     201,
+     58
+    ]
+   ],
+   "walk": [
+    210,
+    93
+   ],
+   "face": "up"
+  },
+  "tubes": {
+   "poly": [
+    [
+     173,
+     30
+    ],
+    [
+     198,
+     30
+    ],
+    [
+     198,
+     82
+    ],
+    [
+     173,
+     82
+    ]
+   ],
+   "walk": [
+    183,
+    93
+   ],
+   "face": "up"
+  },
+  "darkroom_door": {
+   "poly": [
+    [
+     333,
+     31
+    ],
+    [
+     359,
+     31
+    ],
+    [
+     359,
+     89
+    ],
+    [
+     333,
+     89
+    ]
+   ],
+   "walk": [
+    349,
+    91
+   ],
+   "face": "up"
+  },
+  "corkboard": {
+   "poly": [
+    [
+     286,
+     24
+    ],
+    [
+     330,
+     24
+    ],
+    [
+     330,
+     60
+    ],
+    [
+     286,
+     60
+    ]
+   ],
+   "walk": [
+    306,
+    94
+   ],
+   "face": "up"
+  },
+  "pike_desk": {
+   "poly": [
+    [
+     292,
+     69
+    ],
+    [
+     343,
+     69
+    ],
+    [
+     350,
+     110
+    ],
+    [
+     298,
+     110
+    ]
+   ],
+   "walk": [
+    321,
+    120
+   ],
+   "face": "up"
+  },
+  "exit_street": {
+   "poly": [
+    [
+     39,
+     31
+    ],
+    [
+     65,
+     31
+    ],
+    [
+     65,
+     89
+    ],
+    [
+     39,
+     89
+    ]
+   ],
+   "walk": [
+    52,
+    91
+   ],
+   "face": "up"
+  },
+  "editor_office": {
+   "poly": [
+    [
+     94,
+     25
+    ],
+    [
+     170,
+     25
+    ],
+    [
+     170,
+     88
+    ],
+    [
+     94,
+     88
+    ]
+   ],
+   "walk": [
+    157,
+    91
+   ],
+   "face": "up"
+  },
+  "clippings": {
+   "poly": [
+    [
+     63,
+     29
+    ],
+    [
+     89,
+     29
+    ],
+    [
+     89,
+     92
+    ],
+    [
+     63,
+     92
+    ]
+   ],
+   "walk": [
+    74,
+    94
+   ],
+   "face": "up"
+  },
+  "typewriters": {
+   "poly": [
+    [
+     198,
+     65
+    ],
+    [
+     275,
+     65
+    ],
+    [
+     275,
+     89
+    ],
+    [
+     198,
+     89
+    ]
+   ],
+   "walk": [
+    238,
+    121
+   ],
+   "face": "up"
+  }
+ },
+ "walk": [
+  {
+   "poly": [
+    [
+     37,
+     89
+    ],
+    [
+     363,
+     89
+    ],
+    [
+     400,
+     123
+    ],
+    [
+     400,
+     144
+    ],
+    [
+     0,
+     144
+    ],
+    [
+     0,
+     123
+    ]
+   ],
+   "holes": [
+    [
+     [
+      89,
+      100
+     ],
+     [
+      160,
+      100
+     ],
+     [
+      156,
+      117
+     ],
+     [
+      77,
+      117
+     ]
+    ],
+    [
+     [
+      195,
+      100
+     ],
+     [
+      273,
+      100
+     ],
+     [
+      280,
+      117
+     ],
+     [
+      194,
+      117
+     ]
+    ],
+    [
+     [
+      290,
+      100
+     ],
+     [
+      344,
+      100
+     ],
+     [
+      360,
+      118
+     ],
+     [
+      300,
+      118
+     ]
+    ],
+    [
+     [
+      64,
+      88
+     ],
+     [
+      93,
+      88
+     ],
+     [
+      89,
+      93
+     ],
+     [
+      59,
+      93
+     ]
+    ],
+    [
+     [
+      373,
+      112
+     ],
+     [
+      390,
+      112
+     ],
+     [
+      397,
+      118
+     ],
+     [
+      379,
+      118
+     ]
+    ]
+   ]
+  }
+ ],
+ "points": {
+  "start": {
+   "x": 60,
+   "y": 98,
+   "face": "right"
+  },
+  "from_map": {
+   "x": 60,
+   "y": 98,
+   "face": "right"
+  },
+  "from_darkroom": {
+   "x": 351,
+   "y": 94,
+   "face": "down"
+  },
+  "abernathy_spot": {
+   "x": 141,
+   "y": 85,
+   "face": "down"
+  },
+  "pike_desk_spot": {
+   "x": 329,
+   "y": 120,
+   "face": "up"
+  }
+ },
+ "objects": {
+  "partition": {
+   "x": 92,
+   "y": 25,
+   "w": 80,
+   "h": 63,
+   "baseline": 88,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "cooler": {
+   "x": 375,
+   "y": 79,
+   "w": 16,
+   "h": 36,
+   "baseline": 115,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "desks1": {
+   "x": 83,
+   "y": 69,
+   "w": 75,
+   "h": 42,
+   "baseline": 112,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "desks2": {
+   "x": 197,
+   "y": 69,
+   "w": 78,
+   "h": 42,
+   "baseline": 112,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "chair0": {
+   "x": 85,
+   "y": 80,
+   "w": 22,
+   "h": 37,
+   "baseline": 115,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "chair1": {
+   "x": 125,
+   "y": 80,
+   "w": 22,
+   "h": 37,
+   "baseline": 115,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "chair2": {
+   "x": 201,
+   "y": 80,
+   "w": 22,
+   "h": 37,
+   "baseline": 115,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "chair3": {
+   "x": 248,
+   "y": 80,
+   "w": 22,
+   "h": 37,
+   "baseline": 115,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "pike_desk": {
+   "x": 292,
+   "y": 68,
+   "w": 58,
+   "h": 42,
+   "baseline": 111,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "pike_chair": {
+   "x": 324,
+   "y": 80,
+   "w": 22,
+   "h": 38,
+   "baseline": 116,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "basket": {
+   "x": 352,
+   "y": 96,
+   "w": 9,
+   "h": 13,
+   "baseline": 109,
+   "state": false,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "press_card": {
+   "x": 306,
+   "y": 50,
+   "w": 12,
+   "h": 8,
+   "baseline": null,
+   "state": true,
+   "depth": 88,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "darkroom_lamp_on": {
+   "x": 336,
+   "y": 26,
+   "w": 23,
+   "h": 19,
+   "baseline": null,
+   "state": true,
+   "depth": 88,
+   "variants": [
+    "day",
+    "night"
+   ]
+  }
+ },
+ "variants": [
+  "day",
+  "night"
+ ],
+ "anims": {
+  "pendulum": {
+   "x": 206,
+   "y": 34,
+   "w": 9,
+   "h": 16,
+   "frames": 8,
+   "fps": 6,
+   "depth": null,
+   "variants": [
+    "day",
+    "night"
+   ]
+  },
+  "smoke": {
+   "x": 130,
+   "y": 73,
+   "w": 5,
+   "h": 10,
+   "frames": 6,
+   "fps": 5,
+   "depth": 113,
+   "variants": [
+    "day",
+    "night"
+   ]
+  }
+ },
+ "persp": {
+  "hy": -62,
+  "E": 150
+ },
+ "scale": {
+  "yFar": 88,
+  "sFar": 0.743,
+  "yNear": 140,
+  "sNear": 1.0
+ },
+ "floor": "wood",
+ "rain": [
+  {
+   "x": 224,
+   "y": 18,
+   "w": 56,
+   "h": 42,
+   "density": 1.0,
+   "kind": "window"
+  }
+ ]
+}
