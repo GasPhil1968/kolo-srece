@@ -1,6 +1,6 @@
 # Night Latch — Automated playtest report
 
-Generated 2026-10-16T20:04:02.362Z by `npm run playtest:sweep` (`tools/playtest.ts`): 6 campaign(s) of 2000 runs, seed(s) 1, 2, 3, 4, 5, 6, Node v22.22.0.
+Generated 2026-10-16T20:33:43.365Z by `npm run playtest:sweep` (`tools/playtest.ts`): 6 campaign(s) of 2000 runs, seed(s) 1, 2, 3, 4, 5, 6, Node v22.22.0.
 
 > **These are automated simulations, not human playtests.** Each run is a scripted or randomized virtual player driving the real game logic (`src/engine` + `src/content`, the same code the browser build runs) through `Game.perform()`, the entry point every mouse click uses. Rendering, input, animation timing and audio are exercised separately by the Playwright browser tests: see [BROWSER_TEST_REPORT.md](BROWSER_TEST_REPORT.md).
 
@@ -27,7 +27,7 @@ Generated 2026-10-16T20:04:02.362Z by `npm run playtest:sweep` (`tools/playtest.
 | Save/load failures | 0 |
 | Average actions to finish the game | 602 |
 | Average walkthrough steps to finish | 149 |
-| Wall-clock time | 79 s |
+| Wall-clock time | 78 s |
 
 ## Campaigns
 
@@ -69,11 +69,13 @@ Generated 2026-10-16T20:04:02.362Z by `npm run playtest:sweep` (`tools/playtest.
 | Rooms | 27 | 27 |
 | Clues | 86 | 86 |
 | Deductions | 6 | 6 |
-| Documents read | 21 | 22 |
+| Documents opened by the story | 21 | 21 |
 | Items held | 51 | 51 |
-| Dialogue options chosen | 161 | — |
-| Hotspots interacted with | 249 | — |
+| Dialogue options chosen | 161 | 161 |
+| Hotspot ids interacted with | 249 | 249 |
 | Map locations travelled to | 14 | 14 |
+
+Documents only reachable from a clue in the notebook: gus_statement. The simulator doesn't open notebook documents (a pure UI action); the browser tests check that a clue's document opens from the notebook.
 
 ### Never reached
 

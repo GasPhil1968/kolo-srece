@@ -1,7 +1,169 @@
 {
- "generated": "2026-10-16T20:14:21.721Z",
- "url": "http://127.0.0.1:38719/",
+ "generated": "2026-10-16T20:40:21.994Z",
+ "url": "http://127.0.0.1:36017/",
  "results": [
+  {
+   "name": "Title screen and menu",
+   "ok": true,
+   "checks": [
+    {
+     "name": "title menu offers New game",
+     "ok": true,
+     "info": "New game | Load game | Settings | Credits"
+    },
+    {
+     "name": "title menu offers Settings and Credits",
+     "ok": true
+    },
+    {
+     "name": "canvas renders at native 320x180",
+     "ok": true,
+     "info": "{\"w\":320,\"h\":180,\"css\":\"pixelated\"}"
+    },
+    {
+     "name": "nearest-neighbour scaling (image-rendering: pixelated)",
+     "ok": true,
+     "info": "pixelated"
+    },
+    {
+     "name": "credits open from the title menu",
+     "ok": true,
+     "info": "end"
+    },
+    {
+     "name": "credits close on click",
+     "ok": true
+    }
+   ],
+   "ms": 3810,
+   "pageErrors": []
+  },
+  {
+   "name": "New game and mouse interaction in Room 9",
+   "ok": true,
+   "checks": [
+    {
+     "name": "new game starts in Room 9 (hotel_room)",
+     "ok": true
+    },
+    {
+     "name": "chapter 1",
+     "ok": true
+    },
+    {
+     "name": "hovering a hotspot names verb and object",
+     "ok": true,
+     "info": "Take hat"
+    },
+    {
+     "name": "right-click looks (an action runs)",
+     "ok": true
+    },
+    {
+     "name": "left-click walks over and takes the hat",
+     "ok": true
+    },
+    {
+     "name": "the hat note is filed in the notebook",
+     "ok": true
+    },
+    {
+     "name": "searching the bed finds the newspaper",
+     "ok": true
+    },
+    {
+     "name": "clicking an inventory slot picks the item up",
+     "ok": true
+    },
+    {
+     "name": "right-click drops a held item",
+     "ok": true
+    },
+    {
+     "name": "right-click on an item examines it",
+     "ok": true
+    },
+    {
+     "name": "notebook button opens the notebook",
+     "ok": true
+    },
+    {
+     "name": "Escape closes the notebook",
+     "ok": true
+    },
+    {
+     "name": "the city map is unavailable while locked in",
+     "ok": true
+    },
+    {
+     "name": "hint button gives a hint (hint tier advances)",
+     "ok": true
+    },
+    {
+     "name": "a clue's document opens from the notebook",
+     "ok": true
+    },
+    {
+     "name": "N opens the notebook",
+     "ok": true,
+     "info": "{\"ov\":[\"notebook\"],\"busy\":0,\"lock\":1,\"idle\":false}"
+    }
+   ],
+   "ms": 13515,
+   "pageErrors": []
+  },
+  {
+   "name": "Save, load and settings through the pause menu",
+   "ok": true,
+   "checks": [
+    {
+     "name": "menu button opens the pause menu",
+     "ok": true
+    },
+    {
+     "name": "saving to slot 1 writes the save",
+     "ok": true
+    },
+    {
+     "name": "after saving, the wardrobe is opened",
+     "ok": true
+    },
+    {
+     "name": "loading slot 1 restores the saved state",
+     "ok": true,
+     "info": "{\"c1_hat_taken\":true}"
+    },
+    {
+     "name": "loaded game is in the saved room",
+     "ok": true
+    },
+    {
+     "name": "inventory icons are drawn after loading",
+     "ok": true,
+     "info": " vs "
+    },
+    {
+     "name": "autosave slot exists after the chapter opening",
+     "ok": true
+    },
+    {
+     "name": "music volume setting changes and persists",
+     "ok": true,
+     "info": "0.7 -> 0.6"
+    },
+    {
+     "name": "settings survive a page reload",
+     "ok": true
+    },
+    {
+     "name": "title offers Continue once a save exists",
+     "ok": true,
+     "info": "Continue | New game | Load game | Settings | Credits"
+    }
+   ],
+   "ms": 12776,
+   "pageErrors": []
+  },
   {
    "name": "Every room renders (screenshots)",
    "ok": true,
@@ -113,11 +275,57 @@
     {
      "name": "room clocktower loads and renders",
      "ok": true
+    },
+    {
+     "name": "frame rate stays near 60 FPS in every room (software-rendered Chromium)",
+     "ok": true,
+     "info": "{\"hotel_room\":61,\"hotel_lobby\":61,\"office\":61,\"nora_flat\":61,\"lantern\":60,\"cold_store\":61,\"pier9\":61,\"pharmacy\":60,\"gazette\":61,\"mission\":61,\"darkroom\":61,\"cemetery\":61,\"commission\":61,\"precinct\":61,\"hask_shop\":61,\"halcyon_gate\":60,\"halcyon_cell\":61,\"halcyon_corridor\":61,\"halcyon_office\":60,\"holding_cell\":60,\"lantern_cellar\":61,\"tunnel\":60,\"calypso_hold\":61,\"calypso_deck\":60,\"calypso_cabin\":61,\"radio_booth\":61,\"clocktower\":61}"
     }
    ],
-   "ms": 19931,
+   "ms": 52431,
    "extra": {
-    "rooms": 27
+    "rooms": 27,
+    "fpsMin": 60,
+    "fpsAvg": 61
+   },
+   "pageErrors": []
+  },
+  {
+   "name": "Complete playthrough with real mouse input",
+   "ok": true,
+   "checks": [
+    {
+     "name": "the game can be finished from New game to the ending",
+     "ok": true
+    },
+    {
+     "name": "all eight chapters were played",
+     "ok": true,
+     "info": "1,2,3,4,5,6,7,8"
+    }
+   ],
+   "ms": 300897,
+   "extra": {
+    "steps": 140,
+    "clicks": 576,
+    "minutes": 5,
+    "tail": [
+     "  choose broadcast.frank",
+     "  choose frank_talkback.early",
+     "  show gate_log",
+     "  choose frank_talkback.padlock",
+     "  choose frank_talkback.walter",
+     "[c8.door]",
+     "use hs:door",
+     "[c8.roof]",
+     "use npc:delaney",
+     "  choose roof.show",
+     "  show lighter",
+     "  choose epilogue.after",
+     "  choose epilogue.knife",
+     "  choose epilogue.now",
+     "  choose epilogue.go"
+    ]
    },
    "pageErrors": []
   }

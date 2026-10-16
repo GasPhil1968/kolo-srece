@@ -35,7 +35,8 @@ coat, and a silent one who "smelled like a hospital" (clue `two_men`). Register:
 `ask_piano`); Mabel was a court stenographer for twelve years. Client **"Evelyn Marsh"**
 waits: hires Rook to find her "sister" Nora; gives `apt_key`, `nora_photo`, `retainer`.
 Observed: watch pinned upside down, carbolic soap (clue `evelyn_watch`); phone number
-Harbourview 4-170 (clue `evelyn_phone`); claims to be Nora's sister (clue `evelyn_claim`).
+Harbourview 4-170 (clue `evelyn_phone`; asked for, or left when she hires Rook, so it can't be
+missed); claims to be Nora's sister (clue `evelyn_claim`).
 Filing cabinet: thin Meridian file, case closed by Lt. F. Delaney (clue `meridian_file`).
 Phone: Delaney is warm and warns him off.
 
@@ -151,7 +152,8 @@ the past self photographed the key's hiding place.
 `evelyn_impostor`; `phone_halcyon` + `evelyn_watch` → `evelyn_nurse`.
 Optional: `two_men` + `meeting_attendees` + `delaney_coat` → `camel_coat`.
 
-**Turn:** Halcyon House unlocks. Dusk, rain; Rook climbs the wall; a torch beam; "Good
+**Turn:** Halcyon House unlocks. Dusk, rain; the gate is chained, but an ash-can and crate
+stand under an oak limb that reaches over the wall. Rook climbs; a torch beam; "Good
 evening, Mr. Rook." — Vivian in a nurse's cape. A needle. *End of Chapter Three.*
 
 ---
@@ -309,7 +311,7 @@ in." **Mechanism:** the escape is a transmission.
 | 5 | Unscrew the ON AIR bulb with a handkerchief (hot) | — | `bulb`; Delaney won't see the lamp |
 | 6 | Wait for nine (clock) → Crane begins | patched, bulb out | |
 | 7 | Transmitter key to BOOTH | `booth_key` | live |
-| 8 | **The broadcast** — present evidence in order: (a) `padlock` + `gate_log`/`gus_log`; (b) `calypso_manifest`; (c) `halcyon_files` / `vial`; (d) `minutes1-3` | evidence | Brackwater listens |
+| 8 | **The broadcast** — present evidence in order: (a) `padlock` + `gate_log`/`gus_log`; (b) `calypso_manifest`; (c) `halcyon_files` / `vial`; (d) `minutes1-3`. Wrong evidence never advances or ends it; "(Cover the microphone and check my notes.)" steps away, and the microphone or the transmitter key resumes | evidence | Brackwater listens |
 | 9 | Talkback to Delaney with the mic live — confession dialogue (present lighter photo, the 22:25 gate entry, "for Sgt. Rook") | | confession on air |
 | 10 | Unlock the door → the clock tower roof | | |
 | 11 | Roof: Delaney at the edge with a gun. Give him the `lighter` ("Partners.") | `lighter` | surrender |

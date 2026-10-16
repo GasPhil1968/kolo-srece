@@ -35,6 +35,10 @@ for name in ('title', 'room9_start', 'notebook', 'hint', 'menu', 'settings'):
     if os.path.exists(p):
         im = native(p)
         im.resize((im.width * 2, im.height * 2), Image.NEAREST).save(f'{OUT}/{name}.png', optimize=True)
+for p in sorted(glob.glob(f'{SRC}/tour/*.png')):
+    im = native(p)
+    name = os.path.basename(p).split('_', 1)[1]
+    im.resize((im.width * 2, im.height * 2), Image.NEAREST).save(f'{OUT}/{name}', optimize=True)
 for p in sorted(glob.glob(f'{SRC}/playthrough/*.png')):
     im = native(p)
     im.resize((im.width * 2, im.height * 2), Image.NEAREST).save(f'{OUT}/{os.path.basename(p)}', optimize=True)

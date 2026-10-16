@@ -10,6 +10,12 @@ Rook's own mind two years ago.
 
 ![Every room of the game at native resolution](docs/screenshots/rooms.png)
 
+| | |
+|---|---|
+| ![Dialogue](docs/screenshots/dialogue_menu.png) | ![A document from the case](docs/screenshots/document.png) |
+| ![The city map](docs/screenshots/map.png) | ![A combination lock close-up](docs/screenshots/closeup_lock.png) |
+| ![The notebook's timeline](docs/screenshots/timeline_holding_cell.png) | ![A chapter card](docs/screenshots/chapter_card.png) |
+
 * 8 chapters, each opening in a different locked room: a hotel room, a fish cold store, a
   darkroom, a padded cell, a police holding cell, a smugglers' cellar, a ship's hold and a radio
   booth. The locked rooms, the disappearances and Rook's memory loss share one explanation,
@@ -69,8 +75,10 @@ screen resumes the most recent save.
 ## Testing
 
 ```bash
-npm run validate     # static check: every reference, hotspot, point, sprite and sound resolves
-npm run playtest     # 2,000 seeded automated playthrough simulations -> docs/TEST_REPORT.md
+npm test                 # engine unit tests (Vitest)
+npm run validate         # static check: every reference, hotspot, point, sprite and sound resolves
+npm run playtest         # 2,000 seeded automated playthrough simulations (about 15 s)
+npm run playtest:sweep   # six such campaigns, 12,000 runs (about 90 s) -> docs/TEST_REPORT.md
 npm run build && npm run e2e   # Playwright browser tests -> docs/BROWSER_TEST_REPORT.md
 ```
 
@@ -83,9 +91,12 @@ npm run build && npm run e2e   # Playwright browser tests -> docs/BROWSER_TEST_R
   and long chaotic sessions, with softlock detection afterwards. Every run is reproducible:
   `npx tsx tools/playtest.ts --replay <id>`.
 * **`e2e`** (`tests/e2e/`) drives the production build in Chromium with real mouse clicks and key
-  presses. It covers the title and menus, inventory, notebook, hints, save/load, settings and
-  screenshots of all rooms, and it plays **the entire game from New game to the ending using
-  only mouse input**.
+  presses. It covers the title and menus, inventory, notebook, hints, save/load, settings, every
+  room (with a frame-rate check) and it plays **the entire game from New game to the ending using
+  only mouse input**: hotspots, characters, inventory, dialogue choices, evidence, map pins,
+  lock wheels, the patch bay and the notebook's deductions and timeline.
+  `npx tsx tests/e2e/tour.ts` saves extra screenshots of speech, menus, documents, the map,
+  close-ups and chapter cards for human review.
 
 The simulations and browser runs are automated tests, not human playtests. The reports say
 exactly what ran: [`docs/TEST_REPORT.md`](docs/TEST_REPORT.md) and

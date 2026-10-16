@@ -380,6 +380,8 @@ function report(results: RunResult[], ms: number) {
     failureReasons: [...reasons.entries()].sort((a, b) => b[1] - a[1]).map(([reason, count]) => ({ reason, count })),
     failures: failed.slice(0, 60).map((r) => ({ id: r.id, campaign: r.campaign, category: r.category, seed: r.seed, startChapter: r.startChapter, endChapter: r.endChapter, reason: r.reason, softlock: r.softlock, violations: r.violations, exceptions: r.exceptions, failedTransitions: r.failedTransitions, recent: r.recent })),
     coverage: Object.fromEntries(Object.entries(cov).map(([k, v]) => [k, v.size])),
+    totals2: { options: allOptions.length, hotspots: allHotspots.length, docs: docsReachable.length },
+    notebookDocs: Object.keys(C.docs).filter((d) => !scriptDocs.has(d)),
     unreachable,
   };
   writeFileSync('reports/playtest-report.json', JSON.stringify(json, null, 1));
@@ -430,13 +432,17 @@ function writeMarkdown(json: ReturnType<typeof JSON.parse>, results: RunResult[]
   md += `- softlock detection: from wherever random play leaves the game, the solver must still be able to finish the chapter or the game\n\n`;
   md += `## Coverage across all runs\n\n| Content | Reached | Total |\n|---|---|---|\n`;
   const total: Record<string, number> = {
-    rooms: Object.keys(C.rooms).length, clues: Object.keys(C.clues).length, deds: Object.keys(C.deductions).length, docs: Object.keys(C.docs).length,
+    rooms: Object.keys(C.rooms).length, clues: Object.keys(C.clues).length, deds: Object.keys(C.deductions).length, docs: json.totals2.docs,
     items: Object.keys(C.items).length, travel: Object.values(C.locations).filter((l) => l.when !== 'false').length,
+    options: json.totals2.options, hotspots: json.totals2.hotspots,
   };
-  const label: Record<string, string> = { rooms: 'Rooms', clues: 'Clues', deds: 'Deductions', docs: 'Documents read', items: 'Items held', travel: 'Map locations travelled to', options: 'Dialogue options chosen', hotspots: 'Hotspots interacted with' };
+  const label: Record<string, string> = { rooms: 'Rooms', clues: 'Clues', deds: 'Deductions', docs: 'Documents opened by the story', items: 'Items held', travel: 'Map locations travelled to', options: 'Dialogue options chosen', hotspots: 'Hotspot ids interacted with' };
   for (const [k, v] of Object.entries(json.coverage as Record<string, number>)) {
     if (!label[k]) continue;
-    md += `| ${label[k]} | ${v} | ${total[k] ?? '—'} |\n`;
+    md += `| ${label[k]} | ${k === 'docs' ? Math.min(v, total[k]) : v} | ${total[k] ?? '—'} |\n`;
+  }
+  if (json.notebookDocs.length) {
+    md += `\nDocuments only reachable from a clue in the notebook: ${json.notebookDocs.join(', ')}. The simulator doesn't open notebook documents (a pure UI action); the browser tests check that a clue's document opens from the notebook.\n`;
   }
   md += `\n### Never reached\n\n`;
   const un = json.unreachable as Record<string, string[]>;

@@ -276,6 +276,9 @@ export function runOverlay(key: string, data: Record<string, unknown>): Promise<
   return new Promise((resolve) => {
     const sp = ctl.phaser.scene;
     ctl.inputLocked++;
+    // the hover sentence belongs to the room, not to whatever is opening over it
+    const hud = sp.getScene('hud') as unknown as { sentence?: Phaser.GameObjects.BitmapText };
+    if (sp.isActive('hud') && hud.sentence?.active) hud.sentence.setText('');
     const done = () => {
       ctl.inputLocked = Math.max(0, ctl.inputLocked - 1);
       resolve();

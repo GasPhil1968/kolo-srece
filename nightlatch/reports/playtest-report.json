@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-16T20:04:02.362Z",
+ "generated": "2026-10-16T20:33:43.365Z",
  "seeds": [
   1,
   2,
@@ -32,7 +32,7 @@
   "saveLoadFailures": 0,
   "avgActionsToFinish": 602,
   "avgStepsToFinish": 149,
-  "durationSec": 79
+  "durationSec": 78
  },
  "categories": [
   {
@@ -53,7 +53,7 @@
    "failed": 0,
    "avgActions": 772,
    "avgSteps": 122,
-   "avgMs": 45
+   "avgMs": 44
   },
   {
    "id": "saveload",
@@ -63,7 +63,7 @@
    "failed": 0,
    "avgActions": 383,
    "avgSteps": 300,
-   "avgMs": 27
+   "avgMs": 28
   },
   {
    "id": "chapter",
@@ -103,7 +103,7 @@
    "failed": 0,
    "avgActions": 339,
    "avgSteps": 130,
-   "avgMs": 11
+   "avgMs": 10
   }
  ],
  "perSeed": [
@@ -164,6 +164,14 @@
   "sfx": 49,
   "music": 7
  },
+ "totals2": {
+  "options": 161,
+  "hotspots": 249,
+  "docs": 21
+ },
+ "notebookDocs": [
+  "gus_statement"
+ ],
  "unreachable": {
   "rooms": [],
   "locations": [],

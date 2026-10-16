@@ -144,6 +144,20 @@ export function installTestHooks(game: Phaser.Game) {
         close: [306, 12],
       };
     },
+    /** Phaser's smoothed frame rate. */
+    fps: () => game.loop.actualFps,
+    /** Frames actually rendered during the next `ms` milliseconds, as frames per second. */
+    measureFps: (ms = 1000) =>
+      new Promise<number>((resolve) => {
+        let frames = 0;
+        const t0 = performance.now();
+        const tick = (t: number) => {
+          frames++;
+          if (t - t0 < ms) requestAnimationFrame(tick);
+          else resolve((frames * 1000) / (t - t0));
+        };
+        requestAnimationFrame(tick);
+      }),
     texHas: (key: string, frame?: string) => game.textures.exists(key) && (frame === undefined || game.textures.get(key).has(frame)),
     hudIcons: () => {
       const h = hud() as unknown as { icons: Phaser.GameObjects.Image[] };

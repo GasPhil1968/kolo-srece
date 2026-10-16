@@ -103,3 +103,20 @@ export async function clickButton(page: Page, scene: string, text: string) {
   if (!b) throw new Error(`no button "${text}" in ${scene}: ${btns.map((x) => x.text).join(' | ')}`);
   await clickGame(page, b.x, b.y);
 }
+
+/** Walk towards a hotspot or NPC until it is on screen; returns its screen point (game coords). */
+export async function bringIntoView(page: Page, kind: 'hs' | 'npc', id: string): Promise<[number, number]> {
+  for (let tries = 0; tries < 6; tries++) {
+    const pt: [number, number] | null = await call(page, kind === 'hs' ? 'hotspotPoint' : 'npcPoint', id);
+    if (pt) return pt;
+    const wx: number | null = await call(page, kind === 'hs' ? 'hotspotWorldX' : 'npcWorldX', id);
+    if (wx === null) throw new Error(`${kind} ${id} is not in this room`);
+    const cam: number = await call(page, 'cameraX');
+    const fp: [number, number] | null = await call(page, 'floorPoint', wx > cam + 160 ? 300 : 20);
+    if (!fp) throw new Error(`no floor to walk towards ${id}`);
+    await clickGame(page, fp[0], fp[1]);
+    await page.waitForTimeout(150);
+    await page.waitForFunction(() => (window.__NL as NL).idle(), null, { timeout: 30000, polling: 50 });
+  }
+  throw new Error(`${kind} ${id} never came on screen`);
+}

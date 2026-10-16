@@ -139,6 +139,19 @@ export const CASES: { name: string; body: Body }[] = [
       check('hint button gives a hint (hint tier advances)', JSON.stringify((await state(page)).hintTier) !== tiers);
       await gameShot(page, `${SHOTS}/hint.png`);
       await settle(page);
+      // read a document from a clue in the notebook
+      await clickGame(page, ui.buttons.notebook[0], ui.buttons.notebook[1]);
+      await sleep(page, 300);
+      await clickGame(page, 92, 14); // Clues tab
+      await sleep(page, 200);
+      await clickButton(page, 'notebook', 'Note in my hatband');
+      await sleep(page, 200);
+      await clickButton(page, 'notebook', '[ Read the document ]');
+      await sleep(page, 400);
+      check('a clue\'s document opens from the notebook', ((await call(page, 'overlays')) as string[]).includes('doc'));
+      await gameShot(page, `${SHOTS}/notebook_doc.png`);
+      await page.keyboard.press('Escape');
+      await settle(page);
       await page.keyboard.press('n');
       await sleep(page, 300);
       const dbg = await page.evaluate(() => {
@@ -220,16 +233,20 @@ export const CASES: { name: string; body: Body }[] = [
       mkdirSync(out, { recursive: true });
       const { first } = JSON.parse(readFileSync('reports/raw/room_states.json', 'utf8')) as { first: Record<string, string> };
       let n = 0;
+      const fps: Record<string, number> = {};
       for (const [room, json] of Object.entries(first)) {
         await page.evaluate((j) => (window.__NL as NL).loadState(j), json);
         await page.waitForFunction(() => (window.__NL as NL).idle(), null, { timeout: 30000 });
-        await sleep(page, 500);
+        await sleep(page, 700); // let loading finish, then count frames with the room's animations running
+        fps[room] = Math.round(await call<number>(page, 'measureFps', 1000));
         const ok = (await call(page, 'room')) === room;
         check(`room ${room} loads and renders`, ok);
         await gameShot(page, `${out}/${room}.png`);
         n++;
       }
-      return { rooms: n };
+      const worst = Math.min(...Object.values(fps));
+      check('frame rate stays near 60 FPS in every room (software-rendered Chromium)', worst >= 55, JSON.stringify(fps));
+      return { rooms: n, fpsMin: worst, fpsAvg: Math.round(Object.values(fps).reduce((a, b) => a + b, 0) / n) };
     },
   },
   {
