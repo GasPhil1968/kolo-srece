@@ -436,7 +436,16 @@ for (const l of Object.values(C.locations)) {
     else point(r, at ?? l.at ?? 'from_map', w);
   }
 }
-for (const p of Object.values(C.people)) for (const [c] of p.notes ?? []) cond(c, `person ${p.id}`);
+const uiAtlas = readJson<{ frames: Record<string, unknown> }>(`${ASSETS}/ui/ui.json`);
+for (const p of Object.values(C.people)) {
+  for (const [c] of p.notes ?? []) cond(c, `person ${p.id}`);
+  if (p.portrait && uiAtlas && !uiAtlas.frames['face_' + p.portrait]) error(`person ${p.id}`, `no portrait face_${p.portrait} in ui atlas`);
+}
+for (const d of Object.values(C.dialogs)) {
+  for (const n of Object.values(d.nodes)) for (const o of n.options) {
+    if (o.text.length > 72) warn(`dialog ${d.id}.${o.id}`, `option text is ${o.text.length} characters; the menu shows 72`);
+  }
+}
 for (const ch of C.chapters) {
   cond(ch.complete, `chapter ${ch.n}.complete`);
   for (const o of ch.objectives) {

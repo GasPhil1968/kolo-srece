@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-16T20:33:43.365Z",
+ "generated": "2026-10-16T20:44:11.133Z",
  "seeds": [
   1,
   2,
@@ -32,7 +32,7 @@
   "saveLoadFailures": 0,
   "avgActionsToFinish": 602,
   "avgStepsToFinish": 149,
-  "durationSec": 78
+  "durationSec": 74
  },
  "categories": [
   {
@@ -43,7 +43,7 @@
    "failed": 0,
    "avgActions": 177,
    "avgSteps": 139,
-   "avgMs": 6
+   "avgMs": 5
   },
   {
    "id": "explorer",
@@ -53,7 +53,7 @@
    "failed": 0,
    "avgActions": 772,
    "avgSteps": 122,
-   "avgMs": 44
+   "avgMs": 42
   },
   {
    "id": "saveload",
@@ -63,7 +63,7 @@
    "failed": 0,
    "avgActions": 383,
    "avgSteps": 300,
-   "avgMs": 28
+   "avgMs": 26
   },
   {
    "id": "chapter",
@@ -83,7 +83,7 @@
    "failed": 0,
    "avgActions": 457,
    "avgSteps": 58,
-   "avgMs": 27
+   "avgMs": 26
   },
   {
    "id": "rapid",
@@ -93,7 +93,7 @@
    "failed": 0,
    "avgActions": 1553,
    "avgSteps": 131,
-   "avgMs": 27
+   "avgMs": 25
   },
   {
    "id": "outoforder",

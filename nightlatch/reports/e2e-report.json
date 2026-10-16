@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-16T20:40:21.994Z",
- "url": "http://127.0.0.1:36017/",
+ "generated": "2026-10-16T20:50:36.802Z",
+ "url": "http://127.0.0.1:35575/",
  "results": [
   {
    "name": "Title screen and menu",
@@ -35,7 +35,7 @@
      "ok": true
     }
    ],
-   "ms": 3810,
+   "ms": 3844,
    "pageErrors": []
   },
   {
@@ -109,7 +109,7 @@
      "info": "{\"ov\":[\"notebook\"],\"busy\":0,\"lock\":1,\"idle\":false}"
     }
    ],
-   "ms": 13515,
+   "ms": 13440,
    "pageErrors": []
   },
   {
@@ -161,7 +161,7 @@
      "info": "Continue | New game | Load game | Settings | Credits"
     }
    ],
-   "ms": 12776,
+   "ms": 12665,
    "pageErrors": []
   },
   {
@@ -279,10 +279,10 @@
     {
      "name": "frame rate stays near 60 FPS in every room (software-rendered Chromium)",
      "ok": true,
-     "info": "{\"hotel_room\":61,\"hotel_lobby\":61,\"office\":61,\"nora_flat\":61,\"lantern\":60,\"cold_store\":61,\"pier9\":61,\"pharmacy\":60,\"gazette\":61,\"mission\":61,\"darkroom\":61,\"cemetery\":61,\"commission\":61,\"precinct\":61,\"hask_shop\":61,\"halcyon_gate\":60,\"halcyon_cell\":61,\"halcyon_corridor\":61,\"halcyon_office\":60,\"holding_cell\":60,\"lantern_cellar\":61,\"tunnel\":60,\"calypso_hold\":61,\"calypso_deck\":60,\"calypso_cabin\":61,\"radio_booth\":61,\"clocktower\":61}"
+     "info": "{\"hotel_room\":61,\"hotel_lobby\":61,\"office\":61,\"nora_flat\":60,\"lantern\":61,\"cold_store\":61,\"pier9\":60,\"pharmacy\":61,\"gazette\":60,\"mission\":60,\"darkroom\":60,\"cemetery\":60,\"commission\":60,\"precinct\":61,\"hask_shop\":61,\"halcyon_gate\":61,\"halcyon_cell\":61,\"halcyon_corridor\":60,\"halcyon_office\":61,\"holding_cell\":61,\"lantern_cellar\":61,\"tunnel\":61,\"calypso_hold\":61,\"calypso_deck\":61,\"calypso_cabin\":61,\"radio_booth\":61,\"clocktower\":61}"
     }
    ],
-   "ms": 52431,
+   "ms": 52211,
    "extra": {
     "rooms": 27,
     "fpsMin": 60,
@@ -304,7 +304,7 @@
      "info": "1,2,3,4,5,6,7,8"
     }
    ],
-   "ms": 300897,
+   "ms": 301760,
    "extra": {
     "steps": 140,
     "clicks": 576,

@@ -36,7 +36,7 @@ export const nora6: DialogDef = {
           do: [S('nora', 'You said you owed my father.'), S('nora', 'You didn’t say what.')],
         },
         {
-          id: 'truth', text: 'Nora... Walter went aboard the Meridian that night because I asked him to.', when: 'clue:sent_walter & seen:nora6.why',
+          id: 'truth', text: 'Nora... Walter went aboard the Meridian because I asked him to.', when: 'clue:sent_walter & seen:nora6.why',
           once: true,
           do: [
             { wait: 900 },

@@ -250,7 +250,7 @@ export class HudScene extends Phaser.Scene {
           .setInteractive();
         this.dialogObjs.push(bg);
         shown.forEach((o, i) => {
-          const t = this.add.bitmapText(8, top + 4 + i * 10, 'nlo', truncate(o.text, 62)).setTint(0xb8a070)
+          const t = this.add.bitmapText(8, top + 4 + i * 10, 'nlo', truncate(o.text, 72)).setTint(0xb8a070)
             .setDepth(4001).setInteractive({ useHandCursor: true });
           t.on('pointerover', () => t.setTint(0xffffff));
           t.on('pointerout', () => t.setTint(0xb8a070));
