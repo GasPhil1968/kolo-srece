@@ -3,6 +3,10 @@
 // asset is embedded as a data URI in assets-data.js (see src/game/assets.ts), and the game is
 // bundled as a classic script, since module scripts are also blocked on file://.
 //
+// To keep the download small, music and ambience are re-encoded at constant 80 / 48 kbit/s
+// (needs ffmpeg). Each re-encoded file must decode to exactly the manifest's sample count, so
+// loops stay seamless; otherwise the original file is used. `--full-audio` keeps the originals.
+//
 //   npm run build:portable   ->  dist-portable/  and  release/NightLatch.zip
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
@@ -11,8 +15,21 @@ import { build } from 'esbuild';
 
 const OUT = 'dist-portable';
 const NAME = 'NightLatch';
+const BITRATE: Record<string, string> = { music: '80k', amb: '48k' };
+const FULL_AUDIO = process.argv.includes('--full-audio');
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
+
+/** Re-encode one looping MP3 at a lower constant bitrate; null if it would change its length. */
+function smallerMp3(file: string, bitrate: string, samples: number, tmp: string): Buffer | null {
+  const ch = execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'stream=channels', '-of', 'csv=p=0', file]).toString().trim();
+  const pcm = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-f', 'f32le', '-ac', ch, '-ar', '44100', 'pipe:1'], { maxBuffer: 1 << 30 });
+  execFileSync('ffmpeg', ['-v', 'error', '-y', '-f', 'f32le', '-ar', '44100', '-ac', ch, '-i', 'pipe:0', '-c:a', 'libmp3lame',
+    '-b:a', bitrate, '-map_metadata', '-1', '-id3v2_version', '0', '-write_id3v1', '0', tmp], { input: pcm, maxBuffer: 1 << 30 });
+  const back = execFileSync('ffmpeg', ['-v', 'error', '-i', tmp, '-f', 'f32le', '-ac', ch, '-ar', '44100', 'pipe:1'], { maxBuffer: 1 << 30 });
+  const n = back.length / 4 / Number(ch);
+  return n === samples ? readFileSync(tmp) : null;
+}
 
 // 1. the game, as one classic script
 await build({
@@ -41,11 +58,27 @@ const walk = (dir: string) => {
 walk('public/assets');
 const map: Record<string, string> = {};
 let bytes = 0;
+const audioManifest = JSON.parse(readFileSync('public/assets/audio/manifest.json', 'utf8')) as Record<string, Record<string, { file: string; samples: number }>>;
+const smaller = new Map<string, Buffer>();
+if (!FULL_AUDIO) {
+  const tmp = join(OUT, '.tmp.mp3');
+  let kept = 0;
+  for (const cat of Object.keys(BITRATE)) {
+    for (const e of Object.values(audioManifest[cat])) {
+      const src = `public/assets/audio/${e.file}`;
+      const out = smallerMp3(src, BITRATE[cat], e.samples, tmp);
+      if (out && out.length < statSync(src).size) smaller.set(src, out);
+      else kept++;
+    }
+  }
+  rmSync(tmp, { force: true });
+  console.log(`audio: ${smaller.size} music/ambience files re-encoded at ${BITRATE.music}/${BITRATE.amb}, ${kept} kept as they were`);
+}
 for (const f of files.sort()) {
   const ext = f.split('.').pop()!.toLowerCase();
   const type = TYPES[ext];
   if (!type) throw new Error(`no MIME type for ${f}`);
-  const data = readFileSync(f);
+  const data = smaller.get(f) ?? readFileSync(f);
   // Phaser decodes base64 text with atob(), which only round-trips ASCII
   if (!type.startsWith('image/') && !type.startsWith('audio/') && !/^[\x00-\x7f]*$/.test(data.toString('latin1'))) {
     throw new Error(`${f} is not plain ASCII; it would be garbled in the portable build`);
