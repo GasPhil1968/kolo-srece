@@ -72,6 +72,42 @@ SHEETS = {
         'src': 'sprites/fire.webp', 'grid': (8, 1), 'refH': 112, 'anchor': 'bottom', 'anchor_x': 56, 'defringe': False,
         'anims': {'stand': {'frames': list(range(8)), 'fps': 10, 'loop': True}},
     },
+    # --- Weide 1467 -----------------------------------------------------------------------------
+    # The flock's goats: grazing/looking frames (fx_goat_graze, 192 px cells) and the same goat's
+    # three-frame walk from sprites/animals.webp (row 0, 140 px cells). refH = standing height with
+    # horns in each sheet's pixels, so both sheets render at the same size.
+    'goat': {
+        'src': 'fx/fx_goat_graze.webp', 'grid': (4, 2), 'refH': 157, 'anchor': (96, 184), 'walkSpeed': 70,
+        'extra': {'w': {'src': 'sprites/animals.webp', 'grid': (3, 4)}},
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'graze': {'frames': timed([0, 1, 2, 3, 2, 3, 2, 4, 5, 6, 7], [4.6, .4, .9, .9, .9, .9, .9, 1.2, 1.4, 1.6, 1.4], 10), 'fps': 10, 'loop': True},
+            'eat': {'frames': timed([1, 2, 3, 2, 3], [.4, .6, .6, .6, .6], 10), 'fps': 10, 'loop': True},
+            'look': {'frames': [6], 'loop': True},
+            'walk': {'frames': ['w0', 'w1', 'w2'], 'fps': 6, 'loop': True, 'refH': 103},
+        },
+    },
+    # Ragusan caravan (props/prop_karawane_*): two rider types, a pack mule, a cloth bale.
+    'reiter_a': {
+        'src': 'props/prop_karawane_reiter.webp', 'grid': (4, 2), 'refH': 222, 'anchor': 'bottom', 'anchor_x': 128,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'walk': {'frames': [0, 1, 2, 3], 'fps': 4, 'loop': True}},
+    },
+    'reiter_b': {
+        'src': 'props/prop_karawane_reiter.webp', 'grid': (4, 2), 'refH': 222, 'anchor': 'bottom', 'anchor_x': 128,
+        'anims': {'stand': {'frames': [4], 'loop': True}, 'walk': {'frames': [4, 5, 6, 7], 'fps': 4, 'loop': True}},
+    },
+    'maultier': {
+        'src': 'props/prop_karawane_maultier.webp', 'grid': (4, 1), 'refH': 145, 'anchor': 'bottom', 'anchor_x': 96,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'walk': {'frames': [0, 1, 2, 3], 'fps': 3.4, 'loop': True}},
+    },
+    'ballen': {
+        'src': 'props/prop_karawane_ballen.webp', 'grid': (1, 1), 'refH': 48, 'anchor': 'bottom', 'defringe': False,
+        'anims': {'stand': {'frames': [0], 'loop': True}},
+    },
+    'smoke': {
+        'src': 'fx/fx_smoke_cycle.webp', 'grid': (4, 2), 'refH': 128, 'anchor': 'bottom', 'anchor_x': 64, 'defringe': False, 'clean': False,
+        'anims': {'stand': {'frames': list(range(8)), 'fps': 5, 'loop': True}},
+    },
 }
 
 PROPS = {
@@ -96,6 +132,13 @@ PROPS = {
     'prop_kaffeestand': 'props/prop_kaffeestand.webp',
     'prop_kafana_counter': 'sarajevo-v6/kafana-counter.webp',
     'prop_band': {'src': 'ui/inv.webp', 'crop': [0, 0, 88, 88]},
+    # Weide 1467
+    'prop_juniper': 'props/prop_juniper.webp',
+    'prop_juniper_wool': 'props/prop_juniper_wool.webp',
+    'prop_stone_sitters': 'props/prop_stone_sitters.webp',
+    'prop_bread': 'props/prop_bread.webp',
+    'prop_cheese': 'props/prop_cheese.webp',
+    'fx_dust_mote': 'fx/fx_dust_mote.webp',
 }
 
 ICONS = {
@@ -104,4 +147,5 @@ ICONS = {
     'zettel': {'src': 'ui/inv.webp', 'cell': (4, 4, 3)},
     'tasse': {'src': 'ui/inv.webp', 'cell': (4, 4, 11)},
     'dzezva': {'src': 'props/prop_sarajevo_dzezva.webp'},
+    'wacholder': {'src': 'ui/inv.webp', 'cell': (4, 4, 9)},
 }

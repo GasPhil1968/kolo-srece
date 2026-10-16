@@ -84,6 +84,37 @@ export const solveSarajevo: Solver = (sim) => {
   return null;
 };
 
+// ----------------------------------------------------------------------------------- chapter 2
+
+export const solveWeide: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`we.${n}`];
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const want of ['rag', 'cloth', 'listen', 'still']) if (opts.includes(want)) return choose(want);
+    if (opts.includes('later')) return choose('later');
+    return pickOption(sim, []);
+  }
+  if (s.room === 'we_kuca') return fl('ate') ? act('bank', 'lie') : act('tisch', 'eat');
+  if (!fl('counted')) return go(sim, 'we_weide') ?? act('herde', 'look');
+  if (!fl('trail')) return go(sim, 'we_weide') ?? act('wacholder', 'look');
+  if (!fl('found')) return go(sim, 'we_weide') ?? act('mauer', 'look');
+  if (!fl('goatBack') && !s.inventory.includes('wacholder')) return go(sim, 'we_weide') ?? act('wacholder', 'take');
+  if (!fl('goatBack')) return go(sim, 'we_weide') ?? use('wacholder', 'mauerEnde');
+  if (!fl('lesson')) {
+    if (!fl('sitting')) return go(sim, 'we_weide') ?? act('stein', 'climb');
+    if (s.room === 'we_weide') return act('strasse', 'go');
+    if (!fl('obsMiddle') || !fl('obsQuiet') || (!fl('q1') && fl('obsMiddle'))) return act('reiter1', 'look');
+    if (!fl('obsBales')) return act('ballen0', 'look');
+    if (!fl('obsMule')) return act('maultier', 'look');
+    return act('reiter1', 'look');
+  }
+  if (s.room === 'we_tal') return act('zurueck', 'go');
+  return act('pfad', 'go');
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
+  weide: solveWeide,
 };

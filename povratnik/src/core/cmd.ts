@@ -15,7 +15,7 @@ export interface ChoiceOption {
 export type Cmd =
   | { k: 'say'; actor: string; text: string; mood?: string }
   | { k: 'narrate'; text: string }
-  | { k: 'walk'; actor: string; x: number; y: number; wait: boolean; speed?: number; face?: Facing }
+  | { k: 'walk'; actor: string; x: number; y: number; wait: boolean; speed?: number; face?: Facing; direct?: boolean; via?: [number, number][] }
   | { k: 'face'; actor: string; dir: Facing | string }
   | { k: 'pose'; actor: string; pose: string; loop: boolean; wait: boolean; times: number; rest: boolean }
   | { k: 'waitActor'; actor: string }
@@ -34,7 +34,14 @@ export type Cmd =
 
 export const say = (actor: string, text: string, mood?: string): Cmd => ({ k: 'say', actor, text, mood });
 export const narrate = (text: string): Cmd => ({ k: 'narrate', text });
-export const walk = (actor: string, x: number, y: number, opts: { wait?: boolean; speed?: number; face?: Facing } = {}): Cmd => ({
+/** Walk along the walk area. direct: straight lines through `via` to the target, ignoring the
+ * walk area (animals behind walls, figures entering from off-screen). */
+export const walk = (
+  actor: string,
+  x: number,
+  y: number,
+  opts: { wait?: boolean; speed?: number; face?: Facing; direct?: boolean; via?: [number, number][] } = {},
+): Cmd => ({
   k: 'walk',
   actor,
   x,
@@ -42,6 +49,8 @@ export const walk = (actor: string, x: number, y: number, opts: { wait?: boolean
   wait: opts.wait ?? true,
   speed: opts.speed,
   face: opts.face,
+  direct: opts.direct,
+  via: opts.via,
 });
 export const face = (actor: string, dir: Facing | string): Cmd => ({ k: 'face', actor, dir });
 /** Play a pose animation. loop: keeps looping (never waits); rest: keep the last frame afterwards. */

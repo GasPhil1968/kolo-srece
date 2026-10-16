@@ -7,6 +7,7 @@ import { dyn, LayerDef, RoomDef } from '../core/content';
 import { ADULT_H, charMeta, imageMeta, CharMeta, FrameMeta } from '../content/assets';
 import { pointInPoly, toPoints } from '../core/geom';
 import { Ambience } from './ambience';
+import { placeDecor, DecorPlacement } from '../core/decor';
 
 export const R = 2;
 export const VIEW_W = 960;
@@ -336,22 +337,41 @@ export class GameScene extends Phaser.Scene {
         this.actorViews.delete(id);
       }
     }
-    // Decor figures (non-interactive).
+    // Decor figures (non-interactive unless a hotspot is bound to them). Leaders before followers.
     const dseen = new Set<string>();
-    for (const d of room.decor ?? []) {
+    const placed = new Map<string, { p: DecorPlacement; scale: number }>();
+    const decor = [...(room.decor ?? [])].sort((a, b) => (a.follow ? 1 : 0) - (b.follow ? 1 : 0));
+    for (const d of decor) {
       if (d.visible && !d.visible(s)) continue;
       const meta = charMeta(d.character);
       if (!meta || !this.textures.exists(meta.atlas)) continue;
+      let p = placeDecor(d, engine.clock);
+      if (d.follow) {
+        const lead = placed.get(d.follow.id);
+        if (!lead || lead.p.hidden) continue;
+        const bob = d.follow.bob ? Math.abs(Math.sin(Math.PI * (d.follow.bobHz ?? 1) * engine.clock)) * d.follow.bob : 0;
+        p = {
+          ...p,
+          x: lead.p.x + d.follow.dx * lead.scale * lead.p.facing,
+          y: lead.p.y,
+          facing: lead.p.facing,
+          alpha: lead.p.alpha * (d.alpha ?? 1),
+        };
+        this.decorLift.set(d.id, (d.follow.dy - bob) * lead.scale);
+      }
+      if (p.hidden) continue;
       dseen.add(d.id);
       let sp = this.decorViews.get(d.id);
       if (!sp) {
-        sp = this.add.sprite(d.x, d.y, meta.atlas, firstFrame(meta));
+        sp = this.add.sprite(p.x, p.y, meta.atlas, firstFrame(meta));
         this.decorViews.set(d.id, sp);
       }
-      const name = d.anim ?? 'stand';
-      this.applyFigure(sp, meta, name, engine.clock + (d.phase ?? 0), true, 1, d.x, d.y, d.facing ?? 1, d.relHeight ?? 1, tint, d.scale);
-      if (d.depth !== undefined) sp.setDepth(d.depth);
-      sp.setAlpha(d.alpha ?? 1);
+      this.applyFigure(sp, meta, p.anim, p.t, true, 1, p.x, p.y, p.facing, d.relHeight ?? 1, tint, d.scale);
+      const lift = this.decorLift.get(d.id);
+      if (lift) sp.setY(p.y + lift);
+      sp.setDepth(d.depth ?? (d.follow ? p.y + 0.5 : p.y));
+      sp.setAlpha(p.alpha);
+      placed.set(d.id, { p, scale: sp.scaleX });
     }
     for (const [id, sp] of this.decorViews) {
       if (!dseen.has(id)) {
@@ -362,6 +382,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private decorViews = new Map<string, Phaser.GameObjects.Sprite>();
+  private decorLift = new Map<string, number>();
 
   /** Set frame, anchor, facing, perspective scale and depth of a figure sprite. */
   private applyFigure(
@@ -410,6 +431,17 @@ export class GameScene extends Phaser.Scene {
   speechAnchor(actorId: string): { x: number; y: number } | null {
     const v = this.actorViews.get(actorId);
     const a = this.engine.state.actors[actorId];
+    if (a && a.room === this.engine.state.room && a.hidden) {
+      // Drawn as part of a layer (e.g. seated on the Steinblock)?
+      for (const l of this.engine.room.layers ?? []) {
+        const frac = l.speakers?.[actorId];
+        const lv = this.layerViews.get(l.id);
+        if (frac === undefined || !lv || !lv.visible) continue;
+        const b = lv.getBounds();
+        return { x: b.x + b.width * frac - this.cameras.main.scrollX, y: b.y - this.cameras.main.scrollY };
+      }
+      return null;
+    }
     if (!v || !a || a.room !== this.engine.state.room) return null;
     const top = v.sprite.getTopCenter();
     return { x: a.x - this.cameras.main.scrollX, y: (top.y ?? a.y - 150) - this.cameras.main.scrollY };
@@ -435,6 +467,16 @@ export class GameScene extends Phaser.Scene {
         const def = engine.actorDef(id)!;
         return { id: `actor:${id}`, name: dyn(def.name, s), exit: false };
       }
+    }
+    // Hotspots bound to (moving) decor figures, front to back.
+    const bound = engine
+      .visibleHotspots()
+      .filter((h) => h.decor && this.decorViews.has(h.decor))
+      .sort((a, b) => this.decorViews.get(b.decor!)!.depth - this.decorViews.get(a.decor!)!.depth);
+    for (const h of bound) {
+      const sp = this.decorViews.get(h.decor!)!;
+      if (!sp.visible || sp.alpha < 0.3 || !sp.getBounds().contains(wx, wy)) continue;
+      if (this.alphaAt(sp, wx, wy) > 40 || this.nearBody(sp, wx, wy)) return { id: h.id, name: engine.hotspotName(h), exit: false };
     }
     const h = engine.hotspotAt({ x: wx, y: wy });
     if (h) return { id: h.id, name: engine.hotspotName(h), exit: !!(h.exit && dyn(h.exit, s)) };
@@ -537,6 +579,16 @@ export class GameScene extends Phaser.Scene {
     if (this.debug) this.drawDebug(room);
     if (!this.highlight || this.engine.inputMode() !== 'free') return;
     for (const h of this.engine.visibleHotspots()) {
+      if (h.decor) {
+        const sp = this.decorViews.get(h.decor);
+        if (!sp || !sp.visible) continue;
+        const b = sp.getBounds();
+        g.fillStyle(0xffe2a0, 0.9);
+        g.fillCircle(b.centerX, b.y + b.height * 0.35, 5);
+        g.lineStyle(2, 0x000000, 0.7);
+        g.strokeCircle(b.centerX, b.y + b.height * 0.35, 6);
+        continue;
+      }
       if (!h.shape) continue;
       let cx: number;
       let cy: number;

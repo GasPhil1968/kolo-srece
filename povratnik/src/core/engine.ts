@@ -480,12 +480,16 @@ export class Engine {
     return r;
   }
 
-  private startWalk(id: string, to: Vec, speed?: number, face?: Facing): boolean {
+  private startWalk(id: string, to: Vec, speed?: number, face?: Facing, direct?: { via?: [number, number][] }): boolean {
     const a = this.state.actors[id];
     if (!a || a.room !== this.state.room) return false;
     const room = this.room;
     const nav = this.navFor(room);
-    const path = nav.findPath({ x: a.x, y: a.y }, to);
+    let path: Vec[];
+    if (direct) {
+      path = [...(direct.via ?? []).map(([x, y]) => ({ x, y })), { x: to.x, y: to.y }];
+      while (path.length && dist(a, path[0]) <= 0.5) path.shift();
+    } else path = nav.findPath({ x: a.x, y: a.y }, to);
     const r = this.rtOf(id);
     r.anim = null;
     r.path = path;
@@ -739,6 +743,8 @@ export class Engine {
     if (mode !== 'free') return false;
     switch (i.k) {
       case 'walk': {
+        // A hidden player character (seated in a prop, lying down) does not walk.
+        if (this.state.actors[PC]?.hidden) return false;
         this.pendingAct = null;
         this.startWalk(PC, { x: i.x, y: i.y });
         return true;
@@ -754,7 +760,7 @@ export class Engine {
         const spot = this.approachSpot(tgt);
         if (spot === undefined) return false;
         this.pendingAct = { intent: i, target: tgt };
-        if (spot) {
+        if (spot && !this.state.actors[PC]?.hidden) {
           const moving = this.startWalk(PC, spot, undefined, spot.face);
           if (moving) return true;
         }
@@ -1033,7 +1039,7 @@ export class Engine {
         };
       }
       case 'walk': {
-        const moving = this.startWalk(cmd.actor, { x: cmd.x, y: cmd.y }, cmd.speed, cmd.face);
+        const moving = this.startWalk(cmd.actor, { x: cmd.x, y: cmd.y }, cmd.speed, cmd.face, cmd.direct ? { via: cmd.via } : undefined);
         if (!moving) {
           // Unreachable or already there: arrive in place, never hang.
           const a = this.state.actors[cmd.actor];
@@ -1252,6 +1258,7 @@ export class Engine {
           // Swap rooms.
           this.state.room = target.id;
           this.placeActor(PC, { room: target.id, x: entry.x, y: entry.y, facing: entry.face ?? this.state.actors[PC].facing });
+          target.prepare?.(this.makeCtx());
           for (const r of this.rt.values()) r.path = [];
           this.pendingAct = null;
           this.camLock = null;
@@ -1384,20 +1391,28 @@ export class Engine {
     }
   }
 
+  /** Developer and test helper: change rooms through the normal transition (prepare, onEnter, autosave). */
+  devGoto(roomId: string, entry: string): void {
+    this.startScript('dev:goto', function* (): Script {
+      yield { k: 'room', room: roomId, entry };
+    });
+  }
+
   snapCamera(): void {
     const room = this.content.rooms.get(this.state.room);
     if (!room) return;
     const pc = this.state.actors[PC];
     const target = this.camLock ?? (pc && pc.room === room.id ? pc.x - 480 : 0);
-    this.camX = clamp(target, 0, Math.max(0, room.width - 960));
+    const [minX, maxX] = camRange(room.width);
+    this.camX = clamp(target, minX, maxX);
   }
 
   private updateCamera(dt: number): void {
     const room = this.content.rooms.get(this.state.room);
     if (!room) return;
-    const maxX = Math.max(0, room.width - 960);
+    const [minX, maxX] = camRange(room.width);
     if (this.camLock !== null) {
-      const tgt = clamp(this.camLock, 0, maxX);
+      const tgt = clamp(this.camLock, minX, maxX);
       const step = this.instant ? Infinity : dt * this.camSpeed * Math.max(60, Math.abs(tgt - this.camX));
       this.camX = this.camX < tgt ? Math.min(tgt, this.camX + step) : Math.max(tgt, this.camX - step);
       return;
@@ -1409,7 +1424,7 @@ export class Engine {
     let tgt = this.camX;
     if (screenX < 340) tgt = pc.x - 340;
     else if (screenX > 620) tgt = pc.x - 620;
-    tgt = clamp(tgt, 0, maxX);
+    tgt = clamp(tgt, minX, maxX);
     if (this.instant) this.camX = tgt;
     else this.camX += (tgt - this.camX) * Math.min(1, dt * 6);
   }
@@ -1444,3 +1459,12 @@ function* autosaveScript(): Script {
 
 export { PC, SAVE_VERSION };
 export type { FlagValue };
+
+/** Horizontal camera range; rooms narrower than the view are centred. */
+function camRange(width: number): [number, number] {
+  if (width < 960) {
+    const c = -(960 - width) / 2;
+    return [c, c];
+  }
+  return [0, width - 960];
+}

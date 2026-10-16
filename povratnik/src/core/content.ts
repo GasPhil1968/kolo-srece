@@ -39,6 +39,8 @@ export interface HotspotDef {
   shape?: Rect | { poly: FlatPoly };
   /** Bind the hotspot to an actor (its sprite is the click area). */
   actor?: string;
+  /** Bind the hotspot to a (possibly moving) decor figure; its sprite is the click area. */
+  decor?: string;
   visible?: Cond;
   /** Where the player walks before acting; null = act from the current position. */
   walkTo?: Dyn<Spot | null>;
@@ -79,6 +81,9 @@ export interface LayerDef {
   fps?: number;
   /** Place the image into this rectangle (x, y, w, h) instead of x/y + scale. */
   rect?: [number, number, number, number];
+  /** Hidden actors drawn as part of this layer (a seated pair): speech is anchored above the layer
+   * at the given fraction of its width. */
+  speakers?: Record<string, number>;
 }
 
 /** Non-interactive figure drawn like an actor (perspective scale, planted anchor, y-sorted). */
@@ -98,6 +103,34 @@ export interface DecorDef {
   alpha?: number;
   /** Animation clock offset in seconds, so neighbours do not move in sync. */
   phase?: number;
+  /** Walk along a path and re-enter from its start (caravans, columns, flying birds). */
+  motion?: DecorMotion;
+  /** Ride along with another decor figure (a bale on a horse), offset in the leader's source pixels. */
+  follow?: DecorFollow;
+}
+
+export interface DecorMotion {
+  /** Polyline in room coordinates. */
+  path: [number, number][];
+  /** Room pixels per second along the path. */
+  speed: number;
+  /** Seconds from one entry to the next (>= path length / speed). */
+  period: number;
+  /** Seconds into the cycle at clock 0 (spacing within a column). */
+  offset?: number;
+  /** Pixels over which the figure fades in and out at both ends. */
+  fade?: number;
+  /** Animation while moving (default 'walk'). */
+  anim?: string;
+}
+
+export interface DecorFollow {
+  id: string;
+  dx: number;
+  dy: number;
+  /** Hop height in source pixels and hops per second (soft loads bounce with the gait). */
+  bob?: number;
+  bobHz?: number;
 }
 
 export interface AmbientDef {
@@ -133,6 +166,9 @@ export interface RoomDef {
   /** Multiply tint for actors in this room (night scenes), e.g. 0x9aa6c8. */
   actorTint?: Dyn<number>;
   onEnter?: ScriptFn;
+  /** Synchronous state set-up at the moment the room is swapped in, before it fades in
+   * (e.g. people who came home ahead of the player). No commands. */
+  prepare?: (c: ScriptCtx) => void;
   rules?: RuleDef[];
   /** Asset bundles this room needs (backgrounds, props, character atlases). */
   assets?: string[];

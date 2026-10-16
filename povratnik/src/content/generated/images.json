@@ -389,6 +389,12 @@
   "source": "intros/cine_zaesur_b.webp",
   "w": 1536
  },
+ "fx_dust_mote": {
+  "file": "props/fx_dust_mote.webp",
+  "h": 12,
+  "source": "fx/fx_dust_mote.webp",
+  "w": 12
+ },
  "intro_akt2": {
   "file": "screens/intro_akt2.webp",
   "h": 600,
@@ -467,11 +473,41 @@
   "source": "menu/menu-keyart.webp",
   "w": 960
  },
+ "occ_kuca_bench": {
+  "derived": "occluder cut along a traced outline",
+  "file": "props/occ_kuca_bench.webp",
+  "h": 80,
+  "source": "bg/bg_kuca.webp",
+  "w": 95,
+  "x": 374,
+  "y": 339
+ },
+ "occ_weide_wall": {
+  "derived": "occluder cut along a traced outline",
+  "file": "props/occ_weide_wall.webp",
+  "h": 95,
+  "source": "bg/bg_weide.webp",
+  "w": 445,
+  "x": 735,
+  "y": 274
+ },
  "prop_band": {
   "file": "props/prop_band.webp",
   "h": 88,
   "source": "ui/inv.webp",
   "w": 88
+ },
+ "prop_bread": {
+  "file": "props/prop_bread.webp",
+  "h": 52,
+  "source": "props/prop_bread.webp",
+  "w": 90
+ },
+ "prop_cheese": {
+  "file": "props/prop_cheese.webp",
+  "h": 56,
+  "source": "props/prop_cheese.webp",
+  "w": 80
  },
  "prop_dzezva": {
   "file": "props/prop_dzezva.webp",
@@ -490,6 +526,18 @@
   "h": 38,
   "source": "props/prop_hausnummer3.webp",
   "w": 54
+ },
+ "prop_juniper": {
+  "file": "props/prop_juniper.webp",
+  "h": 200,
+  "source": "props/prop_juniper.webp",
+  "w": 240
+ },
+ "prop_juniper_wool": {
+  "file": "props/prop_juniper_wool.webp",
+  "h": 130,
+  "source": "props/prop_juniper_wool.webp",
+  "w": 156
  },
  "prop_kafana_counter": {
   "file": "props/prop_kafana_counter.webp",
@@ -556,6 +604,12 @@
   "h": 78,
   "source": "props/prop_sarajevo_rose.webp",
   "w": 168
+ },
+ "prop_stone_sitters": {
+  "file": "props/prop_stone_sitters.webp",
+  "h": 290,
+  "source": "props/prop_stone_sitters.webp",
+  "w": 380
  },
  "prop_strassenschild": {
   "file": "props/prop_strassenschild.webp",
