@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type { Action, Target } from '../engine/game';
 import type { Dir } from '../engine/types';
 import { Actor, charMetas } from './actor';
+import { asset } from './assets';
 import { ctl } from './controller';
 import type { Pt, RoomMeta } from './meta';
 import { NavMesh } from './path';
@@ -100,7 +101,7 @@ export class RoomScene extends Phaser.Scene {
       list.push([`room:${id}:obj:${name}`, `assets/rooms/${id}/obj_${name}.png`]);
       for (const v of o.variants ?? []) list.push([`room:${id}:obj:${name}_${v}`, `assets/rooms/${id}/obj_${name}_${v}.png`]);
     }
-    return list;
+    return list.map(([k, url]) => [k, asset(url)]);
   }
 
   ensureLoaded(id: string): Promise<void> {
@@ -112,7 +113,7 @@ export class RoomScene extends Phaser.Scene {
       for (const v of ['', ...(a.variants ?? [])]) {
         const suffix = v ? `${n}_${v}` : n;
         if (!this.textures.exists(`room:${id}:anim:${suffix}`)) {
-          anims.push([`room:${id}:anim:${suffix}`, `assets/rooms/${id}/anim_${suffix}.png`, { frameWidth: a.w, frameHeight: a.h }]);
+          anims.push([`room:${id}:anim:${suffix}`, asset(`assets/rooms/${id}/anim_${suffix}.png`), { frameWidth: a.w, frameHeight: a.h }]);
         }
       }
     }

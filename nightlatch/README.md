@@ -38,6 +38,14 @@ Rook's own mind two years ago.
 * Only to regenerate the assets: Python 3.10+ with `numpy` and `Pillow` (art), plus `ffmpeg`
   (audio). The generated assets are committed, so you don't need these to play or build.
 
+## Play without installing anything
+
+`npm run build:portable` writes `release/NightLatch.zip`. Unzip it and double-click
+`index.html`: the game runs offline in any current browser, with no server and no install.
+Every asset is embedded in `assets-data.js`, because browsers won't load files from a page
+opened from disk. The browser test suite passes against the unzipped folder opened via
+`file://` as well (5 cases, 62 checks, including the full playthrough).
+
 ## Install, run and build
 
 ```bash

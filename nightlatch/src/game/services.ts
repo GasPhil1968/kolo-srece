@@ -1,6 +1,7 @@
 // Settings, save slots and audio — browser-side services.
 import Phaser from 'phaser';
 import { deserialize, serialize, type GameState } from '../engine/state';
+import { asset } from './assets';
 
 // --------------------------------------------------------------------- settings ----
 export interface Settings {
@@ -197,7 +198,7 @@ export class AudioDirector {
     };
     if (this.scene.cache.audio.exists(key)) start();
     else {
-      this.scene.load.audio(key, 'assets/audio/' + entry.file);
+      this.scene.load.audio(key, asset('assets/audio/' + entry.file));
       this.scene.load.once(`filecomplete-audio-${key}`, start);
       this.scene.load.start();
     }
