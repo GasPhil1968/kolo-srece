@@ -17,6 +17,10 @@ export const ctl = {
   inputLocked: 0,
   /** Fast mode for automated browser tests: skips waits/tweens. */
   fast: false,
+  /** In fast mode, close cards/documents/close-ups by themselves (off when a test clicks them). */
+  autoOverlays: true,
+  /** Walking speed multiplier (browser tests walk faster). */
+  walkMul: 1,
 
   newGame(state?: GameState) {
     this.presenter = this.presenter ?? new RuntimePresenter();

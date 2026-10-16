@@ -1,0 +1,41 @@
+# Bugs found by the automated tests (all fixed)
+
+Every bug below was found by one of the automated checks: the static validator, the playtest
+simulations or the Playwright browser tests. Each was fixed, and the suite that found it was
+re-run until it passed.
+
+### Found by the playtest simulations
+
+| # | Bug | How it showed up | Fix |
+|---|---|---|---|
+| 1 | Hiding an NPC after a scene removed it **from every room for good**. Delaney never appeared on the clock tower roof, and Nora never appeared at the dawn epilogue. | Every full run stuck in chapter 8 (softlock) | `hide` now releases the NPC to its default placements; scene staging is reset at each chapter start |
+| 2 | After Frank's surrender the rooftop conversation stayed open, and the surrender could play again. | Dialogue loop in the critical-path run | Rooftop options only exist before the surrender |
+| 3 | The live broadcast had **no way out**. A player who didn't know which evidence to show was stuck in the conversation, without access to the notebook. | Random players hit the 200-choice dialogue guard | "(Cover the microphone and check my notes.)" leaves; the microphone and the transmitter key resume the broadcast |
+| 4 | Using the booth key again after leaving the broadcast only said "We're on the air." | Steps kept failing in chaos runs | The transmitter now resumes the broadcast |
+| 5 | Actions on **hidden hotspots** were executed by the logic layer. Example: the key ring before Danny moves it, which skipped the timeline. The player then missed "for Sgt. Rook" and could not finish chapter 8. | Out-of-order runs: confession impossible (softlock) | The engine ignores look/use/item on hotspots whose condition is false; map travel needs an open street exit |
+| 6 | **Evelyn's phone number was missable.** Taking the case before asking how to reach her made the chapter 3 reverse-directory puzzle unsolvable. | Explorer runs: step kept failing (softlock) | Evelyn leaves her number when Rook takes the case |
+| 7 | The step for Kessler's test was offered while Rook was still locked in the cold store. | Steps kept failing in random orders | Walkthrough precondition corrected; the solver retries steps after progress |
+
+### Found by the static validator
+
+| # | Bug | Fix |
+|---|---|---|
+| 8 | Talking to Nora at the mission, or to Vivian, Kroll, Vey, Crane or Morrow, referenced dialogues that don't exist | Default lines for every character |
+| 9 | The Halcyon House and Pier 4 map pins pointed at arrival points that don't exist | Arrival points set to `start` |
+| 10 | A condition tested a flag that is never set (`c4_van`) | Removed |
+| 11 | The holding-cell key ring is painted in two places but had one hotspot | Split into `keys` / `keys_near` |
+| 12 | 14 painted hotspots had no look or use text (old bar, trolley, fresh grave, bell rope, fire notice, service stairs, two clocks, cabin calendar, ship's clock, sea chest, engineer's chair, ash-can, oak) | Descriptions and interactions written. The Halcyon gate is now explorable rather than an instant cutscene |
+| 13 | Three sound effects used by the game were missing from the audio set | Added to the audio build |
+| 14 | State objects existed in the art but were never shown (`carbon_gone`, the 9 o'clock booth clock) | Wired to their story flags |
+
+### Found by the Playwright browser tests
+
+| # | Bug | How it showed up | Fix |
+|---|---|---|---|
+| 15 | **Loading a save while a game was running** (pause menu → Load) hung. The queued shutdown of the old room tore down the freshly loaded one. | Gallery test could not load a second room | Wait for the old game's scenes to stop before building the new one |
+| 16 | **After loading, the inventory looked empty.** The HUD kept references to the destroyed slot icons of the previous game. | Empty inventory in screenshots | The HUD resets completely on every start; a test now checks the icons after loading |
+| 17 | On the second combination lock, the digits did not change on screen when turning the wheels | Page errors during the browser playthrough | Close-up scene state is reset on every opening |
+| 18 | The N, M and Esc shortcuts stopped working: the key that opened an overlay closed it again in the same frame | "N opens the notebook" check failed | Overlay close keys ignore the first 200 ms |
+| 19 | Music changing twice within 0.7 s crashed the cross-fade every frame, freezing the chapter card | Playthrough stuck on a chapter card | Volume fades run on the game clock and survive scene changes |
+| 20 | Character animation timers fired on sprites destroyed by a reload, and UI refreshes ran after returning to the title | Page errors | Guards on destroyed sprites and stopped scenes |
+| 21 | The notebook's lists could be scrolled past the end | Deduction clicks drifted | Scrolling is clamped |

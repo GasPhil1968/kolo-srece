@@ -65,7 +65,7 @@ export class RoomScene extends Phaser.Scene {
   npcs = new Map<string, Actor>();
   bg?: Phaser.GameObjects.Image;
   objects = new Map<string, Phaser.GameObjects.Image>();
-  animSprites: Phaser.GameObjects.Sprite[] = [];
+  animSprites = new Map<string, Phaser.GameObjects.Sprite>();
   rain?: Rain;
   hover: HoverInfo | null = null;
   private actToken = 0;
@@ -88,7 +88,7 @@ export class RoomScene extends Phaser.Scene {
       this.showHotspots();
     });
     this.input.keyboard?.on('keydown-SPACE', () => this.showHotspots());
-    this.events.on('shutdown', () => this.clearRoom());
+    this.events.once('shutdown', () => this.clearRoom());
   }
 
   // ----------------------------------------------------------------- loading ----
@@ -107,13 +107,19 @@ export class RoomScene extends Phaser.Scene {
     const m = roomMetas[id];
     if (!m) return Promise.reject(new Error('no room meta ' + id));
     const missing = this.texturesFor(id).filter(([k]) => !this.textures.exists(k));
-    const anims = Object.entries(m.anims ?? {}).filter(([n]) => !this.textures.exists(`room:${id}:anim:${n}`));
+    const anims: [string, string, { frameWidth: number; frameHeight: number }][] = [];
+    for (const [n, a] of Object.entries(m.anims ?? {})) {
+      for (const v of ['', ...(a.variants ?? [])]) {
+        const suffix = v ? `${n}_${v}` : n;
+        if (!this.textures.exists(`room:${id}:anim:${suffix}`)) {
+          anims.push([`room:${id}:anim:${suffix}`, `assets/rooms/${id}/anim_${suffix}.png`, { frameWidth: a.w, frameHeight: a.h }]);
+        }
+      }
+    }
     if (!missing.length && !anims.length) return Promise.resolve();
     return new Promise((resolve) => {
       for (const [k, url] of missing) this.load.image(k, url);
-      for (const [n, a] of anims) {
-        this.load.spritesheet(`room:${id}:anim:${n}`, `assets/rooms/${id}/anim_${n}.png`, { frameWidth: a.w, frameHeight: a.h });
-      }
+      for (const [k, url, frame] of anims) this.load.spritesheet(k, url, frame);
       this.load.once('complete', () => resolve());
       this.load.start();
     });
@@ -124,8 +130,8 @@ export class RoomScene extends Phaser.Scene {
     this.bg = undefined;
     for (const o of this.objects.values()) o.destroy();
     this.objects.clear();
-    for (const s of this.animSprites) s.destroy();
-    this.animSprites = [];
+    for (const s of this.animSprites.values()) s.destroy();
+    this.animSprites.clear();
     for (const n of this.npcs.values()) n.destroy();
     this.npcs.clear();
     this.rain?.destroy();
@@ -139,20 +145,26 @@ export class RoomScene extends Phaser.Scene {
     await this.ensureLoaded(id);
     this.clearRoom();
     this.roomId = id;
+    if (this.hover) {
+      this.hover = null; // nothing is under the pointer in the new room until it moves
+      this.events.emit('hover', null);
+    }
     const m = (this.meta = roomMetas[id]);
     this.nav = new NavMesh(m.walk.map((w) => ({ poly: w.poly, holes: w.holes })));
     this.cameras.main.setBounds(0, 0, m.w, VIEW_H);
     this.variantNow = ctl.game.variant(id);
     this.bg = this.add.image(0, 0, this.bgKey()).setOrigin(0, 0).setDepth(-1000);
     for (const [name, a] of Object.entries(m.anims ?? {})) {
-      const key = `room:${id}:anim:${name}`;
-      const animKey = `${key}:loop`;
-      if (!this.anims.exists(animKey)) {
-        this.anims.create({ key: animKey, frames: this.anims.generateFrameNumbers(key, {}), frameRate: a.fps, repeat: -1 });
+      for (const v of ['', ...(a.variants ?? [])]) {
+        const key = `room:${id}:anim:${v ? `${name}_${v}` : name}`;
+        if (!this.anims.exists(`${key}:loop`)) {
+          this.anims.create({ key: `${key}:loop`, frames: this.anims.generateFrameNumbers(key, {}), frameRate: a.fps, repeat: -1 });
+        }
       }
-      const s = this.add.sprite(a.x, a.y, key, 0).setOrigin(0, 0).setDepth(a.depth ?? -900);
-      s.play({ key: animKey, startFrame: Math.floor(Math.random() * a.frames) });
-      this.animSprites.push(s);
+      // ambient animations sort against characters by their depth (a floor y); none = part of the backdrop
+      const s = this.add.sprite(a.x, a.y, this.animTex(name), 0).setOrigin(0, 0).setDepth(a.depth ?? -900);
+      s.play({ key: `${this.animTex(name)}:loop`, startFrame: Math.floor(Math.random() * a.frames) });
+      this.animSprites.set(name, s);
     }
     if (m.rain?.length) this.rain = new Rain(this, m.rain);
     // player
@@ -225,7 +237,7 @@ export class RoomScene extends Phaser.Scene {
 
   /** Sync objects, NPCs, variant and blocks with the logic state. */
   refresh() {
-    if (!this.meta || !ctl.game) return;
+    if (!this.meta || !ctl.game || !this.sys.isActive()) return;
     const g = ctl.game;
     if (g.state.room !== this.roomId) return;
     const v = g.variant(this.roomId);
@@ -233,6 +245,10 @@ export class RoomScene extends Phaser.Scene {
       this.variantNow = v;
       this.bg?.setTexture(this.bgKey());
       for (const [name, img] of this.objects) img.setTexture(this.objKey(name));
+      for (const [name, spr] of this.animSprites) {
+        const frame = spr.anims.currentFrame?.index ?? 0;
+        spr.play({ key: `${this.animTex(name)}:loop`, startFrame: Math.max(0, frame - 1) });
+      }
     }
     const visible = new Set(g.objectsVisible(this.roomId));
     for (const [name, o] of Object.entries(this.meta.objects ?? {})) {
@@ -262,7 +278,8 @@ export class RoomScene extends Phaser.Scene {
       if (!charMetas[sprite]) continue;
       if (!a) {
         a = new Actor(this, sprite, pt.x, pt.y, n.face ?? pt.face ?? 'down');
-        a.scaleFn = this.scaleFn();
+        const fixed = pt.scale;
+        a.scaleFn = fixed ? () => fixed : this.scaleFn();
         a.updateScale();
         if (n.pose && a.has(n.pose)) a.hold(n.pose);
         this.npcs.set(n.id, a);
@@ -278,6 +295,12 @@ export class RoomScene extends Phaser.Scene {
     this.player.setPos(this.player.x, this.player.y);
     const noPlayer = room.noPlayer ? g.cond(room.noPlayer) : false;
     this.player.sprite.setVisible(!noPlayer);
+  }
+
+  private animTex(name: string) {
+    const v = this.variantNow;
+    const a = this.meta.anims[name];
+    return v && a?.variants?.includes(v) ? `room:${this.roomId}:anim:${name}_${v}` : `room:${this.roomId}:anim:${name}`;
   }
 
   private objKey(name: string) {

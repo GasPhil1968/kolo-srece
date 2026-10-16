@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { ctl } from './controller';
 import type { Dir } from '../engine/types';
 import type { CharMeta, Pt } from './meta';
 import { audio } from './services';
@@ -113,7 +114,7 @@ export class Actor {
   }
 
   refreshAnim() {
-    if (this.state === 'anim') return;
+    if (!this.sprite.scene || this.state === 'anim') return; // destroyed, or a pose is playing
     const base = this.state === 'walk' ? 'walk' : this.state === 'talk' ? 'talk' : this.baseAnim;
     const { key, flip } = this.dirAnim(base);
     this.sprite.setFlipX(flip);
@@ -144,7 +145,14 @@ export class Actor {
   }
 
   talk(on: boolean) {
-    if (this.state === 'walk' || this.state === 'anim') return;
+    if (this.state === 'walk') return;
+    if (this.state === 'anim') {
+      // a held still pose (seated) has a matching talking loop; busy poses (piano, typing, aiming) carry on
+      const p = this.heldPose;
+      const t = p && (p.startsWith('idle_') ? p.replace(/^idle_/, 'talk_') : `${p}_talk`);
+      if (p && t && t !== p && this.has(t)) this.sprite.play(this.animKey(on ? t : p), true);
+      return;
+    }
     this.state = on ? 'talk' : 'idle';
     this.refreshAnim();
   }
@@ -171,7 +179,7 @@ export class Actor {
         this.refreshAnim();
         const s = Phaser.Math.Clamp(this.scaleFn(this.y), 0.6, 1.2);
         const vertical = Math.abs(dy) > Math.abs(dx);
-        const speed = this.speed * s * (vertical ? 0.62 : 1);
+        const speed = this.speed * s * (vertical ? 0.62 : 1) * ctl.walkMul;
         const obj = { x: this.x, y: this.y };
         this.scene.tweens.add({
           targets: obj,
@@ -201,6 +209,7 @@ export class Actor {
     const n = this.has(`${name}_side`) && !this.has(name) ? `${name}_side` : name;
     if (!this.has(n)) return Promise.resolve();
     this.state = 'anim';
+    this.heldPose = null;
     const key = this.animKey(n);
     if (n.endsWith('_side')) this.sprite.setFlipX(this.dir === 'left');
     return new Promise((resolve) => {
@@ -227,14 +236,18 @@ export class Actor {
   /** Hold a looping pose until changed (e.g. 'lie', 'shiver_side', 'play_side'). */
   hold(name: string) {
     if (!this.has(name)) return;
+    this.heldPose = name;
     this.state = 'anim';
     this.sprite.play(this.animKey(name), true);
   }
 
   release() {
+    this.heldPose = null;
     this.state = 'idle';
     this.refreshAnim();
   }
+
+  private heldPose: string | null = null;
 
   tick(now: number) {
     if (this.state === 'idle' && now > this.blinkAt) {

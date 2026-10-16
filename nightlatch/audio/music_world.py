@@ -76,20 +76,20 @@ def locked() -> Song:
     kit += [(b, 'kick', 0.32, True) for bar in range(8, 16) for b in (bar * 4, bar * 4 + 0.4)]
     s.bus('room', 'corridor', -9.0)
     s.bus('far', 'hall', -6.0)
-    s.add('clock', 'drums', kit, gain_db=-4.0, swing=False, jitter_ms=1.0, drift_ms=0, vel_jitter=0.03,
+    s.add('clock', 'drums', kit, gain_db=-3.0, swing=False, jitter_ms=1.0, drift_ms=0, vel_jitter=0.03,
           sends={'room': -14}, opts=dict(pan_scale=1.0))
-    s.add('pizz', UprightBass('pizz_locked', sustain=0.45, bright=1.2), pizz, gain_db=-3.0, pan=-0.1,
+    s.add('pizz', UprightBass('pizz_locked', sustain=0.45, bright=1.2), pizz, gain_db=-4.5, pan=-0.1,
           swing=False, jitter_ms=4, sends={'room': -12}, eq=[('pk', 110, 1.0, 2.0), ('blp', 4500, 2)])
-    s.add('celesta', Mallet('celesta', 'cel_locked'), cel, gain_db=-7.0, pan=0.35, swing=False, jitter_ms=6,
+    s.add('celesta', Mallet('celesta', 'cel_locked'), cel, gain_db=-5.0, pan=0.35, swing=False, jitter_ms=6,
           sends={'far': -2, 'room': -10})
-    s.add('cellos', StringSection('cellos', 'vc_locked', sul_tasto=True), vc, gain_db=-8.0, pan=0.25,
+    s.add('cellos', StringSection('cellos', 'vc_locked', sul_tasto=True), vc, gain_db=-10.0, pan=0.25,
           swing=False, sends={'far': -8})
-    s.add('basses', StringSection('basses', 'cb_locked'), bs, gain_db=-8.0, pan=0.1, swing=False, sends={'far': -10})
+    s.add('basses', StringSection('basses', 'cb_locked'), bs, gain_db=-10.0, pan=0.1, swing=False, sends={'far': -10})
     s.add('violas', StringSection('violas', 'vla_locked', sul_tasto=True), vla, gain_db=-10.0, pan=-0.3,
           swing=False, sends={'far': -6})
     s.add('clusters', Piano('muffled', bright=0.45, decay=0.3, knock=1.6, hammer=1.5), clusters, gain_db=-9.0,
           swing=False, jitter_ms=5, sends={'room': -10}, eq=[('blp', 1800, 2), ('ls', 200, 0.7, 2)])
-    s.master_opts.update(target_rms_db=-21.5, glue=0.6)
+    s.master_opts.update(target_rms_db=-21.5, glue=0.6, eq=[('ls', 150, 0.7, -2.0), ('hs', 2500, 0.7, 2.0)])
     return s
 
 
@@ -131,7 +131,7 @@ def office() -> Song:
     s.add('bass', UprightBass('office_bass', sustain=1.4, bright=0.85), bass, gain_db=-7.0, pan=0.05,
           feel_ms=-3, jitter_ms=8, sends={'room': -14},
           eq=[('pk', 90, 1.0, 2.5), ('pk', 650, 1.2, -2.5), ('blp', 3500, 2)])
-    s.master_opts.update(target_rms_db=-20.5, eq=[('hs', 7000, 0.7, -2.0)], glue=0.7)
+    s.master_opts.update(target_rms_db=-20.5, eq=[('hs', 8000, 0.7, -0.5)], glue=0.7)
     return s
 
 
@@ -275,10 +275,10 @@ def city() -> Song:
     s.bus('room', 'studio', -4.0)
     s.bus('plate', 'plate', -6.0)
     s.add('swirl', 'swirl', [], gain_db=-15.0, sends={'room': -14}, opts=dict(level=0.12, circle_beats=1.0))
-    s.add('vibes', Mallet('vibes', 'vib_city', tremolo=0.18, trem_rate=5.2), vib, gain_db=1.0, pan=0.25,
+    s.add('vibes', Mallet('vibes', 'vib_city', tremolo=0.18, trem_rate=5.2, spread=0.6), vib, gain_db=1.0, pan=0.4,
           feel_ms=6, jitter_ms=8, sends={'plate': -9, 'room': -14},
           pedal=[(c.t + 0.05, c.t + c.d - 0.05) for c in ch])
-    s.add('piano', Piano('city_pno', bright=0.95, spread=0.5), comp, gain_db=-5.0, feel_ms=10, jitter_ms=8,
+    s.add('piano', Piano('city_pno', bright=0.95, spread=0.85), comp, gain_db=-5.0, feel_ms=10, jitter_ms=8,
           sends={'room': -12}, eq=[('hs', 6000, 0.7, -2.0)])
     s.add('bass', UprightBass('city_bass'), bass, gain_db=-4.5, pan=-0.05, feel_ms=-5, jitter_ms=6,
           sends={'room': -18}, eq=[('pk', 100, 1.0, 2.5), ('pk', 700, 1.2, -2.0), ('pk', 1400, 1.5, 1.5), ('blp', 5000, 2)])

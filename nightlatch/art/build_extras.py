@@ -24,7 +24,7 @@ import extras_common  # noqa: E402,F401  (registers the e_ ramps)
 
 def build_items():
     import extras_icons
-    img, frames, names = extras_icons.build_atlas()
+    img, frames, _names = extras_icons.build_atlas()
     return f'{len(frames)} frames, atlas {img.shape[1]}x{img.shape[0]}'
 
 

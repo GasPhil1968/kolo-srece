@@ -65,10 +65,6 @@ def cyl(ax, ay, bx, by, r, lo, hi, spec=0.0):
     return f
 
 
-def const(v):
-    return lambda X, Y: np.full(X.shape, v, np.float32)
-
-
 # ------------------------------------------------------------------ icon canvas ----------
 class Ico:
     def __init__(self, seed=0):
@@ -282,10 +278,6 @@ def scribble(ic, x0, x1, y, ramp, lum, seed=0):
     ic.px(pts, ramp, lum)
 
 
-def key_bit(ic, ramp, lum, pts):
-    ic.paint(ic.pix(pts), ramp, lum, bevel=None)
-
-
 def evidence_mark(ic, x=17, y=2):
     """Brass 'important' glint: a small four-point sparkle (drawn after the outline)."""
     def fn(out):
@@ -494,16 +486,16 @@ def _apt_key(ic):
     for (x, y) in ((11, 12), (13, 14), (15, 16)):
         ic.c.rid[y, x] = -1
     ic.px([(12, 10), (14, 12), (16, 14)], 'chrome', 1.0)
-    bow = ic.rows(0, 1, ['.##.##.',
+    bow = ic.rows(1, 1, ['.##.##.',
                          '#..#..#',
                          '.##.##.',
                          '..#.#..',
                          '.#...#.',
                          '#.....#'])
     ic.paint(bow, 'neonred', .55, bevel=None, sep=.35)
-    ic.px([(1, 1), (4, 1), (0, 2), (3, 2)], 'neonred', .8)
-    ic.px([(3, 3)], 'red', .45)
-    ic.px([(0, 6), (6, 6)], 'red', .55)
+    ic.px([(2, 1), (5, 1), (1, 2), (4, 2)], 'neonred', .8)
+    ic.px([(4, 3)], 'red', .45)
+    ic.px([(1, 6), (7, 6)], 'red', .55)
 
 
 @icon('nora_photo')
@@ -691,7 +683,8 @@ def _vial(ic):
     lab = ic.rect(6, 11, 13, 15)
     ic.paint(lab, 'paper', lin(.86, .05), bevel=(.05, .1))
     ic.paint(ic.rect(6, 11, 13, 11), 'e_redink', .75, bevel=None)
-    ic.px([(7, 13), (8, 13), (10, 13), (11, 13), (12, 13), (8, 14), (9, 14)], 'ink', .3)
+    l7 = ic.rows(8, 12, ['#.###', '#...#', '#..#.', '##.#.'])          # 'L7'
+    ic.paint(l7, 'e_redink', .45, bevel=None)
 
 
 @icon('press_card')
@@ -743,10 +736,10 @@ def _pike_camera(ic):
 # ------------------------------------------------------------------ chapter 3 ------------
 @icon('negatives')
 def _negatives(ic):
-    strip = ic.poly([(0, 6), (19, 4), (19, 13), (0, 15)])
+    strip = ic.poly([(1, 6), (18, 4), (18, 13), (1, 15)])
     ic.paint(strip, 'e_amber', lambda X, Y: .3 + .04 * (10 - X) / 10, bevel=(.12, .05))
     # sprocket holes along both edges
-    for x in range(1, 19, 2):
+    for x in range(2, 18, 2):
         yt = int(6 - x * 2 / 19) + 1
         yb = int(15 - x * 2 / 19) - 1
         ic.px([(x, yt), (x, yb)], 'e_amber', .7)
@@ -761,7 +754,7 @@ def _negatives(ic):
     ic.paint(ic.rect(16, 8, 17, 11) & f2, 'e_amber', .12, bevel=None)
     ic.px([(15, 9)], 'e_amber', .85)
     # light catching the base
-    ic.px([(1, 7), (10, 6), (19, 5)], 'e_amber', .9)
+    ic.px([(2, 7), (10, 6), (17, 5)], 'e_amber', .9)
 
 
 @icon('contact_sheet', evidence=True)
@@ -839,7 +832,7 @@ def _lockpicks(ic):
             ic.px([(x - 1, top + 1), (x + 1, top + 1)], 'chrome', .55)
         ic.px([(x, top)], 'chrome', 1.0)
     # tie
-    ic.paint(ic.line((1, 13), (0, 15)), 'e_leather', .6, bevel=None)
+    ic.paint(ic.line((1, 13), (1, 15)), 'e_leather', .6, bevel=None)
 
 
 # ------------------------------------------------------------------ chapter 4 ------------
@@ -871,7 +864,7 @@ def _spoon_body(ic, flat=False):
         ic.paint(ic.line((1, 17), (1, 18), (3, 18)), 'chrome', 1.0, bevel=None)   # bright ground edge
         ic.px([(3, 15), (4, 14), (5, 15)], 'tile', .38)                          # grinding scratches
         ic.px([(3, 16), (6, 13)], 'chrome', .95)
-        ic.paint(ic.pix([(6, 18), (8, 17), (7, 19)]), 'chrome', .8, bevel=None)  # filings
+        ic.paint(ic.pix([(6, 18), (8, 17)]), 'chrome', .8, bevel=None)           # filings
 
 
 @icon('spoon')
@@ -919,16 +912,16 @@ def _pills(ic):
 @icon('matches')
 def _matches(ic):
     # three matches in a twist of paper (a cone, twisted shut at the bottom)
-    for (x0, y0, x1, y1) in ((8, 9, 5, 3), (10, 9, 10, 2), (12, 9, 15, 3)):
+    for (x0, y0, x1, y1) in ((8, 9, 5, 4), (10, 9, 10, 3), (12, 9, 15, 4)):
         ic.paint(ic.line((x0, y0), (x1, y1)), 'cream', .78, bevel=None)
-    for (x, y) in ((4, 1), (9, 0), (15, 1)):
+    for (x, y) in ((4, 2), (9, 1), (15, 2)):
         ic.paint(ic.rect(x, y, x + 1, y + 2), 'red', .7, bevel=(.22, .15))
     cone = ic.poly([(3, 8), (17, 7), (13, 15), (11, 17), (9, 17)])
     ic.paint(cone, 'paper', lin(.84, .08), bevel=(.1, .14), sep=.3)
     ic.paint(ic.line((5, 9), (10, 15)), 'paper', .58, bevel=None)       # folds
     ic.paint(ic.line((12, 9), (11, 14)), 'paper', .62, bevel=None)
     ic.px([(4, 8), (6, 8), (8, 8)], 'paper', 1.0)
-    tail = ic.pix([(10, 18), (9, 19), (11, 19)])
+    tail = ic.pix([(10, 18), (9, 18), (11, 18)])
     ic.paint(tail, 'paper', .6, bevel=None)
     ic.px([(14, 9), (15, 9)], 'denim', .45)                             # pencil marks
 
@@ -946,8 +939,8 @@ def _straw_bundle(ic, ramp, damp=False):
         a_bot = math.radians(135 - t * 30 + rng.uniform(-5, 5))
         rt = 9.5 + rng.uniform(-1.5, 1.0)
         rb = 8.5 + rng.uniform(-1.5, 1.0)
-        top = (wx + math.cos(a_top) * rt, wy + math.sin(a_top) * rt)
-        bot = (wx + math.cos(a_bot) * rb, wy + math.sin(a_bot) * rb)
+        top = (min(18, max(1, wx + math.cos(a_top) * rt)), min(18, max(1, wy + math.sin(a_top) * rt)))
+        bot = (min(18, max(1, wx + math.cos(a_bot) * rb)), min(18, max(1, wy + math.sin(a_bot) * rb)))
         l = .5 + .4 * rng.random()
         ic.paint(ic.line(bot, (wx, wy), top), ramp, l, bevel=None)
     # twisted binding round the waist
@@ -956,10 +949,10 @@ def _straw_bundle(ic, ramp, damp=False):
     ic.px([(8, 10), (10, 9)], ramp, .55)
     if damp:
         ic.c.lum[ic.opaque] *= .9
-        for (x, y) in ((4, 16), (8, 17), (2, 13)):
+        for (x, y) in ((4, 15), (8, 16), (2, 12)):
             ic.paint(ic.pix([(x, y + 1), (x, y + 2)]), 'ice', .55, bevel=None)
             ic.px([(x, y + 2)], 'ice', .95)
-        ic.paint(ic.pix([(6, 19)]), 'ice', .8, bevel=None)
+        ic.paint(ic.pix([(6, 18)]), 'ice', .8, bevel=None)
         ic.px([(12, 6), (14, 4), (5, 13), (9, 9)], 'ice', .9)     # wet sheen
     else:
         ic.px([(15, 3), (16, 6), (13, 2)], ramp, 1.0)
@@ -985,7 +978,7 @@ def _halcyon_files(ic):
     front = ic.poly([(1, 7), (16, 7), (16, 18), (1, 18)])
     ic.paint(front, 'e_manila', lin(.7, .06), bevel=(.12, .12), sep=.35)
     ic.paint(ic.rect(3, 9, 10, 11), 'paper', .9, bevel=None)
-    ic.px([(4, 10), (5, 10), (6, 10), (8, 10), (9, 10)], 'ink', .3)
+    ic.px([(4, 10), (5, 10), (6, 10), (7, 10), (8, 10)], 'ink', .3)
     st = ic.line((5, 16), (13, 13)) | ic.line((5, 15), (13, 12))
     ic.paint(st, 'e_redink', .7, bevel=None)
     ic.px([(7, 15), (10, 14), (11, 13)], 'e_redink', .45)
@@ -1052,9 +1045,9 @@ def _cell_keys(ic):
 @icon('padlock', evidence=True)
 def _padlock(ic):
     # the sawn-off hasp, hanging in the shackle (drawn first, the shackle passes through it)
-    hasp = ic.poly([(0, 7), (6, 3), (8, 5), (2, 10)])
+    hasp = ic.poly([(1, 7), (6, 3), (8, 5), (2, 10)])
     ic.paint(hasp, 'rust', lin(.55, .08), bevel=(.15, .12))
-    ic.px([(0, 7), (1, 8), (2, 9)], 'chrome', .95)                    # bright sawn edge
+    ic.px([(1, 7), (1, 8), (2, 9)], 'chrome', .95)                    # bright sawn edge
     ic.px([(3, 6), (4, 7)], 'rust', .25)
     shackle = ic.ell(10.0, 7.0, 5.0, 6.0) & ~ic.ell(10.0, 7.0, 2.9, 4.0) & ic.rect(0, 0, 19, 9)
     ic.paint(shackle, 'steel', sph(10.0, 6.0, 5.2, .32, .95), bevel=None, sep=.3)
@@ -1132,12 +1125,12 @@ def _lantern(ic, mode='dry'):
     ic.px([(8, 5), (10, 5)], 'red', .25)
     # burner collar + fount
     ic.paint(ic.rect(6, 15, 13, 15), 'brass', .55, bevel=None)
-    tank = ic.poly([(2, 16), (17, 16), (18, 17), (18, 18), (17, 19), (2, 19), (1, 18), (1, 17)])
+    tank = ic.poly([(2, 16), (17, 16), (18, 17), (18, 18), (17, 18), (2, 18), (1, 18), (1, 17)])
     ic.paint(tank, 'red', cyl(10, 15.5, 10, 19.5, 2.4, .25, .78), bevel=None, sep=.35)
     ic.paint(ic.rect(3, 16, 16, 16), 'red', .8, bevel=None)
     ic.px([(15, 15), (16, 15)], 'steel', .6)                              # filler cap
     # rust
-    ic.px([(4, 18), (12, 19), (16, 9), (3, 12)], 'rust', .5)
+    ic.px([(4, 18), (12, 18), (16, 9), (3, 12)], 'rust', .5)
     ic.px([(13, 18), (2, 15)], 'rust', .62)
     if mode == 'fueled':
         # brimming with rum: the fount glistens amber, rum runs over the filler and drips
@@ -1145,7 +1138,7 @@ def _lantern(ic, mode='dry'):
         ic.paint(ic.rect(14, 15, 16, 15), 'e_amber', 1.0, bevel=None)
         ic.paint(ic.pix([(16, 17), (16, 18), (15, 18)]), 'e_amber', .85, bevel=None)
         ic.px([(5, 17), (6, 17), (9, 18), (10, 18)], 'e_amber', .62)
-        drop = ic.pix([(17, 19)])
+        drop = ic.pix([(18, 16)])
         ic.paint(drop, 'e_amber', .9, bevel=None)
     if lit:
         ic.glow(9.5, 10.6, 11.5, '#ffb24a', .8)
@@ -1175,7 +1168,7 @@ def _rum(ic):
     neck = ic.rect(8, 3, 11, 7)
     ic.paint(neck, 'e_amber', cyl(8, 5, 12, 5, 2.1, .12, .55), bevel=None)
     ic.paint(ic.rect(7, 3, 12, 3), 'e_amber', .4, bevel=None)          # lip
-    cork = ic.rect(8, 0, 11, 2)
+    cork = ic.rect(8, 1, 11, 2)
     ic.paint(cork, 'oak', lin(.6, .1), bevel=(.12, .12))
     ic.paint(ic.pix([(8, 3), (8, 4), (11, 3)]), 'blood', .55, bevel=None)    # wax drip
     lab = ic.rect(4, 10, 15, 16)
@@ -1189,7 +1182,26 @@ def _rum(ic):
         x, y = int(rng.integers(5, 15)), int(rng.integers(6, 10))
         if ic.opaque[y, x] and ic.c.names[ic.c.rid[y, x]] == 'e_amber':
             ic.px([(x, y)], 'fog', .5 + .2 * rng.random())
-    ic.px([(9, 1), (10, 0)], 'fog', .6)
+    ic.px([(9, 1), (10, 1)], 'fog', .6)
+
+
+@icon('hat')
+def _hat(ic):
+    # Rook's grey fedora: teardrop-pinched crown, black band with a bow, snap brim
+    brim = ic.ell(10.0, 14.2, 9.4, 3.3)
+    ic.paint(brim, 'slate', lambda X, Y: .7 + .06 * (10 - X) / 10 - .08 * (Y - 13.5), bevel=(.15, .0))
+    under = brim & ~ic.ell(10.0, 13.6, 9.4, 3.1)
+    ic.paint(under, 'slate', .3, bevel=None)                       # turned-down front edge
+    ic.px([(1, 14), (18, 14)], 'slate', .45)
+    crown = ic.poly([(5, 13), (5, 7), (6, 4), (8, 2), (10, 3), (12, 2), (14, 4), (15, 7), (15, 13)])
+    ic.paint(crown, 'slate', cyl(5, 8, 15, 8, 5.2, .32, .9), bevel=(.1, .1), sep=.35)
+    ic.paint(ic.pix([(10, 3), (10, 4), (10, 5), (9, 6), (11, 6)]), 'slate', .38, bevel=None)    # pinch
+    ic.px([(7, 3), (6, 5), (6, 6)], 'slate', 1.0)
+    band = ic.rect(5, 10, 15, 12)
+    ic.paint(band, 'black', lambda X, Y: .55 - .04 * (X - 5), bevel=None)
+    ic.px([(5, 10), (6, 10), (7, 10)], 'black', .85)
+    ic.paint(ic.pix([(4, 10), (3, 10), (3, 11), (4, 12)]), 'black', .6, bevel=None)       # the bow
+    ic.px([(13, 9)], 'red', .75)                                   # a match head tucked in the band
 
 
 @icon('hat_matches')
@@ -1208,17 +1220,17 @@ def _hat_matches(ic):
 
 @icon('walter_knife')
 def _walter_knife(ic):
-    handle = ic.poly([(1, 16), (8, 9), (11, 11), (11, 12), (4, 19), (2, 19), (1, 18)])
+    handle = ic.poly([(1, 15), (8, 8), (11, 10), (11, 11), (4, 18), (2, 18), (1, 17)])
     ic.paint(handle, 'e_bone', cyl(2, 18, 9, 11, 2.3, .35, .95), bevel=(.05, .1))
-    ic.paint(ic.poly([(7, 10), (8, 9), (11, 11), (10, 12)]), 'brass', .7, bevel=None)    # bolster
-    ic.paint(ic.pix([(1, 17), (2, 18), (1, 16), (3, 19)]), 'brass', .55, bevel=None)
-    ic.px([(4, 15), (5, 15), (6, 14)], 'e_bone', .4)       # W.M.
-    ic.px([(4, 16), (6, 15)], 'e_bone', .45)
-    blade = ic.poly([(10, 9), (17, 2), (18, 2), (18, 3), (12, 11)])
+    ic.paint(ic.poly([(7, 9), (8, 8), (11, 10), (10, 11)]), 'brass', .7, bevel=None)     # bolster
+    ic.paint(ic.pix([(1, 16), (2, 17), (1, 15), (3, 18)]), 'brass', .55, bevel=None)
+    ic.px([(4, 14), (5, 14), (6, 13)], 'e_bone', .4)       # W.M.
+    ic.px([(4, 15), (6, 14)], 'e_bone', .45)
+    blade = ic.poly([(10, 8), (17, 1), (18, 1), (18, 2), (12, 10)])
     ic.paint(blade, 'chrome', lin(.62, .12), bevel=None)
-    ic.paint(ic.line((11, 9), (17, 3)), 'chrome', .95, bevel=None)    # edge bevel
-    ic.px([(18, 2)], 'white', 1.0)
-    ic.px([(12, 10), (13, 9)], 'chrome', .4)
+    ic.paint(ic.line((11, 8), (17, 2)), 'chrome', .95, bevel=None)    # edge bevel
+    ic.px([(18, 1)], 'white', 1.0)
+    ic.px([(12, 9), (13, 8)], 'chrome', .4)
 
 
 @icon('calypso_manifest', evidence=True)
@@ -1266,15 +1278,15 @@ def _press_pass(ic):
     ic.px([(4, 6), (16, 6)], 'e_gold', 1.0)
     # PRESS band
     ic.paint(ic.rect(5, 10, 15, 12), 'e_gold', lin(.8, .05), bevel=None)
-    ic.px([(6, 11), (8, 11), (10, 11), (12, 11), (14, 11)], 'black', .3)
-    ic.px([(7, 14), (8, 14), (9, 14), (11, 14), (12, 14), (13, 14)], 'e_gold', .55)   # 'H. ABERNATHY'
+    ic.px([(6, 11), (7, 11), (9, 11), (10, 11), (12, 11), (14, 11)], 'black', .3)
+    ic.px([(6, 14), (7, 14), (8, 14), (9, 14), (10, 14), (11, 14), (12, 14), (13, 14), (14, 14)], 'e_gold', .5)   # name line
     # ribbon rosette
     tails = ic.poly([(4, 4), (6, 4), (6, 11), (5, 10), (4, 11)]) | ic.poly([(7, 4), (9, 4), (9, 10), (8, 9), (7, 10)])
     ic.paint(tails, 'neonred', lin(.45, .08), bevel=(.1, .1), sep=.3)
-    ros = ic.ell(6.5, 3.5, 3.2, 3.0)
-    ic.paint(ros, 'neonred', sph(6.5, 3.5, 3.2, .3, .8), bevel=None)
-    ic.px([(6, 3), (7, 3), (6, 4)], 'e_gold', .9)
-    ic.px([(4, 2), (9, 2), (4, 5), (9, 5)], 'neonred', .35)
+    ros = ic.ell(6.5, 4.0, 3.2, 2.8)
+    ic.paint(ros, 'neonred', sph(6.5, 4.0, 3.2, .3, .8), bevel=None)
+    ic.px([(6, 4), (7, 4), (6, 5)], 'e_gold', .9)
+    ic.px([(4, 3), (9, 3), (4, 5), (9, 5)], 'neonred', .35)
 
 
 @icon('gus_log', evidence=True)
@@ -1284,17 +1296,17 @@ def _gus_log(ic):
     for y in range(8, 18, 2):
         ic.px([(16, y)], 'paper', .55)
     # gull feather pressed between the pages, sticking out to the right
-    vane = ic.poly([(11, 10), (16, 7), (19, 5), (19, 7), (16, 10), (12, 12)])
+    vane = ic.poly([(11, 10), (16, 7), (18, 5), (18, 7), (16, 10), (12, 12)])
     ic.paint(vane, 'white', lin(.86, .1), bevel=(.08, .12))
-    ic.paint(ic.line((12, 11), (16, 9), (19, 6)), 'white', .55, bevel=None)
-    ic.paint(ic.pix([(19, 5), (18, 5)]), 'slate', .3, bevel=None)
+    ic.paint(ic.line((12, 11), (16, 9), (18, 6)), 'white', .55, bevel=None)
+    ic.paint(ic.pix([(18, 5), (17, 5)]), 'slate', .3, bevel=None)
     cover = ic.poly([(1, 4), (14, 4), (14, 17), (1, 17)])
     ic.paint(cover, 'teal', lin(.5, .08), bevel=(.2, .1), sep=.3)
     ic.paint(ic.rect(1, 4, 2, 17), 'e_leather', .45, bevel=None)         # leather spine
     ic.paint(ic.poly([(11, 14), (14, 14), (14, 17), (11, 17)]) & ic.poly([(14, 13), (14, 17), (10, 17)]),
              'e_leather', .5, bevel=None)
     ic.paint(ic.rect(5, 7, 11, 9), 'paper', .8, bevel=None)              # label
-    ic.px([(6, 8), (7, 8), (9, 8), (10, 8)], 'ink', .35)
+    ic.px([(6, 8), (7, 8), (8, 8), (9, 8), (10, 8)], 'ink', .4)
     ic.px([(3, 12), (6, 14), (9, 11)], 'teal', .3)                       # wear
 
 
@@ -1308,8 +1320,8 @@ def _antidote(ic):
     for k in range(3):
         ic.px([(5 + k * 2, 11 - k * 2)], 'ink', .35)
     ic.paint(ic.poly([(1, 12), (3, 10), (8, 15), (6, 17)]) & ~barrel, 'chrome', .7, bevel=None)
-    ic.paint(ic.line((5, 15), (1, 19)) | ic.line((4, 15), (1, 18)), 'chrome', .55, bevel=None)
-    ic.paint(ic.pix([(0, 19), (1, 18), (0, 18), (2, 19)]), 'chrome', .8, bevel=None)
+    ic.paint(ic.line((5, 15), (2, 18)) | ic.line((4, 15), (2, 17)), 'chrome', .55, bevel=None)
+    ic.paint(ic.pix([(1, 18), (2, 18), (1, 17), (3, 18)]), 'chrome', .8, bevel=None)
     ic.paint(ic.pix([(12, 7), (11, 6)]), 'chrome', .7, bevel=None)
     ic.paint(ic.line((12, 6), (15, 3)), 'chrome', .9, bevel=None)
     ic.px([(4, 12), (6, 10), (8, 8)], 'white', .95)
@@ -1317,7 +1329,7 @@ def _antidote(ic):
     tip = ic.rect(15, 4, 16, 6) & ~ic.pix([(15, 4)])
     neck = ic.rect(15, 8, 16, 8)
     shoulder = ic.pix([(15, 7), (16, 7)])
-    amp = ic.poly([(14, 9), (17, 9), (17, 17), (16, 18), (15, 18), (14, 17)])
+    amp = ic.poly([(14, 9), (17, 9), (17, 16), (16, 17), (15, 17), (14, 16)])
     ic.paint(amp | tip | neck | shoulder, 'e_amber', cyl(14, 13, 17, 13, 1.8, .45, .95), bevel=None)
     ic.paint(neck, 'e_amber', .35, bevel=None)
     ic.paint(ic.rect(14, 12, 17, 13), 'paper', .85, bevel=None)
@@ -1341,18 +1353,18 @@ def _self_notes(ic):
 
 @icon('bulb')
 def _bulb(ic):
-    glass = ic.ell(10.0, 7.5, 6.2, 6.5) | ic.poly([(6, 11), (14, 11), (12, 15), (8, 15)])
-    ic.paint(glass, 'neonred', sph(10.0, 7.5, 6.2, .3, .85, ry=6.5), bevel=None)
+    glass = ic.ell(10.0, 7.2, 6.1, 6.2) | ic.poly([(6, 10), (14, 10), (12, 14), (8, 14)])
+    ic.paint(glass, 'neonred', sph(10.0, 7.2, 6.1, .3, .85, ry=6.2), bevel=None)
     # filament
-    ic.paint(ic.line((9, 13), (8, 8), (12, 8), (11, 13)), 'neonred', .2, bevel=None)
+    ic.paint(ic.line((9, 12), (8, 8), (12, 8), (11, 12)), 'neonred', .2, bevel=None)
     ic.px([(9, 8), (10, 8), (11, 8)], 'e_neon', .6)
     ic.px([(7, 4), (6, 5), (6, 6), (8, 3)], 'white', .95)
     # screw base
-    base = ic.rect(7, 15, 12, 18) | ic.rect(9, 19, 10, 19)
-    ic.paint(base, 'brass', cyl(7, 17, 12, 17, 3, .3, .9), bevel=None, sep=.35)
-    for y in (16, 18):
+    base = ic.rect(7, 14, 12, 17) | ic.rect(9, 18, 10, 18)
+    ic.paint(base, 'brass', cyl(7, 16, 12, 16, 3, .3, .9), bevel=None, sep=.35)
+    for y in (15, 17):
         ic.paint(ic.rect(7, y, 12, y), 'brass', .35, bevel=None)
-    ic.paint(ic.rect(9, 19, 10, 19), 'black', .4, bevel=None)
+    ic.paint(ic.rect(9, 18, 10, 18), 'black', .4, bevel=None)
 
 
 # ------------------------------------------------------------------ fallback -------------

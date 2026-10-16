@@ -130,6 +130,7 @@ export const evelyn: DialogDef = {
             S('evelyn', 'And fifty dollars, to begin with.'),
             'That’s very prompt.',
             S('evelyn', 'I’m a very prompt woman.'),
+            { if: '!clue:evelyn_phone', then: [S('evelyn', 'You can leave word for me at Harbourview 4-170. A report every evening, please.'), clue('evelyn_phone')] },
             S('evelyn', 'Please, Mr. Rook. Find her before anyone else does.'),
             { narrate: 'As she stood to go, I noticed a little gold watch pinned upside down to her lapel. And under the perfume, carbolic soap.' },
             clue('evelyn_watch'),

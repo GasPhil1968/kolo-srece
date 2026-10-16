@@ -78,7 +78,7 @@ class Loop:
                 return out
             out.append(t)
 
-    def finish(self, target_rms_db: float = -22.0, eq=None) -> np.ndarray:
+    def finish(self, target_rms_db: float = -22.0, eq=None, width: float = 0.7) -> np.ndarray:
         out = np.zeros((2, self.L))
         for name, b in self.bus.items():
             y = fold_loop(b, self.L, 0)
@@ -90,9 +90,24 @@ class Loop:
                     out += y
             else:
                 out += y
-        out = filt(out, [('bhp', 30, 2)] + (eq or []), circular=True, tail=0.5)
+        out = filt(out, [('bhp', 30, 2), ('blp', 14500, 2)] + (eq or []), circular=True, tail=0.5)
+        m = 0.5 * (out[0] + out[1])
+        sd = 0.5 * (out[0] - out[1]) * width
+        out = np.vstack([m + sd, m - sd])
         out *= undb(target_rms_db) / (rms(out) + 1e-12)
-        return limit(out, -1.5, circular=True)
+        out = limit(out, -1.5, circular=True)
+        return rotate_to_quiet(out)
+
+
+def rotate_to_quiet(y: np.ndarray) -> np.ndarray:
+    """Start the (periodic) loop at its calmest moment: lowest high-passed energy in a 20 ms
+    window.  The content is unchanged; only the wrap point moves away from transients."""
+    hp = filt(y.mean(axis=0), [('bhp', 2000, 2)], circular=True, tail=0.05)
+    w = ns(0.02)
+    e = np.convolve(hp * hp, np.ones(w) / w, mode='same')
+    e[:w] = e[-w:] = np.inf
+    k = int(np.argmin(e))
+    return np.roll(y, -k, axis=1)
 
 
 def impulse_bank(A: Loop, rate: float, bands, q: float = 6.0, amp_sigma: float = 0.8, pan_spread: float = 0.6,

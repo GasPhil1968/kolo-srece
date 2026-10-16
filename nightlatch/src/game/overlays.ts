@@ -11,6 +11,16 @@ export abstract class Overlay extends Phaser.Scene {
   init(data: { onClose?: () => void }) {
     this.onClose = data.onClose ?? null;
     this.closing = false;
+    this.openedAt = performance.now();
+  }
+
+  /** When the overlay opened: the key press that opened it must not also close it. */
+  protected openedAt = 0;
+
+  protected onKey(key: string, fn: () => void = () => this.close()) {
+    this.input.keyboard?.on(`keydown-${key}`, () => {
+      if (performance.now() - this.openedAt > 200) fn();
+    });
   }
 
   close() {
@@ -59,7 +69,7 @@ export class CardScene extends Overlay {
       .setMaxWidth(260).setCenterAlign().setAlpha(0);
     audio.play('music', null);
     audio.sfx('chapter');
-    if (ctl.fast) {
+    if (ctl.fast && ctl.autoOverlays) {
       this.time.delayedCall(10, () => this.close());
       return;
     }
@@ -123,9 +133,9 @@ export class DocScene extends Overlay {
     }
     void title;
     this.closeButton(pb.right - 2, pb.y + 2);
-    this.input.keyboard?.on('keydown-ESC', () => this.close());
-    this.input.keyboard?.on('keydown-SPACE', () => this.close());
-    if (ctl.fast) this.time.delayedCall(5, () => this.close());
+    this.onKey('ESC');
+    this.onKey('SPACE');
+    if (ctl.fast && ctl.autoOverlays) this.time.delayedCall(5, () => this.close());
   }
   private paper!: Phaser.GameObjects.Image;
 }
@@ -147,6 +157,12 @@ export class CloseupScene extends Overlay {
     this.def = data.def;
   }
   create() {
+    // the scene object is reused for every close-up: reset what the last one left behind
+    this.digits = [];
+    this.texts = [];
+    this.patches = [];
+    this.pending = null;
+    this.jackPos = {};
     this.backdrop(0.75).on('pointerdown', (p: Phaser.Input.Pointer) => {
       if (p.rightButtonDown()) this.close();
     });
@@ -154,8 +170,8 @@ export class CloseupScene extends Overlay {
     if (this.def.kind === 'combo') this.buildCombo();
     else this.buildPatch();
     this.closeButton(306, 12);
-    this.input.keyboard?.on('keydown-ESC', () => this.close());
-    if (ctl.fast) this.time.delayedCall(5, () => this.close());
+    this.onKey('ESC');
+    if (ctl.fast && ctl.autoOverlays) this.time.delayedCall(5, () => this.close());
   }
 
   private buildCombo() {

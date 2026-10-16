@@ -11,8 +11,6 @@ LATCH, a thin rule and a subtle warm glow; transparent background.
 """
 from __future__ import annotations
 
-import math
-
 import numpy as np
 
 from core import Canvas, noise2, out_path, save_png, RAMPS
@@ -154,6 +152,9 @@ def build_title():
         c.line(a[0], a[1], b[0], b[1], 'black', .4)
     c.poly(quad(LX, .1, 6.9, 0, 2.0, 8.0), 'wood', .25, dith=.2)                 # door
     c.poly(quad(LX, .5, 3.2, 0, 2.6, 5.9), 'glass', .14, dith=.3)                # display window
+    for (zg_, up_) in ((3.6, 2.2), (4.4, 1.6), (5.2, 1.0)):
+        a, b = P(LX, up_ + .5, zg_), P(LX, up_, zg_ + .5)
+        c.line(a[0], a[1], b[0], b[1], 'glass', .55)                             # lamplight on the glass
     c.poly(quad(LX, 2.8, 2.9, 0, 3.4, 6.2), 'e_wall', .3, dith=.2)               # sign board
     # upper windows (dark) with sills
     for (z0, z1) in ((3.4, 5.4), (9.8, 11.4)):
@@ -161,8 +162,10 @@ def build_title():
             c.poly(quad(LX, up0, z0, 0, up0 + 2.0, z1), 'glass', .12, dith=.3)
             c.poly(quad(LX, up0 - .25, z0 - .2, 0, up0, z1 + .2), 'concrete', .42, dith=0)
     # a few lit windows down the street
-    for (z0, up0, w_) in ((14.5, 4.0, 1.4), (17.5, 7.2, 1.4), (25.0, 3.8, 1.6), (36.0, 4.0, 1.8)):
-        c.poly(quad(LX, up0, z0, 0, up0 + 1.6, z0 + w_), 'e_window', .7, emis=.7, dith=.2)
+    for (z0, up0, w_, l_) in ((14.5, .8, 2.2, .5), (25.0, 3.8, 1.6, .7), (36.0, 4.0, 1.8, .7)):
+        c.poly(quad(LX, up0, z0, 0, up0 + 1.6, z0 + w_), 'e_window', l_, emis=.55, dith=.2)
+    a_, b_ = P(LX, .8, 15.6), P(LX, 2.4, 15.6)
+    c.line(a_[0], a_[1], b_[0], b_[1], 'black', .4)                               # mullion
 
     # ---- right side: the hotel and shopfronts at X = +12 ------------------------------------
     RX = 12.0
@@ -177,7 +180,9 @@ def build_title():
     for (z0, z1, h_, _, _) in right_bld:
         for up0 in np.arange(3.6, h_ - 1.5, 3.2):
             for zw in np.arange(z0 + .8, z1 - 1.2, 2.6):
-                lit = rng.random() < .2
+                wx_, wy_ = P(RX, up0 + .85, zw + .6)
+                in_logo = (48 <= wx_ <= 274) and (10 <= wy_ <= 68)
+                lit = rng.random() < .2 and not in_logo
                 c.poly(quad(RX, up0, zw, 0, up0 + 1.7, zw + 1.2),
                        'e_window' if lit else 'glass', .6 if lit else .18, emis=.6 if lit else None, dith=.2)
                 if lit:
@@ -246,19 +251,22 @@ def build_title():
     puddles = [_pud(282, 160, .95, .55), _pud(246, 121, .75, 1.0), _pud(62, 154, 1.0, .45),
                _pud(28, 171, .9, .35), _pud(258, 140, .5, .5), _pud(80, 140, .55, .5)]
     pud = np.zeros((H, W), bool)
+    NP = noise2(W, H, 5, 17, 2)
     for (pX, pZ, rX, rZ) in puddles:
-        pud |= ground & (((Xg - pX) / rX) ** 2 + ((zg - pZ) / rZ) ** 2 <= 1)
+        dd = ((Xg - pX) / rX) ** 2 + ((zg - pZ) / rZ) ** 2
+        pud |= ground & (dd <= 1 + (NP - .5) * 1.4)
+        pud |= ground & (((Xg - pX - rX * .7) / (rX * .5)) ** 2 + ((zg - pZ + rZ * .3) / (rZ * .6)) ** 2 <= 1 + (NP - .5))
     # each puddle mirrors the sky: dark at its near edge, brightening toward its far edge,
     # with a thin lit rim where the far edge catches the fog glow
     pl = np.zeros((H, W), np.float32)
     for (pX, pZ, rX, rZ) in puddles:
-        m_ = ground & (((Xg - pX) / rX) ** 2 + ((zg - pZ) / rZ) ** 2 <= 1)
+        m_ = pud & (np.abs(Xg - pX) < rX * 2.2) & (np.abs(zg - pZ) < rZ * 2.2)
         t_ = np.clip((zg - (pZ - rZ)) / (2 * rZ), 0, 1)
         pl = np.where(m_, .08 + .3 * t_ ** 1.5, pl)
     c._apply(pud, 'e_skyfog', pl + (N3 - .5) * .05, dith=.6)
     puddle_mask = pud.copy()
     rim = pud & ~shift(pud, 1, 0)
-    c._apply(rim, 'e_skyfog', np.full((H, W), .62, np.float32), dith=0)
+    c._apply(rim, 'e_skyfog', np.full((H, W), .5, np.float32), dith=0)
     rip_ = pud & (((yy.astype(int) * 7 + (xx.astype(int) // 3) * 5) % 13) == 0) & ~rim
     c._apply(rip_, 'e_skyfog', np.full((H, W), .4, np.float32), dith=0)
 
@@ -297,6 +305,10 @@ def build_title():
             for k, cc in enumerate(row):
                 if cc == '#':
                     c.put(lx0 + k, ly + j, 'neonred', 1.0, emis=1)
+    for yb in range(int(sy0) + 1, int(sy1), 2):
+        on = (yb // 2) % 2 == 0
+        c.put(int(sx0), yb, 'lamp' if on else 'neonred', .95 if on else .5, emis=1 if on else .4)
+        c.put(int(sx1) - 1, yb + 1, 'lamp' if on else 'neonred', .95 if on else .5, emis=1 if on else .4)
     c.glow((sx0 + sx1) / 2, (sy0 + sy1) / 2, 30, '#ff3848', .5)
     c.glow((sx0 + sx1) / 2, (sy0 + sy1) / 2, 12, '#ff6a6a', .4)
     reflect_rect(RX - 1.35, RX, 2.9, 8.4, sz, 'neonred', .85, rip=1)
@@ -430,8 +442,9 @@ def mirror_puddles(img, pud, rng):
         if y % 4 == 3:
             col = col * .75
         out[y, x] = np.clip(col, 0, 255).astype(np.uint8)
-    rim = pud & ~shift(pud, 1, 0)
-    out[rim] = np.clip(out[rim].astype(np.float32) * .6 + np.array(EC.hexrgb('#7d8aa0'), np.float32) * .4, 0, 255).astype(np.uint8)
+    yy_, xx_ = np.mgrid[0:H, 0:W]
+    rim = pud & ~shift(pud, 1, 0) & (((xx_ * 3 + yy_) % 5) != 0)
+    out[rim] = np.clip(out[rim].astype(np.float32) * .65 + np.array(EC.hexrgb('#7d8aa0'), np.float32) * .35, 0, 255).astype(np.uint8)
     return out
 
 
@@ -609,8 +622,7 @@ def _glyph_mask(ch, wid):
         inside = (np.abs(xx_ - cxm) <= ((yy_ + 1.5) / (LH + 1.5)) * (wid / 2)) & (yy_ > 0)
         m[inside] = True
         R(int(cxm) - 1, 0, int(cxm) + 1, 2)
-        m[LH - 6:LH, int(cxm) - 3:int(cxm) + 3] = False          # notch between the legs
-        notch = (np.abs(xx_ - cxm) <= (yy_ - (LH - 9)) * .8) & (yy_ > LH - 9)
+        notch = (np.abs(xx_ - cxm) <= (yy_ - (LH - 7)) * .9) & (yy_ > LH - 7)   # notch between the legs
         m[notch] = False
     elif ch == 'C':
         R(0, 6, T, LH - 6)
@@ -625,13 +637,29 @@ def _glyph_mask(ch, wid):
     return m
 
 
+KEYHOLE = ['..ddd..',
+           '.ddLLL.',
+           'dLLLLLL',
+           'dLLLLLL',
+           'dLLLLLL',
+           '.dLLLL.',
+           '..dLL..',
+           '..dLL..',
+           '.dLLLL.',
+           '.dLLLL.',
+           'dLLLLLL',
+           'dLLLLLL']
+
+
 def _keyhole(m, wid):
-    """Cut a keyhole through the solid A: round head + flared slot."""
-    yy_, xx_ = np.mgrid[0:LH, 0:wid].astype(np.float32) + .5
-    cxm = wid / 2
-    head = (xx_ - cxm) ** 2 + (yy_ - 13.0) ** 2 <= 3.2 ** 2
-    slot = (np.abs(xx_ - cxm) <= .9 + (yy_ - 14) * .16) & (yy_ >= 14) & (yy_ <= 23.2)
-    hole = head | slot
+    """Cut a classic keyhole (hand-drawn stamp) through the solid A."""
+    hole = np.zeros_like(m)
+    x0 = int(round(wid / 2 - 3.5))
+    y0 = 9
+    for j, row in enumerate(KEYHOLE):
+        for i, ch in enumerate(row):
+            if ch != '.':
+                hole[y0 + j, x0 + i] = True
     m = m.copy()
     m[hole] = False
     return m, hole
@@ -698,10 +726,9 @@ def build_logo():
     tl = glyphs & (~up | ~left)
     br = glyphs & (~down | ~right)
     lum = band + .14 * tl - .3 * br
-    # bevel around the keyhole: the cut catches light on its lower edge
+    # bevel around the keyhole: brass just below/right of the cut catches the light
     kh_ring = dilate4(hole_mask) & glyphs
-    lum = np.where(kh_ring & (shift(hole_mask, -1, 0) | shift(hole_mask, 0, -1)), .2, lum)   # upper-left wall
-    lum = np.where(kh_ring & (shift(hole_mask, 1, 0) | shift(hole_mask, 0, 1)), 1.0, lum)    # lower-right wall
+    lum = np.where(kh_ring & (shift(hole_mask, 1, 0) | shift(hole_mask, 0, 1)), 1.0, lum)
     idx = np.clip(np.floor(np.clip(lum, 0, 1) * (n - 1) + .5), 0, n - 1).astype(int)
     out[glyphs, :3] = ramp_[idx[glyphs]]
     out[glyphs, 3] = 255
@@ -722,12 +749,19 @@ def build_logo():
     hm = hole_mask & ~ol
     ky0 = np.nonzero(hole_mask)[0].min()
     ky1 = np.nonzero(hole_mask)[0].max()
-    edge_h = hm & dilate4(~hole_mask)
+    # the inner wall of the cut, in shadow, shows along the hole's upper-left edge (stamp 'd')
+    wall = np.zeros_like(hm)
+    kys, kxs = np.nonzero(hole_mask)
+    kx0, ky0_ = kxs.min(), kys.min()
+    for j, row in enumerate(KEYHOLE):
+        for i, ch in enumerate(row):
+            if ch == 'd':
+                wall[ky0_ + j, kx0 + i] = True
     for y, xk in zip(*np.nonzero(hm)):
         t_ = np.clip((y - ky0) / max(1, ky1 - ky0), 0, 1)
-        col = EC.hexrgb('#ffe9a8') * (1 - t_) + EC.hexrgb('#ffb54a') * t_
-        if edge_h[y, xk]:
-            col = EC.hexrgb('#e07a22') * (1 - t_) + EC.hexrgb('#b8501a') * t_
+        col = EC.hexrgb('#fff0b8') * (1 - t_) + EC.hexrgb('#ffae48') * t_
+        if wall[y, xk]:
+            col = EC.hexrgb('#6a3410')
         out[y, xk, :3] = col.astype(np.uint8)
         out[y, xk, 3] = 255
     # ---- soft glow (dithered alpha) ----------------------------------------------------------
@@ -740,7 +774,7 @@ def build_logo():
         dist[nxt & ~cur] = k
         cur = nxt
     g = np.clip(1 - dist / 8, 0, 1) ** 1.7 * .55
-    g[body | ol] = 0
+    g[body | ol | hole_mask] = 0
     q = np.clip(np.floor(g * 4 + (bay - .5) * .9 + .5) / 4.0, 0, 1)
     gm = q > 0
     out[gm, :3] = EC.hexrgb('#c87628')

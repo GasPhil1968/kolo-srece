@@ -132,7 +132,7 @@ export const holding_cell: RoomDef = {
     cell_open: 'c5_cell_open',
   },
   npcs: [
-    { id: 'barnaby', at: 'barnaby_spot', face: 'down', pose: 'idle_down' },
+    { id: 'barnaby', at: 'barnaby_bunk', face: 'right', pose: 'lie' },
     { id: 'pruitt', at: 'pruitt_spot', face: 'down', when: 'chapter=5 & !c5_pruitt_gone', talk: [{ dialog: 'pruitt5' }] },
   ],
   hotspots: {

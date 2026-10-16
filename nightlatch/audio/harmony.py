@@ -518,7 +518,7 @@ def walking_bass(chords, total_beats: float, rng: np.random.Generator, lo: int =
                 elif p in sc:
                     lc = 0.9
                 else:
-                    lc = 3.5
+                    lc = 5.0
             lc += 0.25 * ((m - center) / 6.0) ** 2
             lc += rng.uniform(0, 0.9)
             if melody_evs:
@@ -574,8 +574,10 @@ def two_feel_bass(chords, total_beats: float, rng: np.random.Generator, lo: int 
         if first:
             p = c.bass
         else:
-            opts = [c.fifth(), (nxt.bass + 1) % 12, (nxt.bass - 1) % 12, c.third()]
-            p = opts[int(rng.choice(len(opts), p=[0.45, 0.2, 0.2, 0.15]))]
+            # beat 3 of a two-feel is a long note: chord tones only (approaches are pickups)
+            sev = c.seventh()
+            opts = [c.fifth(), c.third(), sev if sev is not None else c.fifth(), c.bass]
+            p = opts[int(rng.choice(len(opts), p=[0.55, 0.2, 0.15, 0.1]))]
         # nearest octave to previous within range
         cands = [m for m in range(lo, hi + 1) if m % 12 == p]
         if prev is None:

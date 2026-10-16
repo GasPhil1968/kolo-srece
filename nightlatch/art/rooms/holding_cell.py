@@ -535,6 +535,11 @@ def build():
     sc.point('start', bx(200, 34), by(34), 'up')
     sc.point('wake', bx(180, 30), by(30), 'down')
     sc.point('barnaby_spot', bx(72, KZ1 + 3), by(KZ1 + 3), 'right')
+    # lying on the mattress: anchor at the mattress top, half way back; perspective scale of that depth
+    zb = (KZ0 + KZ1) / 2
+    lb = P(p, (KX0 + KX1) / 2 - 4, KH + 1, zb)
+    sc.point('barnaby_bunk', round(lb[0]), round(lb[1]), 'right')
+    sc.meta['points']['barnaby_bunk']['scale'] = round(p.char_scale(by(zb), 140), 3)
     sc.point('bars_spot', bx(178, 6), by(6), 'up')
     sc.point('pruitt_spot', bx(264, -56), by(-56), 'down')
     # NPC beyond the bars: perspective scale (the room's linear scale would be extrapolated)

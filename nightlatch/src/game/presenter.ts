@@ -7,7 +7,7 @@ import { RoomScene, VIEW_H } from './RoomScene';
 import { audio, settings } from './services';
 
 type HudLike = {
-  chooseOption(options: OptionDef[]): Promise<OptionDef>;
+  chooseOption(options: OptionDef[], dialogId?: string): Promise<OptionDef>;
   pickItem(prompt: string): Promise<string | null>;
   toast(text: string, color?: number): void;
   refresh(): void;
@@ -61,6 +61,7 @@ export class RuntimePresenter implements Presenter {
 
   async say(who: string, text: string) {
     const scene = this.room;
+    if (!scene.sys.isActive()) return;
     const g = ctl.game;
     const npc = g.content.npcs[who];
     const actor = scene.actorFor(who);
@@ -99,6 +100,7 @@ export class RuntimePresenter implements Presenter {
 
   async narrate(text: string) {
     const scene = this.room;
+    if (!scene.sys.isActive()) return;
     this.clearLine();
     const cam = scene.cameras.main;
     const t = scene.add.bitmapText(0, 0, 'nlo', text).setMaxWidth(280).setTint(0xd9c9a0).setDepth(10001)
@@ -205,8 +207,8 @@ export class RuntimePresenter implements Presenter {
     return runOverlay('closeup', { def });
   }
 
-  choose(options: OptionDef[], _dialog: DialogDef) {
-    return this.hud.chooseOption(options);
+  choose(options: OptionDef[], dialog: DialogDef) {
+    return this.hud.chooseOption(options, dialog.id);
   }
 
   present(prompt: string) {

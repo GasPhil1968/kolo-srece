@@ -820,7 +820,7 @@
     "h": 20
    }
   },
-  "hat_matches": {
+  "hat": {
    "frame": {
     "x": 23,
     "y": 89,
@@ -840,7 +840,7 @@
     "h": 20
    }
   },
-  "walter_knife": {
+  "hat_matches": {
    "frame": {
     "x": 45,
     "y": 89,
@@ -860,7 +860,7 @@
     "h": 20
    }
   },
-  "calypso_manifest": {
+  "walter_knife": {
    "frame": {
     "x": 67,
     "y": 89,
@@ -880,7 +880,7 @@
     "h": 20
    }
   },
-  "minutes3": {
+  "calypso_manifest": {
    "frame": {
     "x": 89,
     "y": 89,
@@ -900,7 +900,7 @@
     "h": 20
    }
   },
-  "booth_key": {
+  "minutes3": {
    "frame": {
     "x": 111,
     "y": 89,
@@ -920,7 +920,7 @@
     "h": 20
    }
   },
-  "press_pass": {
+  "booth_key": {
    "frame": {
     "x": 133,
     "y": 89,
@@ -940,7 +940,7 @@
     "h": 20
    }
   },
-  "gus_log": {
+  "press_pass": {
    "frame": {
     "x": 155,
     "y": 89,
@@ -960,7 +960,7 @@
     "h": 20
    }
   },
-  "antidote": {
+  "gus_log": {
    "frame": {
     "x": 177,
     "y": 89,
@@ -980,7 +980,7 @@
     "h": 20
    }
   },
-  "self_notes": {
+  "antidote": {
    "frame": {
     "x": 199,
     "y": 89,
@@ -1000,9 +1000,29 @@
     "h": 20
    }
   },
-  "bulb": {
+  "self_notes": {
    "frame": {
     "x": 1,
+    "y": 111,
+    "w": 20,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 20,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 20,
+    "h": 20
+   }
+  },
+  "bulb": {
+   "frame": {
+    "x": 23,
     "y": 111,
     "w": 20,
     "h": 20

@@ -1,0 +1,125 @@
+{
+ "generated": "2026-10-16T20:14:21.721Z",
+ "url": "http://127.0.0.1:38719/",
+ "results": [
+  {
+   "name": "Every room renders (screenshots)",
+   "ok": true,
+   "checks": [
+    {
+     "name": "room hotel_room loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room hotel_lobby loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room office loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room nora_flat loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room lantern loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room cold_store loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room pier9 loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room pharmacy loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room gazette loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room mission loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room darkroom loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room cemetery loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room commission loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room precinct loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room hask_shop loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room halcyon_gate loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room halcyon_cell loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room halcyon_corridor loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room halcyon_office loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room holding_cell loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room lantern_cellar loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room tunnel loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room calypso_hold loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room calypso_deck loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room calypso_cabin loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room radio_booth loads and renders",
+     "ok": true
+    },
+    {
+     "name": "room clocktower loads and renders",
+     "ok": true
+    }
+   ],
+   "ms": 19931,
+   "extra": {
+    "rooms": 27
+   },
+   "pageErrors": []
+  }
+ ]
+}

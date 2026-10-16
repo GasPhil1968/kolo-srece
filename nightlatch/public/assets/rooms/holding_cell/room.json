@@ -355,6 +355,12 @@
    "y": 109,
    "face": "right"
   },
+  "barnaby_bunk": {
+   "x": 85,
+   "y": 89,
+   "face": "right",
+   "scale": 0.811
+  },
   "bars_spot": {
    "x": 178,
    "y": 103,

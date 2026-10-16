@@ -85,7 +85,7 @@ CHARACTERS = {
                    button_ramp='brass'),
     'barnaby': dict(kind='sitter', sit_view='front', color='#b8d8c8', top='stripe', style='jacket', pants='navy',
                     shoes='black', hat='cap', hat_ramp='navy', hair='black', hair_style='short', beard='black',
-                    skin='skin_ruddy', build=1.1, sizes=False),
+                    skin='skin_ruddy', build=1.1, sizes=False, lies=True),
     'kroll': dict(kind='walker', color='#e0e0e0', top='nurse', style='jacket', pants='nurse', shoes='white',
                   hair='slate', hair_style='bald', build=1.2, height=1.07, skin='skin', lapels=False,
                   buttons=[(1.6, 36), (1.6, 32), (1.6, 28)], button_ramp='slate'),

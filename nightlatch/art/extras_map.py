@@ -20,7 +20,7 @@ import numpy as np
 
 from core import Canvas, noise2, out_path, save_png
 import extras_common as EC
-from extras_common import dilate4, dilate8, micro_text, micro_width
+from extras_common import dilate4, dilate8, micro_text
 
 W, H = 320, 180
 
@@ -182,7 +182,18 @@ def tree(c, x, y, r=1.6, lum=.55, ramp='e_green'):
     c.put(int(x + r * .7), int(y + r * .7), ramp, lum * .45)
 
 
-def micro_label(c, x, y, s, lum=.55, ramp='e_ink', spacing=1, align='center'):
+def micro_label(c, x, y, s, lum=.55, ramp='e_ink', spacing=1, align='center', halo=0.0):
+    """Map lettering; halo>0 knocks the background out (lightens it) round the letters."""
+    if halo:
+        from extras_common import micro_mask
+        m = micro_mask(s, spacing)
+        x0 = int(round(x - m.shape[1] / 2)) if align == 'center' else int(x)
+        M = np.zeros((c.h, c.w), bool)
+        hh, ww = m.shape
+        M[y:y + hh, x0:x0 + ww] = m[:max(0, min(hh, c.h - y)), :max(0, min(ww, c.w - x0))]
+        ring = dilate8(M) & ~M
+        c.lum[ring] = np.clip(c.lum[ring] + halo, 0, 1)
+        c.dith[ring] = 0
     return micro_text(c, x, y, s, ramp, lum, spacing=spacing, align=align)
 
 
@@ -286,7 +297,6 @@ def build():
             ix, iy = int(jx), int(jy)
             if 0 <= ix < W and 0 <= iy < H and woods[iy, ix] and dsea[iy, ix] > 2 and rng.random() < .85:
                 tree(c, jx, jy, r=1.5, lum=.34 + rng.random() * .16)
-    summit = lawn
     # the winding drive up to Halcyon House
     drive = [(50, 41), (46, 46), (52, 50), (47, 55), (55, 60), (64, 63), (74, 64)]
     dm = thick_line_mask(drive, 1.5) & land
@@ -463,8 +473,7 @@ def build():
 # ------------------------------------------------------------------ landmark painters ------
 def lm_halcyon(c):
     # Halcyon House: a grim white Victorian sanatorium on the summit, with a cupola tower,
-    # two wings, a walled garden and the gate on the drive.
-    x, y = 50, 36
+    # two wings, a walled garden and the gate on the drive. (pin at 50,36)
     c.rect(36, 37, 65, 40, 'concrete', .55, dith=.3)                     # terrace / wall
     for xx_ in range(37, 65, 3):
         c.put(xx_, 37, 'concrete', .8)
@@ -780,36 +789,32 @@ def dressing(c, water, rng):
 
 
 def labels(c):
-    micro_label(c, 24, 66, 'GULL', lum=.25, ramp='e_hill')
-    micro_label(c, 24, 72, 'HILL', lum=.25, ramp='e_hill')
+    micro_label(c, 24, 66, 'GULL', lum=.2, ramp='e_hill', halo=.22)
+    micro_label(c, 24, 72, 'HILL', lum=.2, ramp='e_hill', halo=.22)
     micro_label(c, 240, 15, 'BRACKWATER SOUND', lum=.36, ramp='e_sea', spacing=1)
     micro_label(c, 298, 124, 'OUTER', lum=.38, ramp='e_sea')
     micro_label(c, 298, 130, 'HARBOUR', lum=.38, ramp='e_sea')
     micro_label(c, 160, 161, 'INNER HARBOUR', lum=.38, ramp='e_sea')
     micro_label(c, 100, 160, 'BRACK ESTUARY', lum=.38, ramp='e_sea')
     micro_label(c, 102, 26, 'SEAWALL', lum=.4, ramp='e_sea')
-    micro_label(c, 92, 74, 'OLD TOWN', lum=.5, ramp='e_ink')
-    micro_label(c, 248, 50, 'DOWNTOWN', lum=.5, ramp='e_ink')
-    micro_label(c, 28, 84, 'WEST END', lum=.45, ramp='e_ink')
-    micro_label(c, 286, 44, 'THE POINT', lum=.42, ramp='e_ink')
+    micro_label(c, 92, 74, 'OLD TOWN', lum=.5, ramp='e_ink', halo=.12)
+    micro_label(c, 248, 50, 'DOWNTOWN', lum=.5, ramp='e_ink', halo=.12)
+    micro_label(c, 28, 84, 'WEST END', lum=.45, ramp='e_ink', halo=.12)
+    micro_label(c, 286, 44, 'THE POINT', lum=.42, ramp='e_ink', halo=.12)
 
 
 def compass(c, cx, cy):
-    with track(c) as hold:
-        c.ellipse(cx, cy, 9.5, 9.5, 'e_parch', .9, dith=0)
-        ring = None
-        # 16-point star: long N/S/E/W points, short diagonals
-        for ang, L, wdt in ((-90, 11, 2.2), (90, 9, 2.2), (0, 9, 2.2), (180, 9, 2.2),
-                            (-45, 6, 1.6), (45, 6, 1.6), (135, 6, 1.6), (-135, 6, 1.6)):
-            a = math.radians(ang)
-            tipx, tipy = cx + math.cos(a) * L, cy + math.sin(a) * L
-            px_, py_ = -math.sin(a) * wdt, math.cos(a) * wdt
-            # two halves: lit half / shaded half
-            c.poly([(cx, cy), (cx + px_, cy + py_), (tipx, tipy)], 'e_ink', .3, dith=0)
-            c.poly([(cx, cy), (cx - px_, cy - py_), (tipx, tipy)], 'e_parch', .95, dith=0)
-        c.put(cx, cy, 'red', .7)
-    ring = (lambda: None)
-    # outer ring
+    """Eight-point compass rose: each point split into an inked (shaded) and a paper (lit)
+    half, a red centre, an inked ring and the N mark."""
+    c.ellipse(cx, cy, 9.5, 9.5, 'e_parch', .9, dith=0)
+    for ang, L, wdt in ((-90, 11, 2.2), (90, 9, 2.2), (0, 9, 2.2), (180, 9, 2.2),
+                        (-45, 6, 1.6), (45, 6, 1.6), (135, 6, 1.6), (-135, 6, 1.6)):
+        a = math.radians(ang)
+        tipx, tipy = cx + math.cos(a) * L, cy + math.sin(a) * L
+        px_, py_ = -math.sin(a) * wdt, math.cos(a) * wdt
+        c.poly([(cx, cy), (cx + px_, cy + py_), (tipx, tipy)], 'e_ink', .3, dith=0)
+        c.poly([(cx, cy), (cx - px_, cy - py_), (tipx, tipy)], 'e_parch', .95, dith=0)
+    c.put(cx, cy, 'red', .7)
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32) + .5
     d = np.sqrt((xx - cx - .5) ** 2 + (yy - cy - .5) ** 2)
     rm = (np.abs(d - 9.5) < .55)

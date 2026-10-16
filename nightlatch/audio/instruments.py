@@ -29,8 +29,10 @@ def _memo_table(key, fn):
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CACHE_DIR = os.path.join(HERE, 'cache', 'samples')
-with open(os.path.abspath(__file__), 'rb') as _fh:
-    _SRC_HASH = zlib.crc32(_fh.read())
+_SRC_HASH = 0
+for _f in ('instruments.py', 'drums.py'):  # cached samples depend on both generators
+    with open(os.path.join(HERE, _f), 'rb') as _fh:
+        _SRC_HASH = zlib.crc32(_fh.read(), _SRC_HASH)
 _MEM: dict = {}
 
 
@@ -144,7 +146,7 @@ class Piano:
         sig = sig1 + 3.3e-7 * (fk ** 2 - f0 ** 2) * (1.0 / max(self.decay, 0.2))
         w_after = float(np.interp(midi, [21, 50, 80, 108], [0.28, 0.22, 0.15, 0.08]))
         n_str = 1 if midi < 32 else (2 if midi < 45 else 3)
-        att = max(ns(0.0025 + 0.0035 * (1 - v)), 8)
+        att = max(ns(0.003 + 0.003 * (1 - v)), 8)
         onset = np.ones(n)
         onset[:att] = _raised_cos(att)
         y = np.zeros(n)
@@ -313,9 +315,9 @@ MALLET_PRESETS = {
     'celesta':  dict(ratios=[1.0, 2.0, 2.76, 5.40, 8.93], amps=[1.0, 0.07, 0.12, 0.04, 0.015],
                      tmul=[1.0, 0.4, 0.22, 0.1, 0.06], t60=([60, 72, 84, 96, 108], [2.6, 2.1, 1.6, 1.1, 0.7]),
                      att=0.004, noise=0.05, noise_f=1800, dtau=0.25, cal=13.3),
-    'musicbox': dict(ratios=[1.0, 2.0, 6.27, 17.55], amps=[1.0, 0.05, 0.3, 0.06],
-                     tmul=[1.0, 0.5, 0.09, 0.03], t60=([60, 72, 84, 96, 108], [3.0, 2.4, 1.8, 1.2, 0.8]),
-                     att=0.003, noise=0.12, noise_f=5000, dtau=9.0, cal=14.1),
+    'musicbox': dict(ratios=[1.0, 2.01, 6.27, 17.55], amps=[1.0, 0.08, 0.5, 0.12],
+                     tmul=[1.0, 0.5, 0.25, 0.08], t60=([60, 72, 84, 96, 108], [3.0, 2.4, 1.8, 1.2, 0.8]),
+                     att=0.003, noise=0.2, noise_f=6000, dtau=9.0, cal=13.2),
     'glock':    dict(ratios=[1.0, 2.76, 5.40], amps=[1.0, 0.25, 0.08], tmul=[1.0, 0.25, 0.1],
                      t60=([72, 96, 108], [3.5, 2.2, 1.4]), att=0.003, noise=0.06, noise_f=6000, dtau=9.0, cal=14.0),
 }
@@ -475,8 +477,8 @@ def bell(f_nominal: float, kind: str = 'church', v: float = 0.8, seed=0, length=
 # =============================================================================== WINDS (additive)
 WIND_PRESETS = {
     'trumpet_harmon': dict(cal=-0.3, 
-        formant=[(100, -42), (300, -32), (550, -20), (800, -9), (1150, -1), (1550, 2), (1900, 1),
-                 (2400, -4), (3100, -6), (3900, -2), (4600, -5), (6000, -16), (8500, -30), (14000, -55)],
+        formant=[(100, -40), (300, -28), (550, -15), (800, -6), (1150, -1), (1550, 0), (1900, -1.5),
+                 (2400, -5), (3100, -7), (3900, -4.5), (4600, -7), (6000, -17), (8500, -30), (14000, -55)],
         slope=3.2, breath=-34, breath_band=[('bp', 3500, 0.7)], breath_pm=0.6,
         vib_cents=11, vib_rate=5.3, vib_delay=0.32, vib_min=0.7, att=0.028, rel=0.10,
         port=0.04, dip=0.55, drift=3.5, range_db=16, gain=1.0, odd_even=None, scoop=35),

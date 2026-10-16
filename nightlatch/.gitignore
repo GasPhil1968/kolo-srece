@@ -5,3 +5,4 @@ __pycache__/
 audio/cache/
 test-results/
 reports/raw/
+reports/screens/

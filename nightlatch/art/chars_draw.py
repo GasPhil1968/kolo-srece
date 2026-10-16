@@ -118,6 +118,22 @@ def _leg_front(sp, hip, knee, ankle, spec, dark, footz):
     sp.ellipse(shoe, (ankle[0], ankle[1] - 1.1 - footz * .3), 1.7, 1.3 + max(0, -footz) * .25, base=.42 - dark * .5)
 
 
+def _lap_front(sp, P, spec):
+    """Seated, facing us: the thighs come towards the viewer, so we see their lit tops as a
+    lap reaching down to rounded knees, with the shins dropping away in shadow beneath."""
+    pants = spec.get('pants', 'slate')
+    seat = P['lap']
+    w = spec.get('leg_w', 1.0)
+    shadow = sp.new_part(pants, 2)
+    lap = sp.new_part(pants, 1)
+    for side in ('L', 'R'):
+        hx = P['hip' + side][0]
+        kx, ky = P['knee' + side]
+        sp.ellipse(shadow, (kx, ky - 1.6), 2.0 * w, 1.1, base=.22)
+        sp.capsule(lap, (hx * .6, seat + .6), (kx, ky + .9), 2.35 * w, 2.15 * w, base=.62)
+        sp.ellipse(lap, (kx, ky + .4), 2.0 * w, 1.25, base=.72)
+
+
 def _arm_front(sp, sh, el, wr, spec, dark):
     sleeve = spec.get('sleeve', spec.get('top', 'trench'))
     part = sp.new_part(sleeve, 2)
@@ -186,6 +202,8 @@ def draw_front(sp: Sprite, P, spec, talk=0, blink=False, back=False):
         cp = sp.new_part(top, 2)
         sp.poly(cp, [(-3.2, shy + 1.0), (-2.4, shy + 3.8), (-1.2, shy + 2.6)], base=.66)
         sp.poly(cp, [(3.2, shy + 1.0), (2.4, shy + 3.8), (1.2, shy + 2.6)], base=.6)
+    if P.get('lap') and not back:
+        _lap_front(sp, P, spec)
     for side, dk in (('L', 0.0), ('R', .08)):
         _arm_front(sp, P['shoulder' + side], P['elbow' + side], P['wrist' + side], spec, dk)
     head_front(sp, P, spec, talk=talk, blink=blink, back=back)

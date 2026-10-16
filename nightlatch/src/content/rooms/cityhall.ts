@@ -21,7 +21,7 @@ export const radio_booth: RoomDef = {
   name: 'WBRK booth, City Hall',
   music: [['c8_live', 'finale'], ['chapter=8', 'revelation'], ['true', 'bureau']],
   amb: 'crowd_gala',
-  objects: { onair_lit: 'c8_live & !c8_bulb', bulb_removed: 'c8_bulb' },
+  objects: { onair_lit: 'c8_live & !c8_bulb', bulb_removed: 'c8_bulb', clock_nine: 'c8_nine' },
   enter: [{ if: 'chapter=7 & !c7_end', then: ch7End }],
   hotspots: {
     chair: {

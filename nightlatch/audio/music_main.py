@@ -86,7 +86,7 @@ def title() -> Song:
     s.bus('room', 'studio', -6.0)
     s.add('trumpet', Wind('trumpet_harmon', 'tpt_title'), tpt, gain_db=0.0, pan=-0.12, width=0.25,
           sends={'plate': -9, 'room': -16}, feel_ms=22, jitter_ms=12, drift_ms=10,
-          eq=[('hp', 250, 0.7), ('pk', 3000, 1.0, 1.5)])
+          eq=[('hp', 250, 0.7), ('pk', 1700, 0.9, -2.0), ('pk', 3000, 1.0, 1.0)])
     s.add('vibes', Mallet('vibes', 'vibes_title', tremolo=0.22, trem_rate=4.1), vibes, gain_db=0.0,
           pedal=[(c.t + 0.1, c.t + c.d - 0.05) for c in ch], sends={'plate': -8, 'room': -18},
           feel_ms=10, jitter_ms=8)
@@ -198,8 +198,8 @@ def chapter() -> Song:
     vib = melody("r:5.5 Eb6:.5@.42 D6:.5@.4 B5:1.5@.38", start=0, check_bars=False)
     kit = [(0.0, 'kick', 0.35, True), (5.5, 'tap', 0.4, True), (5.5, 'kick', 0.3, True)]
     s.bus('plate', 'plate', -3.0)
-    s.add('trumpet', Wind('trumpet_harmon', 'tpt_ch'), tpt, gain_db=0.0, pan=-0.08, sends={'plate': -8},
-          feel_ms=12, jitter_ms=6, swing=True)
+    s.add('trumpet', Wind('trumpet_harmon', 'tpt_ch'), tpt, gain_db=-1.5, pan=-0.08, sends={'plate': -8},
+          feel_ms=12, jitter_ms=6, swing=True, eq=[('hp', 250, 0.7), ('pk', 1700, 0.9, -2.5)])
     s.add('piano', Piano('grand_ch'), pno, gain_db=-8.0, pedal=[(0.1, 3.95), (4.1, 9.5)], sends={'plate': -14},
           jitter_ms=3)
     s.add('bass', UprightBass('bass_ch', sustain=1.5), bass, gain_db=-4.0, sends={'plate': -20}, jitter_ms=3)
@@ -208,6 +208,27 @@ def chapter() -> Song:
     s.add('swirl', 'swirl', [], gain_db=-14.0, sends={'plate': -12}, opts=dict(level=0.12, circle_beats=2.0))
     s.add('kit', 'drums', kit, gain_db=-2.0, sends={'plate': -12})
     s.master_opts.update(target_rms_db=-20.0, glue=0.5)
+    return s
+
+
+def chapter_sting() -> Song:
+    """~2.8 s chapter-card sting (rendered mono as sfx 'chapter'): the latch's fall D5→Ab4→G4
+    on Harmon trumpet over a dark, rolled CmMaj9, low bass and a brushed-cymbal swell."""
+    s = Song('chapter_sting', bpm=92, bars=1, swing=0.5, loop=False, pre=0.3, tail=3.0, seed=6, max_len=2.9,
+             fade_out=0.8)
+    tpt = melody("D5:.5@.68 Ab4:.5@.64!scoop G4:2.5@.56!vib", start=0.2, check_bars=False)
+    pno = [Ev(0.03 * k, 3.6, m, 0.55 - 0.02 * k, '', True) for k, m in enumerate([36, 43, 51, 55, 59, 62])]
+    bass = [Ev(0.0, 3.6, 36, 0.72, '', True)]
+    kit = [(0.0, 'brushcym', 0.55, True), (0.0, 'kick', 0.3, True), (1.2, 'tap', 0.25, True)]
+    s.bus('plate', 'plate', -3.0)
+    s.add('trumpet', Wind('trumpet_harmon', 'tpt_chsfx'), tpt, gain_db=-2.0, pan=0.0, swing=False, jitter_ms=3,
+          sends={'plate': -7}, eq=[('hp', 250, 0.7), ('pk', 1700, 0.9, -2.5)])
+    s.add('piano', Piano('grand_chsfx', bright=0.85), pno, gain_db=-7.0, pedal=[(0.0, 4.0)], swing=False, jitter_ms=2,
+          sends={'plate': -12}, eq=[('hs', 5000, 0.7, -2.0)])
+    s.add('bass', UprightBass('bass_chsfx', sustain=1.6), bass, gain_db=-5.0, swing=False, jitter_ms=1,
+          sends={'plate': -18})
+    s.add('kit', 'drums', kit, gain_db=-1.0, swing=False, jitter_ms=1, sends={'plate': -10})
+    s.master_opts.update(target_rms_db=-19.0, glue=0.5)
     return s
 
 

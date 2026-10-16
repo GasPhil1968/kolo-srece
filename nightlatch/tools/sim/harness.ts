@@ -4,6 +4,7 @@
 import { enumerateActions, actionKey } from '../../src/engine/actions';
 import { Game, type Action } from '../../src/engine/game';
 import { HeadlessPresenter } from '../../src/engine/presenter';
+import { edgesFrom, routeTo } from '../../src/engine/route';
 import { cloneState, deserialize, newState, serialize, type GameState } from '../../src/engine/state';
 import type { CloseupDef, Content, DialogDef, OptionDef } from '../../src/engine/types';
 
@@ -83,6 +84,8 @@ export class SimPresenter extends HeadlessPresenter {
   musicPlayed = new Set<string>();
   lastOpt: OptionDef | null = null;
   pendingCodes: { id: string; code: string }[] = [];
+  /** If > 0: walk out of a planned conversation at the n-th chance (set per step by the explorer). */
+  impatient = 0;
 
   constructor(rng: Rng, stats: RunStats) {
     super();
@@ -122,6 +125,10 @@ export class SimPresenter extends HeadlessPresenter {
       return fresh.length ? fresh[0] : this.rng.pick(opts);
     };
     if (this.dialogBudget > 40) return leave();
+    if (this.mode === 'plan' && this.impatient > 0 && exit) {
+      // an impatient player walks out of a conversation once (after a few lines), then has to come back
+      if (--this.impatient === 0) return exit;
+    }
     if (this.mode === 'plan') {
       for (const id of this.sayPlan) {
         const o = opts.find((x) => x.id === id);
@@ -129,8 +136,10 @@ export class SimPresenter extends HeadlessPresenter {
       }
       return leave();
     }
-    // random: explore, leaning towards leaving after a while
-    if (this.rng.chance(Math.min(0.85, this.dialogBudget * 0.08))) return leave();
+    // random: a curious player tries new lines first, and leaves after a while
+    if (this.rng.chance(Math.min(0.85, this.dialogBudget * 0.06))) return leave();
+    const fresh = opts.filter((o) => !seen(o) && o.next !== 'exit');
+    if (fresh.length && this.rng.chance(0.75)) return this.rng.pick(fresh);
     return this.rng.pick(opts);
   }
 
@@ -284,50 +293,12 @@ export class Sim {
 
   /** Ways out of the current room: open exits and, from the street, the city map. */
   edges(): { to: string; a: Action }[] {
-    const g = this.game;
-    const out: { to: string; a: Action }[] = [];
-    for (const [id, h] of g.hotspots()) {
-      if (!h.exit || !g.cond(h.exit.when)) continue;
-      if (h.exit.map) {
-        for (const l of g.locations()) out.push({ to: g.locationRoom(l).room, a: { t: 'travel', loc: l.id } });
-      } else out.push({ to: h.exit.to, a: { t: 'use', target: { kind: 'hs', id } } });
-    }
-    return out;
+    return edgesFrom(this.game);
   }
 
   /** Breadth-first route over the room graph (exits and map pins). */
   route(target: string): Action[] | null {
-    const g = this.game;
-    const start = g.state.room;
-    if (start === target) return [];
-    const prev = new Map<string, { from: string; a: Action }>();
-    const queue = [start];
-    const visited = new Set([start]);
-    try {
-      while (queue.length) {
-        const r = queue.shift()!;
-        g.state.room = r;
-        for (const e of this.edges()) {
-          if (visited.has(e.to) || !this.content.rooms[e.to]) continue;
-          visited.add(e.to);
-          prev.set(e.to, { from: r, a: e.a });
-          if (e.to === target) {
-            const path: Action[] = [];
-            let cur = target;
-            while (cur !== start) {
-              const p = prev.get(cur)!;
-              path.unshift(p.a);
-              cur = p.from;
-            }
-            return path;
-          }
-          queue.push(e.to);
-        }
-      }
-      return null;
-    } finally {
-      g.state.room = start;
-    }
+    return routeTo(this.game, target)?.map((e) => e.a) ?? null;
   }
 
   async go(room: string): Promise<boolean> {
@@ -376,6 +347,16 @@ export class Sim {
       if (a.t === 'timeline' && this.rng.chance(0.6)) a = { ...a, order: this.rng.shuffle(a.order) };
       if (a.t === 'item' || a.t === 'combine') this.stats.wrongItemTries++;
       await this.act(a);
+    }
+    this.p.mode = 'plan';
+  }
+
+  /** A curious player: talk to everyone in the room, trying lines not heard before. */
+  async chat() {
+    this.p.mode = 'random';
+    for (const n of this.game.npcsHere()) {
+      if (this.game.state.ended) break;
+      await this.act({ t: 'use', target: { kind: 'npc', id: n.id } });
     }
     this.p.mode = 'plan';
   }

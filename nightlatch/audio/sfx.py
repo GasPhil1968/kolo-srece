@@ -55,7 +55,7 @@ def door_open():
     creak = stick_slip(r, 0.9, [(0, 35), (0.3, 55), (0.9, 42)], [(420, 1.0), (980, 0.6), (1700, 0.3)], q=10,
                        amp_pts=[(0, 0), (0.1, 1), (0.7, 0.8), (0.9, 0)])
     air = burst(r, 0.8, [('bp', 400, 0.6)], 0.2, 0.3)
-    return _rv(_cat((0, latch, 0.8), (0.12, creak, 0.35), (0.15, air, 0.25)), 'room', 0.2)
+    return _rv(_cat((0, latch, 0.5), (0.12, creak, 0.9), (0.15, air, 0.35)), 'room', 0.2)
 
 
 def door_close():
@@ -419,12 +419,16 @@ def thud():
 
 
 def sap():
+    """A leather sap on a skull: a dull, heavy thwock (no ring of metal), a body thump and the
+    victim's ears ringing."""
     r = rng('sap')
-    smack = impact(r, [180, 420, 900], [1, .7, .4], [.06, .04, .03], [('bp', 900, 0.7)], noise_tau=0.008, noise_gain=1.0, dur=0.3)
-    low = impact(r, [60, 110], [1, .6], [.2, .15], [('blp', 300, .7)], dur=0.4, noise_gain=0.3)
+    smack = impact(r, [210, 390, 760], [1, .8, .45], [.16, .12, .08], [('bp', 700, 0.7)], noise_tau=0.012,
+                   noise_gain=0.45, dur=0.4)
+    low = impact(r, [70, 115, 160], [1, .7, .4], [.3, .22, .15], [('blp', 300, .7)], dur=0.5, noise_gain=0.25)
     n = ns(1.2)
-    ring = np.sin(TAU * 3600 * tvec(n)) * np.exp(-tvec(n) / 0.4) * np.clip(tvec(n) / 0.05, 0, 1) * 0.08
-    return _cat((0, smack, 1.0), (0, low, 0.8), (0.05, ring, 1.0))
+    tt = tvec(n)
+    ring = (np.sin(TAU * 3600 * tt) + 0.4 * np.sin(TAU * 3611 * tt)) * np.exp(-tt / 0.45) * np.clip(tt / 0.08, 0, 1) * 0.1
+    return _cat((0, smack, 1.0), (0, low, 1.0), (0.06, ring, 1.0))
 
 
 def alarm_bell():
@@ -732,6 +736,48 @@ def van():
     return _rv(out, 'outdoor', 0.2)
 
 
+def chain_rattle():
+    """A heavy iron gate chain shaken twice against the bars, padlock knocking."""
+    r = rng('chain_rattle')
+    def link(rr, a):
+        f = rr.uniform(900, 2300)
+        return impact(rr, [f, f * 1.52, f * 2.31, f * 3.4], [1, .7, .45, .2], [.12, .09, .06, .04],
+                      [('bp', f * 1.4, 1.2)], noise_tau=0.002, noise_gain=0.45, dur=0.2, jitter=0.02) * a
+    parts = []
+    for k, t0 in enumerate((0.0, 0.34)):
+        shake = grains(r, 0.3, lambda t: 140 * math.exp(-t / 0.09) + 10, link, 0.45)
+        parts.append((t0, shake, 0.75 if k == 0 else 0.6))
+        bar = impact(r, [410, 1130, 2210, 3480], [1, .7, .4, .2], [.7, .45, .3, .2], [('bp', 1800, .8)],
+                     noise_tau=0.003, noise_gain=0.4, dur=0.8)
+        parts.append((t0 + 0.012, bar, 0.45 if k == 0 else 0.35))
+        thump = impact(r, [120, 230], [1, .6], [.12, .08], [('blp', 600, .7)], dur=0.25, noise_gain=0.3)
+        parts.append((t0, thump, 0.45))
+    lock = impact(r, [760, 1650, 2900], [1, .6, .3], [.15, .1, .06], [('bp', 1500, 1)], dur=0.3, noise_gain=0.5)
+    parts.append((0.5, lock, 0.5))
+    return _rv(_cat(*parts), 'outdoor', 0.25)
+
+
+def crate_creak():
+    """Stepping up onto an ash-can and a wooden crate: the can's lid flexes ('oil-can' bonk),
+    the crate creaks under the load."""
+    r = rng('crate_creak')
+    flex = impact(r, [180, 410, 960, 1700], [1, .8, .45, .25], [.28, .2, .12, .08], [('blp', 1500, .7)],
+                  noise_tau=0.006, noise_gain=0.35, dur=0.5)
+    lid = grains(r, 0.12, lambda t: 90, lambda rr, a: impact(rr, [rr.uniform(1800, 3000)], [1], [0.05], [('bp', 2500, 1)],
+                                                             dur=0.06, noise_gain=0.3) * a * 0.3, 0.4)
+    creak_ = stick_slip(r, 0.55, [(0, 22), (0.3, 38), (0.55, 30)], [(260, 1.0), (620, 0.7), (1350, 0.35)], q=10,
+                        jitter=0.25, amp_pts=[(0, 0), (0.06, 1.0), (0.4, 0.8), (0.55, 0)])
+    tick = wood_crack_core(rng('crate_tick'))
+    return _rv(_cat((0, flex, 0.8), (0.01, lid, 0.6), (0.12, creak_, 0.9), (0.42, tick, 0.18)), 'outdoor', 0.15)
+
+
+def chapter():
+    """Chapter-card sting (2-3 s), rendered from the music engine and folded to mono."""
+    import music_main
+    y = music_main.chapter_sting().render()
+    return 0.5 * (y[0] + y[1])
+
+
 # ============================================================================ registry
 SFX = {}
 for _s in ('wood', 'stone', 'metal', 'carpet', 'tile', 'grass', 'water'):
@@ -745,13 +791,15 @@ for _name in ['door_open', 'door_close', 'door_locked', 'unlock', 'lock_click', 
               'switch', 'buzzer', 'radio_static', 'radio_tune', 'crowd_gasp', 'gramophone', 'safe_tick', 'wheel_click',
               'splash', 'gull', 'foghorn', 'church_bell', 'clock_bong', 'ice_chip', 'salt', 'cloth_rip', 'straw',
               'spoon_scrape', 'smoke_whoosh', 'barrels', 'rope_cut', 'hatch_creak', 'ship_creak', 'camera_shutter',
-              'enlarger_hum', 'drip', 'punch', 'gun_cock', 'cell_door', 'van']:
+              'enlarger_hum', 'drip', 'punch', 'gun_cock', 'cell_door', 'van', 'chain_rattle', 'crate_creak',
+              'chapter']:
     SFX[_name] = globals()[_name]
 
 # hard length caps (seconds, a fade-out is applied) for effects with a specified duration
 MAXLEN = {'alarm_bell': 3.4, 'barrels': 3.2, 'van': 3.2, 'gramophone': 1.0, 'enlarger_hum': 1.0,
           'phone_ring': 2.4, 'foghorn': 4.5, 'church_bell': 4.5, 'clock_bong': 3.2, 'clue': 1.6, 'deduction': 2.0,
-          'danger': 2.2, 'heartbeat': 1.4, 'stinger': 3.0}
+          'danger': 2.2, 'heartbeat': 1.4, 'stinger': 3.0, 'chain_rattle': 0.9, 'crate_creak': 0.8,
+          'chapter': 2.9}
 for _k in SFX:
     if _k.startswith('footstep'):
         MAXLEN[_k] = 0.7
@@ -776,11 +824,11 @@ def trim(y, floor_db: float = -50.0, maxlen=None, fade: float = 0.04):
 
 # loudness class → target loudness (LUFS) used for the manifest volume
 ROLE = {
-    'ui': -30.0, 'foot': -27.0, 'small': -25.0, 'medium': -22.0, 'large': -19.0, 'signal': -21.0,
+    'ui': -30.0, 'foot': -25.0, 'small': -25.0, 'medium': -22.0, 'large': -19.0, 'signal': -21.0,
 }
 ROLE_OF = {k: 'foot' for k in SFX if k.startswith('footstep')}
 ROLE_OF.update({k: 'ui' for k in ('ui_click', 'ui_hover')})
-ROLE_OF.update({k: 'signal' for k in ('clue', 'deduction', 'error', 'danger')})
+ROLE_OF.update({k: 'signal' for k in ('clue', 'deduction', 'error', 'danger', 'chapter')})
 ROLE_OF.update({k: 'small' for k in ('pickup', 'combine', 'paper_rustle', 'paper_slide', 'page_turn', 'pencil',
                                      'key_drop', 'lock_click', 'safe_tick', 'wheel_click', 'switch', 'lighter', 'match',
                                      'drip', 'ice_chip', 'salt', 'straw', 'camera_shutter', 'enlarger_hum', 'gun_cock',

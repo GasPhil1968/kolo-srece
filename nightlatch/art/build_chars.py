@@ -92,9 +92,14 @@ def pose_sit_front(spec, seat=13.0):
             P[k] = (P[k][0], P[k][1] - d)
     hw = 2.0 * spec.get('build', 1.0)
     for side, sx in (('L', -1), ('R', 1)):
-        P['knee' + side] = (sx * hw * 1.25, seat - 1.5)
+        P['knee' + side] = (sx * hw * 1.25, seat - 3.6)
         P['ankle' + side] = (sx * hw * 1.2, 1.4)
         P['footz' + side] = 1.0
+    P['lap'] = seat   # thighs point at the viewer: draw their lit tops as a lap
+    for side, sx in (('L', -1), ('R', 1)):   # hands resting on the knees
+        sh = P['shoulder' + side]
+        P['elbow' + side] = (sh[0] + sx * .9, sh[1] - 6.2)
+        P['wrist' + side] = (sx * hw * 1.15, seat - 2.0)
     return P
 
 
@@ -179,6 +184,11 @@ def anims_for(spec, k):
         A['lie'] = ([frame(spec, k, 'side', lie, rot=90, pivot=(0, BASE['hip']), shift=(-6, -18))], 1, True)
         A['shiver_side'] = ([frame(spec, k, 'side', pose_side(spec, aA=30, eA=95, aB=26, eB=95)),
                              frame(spec, k, 'side', pose_side(spec, aA=30, eA=95, aB=26, eB=95, head_tilt=4))], 8, True)
+    if spec.get('lies'):   # lying down (e.g. on a bunk), and talking while lying there
+        lie = pose_side(spec, tA=0, kA=0, tB=-2, kB=0, aA=10, eA=10, aB=-6, eB=12)
+        rot = dict(rot=90, pivot=(0, BASE['hip']), shift=(1, -18))
+        A['lie'] = ([frame(spec, k, 'side', lie, **rot), frame(spec, k, 'side', lie, blink=True, **rot)], 1, True)
+        A['lie_talk'] = ([frame(spec, k, 'side', lie, talk=t, **rot) for t in (1, 2, 0, 2)], 8, True)
     if spec.get('aim'):
         A['aim_side'] = ([frame(spec, k, 'side', pose_side(spec, aA=88, eA=2))], 1, True)
     if spec.get('slump'):

@@ -1,14 +1,32 @@
 {
  "rooms": [
+  "calypso_cabin",
+  "calypso_deck",
+  "calypso_hold",
+  "cemetery",
+  "clocktower",
   "cold_store",
+  "commission",
   "darkroom",
   "gazette",
   "halcyon_cell",
   "halcyon_corridor",
+  "halcyon_gate",
   "halcyon_office",
+  "hask_shop",
+  "holding_cell",
+  "hotel_lobby",
   "hotel_room",
   "lantern",
-  "office"
+  "lantern_cellar",
+  "mission",
+  "nora_flat",
+  "office",
+  "pharmacy",
+  "pier9",
+  "precinct",
+  "radio_booth",
+  "tunnel"
  ],
  "chars": [
   "abernathy",
@@ -44,5 +62,7 @@
  "ui": [
   "ui"
  ],
- "docs": []
+ "docs": [
+  "contact_sheet"
+ ]
 }

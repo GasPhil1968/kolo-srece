@@ -193,14 +193,14 @@ def bureau() -> Song:
         if bar % 8 == 7:
             kit += [(b0 + 3 + k * 0.25, 'snare', 0.32 + 0.06 * k, True) for k in range(4)]
     s.bus('room', 'tile', -6.0)
-    s.add('trumpet', Wind('trumpet_harmon', 'tpt_bureau', att=0.012, rel=0.06), tpt, gain_db=-1.0, pan=0.2,
+    s.add('trumpet', Wind('trumpet_harmon', 'tpt_bureau', att=0.012, rel=0.06), tpt, gain_db=-1.0, pan=0.4,
           swing=False, jitter_ms=5, drift_ms=4, sends={'room': -10}, eq=[('hp', 300, 0.7)])
-    s.add('piano', Piano('bureau_pno', bright=1.0, spread=0.4), pno, gain_db=-10.0, swing=False, jitter_ms=5,
+    s.add('piano', Piano('bureau_pno', bright=1.0, spread=0.9), pno, gain_db=-10.0, swing=False, jitter_ms=5,
           sends={'room': -14}, eq=[('hs', 6000, 0.7, -2.0)])
     s.add('bass', UprightBass('bureau_bass', sustain=0.7), bass, gain_db=-6.0, pan=-0.05, swing=False,
           jitter_ms=4, sends={'room': -18}, eq=[('pk', 100, 1.0, 2.0), ('pk', 1300, 1.4, 2.0), ('blp', 5000, 2)])
     s.add('drums', 'drums', kit, gain_db=1.0, swing=False, jitter_ms=3, drift_ms=2, sends={'room': -14})
-    s.master_opts.update(target_rms_db=-20.0, glue=1.0)
+    s.master_opts.update(target_rms_db=-20.0, glue=1.0, eq=[('ls', 70, 0.7, -2.5)])
     return s
 
 
@@ -416,5 +416,5 @@ def finale() -> Song:
     s.add('bass', UprightBass('fin_bass', sustain=0.8, bright=1.2), bass, gain_db=-3.0, swing=False, jitter_ms=4,
           sends={'room': -16}, eq=[('pk', 100, 1.0, 2.5), ('pk', 1300, 1.4, 2.0), ('blp', 5000, 2)])
     s.add('drums', 'drums', kit, gain_db=2.0, swing=False, jitter_ms=3, drift_ms=2, sends={'room': -12, 'hall': -16})
-    s.master_opts.update(target_rms_db=-19.0, glue=1.3, sat=0.15)
+    s.master_opts.update(target_rms_db=-19.0, glue=1.3, sat=0.15, eq=[('ls', 70, 0.7, -2.5)])
     return s

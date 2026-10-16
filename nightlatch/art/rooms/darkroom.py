@@ -554,12 +554,12 @@ def build():
     def drip(k):
         def f(cc):
             if k < 4:
-                cc.put(dpx, dpy + k * 2, 'glass', .85, emis=.3)
+                cc.put(dpx, dpy + k * 2, 'glass', .62, emis=.2)
             elif k == 4:
-                cc.put(dpx - 1, dpy + 9, 'glass', .7, emis=.2)
-                cc.put(dpx + 1, dpy + 9, 'glass', .7, emis=.2)
+                cc.put(dpx - 1, dpy + 9, 'glass', .55, emis=.15)
+                cc.put(dpx + 1, dpy + 9, 'glass', .55, emis=.15)
             else:
-                cc.put(dpx, dpy, 'glass', .6 + .05 * k, emis=.2)
+                cc.put(dpx, dpy, 'glass', .45 + .04 * k, emis=.15)
         return f
     sc.anim('drip', [drip(k) for k in range(8)], fps=4)
 

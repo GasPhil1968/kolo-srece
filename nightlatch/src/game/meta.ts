@@ -27,6 +27,8 @@ export interface RoomAnimMeta {
   frames: number;
   fps: number;
   depth: number | null;
+  /** Variants with their own strip: anim_<name>_<variant>.png, same geometry. */
+  variants?: string[];
 }
 
 export interface RoomMeta {
@@ -35,7 +37,8 @@ export interface RoomMeta {
   h: number;
   hotspots: Record<string, RoomHotspotMeta>;
   walk: { poly: Pt[]; holes: Pt[][] }[];
-  points: Record<string, { x: number; y: number; face?: 'up' | 'down' | 'left' | 'right' }>;
+  /** `scale` overrides the room's depth scale (e.g. someone on a bunk or beyond bars). */
+  points: Record<string, { x: number; y: number; face?: 'up' | 'down' | 'left' | 'right'; scale?: number }>;
   objects: Record<string, RoomObjectMeta>;
   variants: string[];
   anims: Record<string, RoomAnimMeta>;

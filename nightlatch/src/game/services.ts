@@ -131,10 +131,43 @@ export class AudioDirector {
   };
   private pending: Record<'music' | 'amb', string | null> = { music: null, amb: null };
   private ducked = 1;
+  /** Volume fades run on the game clock, not on a scene, so they survive scene changes. */
+  private fades: { snd: Phaser.Sound.BaseSound; from: number; to: number; t: number; dur: number; destroy: boolean }[] = [];
+  private hooked = false;
 
   attach(scene: Phaser.Scene, manifest: AudioManifest | undefined) {
     this.scene = scene;
     if (manifest) this.manifest = manifest;
+    if (!this.hooked) {
+      this.hooked = true;
+      scene.game.events.on(Phaser.Core.Events.STEP, (_t: number, delta: number) => this.stepFades(delta));
+    }
+  }
+
+  private fadeTo(snd: Phaser.Sound.BaseSound, to: number, ms: number, destroy = false) {
+    const from = (snd as Phaser.Sound.WebAudioSound).volume ?? 0;
+    this.fades = this.fades.filter((f) => f.snd !== snd); // a new fade replaces the old one
+    this.fades.push({ snd, from, to, t: 0, dur: Math.max(1, ms), destroy });
+  }
+
+  private stepFades(delta: number) {
+    if (!this.fades.length) return;
+    const keep: typeof this.fades = [];
+    for (const f of this.fades) {
+      f.t += delta;
+      const k = Math.min(1, f.t / f.dur);
+      try {
+        (f.snd as Phaser.Sound.WebAudioSound).setVolume(f.from + (f.to - f.from) * k);
+        if (k < 1) keep.push(f);
+        else if (f.destroy) {
+          f.snd.stop();
+          f.snd.destroy();
+        }
+      } catch {
+        // the sound manager already disposed of it
+      }
+    }
+    this.fades = keep;
   }
 
   private base(kind: 'music' | 'amb', id: string) {
@@ -148,10 +181,7 @@ export class AudioDirector {
     const cur = this.current[kind];
     if (cur && cur.id === id) return;
     this.pending[kind] = id;
-    if (cur?.snd) {
-      const snd = cur.snd as Phaser.Sound.WebAudioSound;
-      this.scene.tweens.add({ targets: snd, volume: 0, duration: 700, onComplete: () => snd.destroy() });
-    }
+    if (cur?.snd) this.fadeTo(cur.snd, 0, 700, true);
     this.current[kind] = id ? { id, snd: null } : null;
     if (!id) return;
     const entry = this.manifest[kind][id];
@@ -163,7 +193,7 @@ export class AudioDirector {
       const snd = this.scene.sound.add(key, { loop: entry.loop !== false, volume: 0 });
       snd.play();
       this.current[kind] = { id, snd };
-      this.scene.tweens.add({ targets: snd, volume: this.base(kind, id), duration: 900 });
+      this.fadeTo(snd, this.base(kind, id), 900);
     };
     if (this.scene.cache.audio.exists(key)) start();
     else {
@@ -194,7 +224,7 @@ export class AudioDirector {
   refreshVolumes() {
     for (const kind of ['music', 'amb'] as const) {
       const c = this.current[kind];
-      if (c?.snd) (c.snd as Phaser.Sound.WebAudioSound).setVolume(this.base(kind, c.id));
+      if (c?.snd) this.fadeTo(c.snd, this.base(kind, c.id), 250);
     }
   }
 

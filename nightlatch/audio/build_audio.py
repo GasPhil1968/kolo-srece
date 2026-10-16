@@ -91,7 +91,15 @@ def render(cat: str, aid: str):
     y = sfx.trim(y, -50.0, sfx.MAXLEN.get(aid), fade=0.08 if aid in sfx.MAXLEN else 0.03)
     y = foley.safe(np.asarray(y, float), fin=0.0015, fout=0.008)
     y = foley.norm(y, -1.0)
-    return y[None, :], False, {'role': sfx.ROLE_OF[aid]}
+    # very peaky effects would need a manifest volume > 1: tame their transients instead
+    from mixing import loudness, limit
+    role = sfx.ROLE_OF[aid]
+    deficit = sfx.ROLE[role] + 1.0 - loudness(y)
+    if deficit > 0:
+        red = min(deficit, 9.0)
+        y = limit(y * 10 ** (red / 20), -1.0)
+        y = foley.norm(y, -1.0)
+    return y[None, :], False, {'role': role}
 
 
 def write_wav16(path: str, y: np.ndarray) -> None:
@@ -104,6 +112,23 @@ def write_wav16(path: str, y: np.ndarray) -> None:
         w.setsampwidth(2)
         w.setframerate(SR)
         w.writeframes(q.T.tobytes())
+
+
+def lame_safe_length(y: np.ndarray, loop: bool) -> np.ndarray:
+    """FFmpeg's libmp3lame wrapper clamps the gapless end-padding field when
+    (n + 576) mod 1152 lies in ~[580, 623], so such files decode a few samples long (a loop
+    would gain a tiny gap).  One-shots get a little trailing silence; loops are resampled
+    by < 0.03 % with an exact periodic (FFT) resampler, which is inaudible."""
+    n = y.shape[1]
+    x = (n + 576) % 1152
+    if 575 <= x <= 623:
+        extra = 624 - x
+        if loop:
+            from synth import resample_fft
+            y = resample_fft(y, n + extra)
+        else:
+            y = np.concatenate([y, np.zeros((y.shape[0], extra))], axis=1)
+    return y
 
 
 def encode(y: np.ndarray, path: str, quality: int) -> None:
@@ -135,14 +160,20 @@ def analyse(y: np.ndarray, loop: bool) -> dict:
     d1 = np.abs(np.diff(y, axis=1))
     p999 = float(np.percentile(d1, 99.9)) + 1e-12
     if loop:
-        jump = float(np.max(np.abs(y[:, 0] - y[:, -1])))
-        a['seam_jump_ratio'] = round(jump / p999, 3)
-        # second-difference (click) energy across the seam vs the whole file
-        w = 64
-        z = np.concatenate([y[:, -w:], y[:, :w]], axis=1)
-        d2s = float(np.max(np.abs(np.diff(z, 2, axis=1))))
+        # Treat the file as circular: the wrap step x[N-1]->x[0] must not stand out from the
+        # steps around it (a click is an isolated outlier) nor from the file as a whole.
+        W = 1024
+        z = np.concatenate([y[:, -W:], y[:, :W]], axis=1)
+        dz = np.abs(np.diff(z, axis=1))
+        jump = float(np.max(dz[:, W - 1]))
+        neigh = np.delete(dz, W - 1, axis=1)
+        ref = max(float(np.max(neigh)), p999)
+        a['seam_jump_ratio'] = round(jump / ref, 3)
+        d2z = np.abs(np.diff(z, 2, axis=1))
+        seam2 = float(np.max(d2z[:, W - 2:W]))
+        neigh2 = np.delete(d2z, [W - 2, W - 1], axis=1)
         d2 = float(np.percentile(np.abs(np.diff(y, 2, axis=1)), 99.9)) + 1e-12
-        a['seam_click_ratio'] = round(d2s / d2, 3)
+        a['seam_click_ratio'] = round(seam2 / max(float(np.max(neigh2)), d2), 3)
         k = int(0.05 * SR)
         rh = float(np.sqrt(np.mean(y[:, :k] ** 2))) + 1e-12
         rt = float(np.sqrt(np.mean(y[:, -k:] ** 2))) + 1e-12
@@ -185,6 +216,11 @@ def build_one(cat: str, aid: str) -> dict:
     pk = np.max(np.abs(y))
     if pk > 10 ** (-1.5 / 20):
         y *= 10 ** (-1.5 / 20) / pk
+    if not loop:
+        # 12 ms of silence ahead of the onset: MP3 pre-echo then lands in silence, so the
+        # decoded file still starts at ~0 (no click when the one-shot is triggered)
+        y = np.concatenate([np.zeros((y.shape[0], int(0.012 * SR))), y], axis=1)
+    y = lame_safe_length(y, loop)
     write_wav16(os.path.join(CACHE, 'wav', cat, aid + '.wav'), y)
     mp3 = os.path.join(OUT, cat, aid + '.mp3')
     q = QUALITY[cat]
@@ -249,18 +285,66 @@ def write_manifest(assets, an):
     return man
 
 
+INTEGRATION = '''## Pipeline
+
+Everything is synthesized from code (`numpy` only; ffmpeg/libmp3lame for encoding):
+`synth.py` (filters as exact frequency responses, polyBLEP/wavetable/additive oscillators,
+noise, STFT), `reverb.py` (multi-band synthetic IRs + FFT convolution), `instruments.py`
+(additive piano with inharmonic strings/hammer/dampers/pedal, gut-string upright bass,
+vibraphone/celesta/music box, phrase-rendered Harmon & open trumpet, tenor sax, clarinet, bass
+clarinet, brass, string sections, reed organ, bells), `drums.py` (brush swirl & taps, ride with
+spectral wash, hats, kit, timpani rolls, woodblocks), `harmony.py` (chord symbols, bar-checked
+melody notation, voice-led rootless voicings, walking/two-feel bass, comping, SATB chorale
+solver, improviser, melody/clash checkers), `sequencer.py` (tempo maps incl. rubato, 62-64 %
+swing, humanised timing/velocity, circular loop rendering), `mixing.py` (glue compressor,
+lookahead limiter, BS.1770 loudness), track files `music_main.py`, `music_world.py`,
+`music_world2.py`, `ambience.py`, `foley.py`, `sfx.py`.
+
+Loops are rendered with pre-roll and tails in an extended buffer and folded circularly to exactly
+one period; EQ, compression, reverb (circular convolution) and limiting then run circularly, so
+the wrap is mathematically continuous. The checks above re-verify it on the decoded MP3s.
+
+## Integration notes
+
+* `manifest.json` → `volume` is the suggested per-asset gain (0..1) that brings every file to a
+  common in-game loudness: music ≈ -23 LUFS, chapter/stingers ≈ -21, ambience ≈ -31 (beds sit
+  under music and dialogue), SFX by class (UI -30, footsteps -25 before the game's own 0.55
+  footstep factor, small -25, medium -22, signals/chapter sting -21, large -19). Multiply by the
+  player's music/SFX sliders.
+* Non-looping music: `chapter` (7.6 s), `stinger_clue`, `stinger_danger`. Every other music track
+  and every ambience loops (`loop: true`); all SFX are one-shots. `sfx/chapter` (2.8 s) is the
+  short card sting the chapter overlay fires after stopping the music; `music/chapter` is the
+  longer 7.6 s version of the same idea.
+* Gapless loops: files carry the LAME encoder-delay/padding tag, and `samples` in the manifest
+  is the exact loop length. FFmpeg-based decoding (Chromium's `decodeAudioData`; verified here
+  with ffmpeg) trims the delay, so `buffer.length === samples` and plain `source.loop = true` is
+  seamless. If a browser returns more samples (decoder without gapless support), loop the
+  window `[1105, 1105 + samples]` instead (`loopStart = 1105 / 44100`,
+  `loopEnd = (1105 + samples) / 44100`; 1105 = LAME's 576 + the decoder's 529 samples).
+* Footsteps come in three variations per surface (`footstep_<surface>_1..3`); pick randomly and
+  add ±1.5 dB / ±3 % playback-rate jitter.
+* `lullaby` doubles as the gramophone record: play it through a band-pass (~300 Hz–3.5 kHz) and
+  start it with `sfx/gramophone`. The `title` and `ending` themes share the Night Latch motif
+  with every location cue, so crossfades of 1.5–2 s between location tracks sound intentional.
+* `harbor` exists as both a music cue (`music/harbor.mp3`) and an ambience loop (`amb/harbor.mp3`).
+'''.split('\n')
+
+
 def write_report(assets, an):
     lines = ['# NIGHT LATCH — audio build report', '',
              'Generated by `audio/build_audio.py`. Every value below is measured on the **decoded MP3** '
              '(ffmpeg, gapless LAME header honoured), not on the pre-encode render.', '',
              '* **peak** = sample peak dBFS (must be <= -1.0); **RMS** dBFS; **LUFS** = BS.1770-style integrated '
              'loudness (K-weighted, gated).',
-             '* Loop seam columns (loops only): **jump** = |x[0]-x[N-1]| divided by the 99.9th percentile of '
-             'sample-to-sample steps in the file (< 1 means the wrap is an ordinary step); **click** = largest '
-             'second difference within 64 samples of the seam / 99.9th percentile of the file; **dRMS** = RMS '
-             'change between the last and first 10 ms block vs. the p95 block-to-block change in the file.',
+             '* Loop seam columns (loops only), treating the file as circular: **jump** = the wrap step '
+             '|x[0]-x[N-1]| divided by the largest step within ±1024 samples of the seam (or the file\'s 99.9th '
+             'percentile step, whichever is larger) — <= 1 means the wrap is an ordinary step, a click would be an '
+             'isolated outlier > 1; **click** = the same test on second differences; **dRMS** = level change between '
+             'the last and the first 10 ms block, with the file\'s p95 block-to-block change in brackets.',
              '* **len** = decoded sample count equals the rendered sample count (gapless).',
-             '* One-shots list the absolute sample value at the very start/end (should be ~0: no clicks).', '']
+             '* One-shots list the absolute sample value at the very start/end of the decoded file (must be '
+             '<= 0.003, i.e. no click on trigger); each one-shot carries 12 ms of leading silence so MP3 '
+             'pre-echo cannot reach sample 0.', '']
     total = 0
     problems = []
     for cat, title in (('music', 'Music'), ('amb', 'Ambience'), ('sfx', 'Sound effects')):
@@ -290,12 +374,14 @@ def write_report(assets, an):
                 problems.append('%s non-finite' % aid)
             if not a['length_ok']:
                 problems.append('%s length mismatch' % aid)
+            if not a['loop'] and max(a['start_abs'], a['end_abs']) > 0.003:
+                problems.append('%s decoded edge %.4f/%.4f' % (aid, a['start_abs'], a['end_abs']))
             if cat == 'sfx':
                 lines.append('| %s | %.2f | %.1f | %.1f | %.1f | %.4f / %.4f | %s | %.0f | %.2f |' % (
                     aid, a['duration'], a['peak_dbfs'], a['rms_dbfs'], a['lufs'], a['start_abs'], a['end_abs'],
                     ok_len, a['bytes'] / 1024, a['volume']))
             elif a['loop']:
-                if a['seam_jump_ratio'] > 1.0 or a['seam_click_ratio'] > 1.5:
+                if a['seam_jump_ratio'] > 1.0 or a['seam_click_ratio'] > 1.0:
                     problems.append('%s seam jump %.2f click %.2f' % (aid, a['seam_jump_ratio'], a['seam_click_ratio']))
                 lines.append('| %s | %.2f | yes | %.1f | %.1f | %.1f | %.3f | %.3f | %.2f (%.2f) dB | %s | %.0f | %.2f |' % (
                     aid, a['duration'], a['peak_dbfs'], a['rms_dbfs'], a['lufs'], a['seam_jump_ratio'],
@@ -307,6 +393,7 @@ def write_report(assets, an):
                     ok_len, a['bytes'] / 1024, a['volume']))
         lines.append('')
     lines += ['## Totals', '', '* Encoded size: **%.2f MB** across %d files.' % (total / 1048576, len(an)), '']
+    lines += INTEGRATION
     lines += ['## Checks', '']
     if problems:
         lines += ['* PROBLEMS:'] + ['  * ' + p for p in problems]

@@ -8,7 +8,7 @@
 //
 // Writes reports/playtest-report.json, reports/playtest-runs.csv and docs/TEST_REPORT.md.
 import { fork } from 'node:child_process';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { cpus } from 'node:os';
 import { CONTENT } from '../src/content';
 import { deserialize, serialize } from '../src/engine/state';
@@ -22,6 +22,8 @@ const arg = (name: string, def: string) => {
 };
 const RUNS = Number(arg('runs', '2000'));
 const SEED = Number(arg('seed', '1'));
+/** --seeds 1,2,3 runs one full campaign per seed and reports them together. */
+const SEEDS = arg('seeds', '') ? arg('seeds', '').split(',').map(Number) : [SEED];
 const ONLY = arg('only', '');
 const WORKERS = Math.max(1, Number(arg('workers', String(Math.min(4, cpus().length)))));
 const REPLAY = arg('replay', '');
@@ -54,6 +56,7 @@ function schedule(runs: number): string[] {
 // ------------------------------------------------------------------ run results
 interface RunResult {
   id: number;
+  campaign: number;
   category: string;
   seed: number;
   ok: boolean;
@@ -92,7 +95,7 @@ interface RunResult {
 
 // ------------------------------------------------------------------ the solver
 /** Plays walkthrough steps in a random valid order until `until` holds or the game ends. */
-async function solve(sim: Sim, rng: Rng, until: () => boolean, between?: () => Promise<void>): Promise<{ reason: string; steps: number; softlock: string }> {
+async function solve(sim: Sim, rng: Rng, until: () => boolean, between?: (lastOk: boolean) => Promise<void>): Promise<{ reason: string; steps: number; softlock: string }> {
   const fails = new Map<string, number>();
   let steps = 0;
   let guard = 0;
@@ -113,7 +116,7 @@ async function solve(sim: Sim, rng: Rng, until: () => boolean, between?: () => P
       steps++;
       fails.clear(); // progress can make a failed step possible again
     } else fails.set(st.id, (fails.get(st.id) ?? 0) + 1);
-    if (between && !sim.game.state.ended && !until()) await between();
+    if (between && !sim.game.state.ended && !until()) await between(ok);
   }
   return { reason: '', steps, softlock: '' };
 }
@@ -148,7 +151,7 @@ async function runOne(id: number, category: string, openings: Record<number, str
   let startChapter = 1;
   let sim: Sim;
   let target: () => boolean;
-  let between: (() => Promise<void>) | undefined;
+  let between: ((lastOk: boolean) => Promise<void>) | undefined;
 
   if (category === 'chapter' || category === 'chaos') {
     startChapter = category === 'chapter' ? 1 + (id % 8) : 1 + rng.int(8);
@@ -165,8 +168,11 @@ async function runOne(id: number, category: string, openings: Record<number, str
 
   switch (category) {
     case 'explorer':
-      between = async () => {
+      between = async (lastOk) => {
         if (rng.chance(0.65)) await sim.noise(rng.range(1, 14), { pairs: 0.6 });
+        if (rng.chance(0.3)) await sim.chat();
+        // walk out of the next conversation now and then (never twice running on the same step)
+        sim.p.impatient = lastOk && rng.chance(0.15) ? rng.range(1, 8) : 0;
       };
       break;
     case 'saveload':
@@ -225,7 +231,7 @@ async function runOne(id: number, category: string, openings: Record<number, str
   const ok = !res.reason && reachedTarget && !violations.length && !sim.exceptions.length && !sim.failedTransitions.length;
   const optionKeys = s.seen.filter((k) => /^[a-z0-9_]+\.[a-z0-9_]+$/.test(k));
   const result: RunResult = {
-    id, category, seed, ok,
+    id, campaign: SEED, category, seed, ok,
     reason: res.reason || (!reachedTarget ? 'target not reached' : violations[0] ?? sim.exceptions[0] ?? sim.failedTransitions[0] ?? ''),
     startChapter, endChapter: s.chapter, ended: s.ended,
     steps: res.steps,
@@ -267,20 +273,24 @@ async function main() {
     return;
   }
   const t0 = Date.now();
-  const plan = schedule(RUNS);
-  console.log(`playtest: ${plan.length} runs, seed ${SEED}, ${WORKERS} worker process(es)`);
-  const parts = await Promise.all(
-    Array.from({ length: WORKERS }, (_, k) =>
-      new Promise<RunResult[]>((resolve, reject) => {
-        const child = fork(process.argv[1], [...argv, '--worker', String(k), '--of', String(WORKERS)], { execArgv: process.execArgv });
-        let got: RunResult[] | null = null;
-        child.on('message', (m: { results: RunResult[] }) => (got = m.results));
-        child.on('exit', (code) => (got ? resolve(got) : reject(new Error(`worker ${k} exited with ${code}`))));
-      }),
-    ),
-  );
-  const results = parts.flat().sort((a, b) => a.id - b.id);
-  report(results, Date.now() - t0);
+  const all: RunResult[] = [];
+  for (const seed of SEEDS) {
+    const plan = schedule(RUNS);
+    console.log(`playtest: ${plan.length} runs, seed ${seed}, ${WORKERS} worker process(es)`);
+    const base = argv.filter((a, i) => !['--seeds', '--seed'].includes(a) && !['--seeds', '--seed'].includes(argv[i - 1]));
+    const parts = await Promise.all(
+      Array.from({ length: WORKERS }, (_, k) =>
+        new Promise<RunResult[]>((resolve, reject) => {
+          const child = fork(process.argv[1], [...base, '--seed', String(seed), '--worker', String(k), '--of', String(WORKERS)], { execArgv: process.execArgv });
+          let got: RunResult[] | null = null;
+          child.on('message', (m: { results: RunResult[] }) => (got = m.results));
+          child.on('exit', (code) => (got ? resolve(got) : reject(new Error(`worker ${k} exited with ${code}`))));
+        }),
+      ),
+    );
+    all.push(...parts.flat().sort((a, b) => a.id - b.id));
+  }
+  report(all, Date.now() - t0);
 }
 
 // ------------------------------------------------------------------ report
@@ -301,7 +311,27 @@ function report(results: RunResult[], ms: number) {
   const allOptions: string[] = [];
   for (const d of Object.values(C.dialogs)) for (const n of Object.values(d.nodes)) for (const o of n.options) allOptions.push(`${d.id}.${o.id}`);
   const allHotspots = [...new Set(Object.values(C.rooms).flatMap((r) => Object.keys(r.hotspots)))];
-  const docsReachable = Object.keys(C.docs);
+  // documents opened by scripts or items; the rest are read from clue entries in the notebook
+  // (a UI action the simulator does not take; the browser tests open the notebook)
+  const scriptDocs = new Set<string>();
+  const walk = (x: unknown): void => {
+    if (Array.isArray(x)) x.forEach(walk);
+    else if (x && typeof x === 'object') {
+      const o = x as Record<string, unknown>;
+      if (typeof o.doc === 'string' && !('title' in o)) scriptDocs.add(o.doc);
+      Object.values(o).forEach(walk);
+    }
+  };
+  walk(C.rooms);
+  walk(C.dialogs);
+  walk(C.items);
+  walk(C.npcs);
+  walk(C.watch);
+  walk(C.start);
+  walk(C.closeups);
+  walk(C.deductions);
+  walk(C.timelines);
+  const docsReachable = Object.keys(C.docs).filter((d) => scriptDocs.has(d));
   const unreachable = {
     rooms: Object.keys(C.rooms).filter((x) => !cov.rooms.has(x)),
     locations: Object.values(C.locations).filter((l) => l.when !== 'false').map((l) => l.id).filter((x) => !cov.travel.has(x)),
@@ -341,15 +371,19 @@ function report(results: RunResult[], ms: number) {
     reasons.set(key, (reasons.get(key) ?? 0) + 1);
   }
   const json = {
-    generated: new Date().toISOString(), seed: SEED, runs: RUNS, workers: WORKERS, node: process.version,
+    generated: new Date().toISOString(), seeds: SEEDS, runsPerSeed: RUNS, workers: WORKERS, node: process.version,
     totals, categories: byCat,
+    perSeed: SEEDS.map((sd) => {
+      const rs = results.filter((r) => r.campaign === sd);
+      return { seed: sd, runs: rs.length, passed: rs.filter((r) => r.ok).length, failed: rs.filter((r) => !r.ok).length, actions: sum((r) => r.actions, rs) };
+    }),
     failureReasons: [...reasons.entries()].sort((a, b) => b[1] - a[1]).map(([reason, count]) => ({ reason, count })),
-    failures: failed.slice(0, 60).map((r) => ({ id: r.id, category: r.category, seed: r.seed, startChapter: r.startChapter, endChapter: r.endChapter, reason: r.reason, softlock: r.softlock, violations: r.violations, exceptions: r.exceptions, failedTransitions: r.failedTransitions, recent: r.recent })),
+    failures: failed.slice(0, 60).map((r) => ({ id: r.id, campaign: r.campaign, category: r.category, seed: r.seed, startChapter: r.startChapter, endChapter: r.endChapter, reason: r.reason, softlock: r.softlock, violations: r.violations, exceptions: r.exceptions, failedTransitions: r.failedTransitions, recent: r.recent })),
     coverage: Object.fromEntries(Object.entries(cov).map(([k, v]) => [k, v.size])),
     unreachable,
   };
   writeFileSync('reports/playtest-report.json', JSON.stringify(json, null, 1));
-  const cols = ['id', 'category', 'seed', 'ok', 'startChapter', 'endChapter', 'ended', 'steps', 'actions', 'dialogChoices', 'saves', 'loads', 'autosaves', 'roomChanges', 'transitions', 'wrongItemTries', 'outOfOrderTries', 'ms', 'reason'] as const;
+  const cols = ['campaign', 'id', 'category', 'seed', 'ok', 'startChapter', 'endChapter', 'ended', 'steps', 'actions', 'dialogChoices', 'saves', 'loads', 'autosaves', 'roomChanges', 'transitions', 'wrongItemTries', 'outOfOrderTries', 'ms', 'reason'] as const;
   writeFileSync('reports/playtest-runs.csv', [cols.join(','), ...results.map((r) => cols.map((c) => JSON.stringify(r[c] ?? '')).join(','))].join('\n') + '\n');
 
   // console summary
@@ -366,10 +400,11 @@ function writeMarkdown(json: ReturnType<typeof JSON.parse>, results: RunResult[]
   const t = json.totals;
   const C = CONTENT;
   let md = `# Night Latch — Automated playtest report\n\n`;
-  md += `Generated ${json.generated} by \`npm run playtest\` (\`tools/playtest.ts\`), seed ${json.seed}, Node ${json.node}.\n\n`;
+  const cmd = json.seeds.length > 1 ? 'npm run playtest:sweep' : 'npm run playtest';
+  md += `Generated ${json.generated} by \`${cmd}\` (\`tools/playtest.ts\`): ${json.seeds.length} campaign(s) of ${json.runsPerSeed} runs, seed(s) ${json.seeds.join(', ')}, Node ${json.node}.\n\n`;
   md += `> **These are automated simulations, not human playtests.** Each run is a scripted or randomized virtual player driving the real game logic `;
   md += `(\`src/engine\` + \`src/content\`, the same code the browser build runs) through \`Game.perform()\`, the entry point every mouse click uses. `;
-  md += `Rendering, animation timing and audio are exercised separately by the Playwright browser tests (see the end of this report).\n\n`;
+  md += `Rendering, input, animation timing and audio are exercised separately by the Playwright browser tests: see [BROWSER_TEST_REPORT.md](BROWSER_TEST_REPORT.md).\n\n`;
   md += `## Summary\n\n| | |\n|---|---|\n`;
   md += `| Runs executed | **${t.runs}** |\n| Passed | **${t.passed}** |\n| Failed | **${t.failed}** |\n`;
   md += `| Game endings reached | ${t.endingsReached} |\n| Chapter transitions | ${t.chapterTransitions} |\n`;
@@ -379,6 +414,11 @@ function writeMarkdown(json: ReturnType<typeof JSON.parse>, results: RunResult[]
   md += `| Exceptions | ${t.exceptions} |\n| Runs with invariant violations | ${t.runsWithViolations} |\n| Failed chapter transitions | ${t.failedTransitions} |\n`;
   md += `| Softlock candidates | ${t.softlocks} |\n| Save/load failures | ${t.saveLoadFailures} |\n`;
   md += `| Average actions to finish the game | ${t.avgActionsToFinish} |\n| Average walkthrough steps to finish | ${t.avgStepsToFinish} |\n| Wall-clock time | ${t.durationSec} s |\n\n`;
+  if (json.seeds.length > 1) {
+    md += `## Campaigns\n\n| Seed | Runs | Passed | Failed | Actions |\n|---|---|---|---|---|\n`;
+    for (const p of json.perSeed) md += `| ${p.seed} | ${p.runs} | ${p.passed} | ${p.failed} | ${p.actions.toLocaleString('en-US')} |\n`;
+    md += '\n';
+  }
   md += `## Categories\n\n| Category | What it does | Runs | Passed | Failed | Avg actions |\n|---|---|---|---|---|---|\n`;
   for (const c of json.categories) md += `| ${c.id} | ${c.desc} | ${c.runs} | ${c.passed} | ${c.failed} | ${c.avgActions} |\n`;
   md += `\n## Invariants checked after every action\n\n`;
@@ -412,9 +452,10 @@ function writeMarkdown(json: ReturnType<typeof JSON.parse>, results: RunResult[]
   else {
     md += `| Count | Reason |\n|---|---|\n`;
     for (const f of json.failureReasons) md += `| ${f.count} | ${String(f.reason).replace(/\|/g, '\\|')} |\n`;
-    md += `\nReplay any run with \`npx tsx tools/playtest.ts --runs ${json.runs} --replay <id>\`. First failures: ${json.failures.slice(0, 20).map((f: { id: number }) => f.id).join(', ')}.\n`;
+    md += `\nReplay any run with \`npx tsx tools/playtest.ts --runs ${json.runsPerSeed} --seed <seed> --replay <id>\`. First failures (seed/id): ${json.failures.slice(0, 20).map((f: { id: number; campaign: number }) => `${f.campaign}/${f.id}`).join(', ')}.\n`;
   }
-  md += `\n## Reproducing\n\n\`\`\`\nnpm run validate      # static content/art/audio contract check\nnpm run playtest      # this report (${json.runs} runs)\nnpm run e2e           # Playwright browser tests\n\`\`\`\n`;
+  if (existsSync('docs/BUGS_FIXED.md')) md += '\n' + readFileSync('docs/BUGS_FIXED.md', 'utf8').replace(/^# .*\n/, '## Bugs the automated tests found (all fixed)\n');
+  md += `\n## Reproducing\n\n\`\`\`\nnpm run validate        # static content/art/audio contract check\nnpm run playtest        # one campaign: ${json.runsPerSeed} runs, seed 1 (~15 s)\nnpm run playtest:sweep  # six campaigns, seeds 1-6 (this report when it lists six seeds)\nnpm run e2e             # Playwright browser tests (after npm run build)\n\`\`\`\n`;
   md += `\nPer-run results: \`reports/playtest-runs.csv\`; machine-readable summary: \`reports/playtest-report.json\`.\n`;
   void results;
   writeFileSync('docs/TEST_REPORT.md', md);

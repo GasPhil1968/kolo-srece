@@ -572,7 +572,7 @@ def build():
         n_lights.append(Light(x_, y_ + 60, 50, .3, ystretch=2.4))
     n_lights.append(Light(elx, ely - 8, 46, .7, falloff=1.4))
     n_lights.append(Light(52, 92, 24, .3, ystretch=2.5))
-    n_lights.append(Light(CX, CY + 24, 30, .55))                                   # lamp spill on the clock
+    n_lights.append(Light(CX + 4, CY + 22, 34, 1.0))                               # lamp spill on the clock
     n_lights.append(Light(52, dtop - 8, 16, .35))
     vn = np.clip(1.3 - np.abs(np.arange(W)[None, :] - 215) / 240.0, .5, 1)
     nshade = (base_shade * vn * (topdark ** 2) * .95).astype(np.float32)

@@ -1,102 +1,153 @@
 {
- "generated": "2026-10-16T19:02:47.711Z",
- "seed": 11,
- "runs": 400,
+ "generated": "2026-10-16T20:04:02.362Z",
+ "seeds": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6
+ ],
+ "runsPerSeed": 2000,
  "workers": 4,
  "node": "v22.22.0",
  "totals": {
-  "runs": 400,
-  "passed": 400,
+  "runs": 12000,
+  "passed": 12000,
   "failed": 0,
-  "actions": 197759,
-  "dialogChoices": 36594,
-  "saves": 7573,
-  "loads": 10260,
-  "autosaves": 7589,
-  "roomChanges": 60682,
-  "chapterTransitions": 2037,
-  "wrongItemTries": 34713,
-  "outOfOrderTries": 16380,
-  "endingsReached": 314,
+  "actions": 5950381,
+  "dialogChoices": 1246944,
+  "saves": 231100,
+  "loads": 316213,
+  "autosaves": 229358,
+  "roomChanges": 1813867,
+  "chapterTransitions": 61645,
+  "wrongItemTries": 1030792,
+  "outOfOrderTries": 491626,
+  "endingsReached": 9509,
   "exceptions": 0,
   "runsWithViolations": 0,
   "failedTransitions": 0,
   "softlocks": 0,
   "saveLoadFailures": 0,
-  "avgActionsToFinish": 598,
-  "avgStepsToFinish": 147,
-  "durationSec": 4
+  "avgActionsToFinish": 602,
+  "avgStepsToFinish": 149,
+  "durationSec": 79
  },
  "categories": [
   {
    "id": "critical",
    "desc": "Critical path: walkthrough steps executed in a random valid order, no detours.",
-   "runs": 32,
-   "passed": 32,
+   "runs": 960,
+   "passed": 960,
    "failed": 0,
    "avgActions": 177,
    "avgSteps": 139,
-   "avgMs": 9
+   "avgMs": 6
   },
   {
    "id": "explorer",
    "desc": "Random valid order plus bursts of random actions between steps: every hotspot and NPC, wrong items on everything, wrong item combinations, repeated and random dialogue, random evidence, random deductions and timeline orders, wrong codes.",
-   "runs": 88,
-   "passed": 88,
+   "runs": 2640,
+   "passed": 2640,
    "failed": 0,
-   "avgActions": 776,
-   "avgSteps": 126,
-   "avgMs": 66
+   "avgActions": 772,
+   "avgSteps": 122,
+   "avgMs": 45
   },
   {
    "id": "saveload",
    "desc": "Save and load into a brand-new Game after milestones, reload the latest autosave, and roll back to older saves.",
-   "runs": 56,
-   "passed": 56,
+   "runs": 1680,
+   "passed": 1680,
    "failed": 0,
-   "avgActions": 369,
-   "avgSteps": 291,
-   "avgMs": 37
+   "avgActions": 383,
+   "avgSteps": 300,
+   "avgMs": 27
   },
   {
    "id": "chapter",
    "desc": "Start from each chapter’s opening save, play randomly for 40–250 actions, then the solver must still finish the chapter (softlock detection).",
-   "runs": 96,
-   "passed": 96,
+   "runs": 2880,
+   "passed": 2880,
    "failed": 0,
-   "avgActions": 167,
-   "avgSteps": 13,
-   "avgMs": 11
+   "avgActions": 161,
+   "avgSteps": 12,
+   "avgMs": 10
   },
   {
    "id": "chaos",
    "desc": "Long random sessions (150–600 actions incl. rapid travel and save/load) from a random chapter; the solver must then finish the whole game.",
-   "runs": 48,
-   "passed": 48,
+   "runs": 1440,
+   "passed": 1440,
    "failed": 0,
-   "avgActions": 428,
-   "avgSteps": 53,
-   "avgMs": 42
+   "avgActions": 457,
+   "avgSteps": 58,
+   "avgMs": 27
   },
   {
    "id": "rapid",
    "desc": "Rapid location switching: 10–40 random exits/map hops between every step.",
-   "runs": 32,
-   "passed": 32,
+   "runs": 960,
+   "passed": 960,
    "failed": 0,
-   "avgActions": 1574,
+   "avgActions": 1553,
    "avgSteps": 131,
-   "avgMs": 42
+   "avgMs": 27
   },
   {
    "id": "outoforder",
    "desc": "Before each step, try the actions of up to three steps that are not available yet (out-of-order triggers), then continue.",
-   "runs": 48,
-   "passed": 48,
+   "runs": 1440,
+   "passed": 1440,
    "failed": 0,
-   "avgActions": 338,
+   "avgActions": 339,
    "avgSteps": 130,
-   "avgMs": 17
+   "avgMs": 11
+  }
+ ],
+ "perSeed": [
+  {
+   "seed": 1,
+   "runs": 2000,
+   "passed": 2000,
+   "failed": 0,
+   "actions": 994886
+  },
+  {
+   "seed": 2,
+   "runs": 2000,
+   "passed": 2000,
+   "failed": 0,
+   "actions": 990735
+  },
+  {
+   "seed": 3,
+   "runs": 2000,
+   "passed": 2000,
+   "failed": 0,
+   "actions": 995277
+  },
+  {
+   "seed": 4,
+   "runs": 2000,
+   "passed": 2000,
+   "failed": 0,
+   "actions": 986562
+  },
+  {
+   "seed": 5,
+   "runs": 2000,
+   "passed": 2000,
+   "failed": 0,
+   "actions": 991992
+  },
+  {
+   "seed": 6,
+   "runs": 2000,
+   "passed": 2000,
+   "failed": 0,
+   "actions": 990929
   }
  ],
  "failureReasons": [],
@@ -107,8 +158,8 @@
   "deds": 6,
   "docs": 21,
   "items": 51,
-  "options": 149,
-  "hotspots": 248,
+  "options": 161,
+  "hotspots": 249,
   "travel": 14,
   "sfx": 49,
   "music": 7
@@ -119,25 +170,8 @@
   "clues": [],
   "deductions": [],
   "items": [],
-  "docs": [
-   "gus_statement"
-  ],
-  "dialogOptions": [
-   "deacon.piano",
-   "deacon.lullaby_early",
-   "mabel.drugged",
-   "mabel.pad",
-   "mabel.fake",
-   "mabel.nurse",
-   "mabel.frank",
-   "mabel.escaped",
-   "mabel.plan",
-   "sal.sorry",
-   "pruett.pad",
-   "frank_talkback.wait"
-  ],
-  "hotspots": [
-   "ledge"
-  ]
+  "docs": [],
+  "dialogOptions": [],
+  "hotspots": []
  }
 }

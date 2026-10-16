@@ -178,6 +178,7 @@ def voice(r, dur: float, f0: float = 120.0, rate: float = 4.5, female: bool = Fa
     t = r.uniform(0, 0.6)
     scale = 1.17 if female else 1.0
     vkeys = list(VOWELS)
+    cons_t = []
     while t < dur:
         nsyl = int(r.integers(3, 11)) if not laugh else int(r.integers(4, 8))
         phrase_f0 = f0 * math.exp(r.normal(0, 0.08))
@@ -200,6 +201,8 @@ def voice(r, dur: float, f0: float = 120.0, rate: float = 4.5, female: bool = Fa
             vw = VOWELS['a'] if laugh else VOWELS[vkeys[int(r.integers(len(vkeys)))]]
             F[seg] = np.array(vw) * scale * (1 + r.normal(0, 0.05, 3))
             voiced[seg] = 1.0 if (laugh or r.random() > 0.12) else 0.0
+            if not laugh and r.random() < 0.55:
+                cons_t.append((t, a_s))
             t += sd + (r.uniform(0.0, 0.05) if not laugh else 0.03)
         t += r.exponential(pause) + 0.15
     # smooth controls
@@ -223,6 +226,18 @@ def voice(r, dur: float, f0: float = 120.0, rate: float = 4.5, female: bool = Fa
     exc = src * va + nz * (breath + (1 - va) * 0.5) * (0.35 if not laugh else 0.6)
     y = _formant_filter(exc, F)
     y *= np.interp(ta, tc, amps)
+    y /= np.std(y) + 1e-9
+    # consonants: fricative and plosive noise bursts at syllable onsets (s, sh, f, t, k)
+    cons = np.zeros(n)
+    kinds = [([('bp', 6500, 1.6)], 0.08), ([('bp', 3200, 1.4)], 0.09), ([('bhp', 2500, 1), ('blp', 9000, 1)], 0.06),
+             ([('bp', 4200, 1.0)], 0.018), ([('bp', 2200, 1.2)], 0.022)]
+    for (tc0, a_s) in cons_t:
+        spec, d = kinds[int(r.integers(len(kinds)))]
+        m = ns(d)
+        b = filt(r.standard_normal(m), spec, tail=0.01)
+        b *= np.sin(np.pi * np.arange(m) / m) ** (0.6 if d > 0.03 else 0.3)
+        mix_at(cons, b * a_s, ns(max(tc0 - d * 0.6, 0)))
+    y += cons / (np.std(cons) + 1e-9) * 0.22
     return y / (np.std(y) + 1e-9)
 
 

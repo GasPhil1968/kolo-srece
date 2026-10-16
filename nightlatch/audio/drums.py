@@ -108,6 +108,16 @@ def _crash(v, var):
     return _end_fade(y / (np.abs(y).max() + 1e-12), 0.2)
 
 
+def _brush_cymbal(v, var):
+    """A wire brush swept across a suspended cymbal: crash wash with a soft swelling attack."""
+    y = _crash(v, var)
+    n = y.size
+    a = ns(0.07)
+    y[:a] *= (0.5 - 0.5 * np.cos(np.pi * np.arange(a) / a)) ** 1.5
+    y = filt(y, [('blp', 7500, 0.7), ('ls', 600, 0.7, -3)], tail=0.02)
+    return _end_fade(y / (np.abs(y).max() + 1e-12), 0.2)
+
+
 def _hat(v, var, kind='closed'):
     r = rng('hat', v, var, kind)
     if kind == 'open':
@@ -209,6 +219,7 @@ GEN = {
     'slap': lambda v, k: _brush_tap(v, k, True),
     'ride': _ride,
     'crash': _crash,
+    'brushcym': _brush_cymbal,
     'hat': lambda v, k: _hat(v, k, 'closed'),
     'ohat': lambda v, k: _hat(v, k, 'open'),
     'chick': lambda v, k: _hat(v, k, 'chick'),
@@ -224,11 +235,11 @@ GEN = {
     'rim': _rim,
 }
 
-PAN = {'tap': -0.1, 'slap': -0.1, 'ride': 0.45, 'crash': -0.35, 'hat': -0.4, 'ohat': -0.4, 'chick': -0.4,
+PAN = {'brushcym': -0.3, 'tap': -0.1, 'slap': -0.1, 'ride': 0.45, 'crash': -0.35, 'hat': -0.4, 'ohat': -0.4, 'chick': -0.4,
        'kick': 0.0, 'kick_hard': 0.0, 'snare': -0.08, 'rimshot': -0.08, 'tom_hi': 0.2, 'tom_mid': 0.3,
        'tom_lo': 0.4, 'wb_hi': 0.2, 'wb_lo': 0.2, 'rim': -0.1}
 
-GAIN = {'tap': 0.5, 'slap': 0.65, 'ride': 0.32, 'crash': 0.45, 'hat': 0.22, 'ohat': 0.25, 'chick': 0.2,
+GAIN = {'brushcym': 0.4, 'tap': 0.5, 'slap': 0.65, 'ride': 0.32, 'crash': 0.45, 'hat': 0.22, 'ohat': 0.25, 'chick': 0.2,
         'kick': 0.55, 'kick_hard': 0.7, 'snare': 0.55, 'rimshot': 0.6, 'tom_hi': 0.55, 'tom_mid': 0.55,
         'tom_lo': 0.6, 'wb_hi': 0.4, 'wb_lo': 0.4, 'rim': 0.4}
 

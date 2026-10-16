@@ -65,8 +65,8 @@ export class MapScene extends Overlay {
       });
     }
     this.closeButton(310, 9);
-    this.input.keyboard?.on('keydown-ESC', () => this.close());
-    this.input.keyboard?.on('keydown-M', () => this.close());
+    this.onKey('ESC');
+    this.onKey('M');
   }
 }
 
@@ -89,7 +89,7 @@ export class MenuScene extends Overlay {
         if (p.rightButtonDown()) this.close();
       });
     this.add.image(160, 90, 'ui', 'menu_panel');
-    this.input.keyboard?.on('keydown-ESC', () => this.close());
+    this.onKey('ESC');
     this.page(this.startPage);
   }
   private clear() {
@@ -288,12 +288,23 @@ export class TitleScene extends Phaser.Scene {
   /** Start a new game (no state) or resume a saved one. */
   async launchGame(state?: import('../engine/state').GameState) {
     const sm = this.scene;
-    for (const k of ['room', 'hud']) if (sm.isActive(k)) sm.stop(k);
+    // Scene operations are queued until the next game step: let a running game shut down
+    // completely before the new one is built, or the shutdown would tear the new room down.
+    const nextStep = () => new Promise<void>((r) => this.game.events.once(Phaser.Core.Events.POST_STEP, () => r()));
+    let stopped = false;
+    for (const k of ['room', 'hud', 'notebook', 'map', 'menu', 'doc', 'closeup', 'card', 'end']) {
+      if (sm.isActive(k) || sm.isPaused(k) || sm.isSleeping(k)) {
+        sm.stop(k);
+        stopped = true;
+      }
+    }
+    if (stopped) await nextStep();
     ctl.newGame(state);
     sm.run('room');
     sm.run('hud');
     sm.bringToTop('hud');
     sm.sleep('title');
+    await nextStep();
     const room = sm.get('room') as unknown as { loadRoom(id: string, at?: string): Promise<void> };
     audio.attach(sm.get('hud'), this.cache.json.get('audioManifest'));
     if (state) {
@@ -352,7 +363,7 @@ export class EndScene extends Overlay {
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
       if (p.rightButtonDown() || this.creditsOnly) this.finish();
     });
-    this.input.keyboard?.on('keydown-ESC', () => this.finish());
+    this.onKey('ESC', () => this.finish());
   }
   finish() {
     if (this.creditsOnly) return this.close();

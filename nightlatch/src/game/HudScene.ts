@@ -24,6 +24,9 @@ export class HudScene extends Phaser.Scene {
   private buttons: Record<string, Phaser.GameObjects.Image> = {};
   private hintObjs: Phaser.GameObjects.GameObject[] = [];
   private choosing = false;
+  /** Where the current dialogue options are drawn (for the browser tests). */
+  private optInfo: { id: string; text: string; x: number; y: number; exit: boolean; present: boolean }[] = [];
+  private optDialog = '';
 
   constructor() {
     super('hud');
@@ -34,6 +37,19 @@ export class HudScene extends Phaser.Scene {
   }
 
   create() {
+    // the HUD is restarted for every game launched (new game or load): start from scratch
+    this.slots = [];
+    this.icons = [];
+    this.buttons = {};
+    this.toasts = [];
+    this.toastBusy = false;
+    this.dialogObjs = [];
+    this.hintObjs = [];
+    this.choosing = false;
+    this.optInfo = [];
+    this.pickResolve = null;
+    this.scroll = 0;
+    this.hoverSlot = -1;
     this.add.image(0, PANEL_Y, 'ui', 'panel').setOrigin(0, 0);
     this.sentence = this.add.bitmapText(160, PANEL_Y + 2, 'nlo', '').setOrigin(0.5, 0).setTint(0xd8c8a0);
     for (let i = 0; i < SLOTS; i++) {
@@ -96,10 +112,19 @@ export class HudScene extends Phaser.Scene {
     kb.on('keydown-H', () => !this.isBlocked() && this.showHint());
     kb.on('keydown-ESC', () => !this.isBlocked() && this.openMenu());
     kb.on('keydown-F', () => (this.scale.isFullscreen ? this.scale.stopFullscreen() : this.scale.startFullscreen()));
-    this.room.events.on('hover', () => this.updateSentence());
-    this.room.events.on('held', () => this.refresh());
-    this.room.events.on('changed', () => this.refresh());
-    this.room.events.on('openMap', () => this.openMap());
+    const onHover = () => this.updateSentence();
+    const onChange = () => this.refresh();
+    const onMap = () => this.openMap();
+    this.room.events.on('hover', onHover);
+    this.room.events.on('held', onChange);
+    this.room.events.on('changed', onChange);
+    this.room.events.on('openMap', onMap);
+    this.events.once('shutdown', () => {
+      this.room.events.off('hover', onHover);
+      this.room.events.off('held', onChange);
+      this.room.events.off('changed', onChange);
+      this.room.events.off('openMap', onMap);
+    });
     this.refresh();
   }
 
@@ -109,7 +134,7 @@ export class HudScene extends Phaser.Scene {
 
   // ---------------------------------------------------------------- inventory ----
   refresh() {
-    if (!ctl.game) return;
+    if (!ctl.game || !this.sys.isActive()) return; // stopped (e.g. back at the title)
     const inv = ctl.game.state.inv;
     this.scroll = Phaser.Math.Clamp(this.scroll, 0, Math.max(0, inv.length - SLOTS));
     for (let i = 0; i < SLOTS; i++) {
@@ -139,7 +164,7 @@ export class HudScene extends Phaser.Scene {
   }
 
   updateSentence() {
-    if (!ctl.game || this.choosing) return;
+    if (!ctl.game || this.choosing || !this.sys.isActive()) return;
     if (this.pickResolve) {
       this.sentence.setText('Show what? (right-click to cancel)');
       return;
@@ -205,8 +230,9 @@ export class HudScene extends Phaser.Scene {
   }
 
   // ------------------------------------------------------------------ dialogue ----
-  chooseOption(options: OptionDef[]): Promise<OptionDef> {
+  chooseOption(options: OptionDef[], dialogId = ''): Promise<OptionDef> {
     this.choosing = true;
+    this.optDialog = dialogId;
     this.sentence.setText('');
     return new Promise((resolve) => {
       let page = 0;
@@ -216,6 +242,7 @@ export class HudScene extends Phaser.Scene {
         this.dialogObjs = [];
         const shown = options.slice(page * per, page * per + per);
         const more = options.length > per;
+        this.optInfo = [];
         const lines = shown.length + (more ? 1 : 0);
         const h = lines * 10 + 6;
         const top = 180 - h;
@@ -230,11 +257,13 @@ export class HudScene extends Phaser.Scene {
           t.on('pointerdown', () => {
             for (const ob of this.dialogObjs) ob.destroy();
             this.dialogObjs = [];
+            this.optInfo = [];
             this.choosing = false;
             audio.sfx('ui_click');
             resolve(o);
           });
           this.dialogObjs.push(t);
+          this.optInfo.push({ id: o.id, text: o.text, x: 14, y: top + 8 + i * 10, exit: o.next === 'exit', present: !!o.present });
         });
         if (more) {
           const t = this.add.bitmapText(8, top + 4 + shown.length * 10, 'nlo', '... more').setTint(0x7f7f9f).setDepth(4001)
@@ -244,14 +273,32 @@ export class HudScene extends Phaser.Scene {
             draw();
           });
           this.dialogObjs.push(t);
+          this.optInfo.push({ id: '__more', text: '... more', x: 14, y: top + 8 + shown.length * 10, exit: false, present: false });
         }
       };
       draw();
     });
   }
 
+  testInfo() {
+    const inv = ctl.game?.state.inv ?? [];
+    return {
+      choosing: this.choosing,
+      dialog: this.optDialog,
+      options: [...this.optInfo],
+      picking: !!this.pickResolve,
+      scroll: this.scroll,
+      slots: Array.from({ length: SLOTS }, (_, i) => ({ item: inv[this.scroll + i] ?? null, x: SLOT_X0 + i * SLOT_W, y: PANEL_Y + 23 })),
+      arrows: { left: [52, PANEL_Y + 23], right: [260, PANEL_Y + 23] },
+      buttons: { notebook: [13, PANEL_Y + 23], map: [36, PANEL_Y + 23], hint: [285, PANEL_Y + 23], menu: [308, PANEL_Y + 23] },
+      held: ctl.heldItem,
+      sentence: this.sentence?.text ?? '',
+    };
+  }
+
   // -------------------------------------------------------------------- toasts ----
   toast(text: string, color = 0xe8d8b0) {
+    if (!this.sys.isActive()) return;
     this.toasts.push({ text, color });
     if (!this.toastBusy) this.nextToast();
   }
