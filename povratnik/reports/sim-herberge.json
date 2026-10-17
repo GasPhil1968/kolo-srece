@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-10-17T02:45:14.199Z",
+  "runs": 400,
+  "passed": 400,
+  "failed": 0,
+  "seconds": 1.053,
+  "byChapter": {
+    "herberge": {
+      "runs": 400,
+      "ok": 400,
+      "warmSteps": 2933,
+      "randomSteps": 11860,
+      "saveLoads": 823
+    }
+  },
+  "failures": []
+}

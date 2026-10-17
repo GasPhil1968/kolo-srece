@@ -46,6 +46,12 @@ OCCLUDERS = {
                  1045, 323, 1058, 330, 1070, 335, 1082, 345, 1089, 356, 1086, 368, 1080, 376, 1070, 386, 1046, 394, 1020, 399,
                  990, 402, 957, 405, 920, 407, 882, 408, 850, 407, 820, 405, 790, 401, 745, 396, 712, 391, 682, 385, 660, 380, 645, 376],
     },
+    # Gaststube 1512: the long table's front board, apron and benches, drawn over the card players
+    # sitting behind it (their waists vanish behind the table, as the painting implies).
+    'occ_stube_tisch': {
+        'bg': 'bg/bg_gaststube_clean.webp',
+        'poly': [296, 279, 766, 279, 766, 300, 806, 304, 806, 366, 250, 366, 250, 304, 296, 300],
+    },
 }
 
 

@@ -8,6 +8,7 @@ import { povratnikChapter } from './c04_povratnik';
 import { elftageChapter } from './c05_elftage';
 import { zaesurChapter } from './c06_zaesur';
 import { anconaChapter, anconaDuel } from './c07_ancona';
+import { herbergeChapter, herbergeDuel } from './c08_herberge';
 
-export const CHAPTERS: ChapterDef[] = [sarajevo, weideChapter, dorfChapter, povratnikChapter, elftageChapter, zaesurChapter, anconaChapter];
-export const COMBATS: CombatDef[] = [anconaDuel];
+export const CHAPTERS: ChapterDef[] = [sarajevo, weideChapter, dorfChapter, povratnikChapter, elftageChapter, zaesurChapter, anconaChapter, herbergeChapter];
+export const COMBATS: CombatDef[] = [anconaDuel, herbergeDuel];

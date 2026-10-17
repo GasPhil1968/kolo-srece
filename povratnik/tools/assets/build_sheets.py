@@ -158,7 +158,8 @@ def build_props(only: set[str]) -> dict:
         # Top-left corner of the output inside the crop (pieces cut from one painting are placed
         # against each other with it).
         ox, oy = 0, 0
-        if src.endswith('.webp') and not crop:
+        processed = not isinstance(spec, str) and any(k in spec for k in ('crop', 'poly', 'clean', 'rotate', 'tile', 'mul', 'gain'))
+        if src.endswith('.webp') and not processed:
             shutil.copyfile(ref(src), dst)
         else:
             im = im.convert('RGBA')
@@ -187,6 +188,15 @@ def build_props(only: set[str]) -> dict:
                 for i in range(n):
                     long.alpha_composite(im, (0, i * im.height))
                 im = long
+            if not isinstance(spec, str) and (spec.get('mul') or spec.get('gain')):
+                # Colour multiplied (wet cloth is darker and cooler) and alpha raised (a faint ripple
+                # strip made dense enough to read as a puddle on a dark floor).
+                a = np.array(im).astype(np.float32)
+                if spec.get('mul'):
+                    a[:, :, :3] *= np.array(spec['mul'], np.float32)
+                if spec.get('gain'):
+                    a[:, :, 3] *= float(spec['gain'])
+                im = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
             if not isinstance(spec, str) and spec.get('clean'):
                 # A single object cut from an icon sheet: drop slivers of the neighbouring cells, trim.
                 a, _ = keep_main_blob(np.array(im), near=spec.get('near', 8))

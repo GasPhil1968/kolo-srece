@@ -109,7 +109,7 @@ function checkRoom(chId: string, r: RoomDef, rooms: Map<string, RoomDef>, allRoo
     ids.add(h.id);
     checkHotspot(where, h, nav, rooms, allRooms, items, decorIds);
   }
-  for (const a of r.ambient ?? []) if (!['motes', 'birds'].includes(a.fx)) err(`${where}: unknown ambient effect ${a.fx}`);
+  for (const a of r.ambient ?? []) if (!['motes', 'birds', 'rain', 'ripples'].includes(a.fx)) err(`${where}: unknown ambient effect ${a.fx}`);
 }
 
 function checkHotspot(

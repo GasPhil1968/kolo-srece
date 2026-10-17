@@ -1272,6 +1272,8 @@ export class Engine {
       a.hidden = !anim;
       if (anim) this.setActorPose(id, anim);
     };
+    if (p.pcX !== undefined) this.state.actors[def.pc].x = p.pcX;
+    if (p.oppX !== undefined && def.opp) this.state.actors[def.opp].x = p.oppX;
     if (p.pair) {
       show(def.pair, p.pair);
       if (def.opp) this.state.actors[def.opp].hidden = true;

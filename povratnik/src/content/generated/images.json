@@ -485,6 +485,18 @@
   "source": "ancona-v5/first-neck.png",
   "w": 128
  },
+ "fx_rain": {
+  "file": "props/fx_rain.webp",
+  "h": 256,
+  "source": "fx/fx_rain.webp",
+  "w": 256
+ },
+ "fx_water": {
+  "file": "props/fx_water.webp",
+  "h": 64,
+  "source": "fx/fx_water.webp",
+  "w": 256
+ },
  "intro_akt2": {
   "file": "screens/intro_akt2.webp",
   "h": 600,
@@ -587,6 +599,15 @@
   "x": 638,
   "y": 209
  },
+ "occ_stube_tisch": {
+  "derived": "occluder cut along a traced outline",
+  "file": "props/occ_stube_tisch.webp",
+  "h": 90,
+  "source": "bg/bg_gaststube_clean.webp",
+  "w": 559,
+  "x": 249,
+  "y": 278
+ },
  "occ_weide_wall": {
   "derived": "occluder cut along a traced outline",
   "file": "props/occ_weide_wall.webp",
@@ -644,11 +665,29 @@
   "source": "puzzles-v6/props-states.png",
   "w": 198
  },
+ "prop_cards": {
+  "file": "props/prop_cards.webp",
+  "h": 88,
+  "source": "props/prop_playing_cards.webp",
+  "w": 360
+ },
  "prop_cheese": {
   "file": "props/prop_cheese.webp",
   "h": 56,
   "source": "props/prop_cheese.webp",
   "w": 80
+ },
+ "prop_coat_wet": {
+  "file": "props/prop_coat_wet.webp",
+  "h": 246,
+  "source": "props/prop_coats7.webp",
+  "w": 86
+ },
+ "prop_coats6": {
+  "file": "props/prop_coats6.webp",
+  "h": 247,
+  "source": "props/prop_coats7.webp",
+  "w": 546
  },
  "prop_counting_stall": {
   "file": "props/prop_counting_stall.webp",
@@ -707,6 +746,12 @@
   "h": 216,
   "source": "props/prop_herd_return.webp",
   "w": 492
+ },
+ "prop_hof_body": {
+  "file": "props/prop_hof_body.webp",
+  "h": 212,
+  "source": "combat/hof_body.webp",
+  "w": 528
  },
  "prop_juniper": {
   "file": "props/prop_juniper.webp",
@@ -785,6 +830,24 @@
   "h": 64,
   "source": "props/prop_sarajevo_notes.webp",
   "w": 256
+ },
+ "prop_pfuetze": {
+  "file": "props/prop_pfuetze.webp",
+  "h": 64,
+  "source": "fx/fx_water.webp",
+  "w": 256
+ },
+ "prop_plate_empty": {
+  "file": "props/prop_plate_empty.webp",
+  "h": 76,
+  "source": "props/prop_plate_empty.webp",
+  "w": 260
+ },
+ "prop_plate_full": {
+  "file": "props/prop_plate_full.webp",
+  "h": 76,
+  "source": "props/prop_plate_full.webp",
+  "w": 260
  },
  "prop_querbalken": {
   "file": "props/prop_querbalken.webp",
@@ -993,6 +1056,12 @@
   "h": 85,
   "source": "elf-tage/prop_tuch_krug_brot.png",
   "w": 150
+ },
+ "prop_watchers": {
+  "file": "props/prop_watchers.webp",
+  "h": 380,
+  "source": "props/prop_watchers.webp",
+  "w": 340
  },
  "prop_wetzstein": {
   "file": "props/prop_wetzstein.webp",

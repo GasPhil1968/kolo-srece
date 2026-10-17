@@ -1,58 +1,65 @@
 {
-  "generatedAt": "2026-10-17T02:23:54.513Z",
-  "runs": 700,
-  "passed": 700,
+  "generatedAt": "2026-10-17T02:48:19.193Z",
+  "runs": 800,
+  "passed": 800,
   "failed": 0,
-  "seconds": 5.359,
+  "seconds": 5.916,
   "byChapter": {
     "sarajevo": {
       "runs": 100,
       "ok": 100,
-      "warmSteps": 973,
-      "randomSteps": 3931,
-      "saveLoads": 182
+      "warmSteps": 983,
+      "randomSteps": 4366,
+      "saveLoads": 190
     },
     "weide": {
       "runs": 100,
       "ok": 100,
-      "warmSteps": 917,
-      "randomSteps": 4481,
-      "saveLoads": 266
+      "warmSteps": 1083,
+      "randomSteps": 3471,
+      "saveLoads": 174
     },
     "dorf": {
       "runs": 100,
       "ok": 100,
-      "warmSteps": 783,
-      "randomSteps": 3409,
-      "saveLoads": 190
+      "warmSteps": 758,
+      "randomSteps": 3249,
+      "saveLoads": 188
     },
     "povratnik": {
       "runs": 100,
       "ok": 100,
-      "warmSteps": 823,
-      "randomSteps": 2606,
-      "saveLoads": 167
+      "warmSteps": 753,
+      "randomSteps": 2861,
+      "saveLoads": 181
     },
     "elftage": {
       "runs": 100,
       "ok": 100,
-      "warmSteps": 1570,
-      "randomSteps": 6143,
-      "saveLoads": 325
+      "warmSteps": 1854,
+      "randomSteps": 6697,
+      "saveLoads": 380
     },
     "zaesur": {
       "runs": 100,
       "ok": 100,
-      "warmSteps": 527,
-      "randomSteps": 2828,
-      "saveLoads": 150
+      "warmSteps": 466,
+      "randomSteps": 3360,
+      "saveLoads": 142
     },
     "ancona": {
       "runs": 100,
       "ok": 100,
-      "warmSteps": 1304,
-      "randomSteps": 3422,
-      "saveLoads": 206
+      "warmSteps": 1310,
+      "randomSteps": 3810,
+      "saveLoads": 231
+    },
+    "herberge": {
+      "runs": 100,
+      "ok": 100,
+      "warmSteps": 743,
+      "randomSteps": 3210,
+      "saveLoads": 220
     }
   },
   "failures": []

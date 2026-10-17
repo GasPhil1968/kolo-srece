@@ -1,0 +1,76 @@
+== Die Herberge – An der Straße nach Mailand, November 1512 / Fünf Jahre nach Ancona. / Ein Licht am Weg. Der Regen bleibt vor der Tür. ==
+  (Mijo war wegen des Regens dort und aus keinem anderen Grund.)
+  (Der Raum war niedrig und voll und roch nach nassen Mänteln.)
+  MIJO: Ein Teller, ein Feuer, ein Dach. Morgen weiter nach Norden.
+> use teller
+  MIJO: Ich setze mich und fange an zu essen.
+  [cine_hof_b: Er zog den Handschuh aus. / Und sah zur Tür.]
+  (In dem Moment, in dem der Wirt ihm den Teller hinstellte, kam das Ziehen.)
+  MIJO: Ein Druck hinter den Augen. Ein Ziehen in den Zähnen.
+  MIJO: Sehr nah. Hier im Raum oder gleich dahinter.
+  (Das Ziehen sagt einem nicht, wer da ist. Es sagt nur, dass jemand da ist.)
+> look fuhrleute
+  MIJO: Fuhrleute. Vier spielen Karten, zwei schauen zu.
+  MIJO: Sie streiten über jeden Stich, als hätten sie seit gestern nichts anderes getan. Haben sie wohl auch nicht.
+> look nass
+  MIJO: Ein siebter Mantel, an der Tür. Nass bis zum Kragen.
+  MIJO: Darunter steht eine Pfütze. Wer immer ihn aufgehängt hat, kam eben erst aus dem Regen.
+  MIJO: Sechs Fuhrleute, seit gestern hier. Sechs trockene Mäntel am Balken.
+  MIJO: Der nasse gehört keinem von ihnen. Er ist hereingekommen, hat ihn aufgehängt und ist wieder hinaus. Ohne Mantel, in den Regen.
+  MIJO: Damit ich ihn sehe.
+  (Das Ziehen sagt einem nicht, wer da ist. Er wusste es trotzdem.)
+  MIJO: Alessandro.
+> go tuer
+  (Er stand auf, ließ den Teller stehen und ging hinaus.)
+-> hg_hof (tuer)
+  (Der Hof lag im Regen. In der Mitte stand Alessandro, ohne Mantel, die Klinge gesenkt.)
+  ALESSANDRO: Du bist spät.
+  MIJO: Ich bin nicht deinetwegen hier. Es regnet.
+  ALESSANDRO: Es regnet seit fünf Jahren, wenn man dich so hört.
+  ? „Kurz genug.“ | Warum ich? | (Nichts sagen.)
+> choose warum
+  MIJO: Warum ich?
+  ALESSANDRO: Weil du der Einzige warst, den er nicht kannte. Dreihundert Jahre Fechter, und dann einer von einer Weide.
+  MIJO: Fünf Jahre habe ich überlegt, was ich sage, wenn ich hier stehe.
+  ALESSANDRO: Und?
+  MIJO: Es fällt mir keiner davon ein.
+  ALESSANDRO: Gut. Dann fangen wir an.
+  (Er nahm den Mantel ab und legte ihn über das Treppengeländer.)
+  [Er hebt die Klinge mit beiden Händen über den Kopf. So hat er es mir gezeigt: von oben, mit dem ganzen Gewicht.]
+> combat hoch
+  [Abgefangen. Und er steht schon links, bevor ich mich bewege. Den halben Schritt hat er mir eingeprügelt. Er wartet darauf.]
+  [Er tritt vor, die Spitze tief, auf Höhe meiner Knie.]
+> combat tief
+  [Tief abgefangen. Die Rechte führt. Die Linke liegt am Griff und tut nichts.]
+  [Er zieht die Schulter ein. Kein Hieb – ein Körperstoß, das ganze Gewicht nach vorn.]
+> combat weg
+  [Zur Seite. Er rutscht auf den nassen Steinen. Wer hier das Gewicht verliert, steht nicht wieder auf.]
+  [Wieder von oben. Wie vorhin. Wie vor fünf Jahren, jeden zweiten Tag.]
+> combat binden
+  [Ich pariere und lasse nicht los. Klinge an Klinge. Seine Rechte ist gebunden.]
+  [Die Klingen hängen aneinander. Meine Linke ist frei. Sein Kragen ist eine Handbreit davor.]
+> combat kragen
+  [Ich fasse den Kragen seines Wamses. Das hat er mir nie gezeigt.]
+  [Er drückt. Er ist schwerer als ich, und er stemmt sich gegen mich.]
+> combat drehen
+  [Nicht dagegen. Mit ihm. Er kommt über meine Hüfte wie die Böcke auf der Weide und liegt im Schlamm.]
+  (Alessandro lag im Schlamm zwischen den Steinen. Der Regen lief ihm übers Gesicht.)
+  ALESSANDRO: Wo hast du das gelernt.
+  MIJO: Zu Hause.
+  ALESSANDRO: Das hast du mir in vier Jahren nie gezeigt.
+  MIJO: Du hast nie gefragt.
+  (Im Schlamm liegend lachte er.)
+  ALESSANDRO: Gut. Steh auf und mach es richtig. Nicht so. Nicht am Boden wie ein Hund.
+  (Er kam auf die Knie und hob den Kopf.)
+  ALESSANDRO: Ich habe dir nichts beigebracht, was du nicht heute brauchst.
+  (Nichts sagte er. Er schlug zweimal.)
+  (Dann war nur noch der Regen.)
+  (Es kam über die Steine, aus dem Wasser zwischen ihnen, und es kannte ihn.)
+  (Die Laternen an den Wänden zersprangen, eine nach der anderen.)
+  (Vier Jahre jeden zweiten Tag. Jeder Hieb, den er ihm gezeigt hatte, und jeder, den er ihm nicht gezeigt hatte.)
+  (Vier Jahre lang hatte er jeden Hieb von außen gesehen. Jetzt kannte er ihn von innen.)
+  MIJO: Es geht nicht weg.
+  (Nach einer Weile stand er auf und holte seinen Mantel.)
+> go tor
+  (Er ging durch das Tor auf die Straße, nach Norden, und sah sich nicht um.)
+== Ende des Kapitels ==

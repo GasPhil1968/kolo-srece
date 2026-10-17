@@ -10,11 +10,14 @@ export interface CombatAction {
   label: string;
 }
 
-/** What the fighters show: a pair figure painted with both men, or one pose per fighter. */
+/** What the fighters show: a pair figure painted with both men, or one pose per fighter. A fighter
+ * can also take a new place on the ground line (closing in for a lunge or a bind). */
 export interface DuelPose {
   pair?: string;
   pc?: string;
   opp?: string;
+  pcX?: number;
+  oppX?: number;
 }
 
 export interface DuelStep {

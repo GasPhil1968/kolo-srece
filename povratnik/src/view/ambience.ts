@@ -1,5 +1,6 @@
 // Ambient effects composed from existing effect sprites: wind-blown dust motes (the visible wind in
-// the Weide), birds crossing the sky. Purely presentational; nothing here touches game state.
+// the Weide), birds crossing the sky, rain (the rain tile scrolled in two depths) and puddles (the
+// ripple strip shimmering). Purely presentational; nothing here touches game state.
 import Phaser from 'phaser';
 import type { Engine } from '../core/engine';
 import type { AmbientDef, RoomDef } from '../core/content';
@@ -21,11 +22,27 @@ interface Bird {
   ph: number;
 }
 
+interface RainSheet {
+  sp: Phaser.GameObjects.TileSprite;
+  vx: number;
+  vy: number;
+  alpha: number;
+}
+
+interface Ripple {
+  a: Phaser.GameObjects.Image;
+  b: Phaser.GameObjects.Image;
+  alpha: number;
+  ph: number;
+}
+
 interface Effect {
   def: AmbientDef;
   area: [number, number, number, number];
   motes: Mote[];
   birds: Bird[];
+  rain: RainSheet[];
+  ripples: Ripple[];
 }
 
 const num = (def: AmbientDef, key: string, fallback: number): number => {
@@ -55,6 +72,8 @@ export class Ambience {
     for (const a of room.ambient ?? []) {
       if (a.fx === 'motes') keys.add('fx_dust_mote');
       if (a.fx === 'birds') keys.add('atlas/bird');
+      if (a.fx === 'rain') keys.add('fx_rain');
+      if (a.fx === 'ripples') keys.add('prop_pfuetze');
     }
     return [...keys];
   }
@@ -64,7 +83,7 @@ export class Ambience {
     const reduced = engine.settings.reducedMotion;
     for (const def of room.ambient ?? []) {
       const area = (def.params?.area as string | undefined)?.split(',').map(Number) as [number, number, number, number] | undefined;
-      const fx: Effect = { def, area: area && area.length === 4 ? area : [def.x, def.y, 400, 100], motes: [], birds: [] };
+      const fx: Effect = { def, area: area && area.length === 4 ? area : [def.x, def.y, 400, 100], motes: [], birds: [], rain: [], ripples: [] };
       const r = rand(def.x * 31 + def.y * 17 + def.fx.length);
       const [ax, ay, aw, ah] = fx.area;
       if (def.fx === 'motes' && this.scene.textures.exists('fx_dust_mote')) {
@@ -96,6 +115,30 @@ export class Ambience {
           fx.birds.push({ sp, x: ax + r() * aw, y: ay + r() * ah, vx: dir * speed * (0.8 + r() * 0.4), ph: r() * 3 });
         }
       }
+      if (def.fx === 'rain' && this.scene.textures.exists('fx_rain')) {
+        // Two sheets of the same rain tile: the far one smaller, fainter and slower.
+        const layers = num(def, 'layers', 2);
+        const slow = reduced ? 0.5 : 1;
+        for (let i = 0; i < layers; i++) {
+          const k = 1 - i * 0.35;
+          const sp = this.scene.add.tileSprite(ax, ay, aw, ah, 'fx_rain').setOrigin(0, 0);
+          sp.setTileScale(num(def, 'scale', 1) * (1 - i * 0.3));
+          sp.setDepth(num(def, 'depth', 46000) - i);
+          sp.tilePositionX = r() * 256;
+          sp.tilePositionY = r() * 256;
+          const alpha = num(def, 'alpha', 0.26) * k;
+          sp.setAlpha(alpha);
+          fx.rain.push({ sp, vx: num(def, 'vx', -110) * k * slow, vy: num(def, 'vy', 560) * k * slow, alpha });
+        }
+      }
+      if (def.fx === 'ripples' && this.scene.textures.exists('prop_pfuetze')) {
+        // Puddles: the ripple strip twice, one mirrored, crossfading.
+        const spots = String(def.params?.spots ?? '').split(';').filter(Boolean).map((q) => q.split(',').map(Number));
+        for (const [x, y, w, h] of spots) {
+          const mk = (flip: boolean) => this.scene.add.image(x, y, 'prop_pfuetze').setOrigin(0, 0).setDisplaySize(w, h).setFlipX(flip).setDepth(y);
+          fx.ripples.push({ a: mk(false), b: mk(true), alpha: num(def, 'alpha', 0.9), ph: r() * 6.28 });
+        }
+      }
       this.effects.push(fx);
     }
   }
@@ -120,6 +163,22 @@ export class Ambience {
         m.sp.setPosition(m.x, m.y + Math.sin(t * 1.7 + m.ph) * 3);
         m.sp.setAlpha(Math.max(0, edge) * num(fx.def, 'alpha', 0.55));
       }
+      for (const sh of fx.rain) {
+        sh.sp.setVisible(on);
+        if (!on) continue;
+        const sc = sh.sp.tileScaleX || 1;
+        sh.sp.tilePositionX -= (sh.vx * dt) / sc;
+        sh.sp.tilePositionY -= (sh.vy * dt) / sc;
+        sh.sp.setAlpha(sh.alpha);
+      }
+      for (const rp of fx.ripples) {
+        rp.a.setVisible(on);
+        rp.b.setVisible(on);
+        if (!on) continue;
+        const w = 0.5 + 0.5 * Math.sin(t * num(fx.def, 'hz', 0.9) * 6.28 + rp.ph);
+        rp.a.setAlpha(rp.alpha * w);
+        rp.b.setAlpha(rp.alpha * (1 - w));
+      }
       for (const b of fx.birds) {
         b.sp.setVisible(on);
         if (!on) continue;
@@ -137,6 +196,11 @@ export class Ambience {
     for (const fx of this.effects) {
       for (const m of fx.motes) m.sp.destroy();
       for (const b of fx.birds) b.sp.destroy();
+      for (const sh of fx.rain) sh.sp.destroy();
+      for (const rp of fx.ripples) {
+        rp.a.destroy();
+        rp.b.destroy();
+      }
     }
     this.effects = [];
   }

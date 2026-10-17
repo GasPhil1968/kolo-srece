@@ -136,3 +136,54 @@ the player is something Mijo already knows: Alessandro's lessons, the pasture, h
   is optional (only after reading).
 - The gate refuses until the blade is read ("Noch nicht. Auf seiner Klinge steht etwas.").
 - End: "Er ging hinaus. Und der andere ging mit ihm."
+
+---------------------------------------------------------------------------------------------------
+## Chapter 8 – Die Herberge (An der Straße nach Mailand, November 1512)
+
+Theme: the teacher knows every move he taught. The inn asks the player to *count*; the yard asks the
+player to stop doing what was taught.
+
+### 8.1 Wer? (inn; observation and inference, no items)
+- Goal: find out who the pull belongs to.
+- Initial state: Mijo at the table by the courtyard door, a plate in front of him; four carters playing
+  cards, two watching; six coats on the rail over their table; a seventh coat, a riding coat with
+  buttoned cuffs, alone on a peg by the courtyard door, a puddle under it.
+- Steps: (1) eat – the pull comes (vignette of Mijo pulling off his glove and looking at the door).
+  (2) Look at the carters: six, playing since yesterday ("als hätten sie seit gestern nichts anderes
+  getan"); the watchers' boots are dry. (3) Look at the coat by the door: soaked to the collar, a puddle
+  under it – someone came in out of the rain just now. The rail (six dry coats) is optional
+  confirmation. (4) Deduction fires as soon as (1)–(3) are known: six carters since yesterday, six dry
+  coats; the wet one belongs to none of them; its owner hung it up and went out again without it – "Damit
+  ich ihn sehe." – "Alessandro."
+- Wrong attempts: the door before eating ("Erst esse ich."), before knowing who ("Ich gehe nicht hinaus,
+  ohne zu wissen, wer."); taking the coat ("Er hat ihn für mich hängen lassen."); talking to the carters
+  (they do not look up).
+- The old lantern gate and the 4/2/1 matching board are gone; the clue that used to be audible ("seit
+  gestern gehört") is now visible (dry coats, dry boots, one dripping coat).
+
+### 8.2 Im Hof: das Gespräch, dann der Kampf
+- The talk completes before anyone draws: Alessandro ("Du bist spät."), one choice ("Kurz genug." /
+  "Warum ich?" / silence), each answered in character, then "Fünf Jahre habe ich überlegt …" – "Gut. Dann
+  fangen wir an." Mijo lays his cloak over the stair rail (the fight art shows him in waistcoat and
+  shirt; he takes the cloak again afterwards).
+- Fight (six steps; the inverse of Ancona): every taught answer is expected. "Kontern" is offered at
+  every step and never works ("Den Gegenstoß hat er mir beigebracht. Er wartet darauf."). Mijo reads
+  and parries: two-handed overhead → hoch; point low, stepping in → tief; shoulder dropped, body charge →
+  ausweichen. Each success shows something about him (he waits where the taught half step goes; his left
+  hand rests idle on the grip; he slips on the wet stones). Then: overhead again → Klinge binden (not
+  parry-and-release; the lesson after a failure repeats the idle left hand); bound blades → Kragen
+  greifen with the free left hand; he pushes, heavier → mit seinem Druck drehen (the pasture: let the
+  bigger one come; hip throw).
+- No loss state; decision time 5 s, growing after failures; unlimited in relaxed mode.
+- Checkpoints `prefight`, `duel`, `after`, `quickening`.
+
+### 8.3 Danach
+- Last words lying in the wet ("Wo hast du das gelernt." – "Zu Hause." – "Das hast du mir in vier Jahren
+  nie gezeigt." – "Du hast nie gefragt."), he asks to die properly, kneels; the execution in the painted
+  pair frames.
+- The second Quickening, distinct from Ancona's: blue arcs come over the wet stones from the body, a
+  storm of arcs rises around Mijo, the rain is driven sideways, the wall lanterns flare and go out (the
+  yard stays darker), boards and a barrel hoop fly; Mijo arches, is engulfed, buckles, kneels on his
+  sword, rises. Reduced-flash mode dims the flashes and the additive arcs.
+- Exit: the gate ("Die Straße nach Mailand. Sie führt weiter, mit mir oder ohne."). Optional looks: his
+  saddled horse ("Er wollte nicht bleiben, egal wie es ausgeht."), the dark windows, the body.

@@ -278,6 +278,25 @@ export const solveAncona: Solver = (sim) => {
   return act('tor', 'go');
 };
 
+export const solveHerberge: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`hg.${n}`];
+  if (e.inputMode() === 'combat' && e.combat) return { k: 'combat', action: e.combat.current.answer };
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    return choose(opts.includes('warum') ? 'warum' : opts[0]);
+  }
+  if (s.room === 'hg_stube') {
+    if (!fl('eaten')) return act('teller', 'use');
+    if (!fl('sahFuhrleute')) return act('fuhrleute', 'look');
+    if (!fl('sahNass')) return act('nass', 'look');
+    return act('tuer', 'go');
+  }
+  if (!fl('risen')) return null;
+  return act('tor', 'go');
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
@@ -286,4 +305,5 @@ export const SOLVERS: Record<string, Solver> = {
   elftage: solveElftage,
   zaesur: solveZaesur,
   ancona: solveAncona,
+  herberge: solveHerberge,
 };

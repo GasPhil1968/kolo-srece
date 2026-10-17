@@ -850,7 +850,7 @@ export const anconaChapter: ChapterDef = {
   card: { image: 'intro_akt2', cine: 'cine_akt2_a', lines: T.card },
   pc: { character: 'mijo1507', name: T.names.mijo, color: C.pc },
   start: { room: 'an_hafen', entry: 'start' },
-  next: null,
+  next: 'herberge',
   journal: T.journal,
   items: [
     { id: 'an_dukaten', name: T.items.dukaten.name, icon: 'dukaten', look: T.items.dukaten.look },

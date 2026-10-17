@@ -8,7 +8,8 @@
 //   dark   – the screen goes (nearly) black while the effect runs.
 //   glow   – an additive light sprite at a point, pulsing.
 //   sprite – an animated figure of an atlas thrown from (x, y) to (x2, y2) on an arc, turning, then
-//            resting there (debris, spray, dust, the likeness over the body, birds leaving).
+//            resting there (debris, spray, dust, the likeness over the body, birds leaving). With
+//            `add` it is drawn additively (painted light: arcs, a storm of discharges).
 // Reduced flash: flashes are reduced to a faint tint, discharges and glows are dimmed and do not pulse.
 // Nothing here changes game state.
 import Phaser from 'phaser';
@@ -93,7 +94,9 @@ export class FxLayer {
         const meta = charMeta(str(p, 'character', ''));
         if (!meta) return [];
         const anim = meta.anims[str(p, 'anim', 'stand')] ?? meta.anims.stand;
-        return [sc.add.sprite(0, 0, meta.atlas, anim.frames[0]).setDepth(num(p, 'depth', num(p, 'y2', num(p, 'y', 400))))];
+        const sp = sc.add.sprite(0, 0, meta.atlas, anim.frames[0]).setDepth(num(p, 'depth', num(p, 'y2', num(p, 'y', 400))));
+        if (p.add) sp.setBlendMode(Phaser.BlendModes.ADD);
+        return [sp];
       }
     }
   }
@@ -194,7 +197,7 @@ export class FxLayer {
         sp.setPosition(x0 + (x1 - x0) * u, y0 + (y1 - y0) * ease - arc * 4 * u * (1 - u));
         sp.setRotation(num(p, 'spin', 0) * u + num(p, 'rot', 0));
         sp.setScale(num(p, 'scale', 1));
-        let alpha = num(p, 'alpha', 1);
+        let alpha = num(p, 'alpha', 1) * (p.add && reduced ? 0.55 : 1);
         const fadeOut = num(p, 'fadeOut', 0);
         if (fadeOut > 0) alpha *= Math.max(0, Math.min(1, (num(p, 'life', 1e9) - tt) / fadeOut));
         sp.setAlpha(alpha);

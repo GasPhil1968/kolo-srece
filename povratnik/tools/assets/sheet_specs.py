@@ -425,6 +425,120 @@ SHEETS = {
         'points': 'ancona-v6/anim_quickening_blitze.frames.json',
         'anims': {'stand': {'frames': [6], 'loop': True}, 'one': {'frames': list(range(12)), 'fps': 9}, 'two': {'frames': list(range(12, 24)), 'fps': 9}},
     },
+    # --- Die Herberge, November 1512 ------------------------------------------------------------
+    # The courtyard fight on two single-fighter sheets (Mijo faces right, Alessandro left), each frame
+    # planted on its measured foot (the old layout's foot positions, scaled from 384 to 256 px cells).
+    'mijo_hof': {
+        'src': 'combat/hof_mijo_sword.webp', 'grid': (4, 3), 'refH': 176, 'clean': False,
+        'anchors': [(109.3, 229.3), (127.7, 229.3), (127.7, 229.3), (116.3, 229.3), (87.3, 229.3), (127.7, 229.3), (112.0, 229.3), (140.7, 229.3), (123.7, 229.3), (111.7, 229.3), (104.3, 229.3), (116.7, 229.3)],
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'guard': {'frames': [0], 'loop': True},
+            'parryHigh': {'frames': [3, 5], 'fps': 7},
+            'parryLow': {'frames': [6], 'loop': True},
+            'dodge': {'frames': [8], 'loop': True},
+            'hurt': {'frames': [7], 'loop': True},
+            'riposte': {'frames': [9, 4], 'fps': 5},
+            'bind': {'frames': [5, 10], 'fps': 5},
+        },
+    },
+    'ale_hof': {
+        'src': 'combat/hof_alessandro_sword.webp', 'grid': (4, 3), 'refH': 176, 'facing': -1, 'clean': False,
+        'anchors': [(150.7, 229.3), (144.0, 229.3), (122.0, 229.3), (127.3, 229.3), (169.0, 229.3), (144.7, 229.3), (138.0, 229.3), (127.0, 229.3), (143.7, 229.3), (154.0, 229.3), (146.3, 229.3), (159.7, 229.3)],
+        'anims': {
+            'stand': {'frames': [6], 'loop': True},
+            'wait': {'frames': [6], 'loop': True},
+            'guard': {'frames': [0], 'loop': True},
+            'highCue': {'frames': [2], 'loop': True},
+            'highHit': {'frames': [3], 'loop': True},
+            'lowCue': {'frames': [9], 'loop': True},
+            'lowHit': {'frames': [4], 'loop': True},
+            'bodyCue': {'frames': [1], 'loop': True},
+            'bodyHit': {'frames': [9], 'loop': True},
+            'blocked': {'frames': [5], 'loop': True},
+            'retreat': {'frames': [8], 'loop': True},
+            'hurt': {'frames': [7], 'loop': True},
+            'bind': {'frames': [10], 'loop': True},
+        },
+    },
+    # The grapple and the execution as pair figures (both men painted in one 384 x 320 cell, Mijo's
+    # foot at (120, 300) in every cell). The painted head of the execution frames is kept: it falls
+    # where the body sheet (prop_hof_body) has it lying.
+    'hof_paar': {
+        'src': 'combat/hof_grapple.webp', 'grid': (4, 2), 'refH': 184, 'anchor': (120, 300), 'clean': False,
+        'extra': {'x': {'src': 'combat/hof_finale.webp', 'grid': (4, 3), 'anchor': (120, 300)}},
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'bind': {'frames': [0], 'loop': True},
+            'collar': {'frames': [1], 'loop': True},
+            'grip': {'frames': [1, 2], 'fps': 2.5},
+            'gripHeld': {'frames': [2], 'loop': True},
+            'throw': {'frames': timed([3, 4, 5, 6, 7], [.38, .44, .52, .45, 1.0], 10), 'fps': 10},
+            'down': {'frames': [7], 'loop': True},
+            'crouch': {'frames': ['x0'], 'loop': True},
+            'up': {'frames': ['x1'], 'loop': True},
+            'kneel': {'frames': ['x2'], 'loop': True},
+            'raise': {'frames': ['x3'], 'loop': True},
+            'blow1': {'frames': timed(['x4', 'x5'], [.32, .45], 10), 'fps': 10},
+            'blow2': {'frames': timed(['x6', 'x7', 'x8'], [.6, .28, .45], 10), 'fps': 10},
+            'fall': {'frames': timed(['x9', 'x10'], [.45, .65], 10), 'fps': 10},
+            'after': {'frames': ['x11'], 'loop': True},
+        },
+    },
+    # The second Quickening: Mijo with the arcs painted on him; head bowed, looking up, opening, the
+    # arcs, arching, engulfed, buckling, hunched, kneeling on the sword, rising, standing.
+    'mijo_hofq': {
+        'src': 'combat/hof_quickening.webp', 'grid': (4, 3), 'refH': 228, 'anchor': (128, 244), 'clean': False,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'look': {'frames': [0, 1], 'fps': 1.4},
+            'open': {'frames': [1, 2], 'fps': 1.6},
+            'arcs': {'frames': [3, 4, 5], 'fps': 1.5},
+            'engulfed': {'frames': [5, 6, 7, 6], 'fps': 5, 'loop': True},
+            'buckle': {'frames': [7, 8], 'fps': 1.5},
+            'kneel': {'frames': [9], 'loop': True},
+            'rise': {'frames': [10, 11], 'fps': 1.2},
+            'standDone': {'frames': [11], 'loop': True},
+        },
+    },
+    # Blue discharges of the courtyard (ground spark, tendrils, the arc that travels over the stones, a
+    # tall bolt, a burst, a branch, a small burst, residual sparks) and the storm of arcs.
+    'hof_fx': {
+        'src': 'combat/hof_fx.webp', 'grid': (4, 2), 'refH': 256, 'anchor': 'bottom', 'anchor_x': 128, 'clean': False, 'defringe': False,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'travel': {'frames': [0, 1, 2], 'fps': 8, 'loop': True},
+            'bolt': {'frames': [3, 5], 'fps': 7, 'loop': True},
+            'burst': {'frames': [4, 6, 4], 'fps': 6, 'loop': True},
+            'residual': {'frames': [6, 7], 'fps': 4},
+        },
+    },
+    'hof_storm': {
+        'src': 'combat/hof_storm_arcs.webp', 'grid': (4, 2), 'refH': 256, 'anchor': 'bottom', 'anchor_x': 192, 'clean': False, 'defringe': False,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'grow': {'frames': [0, 1, 2, 3, 4], 'fps': 2.2},
+            'peak': {'frames': [4, 5, 4, 3], 'fps': 3, 'loop': True},
+            'fade': {'frames': [5, 6, 7], 'fps': 2},
+        },
+    },
+    # Four card players seen over the table (upper bodies): cards held, looking down, a card laid.
+    'carter1': {
+        'src': 'sprites/inn_carter_01.webp', 'grid': (2, 2), 'refH': 192, 'anchor': 'bottom', 'anchor_x': 96,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'play': {'frames': timed([0, 1, 0, 3, 2, 0], [4.2, 1.2, 2.6, 1.4, 0.9, 2.1], 10), 'fps': 10, 'loop': True}},
+    },
+    'carter2': {
+        'src': 'sprites/inn_carter_02.webp', 'grid': (2, 2), 'refH': 192, 'anchor': 'bottom', 'anchor_x': 96,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'play': {'frames': timed([0, 1, 0, 3, 2, 0], [3.1, 1.6, 3.4, 1.0, 0.8, 2.6], 10), 'fps': 10, 'loop': True}},
+    },
+    'carter3': {
+        'src': 'sprites/inn_carter_03.webp', 'grid': (2, 2), 'refH': 192, 'anchor': 'bottom', 'anchor_x': 96,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'play': {'frames': timed([0, 1, 0, 3, 2, 0], [5.0, 1.1, 2.2, 1.8, 0.9, 1.4], 10), 'fps': 10, 'loop': True}},
+    },
+    'carter4': {
+        'src': 'sprites/inn_carter_04.webp', 'grid': (2, 2), 'refH': 192, 'anchor': 'bottom', 'anchor_x': 96,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'play': {'frames': timed([0, 1, 0, 3, 2, 0], [2.6, 1.4, 3.9, 1.2, 0.8, 3.0], 10), 'fps': 10, 'loop': True}},
+    },
 }
 
 PROPS = {
@@ -502,6 +616,21 @@ PROPS = {
     'fx_neck': 'ancona-v5/first-neck.png',
     # The memory of Rimini as Nikephoros saw it: the candle-lit table and the two men's hands, no faces.
     'mem_rimini': {'src': 'sprites/q_rimini.webp', 'crop': [380, 214, 300, 186]},
+    # Herberge 1512
+    # The seven coats split: six on the rail over the table (rail and the seventh peg kept), and the
+    # seventh, a riding coat with buttoned cuffs, on its own (it hangs wet by the courtyard door).
+    'prop_coats6': {'src': 'props/prop_coats7.webp', 'poly': [[0, 0], [840, 0], [840, 49], [613, 49], [613, 290], [0, 290]]},
+    'prop_coat_wet': {'clean': True, 'src': 'props/prop_coats7.webp', 'mul': [0.8, 0.84, 0.92],
+                      'poly': [[640, 18], [662, 18], [662, 49], [700, 49], [700, 270], [612, 270], [612, 49], [640, 49]]},
+    # The puddle under it: the ripple strip of fx_water, darkened and made denser.
+    'prop_pfuetze': {'src': 'fx/fx_water.webp', 'mul': [0.35, 0.45, 0.6], 'gain': 2.5},
+    'prop_watchers': 'props/prop_watchers.webp',
+    'prop_plate_full': 'props/prop_plate_full.webp',
+    'prop_plate_empty': 'props/prop_plate_empty.webp',
+    'prop_cards': 'props/prop_playing_cards.webp',
+    'prop_hof_body': 'combat/hof_body.webp',
+    'fx_rain': 'fx/fx_rain.webp',
+    'fx_water': 'fx/fx_water.webp',
 }
 
 ICONS = {
