@@ -268,20 +268,18 @@ export class Menus {
   }
 
   openChapters(): void {
-    const reached = new Set(this.reached());
+    // Every chapter can be started directly; a chapter starts from its own beginning.
     const p = el('div', { class: 'panel', style: 'width:620px' });
     p.append(el('h2', { text: UI.chapters.heading }));
     this.engine.content.order.forEach((id, i) => {
       const ch = this.engine.content.chapters.get(id)!;
-      const ok = reached.has(id) || i === 0;
       const row = el('div', { class: 'row' });
-      row.append(el('div', {}, [`${i + 1}. ${ch.title}`, el('div', { class: 'note', text: ok ? ch.dateline : UI.chapters.locked })]));
+      row.append(el('div', {}, [`${i + 1}. ${ch.title}`, el('div', { class: 'note', text: ch.dateline })]));
       const b = button(UI.chapters.start, () => {
         this.leaveTitle();
         this.engine.newChapter(id);
         this.ui.autosave();
       }, 'btn small', { 'data-testid': `chapter-${id}` });
-      b.disabled = !ok;
       row.append(b);
       p.append(row);
     });

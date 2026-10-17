@@ -112,7 +112,6 @@ export const UI = {
   },
   chapters: {
     heading: 'Kapitel wählen',
-    locked: 'noch nicht erreicht',
     note: 'Ein Kapitel beginnt von vorn. Dein laufendes Spiel bleibt in seinen Spielständen erhalten.',
     start: 'Beginnen',
   },
