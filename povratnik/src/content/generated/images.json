@@ -743,6 +743,12 @@
   "source": "props/prop_fensterplane.webp",
   "w": 62
  },
+ "prop_field_flask": {
+  "file": "props/prop_field_flask.webp",
+  "h": 98,
+  "source": "props/prop_field_flask.webp",
+  "w": 58
+ },
  "prop_folder_empty": {
   "file": "props/prop_folder_empty.webp",
   "h": 76,
@@ -912,6 +918,18 @@
   "h": 64,
   "source": "props/prop_sarajevo_notes.webp",
   "w": 256
+ },
+ "prop_oldman_down": {
+  "file": "props/prop_oldman_down.webp",
+  "h": 214,
+  "source": "props/prop_oldman_bottle_down.webp",
+  "w": 134
+ },
+ "prop_oldman_up": {
+  "file": "props/prop_oldman_up.webp",
+  "h": 214,
+  "source": "props/prop_oldman_bottle_up.webp",
+  "w": 134
  },
  "prop_pfuetze": {
   "file": "props/prop_pfuetze.webp",
@@ -1180,6 +1198,12 @@
   "h": 111,
   "source": "elf-tage-v7/raufe-zustaende.png",
   "w": 165
+ },
+ "prop_window_cloth": {
+  "file": "props/prop_window_cloth.webp",
+  "h": 108,
+  "source": "props/prop_window_cloth.webp",
+  "w": 86
  },
  "prop_zeitung": {
   "file": "props/prop_zeitung.webp",

@@ -359,6 +359,32 @@ export const solveLager: Solver = (sim) => {
   return go(sim, 'lg_lager') ?? act('actor:lg_zeman', 'talk');
 };
 
+export const solveHochzeit: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`hz.${n}`];
+  const inv = (i: string) => s.inventory.includes(i);
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const id of ['habe', 'hochzeit', 'gaeste', 'gruss']) if (opts.includes(id)) return choose(id);
+    if (opts.includes('glas') && !fl('glas')) return choose('glas');
+    if (opts.includes('keiner') && fl('gaeste') && !fl('plan')) return choose('keiner');
+    return choose(opts.includes('__bye') ? '__bye' : opts[0]);
+  }
+  if (s.room === 'hz_kamm') {
+    if (fl('befehl')) return act('weg', 'go');
+    if (!fl('met') || (!fl('glas') && fl('hochzeit'))) return act('actor:hz_hm', 'talk');
+    if (!fl('hochzeit') || !fl('gaeste')) return act('dorf', 'look');
+    if (!inv('feldflasche')) return act('flasche', 'take');
+    return act('actor:hz_hm', 'talk');
+  }
+  if (s.room === 'hz_gasse') {
+    if (!fl('gruss')) return use('feldflasche', 'alter');
+    return act('ende', 'go');
+  }
+  return null;
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
@@ -370,4 +396,5 @@ export const SOLVERS: Record<string, Solver> = {
   herberge: solveHerberge,
   kolonne: solveKolonne,
   lager: solveLager,
+  hochzeit: solveHochzeit,
 };

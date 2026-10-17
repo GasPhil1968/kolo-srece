@@ -11,6 +11,7 @@ import { anconaChapter, anconaDuel } from './c07_ancona';
 import { herbergeChapter, herbergeDuel } from './c08_herberge';
 import { kolonneChapter } from './c09_kolonne';
 import { lagerChapter } from './c10_lager';
+import { hochzeitChapter } from './c11_hochzeit';
 
-export const CHAPTERS: ChapterDef[] = [sarajevo, weideChapter, dorfChapter, povratnikChapter, elftageChapter, zaesurChapter, anconaChapter, herbergeChapter, kolonneChapter, lagerChapter];
+export const CHAPTERS: ChapterDef[] = [sarajevo, weideChapter, dorfChapter, povratnikChapter, elftageChapter, zaesurChapter, anconaChapter, herbergeChapter, kolonneChapter, lagerChapter, hochzeitChapter];
 export const COMBATS: CombatDef[] = [anconaDuel, herbergeDuel];

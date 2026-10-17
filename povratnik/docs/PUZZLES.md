@@ -261,3 +261,23 @@ is one inference across both rooms, carried by Zeman's question "what is wrong w
 - Rehberger (optional): notes everything under Landeskunde, including that Mijo's gunshot "heals fast"
   (`ko.bandaged`), and reports the farmer's fate according to `ko.protocolCurse` (court-martial in
   Travnik after the literal translation, released after the content translation).
+
+## Chapter 11 – Vor dem Dorf (20 September 1878)
+
+Two rooms: the ridge above the village, the lane during the march-through. The old game's central
+clue was a wedding drum that had to be heard; the rebuild shows it instead.
+
+- The captain wants bayonets and the double through a village that shot at the company yesterday.
+- Observations: (1) the village itself: white linen from house to house, garlands, lights in the
+  windows in daylight – "Heute ist Hochzeit", but too far to count people. (2) Ask the captain for his
+  field glass, look again: a close-up of the guests in good clothes and their saddled horses under
+  festive blankets – half of them from elsewhere; guests are sacred. (3) The train wagon's field flask.
+- The argument ("Heute schießt da unten keiner") offers only what Mijo has seen: "Ich habe es im
+  Gefühl" and "Gestern war gestern" are refused; "Hochzeit" alone is not enough; with the guests the
+  captain asks for a plan. "Laufschritt, Bajonett" and "außen herum durch den Wald" are refused with
+  reasons; "Durchziehen, Gewehr über, Abstand, und wer grüßt, wird zurückgegrüßt" is accepted – "Womit?"
+  – the flask (if Mijo has none yet, he says he will get something, and gives it later).
+- The lane: the company marches through in step, two children run alongside, an old man raises a
+  bottle in his doorway. Using the flask on him plays the toast (the painted pair). The lane's end is
+  refused until the greeting is returned. Ending: "Am nächsten Tag wurde aus demselben Dorf wieder
+  geschossen."

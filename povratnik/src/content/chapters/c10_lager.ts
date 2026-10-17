@@ -255,7 +255,7 @@ export const lagerChapter: ChapterDef = {
   card: { image: 'intro_lager', cine: 'cine_lager_a', lines: T.card },
   pc: { character: 'mijo1878', name: T.names.mijo, color: C.pc },
   start: { room: 'lg_lager', entry: 'start' },
-  next: null,
+  next: 'hochzeit',
   journal: T.journal,
   items: [
     {

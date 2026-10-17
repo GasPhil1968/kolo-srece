@@ -68,6 +68,43 @@ SHEETS = {
         'src': 'fx/fx_steam_cycle.webp', 'grid': (4, 2), 'refH': 128, 'anchor': 'bottom', 'anchor_x': 64, 'defringe': False, 'clean': False,
         'anims': {'stand': {'frames': list(range(8)), 'fps': 6, 'loop': True}},
     },
+    # --- Hochzeit 1878 ---------------------------------------------------------------------------
+    # The captain's acting poses (he faces right, toward the village and Mijo).
+    'hauptmann_hz': {
+        'src': 'wedding-polish/captain-1878.webp', 'grid': (4, 3), 'refH': 218,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True}, 'village': {'frames': [2], 'loop': True}, 'back': {'frames': [3], 'loop': True},
+            'crossed': {'frames': [4], 'loop': True}, 'gesture': {'frames': [5], 'loop': True}, 'hip': {'frames': [6], 'loop': True},
+            'halt': {'frames': [9], 'loop': True}, 'point': {'frames': [10], 'loop': True},
+        },
+    },
+    # A private of the company: waiting poses and an eight-phase march, facing right.
+    'infanterie': {
+        'src': 'wedding-polish/infantry-1878.webp', 'grid': (4, 3), 'refH': 214,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True}, 'look': {'frames': [1], 'loop': True}, 'shift': {'frames': [2], 'loop': True},
+            'salute': {'frames': [3], 'loop': True}, 'walk': {'frames': list(range(4, 12)), 'fps': 8, 'loop': True},
+        },
+    },
+    # Two village children running alongside the column (about two thirds of an adult's height).
+    'kinder_hz': {
+        'src': 'wedding-polish/children-1878.webp', 'grid': (4, 3), 'refH': 262, 'clean': False,
+        'anims': {'walk': {'frames': list(range(8)), 'fps': 9, 'loop': True}, 'stand': {'frames': [11], 'loop': True}, 'wave': {'frames': [9, 10], 'fps': 2, 'loop': True}},
+    },
+    # Mijo and the old man at his door: the field flask raised to the bottle (one pair figure).
+    'toast_hz': {
+        'src': 'wedding-polish/toast-1878.webp', 'grid': (4, 3), 'refH': 216, 'anchor': 'bottom', 'anchor_x': 192, 'clean': False,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'toast': {'frames': timed(range(12), [0.6, 0.5, 0.5, 0.5, 0.5, 0.7, 1.1, 0.8, 0.6, 1.4, 0.6, 1.0], 10), 'fps': 10},
+            'after': {'frames': [11], 'loop': True},
+        },
+    },
+    # The wedding guests and their saddled horses, for the view through the captain's field glass.
+    'gaeste_hz': {
+        'src': 'props/prop_wedding_guests.webp', 'grid': (1, 1), 'refH': 150, 'anchor': 'bottom', 'defringe': False,
+        'anims': {'stand': {'frames': [0], 'loop': True}},
+    },
     'smoke_enge': {
         # The smoke over the burning abatis in the gorge (3 x 2 cells, the column's root at x 200).
         'src': 'polish-v3/enge-smoke.png', 'grid': (3, 2), 'refH': 240, 'anchor': 'bottom', 'anchor_x': 200, 'defringe': False, 'clean': False,
@@ -659,6 +696,11 @@ PROPS = {
     'prop_folder_empty': 'props/prop_folder_empty.webp',
     'prop_folder_papers': 'props/prop_folder_papers.webp',
     'prop_rifles': 'props/prop_rifles.webp',
+    # Hochzeit 1878
+    'prop_oldman_up': 'props/prop_oldman_bottle_up.webp',
+    'prop_oldman_down': 'props/prop_oldman_bottle_down.webp',
+    'prop_window_cloth': 'props/prop_window_cloth.webp',
+    'prop_field_flask': 'props/prop_field_flask.webp',
 }
 
 ICONS = {
@@ -691,4 +733,5 @@ ICONS = {
     'stange': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 15)},
     'formular': {'src': 'puzzles-v6/props-states.png', 'cell': (4, 4, 8)},
     'besitzbogen': {'src': 'puzzles-v6/props-states.png', 'cell': (4, 4, 10)},
+    'feldflasche': {'src': 'props/prop_field_flask.webp'},
 }

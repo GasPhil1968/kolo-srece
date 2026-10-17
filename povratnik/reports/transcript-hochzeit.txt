@@ -1,0 +1,57 @@
+== Vor dem Dorf – Drina-Gebiet, 20. September 1878 / Gestern wurde aus diesem Dorf geschossen. Fünf Verwundete. / Heute muss die Kompanie hindurch. ==
+  (Später Nachmittag. Das Licht kam flach über den Kamm.)
+  MIJO: Gestern hat man von dort unten auf uns geschossen. Heute hängen da unten weiße Tücher.
+> talk actor:hz_hm
+  DER HAUPTMANN: Der Dolmetscher mit dem Streifschuss. Gut, dass Sie da sind.
+  DER HAUPTMANN: Gestern fünf Verwundete aus diesem Dorf. Heute gehen wir durch, und zwar so, dass keiner mehr auf die Idee kommt.
+  DER HAUPTMANN: Bajonett auf, Laufschritt. In zwanzig Minuten sind wir auf der anderen Seite.
+  ? Darf ich Ihr Glas? | Heute schießt da unten keiner. | Herr Hauptmann.
+> choose glas
+  MIJO: Darf ich Ihr Glas?
+  DER HAUPTMANN: Bitte. Sagen Sie mir, was Sie sehen. Ich sehe ein Dorf, aus dem geschossen wurde.
+  (Der Hauptmann gab ihm den Feldstecher.)
+  ? Heute schießt da unten keiner. | Herr Hauptmann.
+> choose __bye
+  MIJO: Herr Hauptmann.
+> look dorf
+  [close-up: gaeste_hz stand]
+  MIJO: Gute Kleider, und zu viele Leute für ein Dorf dieser Größe.
+  MIJO: Am Dorfrand gesattelte Pferde mit Festdecken. Die Hälfte ist von auswärts gekommen.
+  MIJO: Gäste. Und Gäste sind heilig. Wer einen trifft, hat seine eigene Verwandtschaft gegen sich.
+> take flasche
+  MIJO: Die nehme ich mit.
+  MIJO: Hebt unten einer die Flasche, muss hier oben einer zurückheben.
+> talk actor:hz_hm
+  DER HAUPTMANN: Nun, Dolmetscher?
+  ? Heute schießt da unten keiner. | Herr Hauptmann.
+> choose keiner
+  MIJO: Heute schießt da unten keiner.
+  DER HAUPTMANN: Woher wollen Sie das wissen?
+  ? Heute ist Hochzeit. | Ich habe es im Gefühl. | Gestern war gestern.
+> choose hochzeit
+  MIJO: Heute ist Hochzeit.
+  DER HAUPTMANN: Hochzeit. Und gestern war Werktag. Das ist alles?
+  ? Die Hälfte da unten sind Gäste von auswärts. Wer heute schießt, trifft seine eigenen Gäste, und dann hat er morgen ihre ganze Verwandtschaft gegen sich. | Das ist alles.
+> choose gaeste
+  MIJO: Die Hälfte da unten sind Gäste von auswärts. Wer heute schießt, trifft seine eigenen Gäste, und dann hat er morgen ihre ganze Verwandtschaft gegen sich.
+  DER HAUPTMANN: Gäste. Und was schlagen Sie vor?
+  ? Im Laufschritt durch, Bajonett auf. | Außen herum, durch den Wald. | Durchziehen, Gewehr über. Abstand halten. Und wer grüßt, wird zurückgegrüßt.
+> choose gruss
+  MIJO: Durchziehen, Gewehr über. Abstand halten. Und wer grüßt, wird zurückgegrüßt.
+  DER HAUPTMANN: Zurückgegrüßt. Womit? Wir haben keinen Schnaps, wir haben Patronen.
+  MIJO: Damit.
+  DER HAUPTMANN: Gewehr über! Abstand halten! Und es wird zurückgegrüßt. Wer das nicht kann, lächelt.
+  (Es war der seltsamste Befehl, den die Kompanie in diesem Herbst bekam. Sie befolgte ihn.)
+> go weg
+  (Sie zogen durch, Gewehr über, im Schritt.)
+-> hz_gasse (start)
+  (Niemand lief weg. Ein paar Leute traten in ihre Türen.)
+> feldflasche -> alter
+  (Mijo hob die Feldflasche, der alte Mann seine Flasche.)
+  (Sie stießen nicht an. Sie hoben sie nur, einer zum anderen, und tranken.)
+  (Beide lachten.)
+  MIJO: Das ist alles, was nötig war. Zwanzig Minuten und eine gehobene Flasche.
+> go ende
+  (Es dauerte zwanzig Minuten. Als der letzte Wagen draußen war, hingen die Tücher immer noch.)
+  (Am nächsten Tag wurde aus demselben Dorf wieder geschossen.)
+== Ende des Kapitels ==

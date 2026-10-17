@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-17T05:00:34.131Z",
+  "generatedAt": "2026-10-17T05:08:00.581Z",
   "runs": 300,
   "passed": 300,
   "failed": 0,
-  "seconds": 1.061,
+  "seconds": 0.867,
   "byChapter": {
-    "lager": {
+    "hochzeit": {
       "runs": 300,
       "ok": 300,
-      "warmSteps": 2897,
-      "randomSteps": 11622,
-      "saveLoads": 738
+      "warmSteps": 2284,
+      "randomSteps": 10521,
+      "saveLoads": 715
     }
   },
   "failures": []
