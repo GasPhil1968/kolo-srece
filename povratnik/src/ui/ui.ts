@@ -8,6 +8,7 @@ import { imageMeta } from '../content/assets';
 import { button, clear, el } from './dom';
 import { Menus } from './menus';
 import { Saves, SlotId, Store } from '../platform/storage';
+import { assetUrl } from '../platform/assetUrl';
 
 const SCENE_H = 470;
 
@@ -490,10 +491,10 @@ export class GameUI implements SceneHooks {
       this.cardRef = c;
       const idx = this.engine.content.order.indexOf(this.engine.state.chapter);
       const card = el('div', { class: c.kind === 'time' ? 'overlay card time' : 'overlay card', 'data-testid': 'card' });
-      if (c.image) card.append(el('img', { class: 'bg', src: `assets/${imageMeta(c.image)?.file ?? `screens/${c.image}.webp`}`, alt: '' }));
+      if (c.image) card.append(el('img', { class: 'bg', src: assetUrl(imageMeta(c.image)?.file ?? `screens/${c.image}.webp`), alt: '' }));
       card.append(el('div', { class: 'shade' }));
       if (c.cine) {
-        const cine = el('div', { class: 'cine', style: `background-image:url(assets/cine/${c.cine}.webp)` });
+        const cine = el('div', { class: 'cine', style: `background-image:url("${assetUrl(`cine/${c.cine}.webp`)}")` });
         card.append(cine);
       }
       const text = el('div', { class: 'text' });
@@ -536,7 +537,7 @@ export class GameUI implements SceneHooks {
       this.vignetteEl?.remove();
       this.vignetteRef = v;
       const box = el('div', { class: 'overlay vignette', 'data-testid': 'vignette' });
-      box.append(el('div', { class: 'strip', style: `background-image:url(assets/cine/${v.image}.webp)` }));
+      box.append(el('div', { class: 'strip', style: `background-image:url("${assetUrl(`cine/${v.image}.webp`)}")` }));
       box.append(el('div', { class: 'cap', 'data-testid': 'vignette-caption' }));
       box.append(el('div', { class: 'cont', text: UI.card.clickToContinue }));
       box.addEventListener('click', () => this.engine.intent({ k: 'advance' }));
@@ -762,5 +763,5 @@ export class GameUI implements SceneHooks {
 }
 
 export function itemSrc(icon: string): string {
-  return `assets/items/${icon}.webp`;
+  return assetUrl(`items/${icon}.webp`);
 }

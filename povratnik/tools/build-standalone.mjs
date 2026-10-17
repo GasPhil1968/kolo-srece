@@ -1,0 +1,70 @@
+// Builds a standalone game: one index.html that runs by double-click (file://), no server needed.
+// Browsers refuse module scripts, XHR and canvas pixel reads for file:// pages, so this build:
+//  - bundles the game into one classic (IIFE) script, lazy imports included, with the CSS inlined;
+//  - embeds every image as a data: URI and every atlas JSON as an object (scene.ts reads
+//    globalThis.__POV_EMBED__ before it falls back to the URL), so nothing is fetched.
+// Output: standalone/index.html (plus nothing else). Run after the game builds: npm run build:standalone
+import { build } from 'esbuild';
+import { readFile, readdir, writeFile, mkdir } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const assetsDir = path.join(root, 'public/assets');
+const outDir = path.join(root, 'standalone');
+
+async function walk(dir) {
+  const out = [];
+  for (const e of await readdir(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) out.push(...(await walk(p)));
+    else out.push(p);
+  }
+  return out;
+}
+
+const MIME = { '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg' };
+
+const result = await build({
+  entryPoints: [path.join(root, 'src/main.ts')],
+  bundle: true,
+  format: 'iife',
+  minify: true,
+  target: ['es2020'],
+  write: false,
+  outdir: 'out',
+  loader: { '.css': 'css' },
+  // CSS background images are written as /assets/...; they are replaced by embedded data URIs below.
+  external: ['/assets/*'],
+  legalComments: 'none',
+});
+const js = result.outputFiles.find((f) => f.path.endsWith('.js')).text;
+
+const embed = {};
+for (const file of await walk(assetsDir)) {
+  const rel = 'assets/' + path.relative(assetsDir, file).split(path.sep).join('/');
+  const ext = path.extname(file).toLowerCase();
+  if (ext === '.json') embed[rel] = JSON.parse(await readFile(file, 'utf8'));
+  else if (MIME[ext]) embed[rel] = `data:${MIME[ext]};base64,${(await readFile(file)).toString('base64')}`;
+}
+
+const css = (result.outputFiles.find((f) => f.path.endsWith('.css'))?.text ?? '').replace(
+  /url\((['"]?)\/(assets\/[^'")]+)\1\)/g,
+  (m, _q, p) => (embed[p] ? `url(${embed[p]})` : m),
+);
+
+const template = await readFile(path.join(root, 'index.html'), 'utf8');
+const html = template
+  .replace('<script type="module" src="/src/main.ts"></script>', '')
+  .replace('</head>', `<style>${css}</style>\n  </head>`)
+  .replace(
+    '</body>',
+    // Embedded data first, then the game. Escaping "</" keeps the inline script from closing early.
+    `<script>globalThis.__POV_EMBED__=${JSON.stringify(embed).replace(/<\//g, '<\\/')};</script>\n` +
+      `<script>${js.replace(/<\/script/gi, '<\\/script')}</script>\n  </body>`,
+  );
+
+await mkdir(outDir, { recursive: true });
+await writeFile(path.join(outDir, 'index.html'), html);
+const size = (await readFile(path.join(outDir, 'index.html'))).length;
+console.log(`standalone/index.html: ${(size / 1e6).toFixed(1)} MB, ${Object.keys(embed).length} embedded assets`);

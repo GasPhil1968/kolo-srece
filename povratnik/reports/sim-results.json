@@ -1,16 +1,86 @@
 {
-  "generatedAt": "2026-10-17T05:08:00.581Z",
-  "runs": 300,
-  "passed": 300,
+  "generatedAt": "2026-10-17T06:12:09.121Z",
+  "runs": 200,
+  "passed": 200,
   "failed": 0,
-  "seconds": 0.867,
+  "seconds": 1.572,
   "byChapter": {
+    "sarajevo": {
+      "runs": 19,
+      "ok": 19,
+      "warmSteps": 191,
+      "randomSteps": 851,
+      "saveLoads": 33
+    },
+    "weide": {
+      "runs": 19,
+      "ok": 19,
+      "warmSteps": 186,
+      "randomSteps": 888,
+      "saveLoads": 49
+    },
+    "dorf": {
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 154,
+      "randomSteps": 634,
+      "saveLoads": 51
+    },
+    "povratnik": {
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 168,
+      "randomSteps": 343,
+      "saveLoads": 15
+    },
+    "elftage": {
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 385,
+      "randomSteps": 770,
+      "saveLoads": 49
+    },
+    "zaesur": {
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 75,
+      "randomSteps": 810,
+      "saveLoads": 33
+    },
+    "ancona": {
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 184,
+      "randomSteps": 649,
+      "saveLoads": 37
+    },
+    "herberge": {
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 72,
+      "randomSteps": 606,
+      "saveLoads": 47
+    },
+    "kolonne": {
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 272,
+      "randomSteps": 1019,
+      "saveLoads": 51
+    },
+    "lager": {
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 155,
+      "randomSteps": 801,
+      "saveLoads": 48
+    },
     "hochzeit": {
-      "runs": 300,
-      "ok": 300,
-      "warmSteps": 2284,
-      "randomSteps": 10521,
-      "saveLoads": 715
+      "runs": 18,
+      "ok": 18,
+      "warmSteps": 156,
+      "randomSteps": 611,
+      "saveLoads": 39
     }
   },
   "failures": []

@@ -5,6 +5,7 @@ import { button, clear, el } from './dom';
 import type { GameUI } from './ui';
 import { saveSettings, SlotId, SLOT_IDS } from '../platform/storage';
 import { APP_VERSION } from '../version';
+import { assetUrl } from '../platform/assetUrl';
 
 type Layer = { el: HTMLElement; kind: string; onClose?: () => void };
 
@@ -78,7 +79,7 @@ export class Menus {
     this.closeHint();
     this.titleOpen = true;
     const box = el('div', { class: 'overlay title', 'data-testid': 'title' });
-    box.append(el('img', { class: 'logo', src: 'assets/screens/logo.webp', alt: UI.gameTitle }));
+    box.append(el('img', { class: 'logo', src: assetUrl('screens/logo.webp'), alt: UI.gameTitle }));
     box.append(el('div', { class: 'sub', text: UI.subtitle }));
     const menu = el('div', { class: 'menu' });
     const latest = this.ui.saves.latest();

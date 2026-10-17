@@ -14,7 +14,8 @@
     "validate": "tsx tools/validate.ts",
     "e2e": "tsx tests/e2e/run.ts",
     "predev": "node tools/build-phaser.mjs",
-    "prebuild": "node tools/build-phaser.mjs"
+    "prebuild": "node tools/build-phaser.mjs",
+    "build:standalone": "vite build && node tools/build-standalone.mjs"
   },
   "dependencies": {
     "phaser": "3.90.0"

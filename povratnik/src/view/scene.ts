@@ -109,15 +109,21 @@ export class GameScene extends Phaser.Scene {
   /** Queue a texture (image key or atlas key) for loading; returns false if already present. */
   private queueTexture(texKey: string): boolean {
     if (this.textures.exists(texKey) || this.loadingKeys.has(texKey)) return false;
+    // The standalone build (double-click, file://) carries its assets inside the page; see tools/build-standalone.mjs.
+    const embed = (globalThis as { __POV_EMBED__?: Record<string, string | object> }).__POV_EMBED__;
     if (texKey.startsWith('chars/') || texKey.startsWith('atlas/')) {
-      this.load.atlas(texKey, `assets/${texKey}.webp`, `assets/${texKey}.json`);
+      const img = `assets/${texKey}.webp`;
+      const data = `assets/${texKey}.json`;
+      const json = embed ? (embed[data] as unknown as string) : data;
+      this.load.atlas(texKey, embed?.[img] as string | undefined ?? img, json);
     } else {
       const m = imageMeta(texKey);
       if (!m) {
         console.warn(`unknown image ${texKey}`);
         return false;
       }
-      this.load.image(texKey, `assets/${m.file}`);
+      const img = `assets/${m.file}`;
+      this.load.image(texKey, (embed?.[img] as string | undefined) ?? img);
     }
     this.loadingKeys.add(texKey);
     return true;
