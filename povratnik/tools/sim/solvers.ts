@@ -165,9 +165,80 @@ export const solvePovratnik: Solver = (sim) => {
   return act('tuer', 'knock');
 };
 
+export const solveElftage: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`et.${n}`];
+  const num = (n: string) => (typeof s.flags[`et.${n}`] === 'number' ? (s.flags[`et.${n}`] as number) : 0);
+  const has = (i: string) => s.inventory.includes(i);
+  const ph = typeof s.flags['et.phase'] === 'string' ? (s.flags['et.phase'] as string) : 'pre';
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const want of ['wait', 'pray']) if (opts.includes(want)) return choose(want);
+    return pickOption(sim, []);
+  }
+  switch (ph) {
+    case 'pre':
+      return go(sim, 'et_hof') ?? act('stall', 'go');
+    case 'n1':
+      return fl('goats') ? act('bretter', 'look') : act('actor:et_ziegen', 'look');
+    case 'm3': {
+      if (!fl('eaten')) {
+        if (s.room !== 'et_hof') return go(sim, 'et_hof');
+        return fl('clothSeen') ? act('essen', 'take') : act('essen', 'look');
+      }
+      if (!fl('klotzTaken')) return go(sim, 'et_hof') ?? act('klotz', 'take');
+      if (s.room !== 'et_stall') return go(sim, 'et_stall');
+      const r = num('rack');
+      if (!fl('brettTaken')) return act('brett', 'take');
+      if (!fl('seilTaken')) return act('seil', 'take');
+      if (fl('cut') && !fl('handOpenSeen')) return act('self', 'look');
+      if (r === 0) return use('klotz', 'raufe');
+      if (r === 1) return use('brett', 'raufe');
+      if (r === 2) return use('seil', 'pfosten');
+      if (r === 3) return act('stift', 'pull');
+      if (r === 4) return act('raufe', 'lower');
+      if (r === 5) return use('klotz', 'raufe');
+      return null;
+    }
+    case 'e3':
+      return go(sim, 'et_stall') ?? act('self', 'look');
+    case 'p6':
+      return act('platz', 'sit');
+    case 'd6': {
+      if (!has('sense')) return go(sim, 'et_stall') ?? act('sense', 'take');
+      if (s.room !== 'et_feld') return go(sim, 'et_feld');
+      if (fl('uncleGone')) return act('feld', 'look');
+      if (!fl('stoneDown')) return use('sense', 'actor:et_onkel');
+      if (!fl('sharp')) return has('wetzstein') ? use('wetzstein', 'item:sense') : act('stein', 'take');
+      return use('sense', 'feld');
+    }
+    case 'e6':
+      return go(sim, 'et_kirche') ?? act('stufen', 'sit');
+    default: {
+      if (fl('carrying')) {
+        if (s.room === 'et_innen') return act('hinaus', 'go');
+        return go(sim, 'et_kirche') ?? act('stufen', 'lay');
+      }
+      if (s.room === 'et_innen') {
+        if (!fl('beamPushed') || (!fl('clothOn') && has('tuch_nass')) || fl('clothOn')) {
+          if (!fl('crawling')) return act('weg', 'crawl');
+          if (!fl('beamPushed')) return act('balken', 'push');
+          if (!fl('clothOn')) return use('tuch_nass', 'actor:et_junge');
+          return act('actor:et_junge', 'take');
+        }
+        return act('hinaus', 'go');
+      }
+      if (s.room === 'et_gasse') return has('tuch') ? use('tuch', 'eimer') : act('tuer', 'go');
+      return go(sim, 'et_gasse');
+    }
+  }
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
   dorf: solveDorf,
   povratnik: solvePovratnik,
+  elftage: solveElftage,
 };

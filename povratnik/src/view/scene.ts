@@ -267,6 +267,7 @@ export class GameScene extends Phaser.Scene {
     cam.setScroll(sx, sy);
     this.syncLayers(room);
     this.syncActors(room);
+    this.syncInsert();
     const shade = room.shade !== undefined ? dyn(room.shade, s) : 0;
     this.shadeRect.setFillStyle(room.shadeColor ?? 0x0a1028, 1).setAlpha(shade).setVisible(shade > 0.001);
     this.ambience.update(dt, engine);
@@ -295,6 +296,7 @@ export class GameScene extends Phaser.Scene {
       v.setVisible(true);
       v.setAlpha(l.alpha ?? 1);
       v.setFlipX(!!l.flipX);
+      v.setTint(room.layerTint !== undefined && !imgKey.startsWith('occ_') ? dyn(room.layerTint, s) : 0xffffff);
       v.setDepth(layerDepth(l));
       if (l.rect) {
         v.setOrigin(0, 0);
@@ -389,6 +391,82 @@ export class GameScene extends Phaser.Scene {
   private decorViews = new Map<string, Phaser.GameObjects.Sprite>();
   private decorLift = new Map<string, number>();
 
+  // ---------------------------------------------------------------- close-up insert
+
+  private insertFrame: Phaser.GameObjects.Rectangle | null = null;
+  private insertImg: Phaser.GameObjects.Image | null = null;
+  private insertSprite: Phaser.GameObjects.Sprite | null = null;
+  private insertShade: Phaser.GameObjects.Rectangle | null = null;
+  private insertBand: Phaser.GameObjects.Rectangle | null = null;
+  private insertBandEdge: Phaser.GameObjects.Rectangle | null = null;
+  private insertMaskGfx: Phaser.GameObjects.Graphics | null = null;
+  private insertMaskKey = '';
+
+  /** A framed close-up in screen space above the room (below fades and the interface). */
+  private syncInsert(): void {
+    const v = this.engine.insertView;
+    if (!v) {
+      this.insertFrame?.setVisible(false);
+      this.insertImg?.setVisible(false);
+      this.insertShade?.setVisible(false);
+      this.insertBand?.setVisible(false);
+      this.insertBandEdge?.setVisible(false);
+      this.insertSprite?.setVisible(false);
+      return;
+    }
+    const x0 = Math.round((VIEW_W - v.w) / 2);
+    const y0 = Math.round((VIEW_H - v.h) / 2) - 16;
+    if (!this.insertFrame) this.insertFrame = this.add.rectangle(0, 0, 10, 10, 0x000000, 1).setOrigin(0, 0).setScrollFactor(0).setDepth(70000);
+    this.insertFrame.setPosition(x0 - 4, y0 - 4).setSize(v.w + 8, v.h + 8).setStrokeStyle(2, 0xb59a6a, 0.9).setVisible(true);
+    if (v.bg && v.crop && this.textures.exists(v.bg)) {
+      const [cx, cy, cw, ch] = v.crop;
+      const zx = v.w / cw;
+      const zy = v.h / ch;
+      if (!this.insertImg) this.insertImg = this.add.image(0, 0, v.bg).setOrigin(0, 0).setScrollFactor(0).setDepth(70001);
+      if (this.insertImg.texture.key !== v.bg) this.insertImg.setTexture(v.bg);
+      this.insertImg.setCrop(cx, cy, cw, ch).setScale(zx, zy).setPosition(x0 - cx * zx, y0 - cy * zy).setVisible(true);
+    } else {
+      if (v.bg && !this.textures.exists(v.bg)) this.ensure([v.bg]);
+      this.insertImg?.setVisible(false);
+    }
+    if (!this.insertShade) this.insertShade = this.add.rectangle(0, 0, 10, 10, 0x0a1028, 1).setOrigin(0, 0).setScrollFactor(0).setDepth(70001.5);
+    this.insertShade.setPosition(x0, y0).setSize(v.w, v.h).setAlpha(v.shade ?? 0).setVisible((v.shade ?? 0) > 0.001);
+    if (!this.insertBand) {
+      this.insertBand = this.add.rectangle(0, 0, 10, 10, 0x140f0b, 1).setOrigin(0, 0).setScrollFactor(0).setDepth(70003);
+      this.insertBandEdge = this.add.rectangle(0, 0, 10, 2, 0x8a7350, 0.8).setOrigin(0, 0).setScrollFactor(0).setDepth(70003.5);
+    }
+    const band = v.band ?? 0;
+    this.insertBand.setPosition(x0, y0).setSize(v.w, band).setVisible(band > 0);
+    this.insertBandEdge!.setPosition(x0, y0 + band - 1).setSize(v.w, 2).setVisible(band > 0);
+    const sp = v.sprite;
+    const meta = sp ? charMeta(sp.character) : undefined;
+    if (!sp || !meta || !this.textures.exists(meta.atlas)) {
+      if (meta) this.ensure([meta.atlas]);
+      this.insertSprite?.setVisible(false);
+      return;
+    }
+    const am = meta.anims[sp.anim] ?? meta.anims.stand;
+    const raw = Math.floor((this.engine.clock - v.t0) * am.fps + 1e-6);
+    const n = am.frames.length;
+    const frame = am.frames[am.loop ? ((raw % n) + n) % n : Math.min(n - 1, Math.max(0, raw))];
+    if (!this.insertSprite) {
+      this.insertSprite = this.add.sprite(0, 0, meta.atlas, frame).setScrollFactor(0).setDepth(70002);
+      // The figure never spills over the panel's frame.
+      this.insertMaskGfx = this.make.graphics({}, false).setScrollFactor(0);
+      this.insertSprite.setMask(this.insertMaskGfx.createGeometryMask());
+    }
+    if (this.insertSprite.texture.key !== meta.atlas || this.insertSprite.frame.name !== frame) this.insertSprite.setTexture(meta.atlas, frame);
+    const fm = meta.frames[frame];
+    this.insertSprite.setFlipX(!!sp.flip);
+    if (fm) this.insertSprite.setOrigin(sp.flip ? 1 - fm.ax : fm.ax, fm.ay);
+    this.insertSprite.setScale(sp.scale).setPosition(x0 + sp.x, y0 + sp.y).setTint(v.tint ?? 0xffffff).setVisible(true);
+    const key = `${x0},${y0},${v.w},${v.h}`;
+    if (this.insertMaskKey !== key && this.insertMaskGfx) {
+      this.insertMaskKey = key;
+      this.insertMaskGfx.clear().fillStyle(0xffffff, 1).fillRect(x0, y0, v.w, v.h);
+    }
+  }
+
   /** Set frame, anchor, facing, perspective scale and depth of a figure sprite. */
   private applyFigure(
     sp: Phaser.GameObjects.Sprite,
@@ -419,10 +497,10 @@ export class GameScene extends Phaser.Scene {
     }
     const fm = (am.atlas ? meta.extra?.[am.atlas]?.[frameName] : meta.frames[frameName]) ?? meta.frames[frameName];
     if (sp.texture.key !== atlas || sp.frame.name !== frameName) sp.setTexture(atlas, frameName);
-    const flip = facing !== (meta.facing ?? 1);
+    const flip = facing !== (am.facing ?? meta.facing ?? 1);
     sp.setFlipX(flip);
     if (fm) sp.setOrigin(flip ? 1 - fm.ax : fm.ax, fm.ay);
-    const scale = fixedScale ?? (ADULT_H * this.engine.scaleAt(y) * rel) / am.refH;
+    const scale = fixedScale ?? (ADULT_H * this.engine.scaleAt(y, undefined, x) * rel) / am.refH;
     sp.setScale(scale);
     sp.setPosition(x, y);
     sp.setDepth(y);

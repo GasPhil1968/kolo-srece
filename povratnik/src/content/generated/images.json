@@ -584,6 +584,12 @@
   "x": 735,
   "y": 274
  },
+ "prop_balken": {
+  "file": "props/prop_balken.webp",
+  "h": 171,
+  "source": "puzzles-v6/props-states.png",
+  "w": 221
+ },
  "prop_band": {
   "file": "props/prop_band.webp",
   "h": 88,
@@ -595,6 +601,12 @@
   "h": 52,
   "source": "props/prop_bread.webp",
   "w": 90
+ },
+ "prop_brett": {
+  "file": "props/prop_brett.webp",
+  "h": 188,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 370
  },
  "prop_cheese": {
   "file": "props/prop_cheese.webp",
@@ -674,6 +686,18 @@
   "source": "props/prop_kaffeestand.webp",
   "w": 300
  },
+ "prop_klotz": {
+  "file": "props/prop_klotz.webp",
+  "h": 124,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 180
+ },
+ "prop_krug": {
+  "file": "props/prop_krug.webp",
+  "h": 59,
+  "source": "elf-tage/prop_tuch_krug.png",
+  "w": 54
+ },
  "prop_lampe_an": {
   "file": "props/prop_lampe_an.webp",
   "h": 266,
@@ -716,11 +740,71 @@
   "source": "props/prop_radio_aus.webp",
   "w": 176
  },
+ "prop_raufe_0": {
+  "file": "props/prop_raufe_0.webp",
+  "h": 256,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 384
+ },
+ "prop_raufe_1": {
+  "file": "props/prop_raufe_1.webp",
+  "h": 256,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 384
+ },
+ "prop_raufe_2": {
+  "file": "props/prop_raufe_2.webp",
+  "h": 256,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 384
+ },
+ "prop_raufe_3": {
+  "file": "props/prop_raufe_3.webp",
+  "h": 256,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 384
+ },
+ "prop_raufe_4": {
+  "file": "props/prop_raufe_4.webp",
+  "h": 256,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 384
+ },
+ "prop_raufe_5": {
+  "file": "props/prop_raufe_5.webp",
+  "h": 256,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 384
+ },
+ "prop_raufe_7": {
+  "file": "props/prop_raufe_7.webp",
+  "h": 256,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 384
+ },
  "prop_rose": {
   "file": "props/prop_rose.webp",
   "h": 78,
   "source": "props/prop_sarajevo_rose.webp",
   "w": 168
+ },
+ "prop_schwad": {
+  "file": "props/prop_schwad.webp",
+  "h": 133,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 375
+ },
+ "prop_seil": {
+  "file": "props/prop_seil.webp",
+  "h": 173,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 295
+ },
+ "prop_sense": {
+  "file": "props/prop_sense.webp",
+  "h": 210,
+  "source": "elf-tage/prop_sense.png",
+  "w": 104
  },
  "prop_stone_sitters": {
   "file": "props/prop_stone_sitters.webp",
@@ -769,6 +853,24 @@
   "h": 56,
   "source": "props/prop_tasse_voll.webp",
   "w": 94
+ },
+ "prop_tuch_krug": {
+  "file": "props/prop_tuch_krug.webp",
+  "h": 85,
+  "source": "elf-tage/prop_tuch_krug.png",
+  "w": 150
+ },
+ "prop_tuch_krug_brot": {
+  "file": "props/prop_tuch_krug_brot.webp",
+  "h": 85,
+  "source": "elf-tage/prop_tuch_krug_brot.png",
+  "w": 150
+ },
+ "prop_wetzstein": {
+  "file": "props/prop_wetzstein.webp",
+  "h": 111,
+  "source": "elf-tage-v7/raufe-zustaende.png",
+  "w": 165
  },
  "prop_zeitung": {
   "file": "props/prop_zeitung.webp",

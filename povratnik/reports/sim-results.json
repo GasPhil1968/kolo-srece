@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-10-17T01:03:39.414Z",
+  "runs": 500,
+  "passed": 500,
+  "failed": 0,
+  "seconds": 5.112,
+  "byChapter": {
+    "sarajevo": {
+      "runs": 100,
+      "ok": 100,
+      "randomSteps": 7309,
+      "saveLoads": 288
+    },
+    "weide": {
+      "runs": 100,
+      "ok": 100,
+      "randomSteps": 7379,
+      "saveLoads": 411
+    },
+    "dorf": {
+      "runs": 100,
+      "ok": 100,
+      "randomSteps": 7673,
+      "saveLoads": 441
+    },
+    "povratnik": {
+      "runs": 100,
+      "ok": 100,
+      "randomSteps": 6797,
+      "saveLoads": 408
+    },
+    "elftage": {
+      "runs": 100,
+      "ok": 100,
+      "randomSteps": 7643,
+      "saveLoads": 376
+    }
+  },
+  "failures": []
+}

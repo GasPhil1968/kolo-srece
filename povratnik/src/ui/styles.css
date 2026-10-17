@@ -408,6 +408,26 @@ body {
   transform: none;
 }
 
+/* A passage of time inside a chapter: centred, quieter. */
+.card.time .shade {
+  background: #000;
+}
+
+.card.time .text {
+  top: 230px;
+  bottom: auto;
+  text-align: center;
+}
+
+.card.time h1 {
+  font-size: 34px;
+  font-style: italic;
+}
+
+.card.time p {
+  margin: 10px auto;
+}
+
 .card .cine {
   position: absolute;
   right: 40px;

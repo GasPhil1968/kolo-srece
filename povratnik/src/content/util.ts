@@ -19,3 +19,8 @@ export const R = (x: number, y: number, w: number, h: number) => ({ x, y, w, h }
 
 /** Flag name helper per chapter prefix. */
 export const flags = (prefix: string) => (n: string) => `${prefix}.${n}`;
+
+/** Linear perspective through two measured points: an adult is h1 px tall at y1 and h2 px at y2. */
+export function persp2(y1: number, h1: number, y2: number, h2: number): Perspective {
+  return { farY: y1, farScale: h1 / ADULT_H, nearY: y2, nearScale: h2 / ADULT_H };
+}

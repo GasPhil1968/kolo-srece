@@ -80,6 +80,7 @@ export class Ambience {
           sp.setDepth(num(def, 'depth', 45000));
           // Sunlit dust: additive, so the specks read against bright and dark ground alike.
           sp.setBlendMode(Phaser.BlendModes.ADD);
+          if (typeof def.params?.tint === 'number') sp.setTint(def.params.tint);
           fx.motes.push({ sp, x: ax + r() * aw, y: ay + r() * ah, vx: vx * (0.7 + r() * 0.6) * (reduced ? 0.6 : 1), vy: vy * (0.5 + r()), ph: r() * 6.28 });
         }
       }

@@ -23,6 +23,8 @@ export interface AnimMeta {
   atlas?: string;
   /** Ground speed when used as a walking animation (px/s at scale 1). */
   speed?: number;
+  /** Painted direction of this animation when it differs from the character's (1 right, -1 left). */
+  facing?: number;
 }
 
 export interface CharMeta {

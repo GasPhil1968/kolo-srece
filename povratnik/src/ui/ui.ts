@@ -489,7 +489,7 @@ export class GameUI implements SceneHooks {
       this.cardEl?.remove();
       this.cardRef = c;
       const idx = this.engine.content.order.indexOf(this.engine.state.chapter);
-      const card = el('div', { class: 'overlay card', 'data-testid': 'card' });
+      const card = el('div', { class: c.kind === 'time' ? 'overlay card time' : 'overlay card', 'data-testid': 'card' });
       if (c.image) card.append(el('img', { class: 'bg', src: `assets/${imageMeta(c.image)?.file ?? `screens/${c.image}.webp`}`, alt: '' }));
       card.append(el('div', { class: 'shade' }));
       if (c.cine) {
@@ -497,9 +497,9 @@ export class GameUI implements SceneHooks {
         card.append(cine);
       }
       const text = el('div', { class: 'text' });
-      if (idx >= 0) text.append(el('div', { class: 'chap', text: UI.card.chapter(idx + 1) }));
+      if (idx >= 0 && c.kind !== 'time') text.append(el('div', { class: 'chap', text: UI.card.chapter(idx + 1) }));
       text.append(el('h1', { text: c.title }));
-      const [first, ...rest] = c.lines;
+      const [first, ...rest] = c.kind === 'time' ? ['', ...c.lines] : c.lines;
       if (first) text.append(el('div', { class: 'date', text: first }));
       for (const l of rest) text.append(el('p', { text: l }));
       card.append(text, el('div', { class: 'cont', text: UI.card.clickToContinue }));

@@ -3,7 +3,7 @@
 import { clamp, dist, pointInPoly, pointInRect, toPoints, Vec } from './geom';
 import { NavMesh, WalkArea } from './path';
 import { cloneState, emptyState, Facing, FlagValue, GameState, SAVE_VERSION, validateStateShape } from './state';
-import type { ChoiceOption, Cmd, Script, ScriptFn } from './cmd';
+import type { ChoiceOption, Cmd, InsertSpec, Script, ScriptFn } from './cmd';
 import {
   ActorDef,
   ChapterDef,
@@ -78,6 +78,7 @@ export interface CardView {
   lines: string[];
   image?: string;
   cine?: string;
+  kind?: 'time';
   t: number;
   dur: number;
 }
@@ -213,6 +214,8 @@ export class Engine {
   private fadeTarget = 0;
   private fadeSpeed = 2;
   camX = 0;
+  /** Close-up panel shown over the scene (transient presentation, never saved). */
+  insertView: (InsertSpec & { t0: number }) | null = null;
   private camLock: number | null = null;
   private camSpeed = 0;
   shakeT = 0;
@@ -286,9 +289,11 @@ export class Engine {
     return mesh;
   }
 
-  /** Perspective scale for a standard adult standing at y (linear, as a pinhole camera over flat ground). */
-  scaleAt(y: number, room: RoomDef = this.room): number {
+  /** Perspective scale for a standard adult standing at y (linear, as a pinhole camera over flat ground).
+   * With x, raised ground (room.elevation) counts: a figure on a step is scaled for the floor below it. */
+  scaleAt(y: number, room: RoomDef = this.room, x?: number): number {
     const p = room.perspective;
+    if (x !== undefined && room.elevation) y += room.elevation(x, y);
     const t = (y - p.farY) / (p.nearY - p.farY || 1);
     return Math.max(0.05, p.farScale + (p.nearScale - p.farScale) * t);
   }
@@ -515,7 +520,7 @@ export class Engine {
       if (r.anim) r.anim.t += dt;
       if (!r.path.length) continue;
       r.walkT += dt;
-      let budget = (this.instant ? 1e9 : dt) * r.speed * this.scaleAt(a.y);
+      let budget = (this.instant ? 1e9 : dt) * r.speed * this.scaleAt(a.y, this.room, a.x);
       while (budget > 0 && r.path.length) {
         const tgt = r.path[0];
         const d = dist(a, tgt);
@@ -669,6 +674,7 @@ export class Engine {
     this.choiceView = null;
     this.cardView = null;
     this.vignetteView = null;
+    this.insertView = null;
     this.combat = null;
     this.lastCombat = null;
     this.pendingAct = null;
@@ -751,7 +757,14 @@ export class Engine {
     switch (i.k) {
       case 'walk': {
         // A hidden player character (seated in a prop, lying down) does not walk.
-        if (this.state.actors[PC]?.hidden || this.noWalk()) return false;
+        if (this.state.actors[PC]?.hidden) return false;
+        if (this.noWalk()) {
+          // Some rooms explain why (smoke above: crawl).
+          const line = this.room.noWalkSay !== undefined ? dyn(this.room.noWalkSay, this.state) : null;
+          if (!line) return false;
+          this.startScript('noWalk', (c) => c.lines(PC, line));
+          return true;
+        }
         this.pendingAct = null;
         this.startWalk(PC, { x: i.x, y: i.y });
         return true;
@@ -799,7 +812,7 @@ export class Engine {
       if (!a || a.room !== this.state.room || a.hidden || !def) return undefined;
       if (def.talkSpot) return dyn(def.talkSpot, this.state);
       const pc = this.state.actors[PC];
-      const off = (def.talkOffset ?? 80) * this.scaleAt(a.y);
+      const off = (def.talkOffset ?? 80) * this.scaleAt(a.y, this.room, a.x);
       const side = pc.x <= a.x ? -1 : 1;
       const nav = this.navFor(this.room);
       let spot = { x: a.x + side * off, y: a.y + 2 };
@@ -962,6 +975,7 @@ export class Engine {
     this.choiceView = null;
     this.cardView = null;
     this.vignetteView = null;
+    this.insertView = null;
     this.combat = null;
     this.transition = false;
     this.skipping = false;
@@ -976,6 +990,8 @@ export class Engine {
     this.runner = null;
     this.skipping = false;
     this.speech = null;
+    // A close-up belongs to the script that opened it.
+    this.insertView = null;
     this.emit({ k: 'script', id: r.id, phase: 'end' });
     if (this.queue.length) {
       const n = this.queue.shift()!;
@@ -1134,6 +1150,12 @@ export class Engine {
       }
       case 'room':
         return this.beginRoomChange(cmd);
+      case 'insert': {
+        const prev = this.insertView;
+        const sameAnim = prev && cmd.spec && prev.sprite?.character === cmd.spec.sprite?.character && prev.sprite?.anim === cmd.spec.sprite?.anim;
+        this.insertView = cmd.spec ? { ...cmd.spec, t0: sameAnim ? prev!.t0 : this.clock } : null;
+        return { cmd, update: () => true };
+      }
       case 'camera': {
         this.camLock = cmd.x;
         this.camSpeed = cmd.t > 0 ? 1 / cmd.t : 1000;
@@ -1160,7 +1182,7 @@ export class Engine {
       }
       case 'card': {
         const dur = cmd.t ?? Math.min(14, 4 + cmd.lines.join(' ').length * 0.045);
-        const view: CardView = { title: cmd.title, lines: cmd.lines, image: cmd.image, cine: cmd.cine, t: 0, dur };
+        const view: CardView = { title: cmd.title, lines: cmd.lines, image: cmd.image, cine: cmd.cine, kind: cmd.kind, t: 0, dur };
         this.cardView = view;
         return {
           cmd,

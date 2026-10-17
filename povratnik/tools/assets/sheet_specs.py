@@ -221,6 +221,97 @@ SHEETS = {
         'src': 'povratnik1476/water.png', 'grid': (4, 2), 'refH': 123, 'anchor': (0, 0), 'clean': False, 'defringe': False,
         'anims': {'stand': {'frames': list(range(8)), 'fps': 10, 'loop': True}},
     },
+    # --- Elf Tage, August 1476 ------------------------------------------------------------------
+    # Mijo, same man as in Povratnik; every Elf Tage sheet is normalised to a 230 px standing figure
+    # (the v7 work sheet to 245 px, drawn at 0.94 in the old build). Anim facing overrides keep the
+    # painted direction where a sheet mixes directions.
+    'mijo_et': {
+        'src': 'elf-tage/mijo_emotions.png', 'grid': (4, 4), 'refH': 230, 'anchor': (140, 243), 'walkSpeed': 110,
+        'extra': {
+            'm': {'src': 'elf-tage/mijo_motion.png', 'grid': (4, 4), 'anchor': (180, 273)},
+            'r': {'src': 'elf-tage/mijo_rescue.png', 'grid': (4, 4), 'anchor': (250, 254)},
+            'k': {'src': 'elf-tage-v5/anim_mijo_kriechen.png', 'grid': (4, 3), 'anchor': (180, 274)},
+            'v': {'src': 'elf-tage-v7/anim_mijo.png', 'grid': (4, 6), 'anchor': (150, 301)},
+        },
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'sit': {'frames': [1, 2, 3], 'fps': 4},
+            'sitRest': {'frames': [3], 'loop': True},
+            'bread': {'frames': timed([4, 5, 6, 7, 6, 7], [.6, .6, .7, .9, .5, .9], 10), 'fps': 10},
+            'coverFace': {'frames': timed([8, 9, 10], [.5, .6, 1.4], 10), 'fps': 10},
+            'faceRest': {'frames': [10], 'loop': True},
+            'sitDoor': {'frames': [11, 12], 'fps': 0.5, 'loop': True},
+            'handOpen': {'frames': [13], 'loop': True},
+            'handClosed': {'frames': [14], 'loop': True},
+            'walk': {'frames': ['m8', 'm9', 'm10', 'm11', 'm12', 'm13'], 'fps': 8, 'loop': True},
+            'mow': {'frames': timed(['m0', 'm1', 'm2', 'm3'], [.45, .35, .5, .7], 10), 'fps': 10},
+            'carry': {'frames': ['r0', 'r1', 'r2', 'r3'], 'fps': 6, 'loop': True},
+            'carryStand': {'frames': ['r0'], 'loop': True},
+            'layDown': {'frames': ['r4', 'r5', 'r6', 'r7'], 'fps': 2.2},
+            'forehead': {'frames': ['r8', 'r9'], 'fps': 1.2},
+            'beam': {'frames': ['r10', 'r11', 'r12'], 'fps': 2.4},
+            'crawl': {'frames': ['k' + str(i) for i in range(12)], 'fps': 10, 'loop': True, 'speed': 60},
+            'crawlRest': {'frames': ['k0'], 'loop': True},
+            'test': {'frames': ['v0', 'v1', 'v2', 'v1', 'v3'], 'fps': 3, 'refH': 245},
+            'press': {'frames': ['v4', 'v5', 'v6', 'v7'], 'fps': 3, 'refH': 245},
+            'pressHold': {'frames': ['v7'], 'loop': True, 'refH': 245},
+            'tie': {'frames': ['v8', 'v9', 'v10', 'v11'], 'fps': 2.5, 'refH': 245},
+            'pin': {'frames': ['v12', 'v13', 'v14', 'v15'], 'fps': 2.2, 'refH': 245},
+            'lower': {'frames': ['v16', 'v17', 'v18', 'v19'], 'fps': 1.5, 'refH': 245},
+            'block': {'frames': ['v20', 'v21', 'v22', 'v23'], 'fps': 2.5, 'refH': 245},
+        },
+    },
+    # The uncle (elf-tage-v7/anim_uncle.png): mowing facing left, noticing, the whetstone offered and
+    # withdrawn, walking off to the right, resuming, a frontal wait.
+    'uncle_et': {
+        'src': 'elf-tage-v7/anim_uncle.png', 'grid': (4, 6), 'refH': 245, 'anchor': (150, 301), 'facing': -1, 'walkSpeed': 90,
+        'anims': {
+            'stand': {'frames': [21], 'loop': True},
+            'mow': {'frames': [0, 1, 2, 3, 4, 3, 2, 1], 'fps': 3.5, 'loop': True},
+            'notice': {'frames': [5, 6, 7], 'fps': 2},
+            'look': {'frames': [7], 'loop': True},
+            'offer': {'frames': timed([6, 9, 10, 11], [.5, 1.6, .7, .9], 10), 'fps': 10},
+            'lowered': {'frames': [11], 'loop': True},
+            'walk': {'frames': [12, 13, 14, 15], 'fps': 5, 'loop': True, 'facing': 1},
+            'resume': {'frames': [16, 17, 18, 19, 20], 'fps': 3},
+            'wait': {'frames': [22], 'loop': True},
+        },
+    },
+    'ziegen_et': {
+        'src': 'elf-tage-v5/anim_ziegen.png', 'grid': (4, 1), 'refH': 116, 'anchor': (140, 144), 'facing': -1, 'clean': False,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'huddle': {'frames': [0, 1, 2, 3], 'fps': 2.5}, 'huddled': {'frames': [3], 'loop': True}},
+    },
+    'frau_et': {
+        'src': 'elf-tage-v5/anim_frau_gehalten.png', 'grid': (4, 1), 'refH': 232, 'anchor': (150, 244),
+        'anims': {'stand': {'frames': [3], 'loop': True}, 'held': {'frames': timed([0, 1, 2, 3, 2, 1], [.5, .6, .9, .6, .4, .5], 10), 'fps': 10, 'loop': True}},
+    },
+    # The boy (elf-tage/boy.png). Frame 4 is skipped: it would flip his head to the other side.
+    'boy_et': {
+        'src': 'elf-tage/boy.png', 'grid': (4, 2), 'refH': 230, 'anchor': (140, 164),
+        'anims': {
+            'stand': {'frames': [2], 'loop': True},
+            'under': {'frames': [0], 'loop': True},
+            'limp': {'frames': [1], 'loop': True},
+            'step': {'frames': [2], 'loop': True},
+            'breath': {'frames': timed([2, 3, 2, 3], [.6, .8, .5, .9], 10), 'fps': 10},
+            'awaken': {'frames': timed([3, 5, 6], [.6, 1.0, 1.2], 10), 'fps': 10},
+            'seated': {'frames': [6], 'loop': True},
+        },
+    },
+    # The father's bare feet and his jug (elf-tage/father_feet_jug.png): never more of him than this.
+    'feet_et': {
+        'src': 'elf-tage/father_feet_jug.png', 'grid': (4, 1), 'refH': 180, 'anchor': (110, 140), 'clean': False,
+        'anims': {'stand': {'frames': [2], 'loop': True}, 'in': {'frames': [0, 1, 2], 'fps': 1.6}, 'away': {'frames': [2, 3], 'fps': 1.4}, 'gone': {'frames': [3], 'loop': True}},
+    },
+    'fire_et': {
+        'src': 'elf-tage/environment_fire_smoke.png', 'grid': (3, 2), 'refH': 248, 'anchor': (160, 248), 'clean': False, 'defringe': False,
+        'anims': {'stand': {'frames': [0, 1, 2, 3, 4, 5], 'fps': 9, 'loop': True}},
+    },
+    # Close-ups of Mijo's palm: the fresh cut, and the same palm that evening (elf-tage/uncle_hands.png 6/7).
+    'hand_et': {
+        'src': 'elf-tage/uncle_hands.png', 'grid': (4, 2), 'refH': 200, 'anchor': 'bottom', 'anchor_x': 140,
+        'anims': {'stand': {'frames': [6], 'loop': True}, 'cut': {'frames': [6], 'loop': True}, 'healed': {'frames': [7], 'loop': True}},
+    },
 }
 
 PROPS = {
@@ -261,6 +352,20 @@ PROPS = {
     # 1476
     'prop_fenster_nacht': 'povratnik1476/prop_fenster_nacht.webp',
     'prop_eimer_gefallen': 'povratnik1476/prop_eimer_gefallen.webp',
+    # Elf Tage
+    'prop_sense': 'elf-tage/prop_sense.png',
+    'prop_tuch_krug_brot': 'elf-tage/prop_tuch_krug_brot.png',
+    'prop_tuch_krug': 'elf-tage/prop_tuch_krug.png',
+    # The jug alone, cut along its outline from the same painting (it stays when the cloth is taken).
+    'prop_krug': {'src': 'elf-tage/prop_tuch_krug.png', 'poly': [[19, 9], [27, 3], [36, 0], [64, 0], [66, 6], [61, 12], [69, 22], [72, 36], [70, 46], [66, 53], [58, 57], [44, 58], [35, 56], [29, 51], [26, 43], [25, 31], [21, 25], [19, 17]]},
+    # Rack states 0-5 and 7 (6, the rack lying flat on the wet floor, is not a state of the puzzle).
+    **{f'prop_raufe_{i}': {'src': 'elf-tage-v7/raufe-zustaende.png', 'crop': [(i % 4) * 384, (i // 4) * 256, 384, 256]} for i in (0, 1, 2, 3, 4, 5, 7)},
+    'prop_brett': {'clean': True, 'src': 'elf-tage-v7/raufe-zustaende.png', 'crop': [0, 512, 384, 256]},
+    'prop_klotz': {'clean': True, 'src': 'elf-tage-v7/raufe-zustaende.png', 'crop': [384, 512, 384, 256]},
+    'prop_seil': {'clean': True, 'src': 'elf-tage-v7/raufe-zustaende.png', 'crop': [768, 512, 384, 256]},
+    'prop_wetzstein': {'clean': True, 'src': 'elf-tage-v7/raufe-zustaende.png', 'crop': [384, 768, 384, 256]},
+    'prop_schwad': {'clean': True, 'src': 'elf-tage-v7/raufe-zustaende.png', 'crop': [768, 768, 384, 256]},
+    'prop_balken': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [256, 0, 256, 256]},
 }
 
 ICONS = {
@@ -275,4 +380,11 @@ ICONS = {
     'krug': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 9)},
     'streifen': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 12)},
     'krug_schlinge': {'src': 'puzzles-v6/travel-tools.png', 'cell': (4, 4, 3)},
+    'sense': {'src': 'elf-tage/prop_sense.png'},
+    'brett': {'src': 'elf-tage-v7/raufe-zustaende.png', 'cell': (4, 4, 8)},
+    'klotz': {'src': 'elf-tage-v7/raufe-zustaende.png', 'cell': (4, 4, 9)},
+    'seil': {'src': 'elf-tage-v7/raufe-zustaende.png', 'cell': (4, 4, 10)},
+    'wetzstein': {'src': 'elf-tage-v7/raufe-zustaende.png', 'cell': (4, 4, 13)},
+    'tuch': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 8)},
+    'tuch_nass': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 10)},
 }

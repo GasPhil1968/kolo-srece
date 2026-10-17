@@ -16,7 +16,7 @@ import shutil
 import sys
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from common import GENERATED, PUBLIC, Atlas, Frame, bbox, defringe, ensure_dir, keep_main_blob, load_rgba, pack, ref, save_webp, torso_center_x
 from sheet_specs import ICONS, PROPS, SHEETS
@@ -105,6 +105,8 @@ def build_sheet(key: str, spec: dict) -> dict:
         }
         if 'speed' in a:
             meta_anims[name]['speed'] = a['speed']
+        if 'facing' in a:
+            meta_anims[name]['facing'] = a['facing']
     return {
         'atlas': f'atlas/{key}',
         'walkSpeed': spec.get('walkSpeed', 150),
@@ -129,8 +131,23 @@ def build_props(only: set[str]) -> dict:
             shutil.copyfile(ref(src), dst)
         else:
             im = im.convert('RGBA')
-            if crop:
-                im = im.crop(tuple(crop))
+            if crop:  # [x, y, w, h]
+                x, y, w, h = crop
+                im = im.crop((x, y, x + w, y + h))
+            if not isinstance(spec, str) and spec.get('poly'):
+                # Keep only the pixels inside a polygon (one object standing on another, e.g. the jug
+                # lifted off the cloth it stood on), then trim.
+                mask = Image.new('L', im.size, 0)
+                ImageDraw.Draw(mask).polygon([tuple(p) for p in spec['poly']], fill=255)
+                a = np.array(im)
+                a[:, :, 3] = (a[:, :, 3].astype(np.uint16) * (np.array(mask) // 255)).astype(np.uint8)
+                b = bbox(a[:, :, 3], 20)
+                im = Image.fromarray(a).crop(b) if b else Image.fromarray(a)
+            if not isinstance(spec, str) and spec.get('clean'):
+                # A single object cut from an icon sheet: drop slivers of the neighbouring cells, trim.
+                a, _ = keep_main_blob(np.array(im), near=spec.get('near', 8))
+                b = bbox(a[:, :, 3], 20)
+                im = Image.fromarray(a).crop(b) if b else Image.fromarray(a)
             save_webp(im, dst, quality=92)
             im = Image.open(dst)
         out[key] = {'file': f'props/{key}.webp', 'w': im.width, 'h': im.height, 'source': src}

@@ -165,11 +165,19 @@ export interface RoomDef {
   ambient?: AmbientDef[];
   /** Multiply tint for actors in this room (night scenes), e.g. 0x9aa6c8. */
   actorTint?: Dyn<number>;
+  /** Multiply tint for prop layers (a daylight prop in a night room). Occluders (occ_*), which are cut
+   * from the background itself, are never tinted. */
+  layerTint?: Dyn<number>;
   /** Darken the whole picture for dusk and night (0..1) with this colour (default deep blue). */
   shade?: Dyn<number>;
   shadeColor?: number;
+  /** Raised walkable ground (steps, a platform), in screen pixels above the floor at (x, y): figures
+   * standing there are scaled for the floor point below them, not for the higher spot on screen. */
+  elevation?: (x: number, y: number) => number;
   /** The player cannot walk here (lying in cover, a painted full frame). Interactions happen in place. */
   noWalk?: Dyn<boolean>;
+  /** What the player character says when a walk is refused in a no-walk room (null = nothing). */
+  noWalkSay?: Dyn<string | null>;
   onEnter?: ScriptFn;
   /** Synchronous state set-up at the moment the room is swapped in, before it fades in
    * (e.g. people who came home ahead of the player). No commands. */
