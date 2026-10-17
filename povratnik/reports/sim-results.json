@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-17T04:52:25.504Z",
-  "runs": 300,
-  "passed": 300,
+  "generatedAt": "2026-10-17T04:55:00.215Z",
+  "runs": 200,
+  "passed": 200,
   "failed": 0,
-  "seconds": 2.393,
+  "seconds": 1.701,
   "byChapter": {
     "kolonne": {
-      "runs": 300,
-      "ok": 300,
-      "warmSteps": 4075,
-      "randomSteps": 14182,
-      "saveLoads": 973
+      "runs": 200,
+      "ok": 200,
+      "warmSteps": 2644,
+      "randomSteps": 9360,
+      "saveLoads": 645
     }
   },
   "failures": []

@@ -63,8 +63,10 @@ sets sensible defaults in its `setup` so the chapter menu can start it fresh.
 |------|--------|---------|
 | `sa.dzezvaRepaired` | Sarajevo (Halil rivets the džezva) | Zäsur (MacLeod refills his own cup from it) |
 | `sa.sawSecondCup` | Sarajevo | Zäsur (MacLeod knows the cup) |
-| `et.clothUsed` | Elf Tage (blue cloth over the boy's face) | 1878 dialogue nuance |
+| `et.clothOn` | Elf Tage (blue cloth over the boy's face) | 1878 dialogue nuance |
 | `ko.bandaged` | Kolonne (dressing worn) | Lager (Rehberger notices the bandage) |
+| `ko.protocolCurse` | Kolonne (the farmer's curse translated literally into the record) | Lager (the record follows Mijo) |
+| `ko.reported` | Kolonne (which evidence the captain accepted) | Lager |
 
 ## Interaction model (all chapters)
 

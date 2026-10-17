@@ -652,7 +652,7 @@ PROPS = {
     'prop_karren_stein': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [256, 256, 256, 256]},
     'prop_kisten_ko': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [768, 256, 256, 256]},
     # The pole (a gun's handspike), turned flatter so that it lies on the road.
-    'prop_stange': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [768, 768, 256, 256], 'rotate': -24},
+    'prop_stange': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [768, 768, 256, 256], 'rotate': -24, 'mul': [0.72, 0.66, 0.6]},
     'prop_bauer_seated': 'props/prop_bauer_seated.webp',
     'prop_hand_finger': 'props/prop_missing_fingers_hand.webp',
 }

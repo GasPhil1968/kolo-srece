@@ -444,7 +444,7 @@ spitze.hotspots = [
 
 // ======================================================================================== Das Feldzelt
 
-const HAND: InsertSpec = { w: 300, h: 400, bg: 'prop_hand_finger', crop: [0, 0, 112, 152] };
+const HAND: InsertSpec = { w: 196, h: 266, bg: 'prop_hand_finger', crop: [0, 0, 112, 152] };
 
 function* zeltEnter(c: ScriptCtx): Script {
   if (c.is(f('inTent'))) return;
@@ -573,7 +573,7 @@ export const kolonneChapter: ChapterDef = {
     color: C.pc,
     attach: (s) => {
       const image = fl(s, 'bandaged') ? 'prop_uniform_bandage' : fl(s, 'bloody') ? 'prop_uniform_blood' : 'prop_uniform_hole';
-      return { image, w: 0.09, h: 0.126 };
+      return fl(s, 'bloody') && !fl(s, 'bandaged') ? { image, w: 0.12, h: 0.168 } : { image, w: 0.09, h: 0.126 };
     },
   },
   start: { room: 'ko_enge', entry: 'start' },
@@ -598,7 +598,7 @@ export const kolonneChapter: ChapterDef = {
       name: T.names.hauptmann,
       character: 'hauptmann',
       color: C.hm,
-      start: { room: 'ko_spitze', x: 520, y: 404, facing: 1 },
+      start: { room: 'ko_spitze', x: 400, y: 440, facing: 1 },
       talkOffset: 70,
       verbs: ['look', 'talk'],
       on: { look: T.spitze.hauptmann.look, talk: (c: ScriptCtx) => c.dialogue('ko_hm') },
@@ -619,11 +619,11 @@ export const kolonneChapter: ChapterDef = {
       name: T.names.major,
       character: 'major',
       color: C.major,
-      start: { room: 'ko_zelt', x: 840, y: 452, facing: -1 },
+      start: { room: 'ko_zelt', x: 862, y: 454, facing: -1 },
       verbs: ['look', 'talk'],
       on: { look: T.zelt.major.look, talk: (c: ScriptCtx) => c.dialogue('ko_major') },
     },
-    { id: SOLDAT, name: T.names.soldat, character: 'soldat', color: C.soldat, start: { room: 'ko_zelt', x: 742, y: 404, facing: -1 }, verbs: ['look'], on: { look: T.zelt.soldat.look } },
+    { id: SOLDAT, name: T.names.soldat, character: 'soldat', color: C.soldat, start: { room: 'ko_zelt', x: 716, y: 392, facing: -1 }, verbs: ['look'], on: { look: T.zelt.soldat.look } },
     { id: BAUER, name: T.names.bauer, character: 'bauer', color: C.bauer, start: { room: 'ko_zelt', x: 596, y: 440, facing: -1, hidden: true }, verbs: [] },
   ],
   dialogues: [

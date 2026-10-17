@@ -187,3 +187,56 @@ player to stop doing what was taught.
   sword, rises. Reduced-flash mode dims the flashes and the additive arcs.
 - Exit: the gate ("Die Straße nach Mailand. Sie führt weiter, mit mir oder ohne."). Optional looks: his
   saddled horse ("Er wollte nicht bleiben, egal wie es ausgeht."), the dark windows, the body.
+
+## Chapter 9 – Die Kolonne (August 1878)
+
+Three rooms, in story order: the gorge right after the ambush, the head of the column the same hour, the
+interrogation tent that evening. Everything Mijo solves after the gorge he solves with words, because on
+paper he is now a wounded man and may not lift anything.
+
+### 9.1 Die Enge: a wounded man like eighteen others
+- Situation: shot through (entry above the hip from behind, exit under the last rib), seven minutes
+  behind a dead horse; the wound has closed. A hole in the tunic over healed skin would give him away.
+  The torn tunic is drawn on Mijo (a patch pinned to a measured point of every frame) and changes with
+  the steps below.
+- Steps: (1) look at himself – the hole, the healed skin ("Ein Loch im Rock und keines im Mann.").
+  (2) Use the horse: its blood smeared over the coat (a man with a bloody coat is not conspicuous after a
+  fight; one without a wound is). (3) Take the field dressing from the fallen soldier's pack (refused
+  before (1): "Ohne Grund fasse ich das Gepäck eines Toten nicht an."). (4) Combine dressing + horse: a
+  white dressing over a gunshot wound would be wrong ("bleibt nicht weiß"). (5) Use the reddened
+  dressing on himself (refused on a clean coat; the white dressing is refused with the reason).
+- Exit "Nach vorn" explains each missing step. Observation for later: the abatis was set alight by
+  the attackers when they left (look at the smoke).
+
+### 9.2 Die Spitze der Kolonne: the carter, the receipt, the handspike, the report
+- The requisitioned carter's cart (the one from the gorge, pulled on without its horse) blocks the road
+  with a broken axle. The captain shouts German at a man who understands only the tone.
+- Mijo may not unload or lift ("Mit einem Verband um den Leib hebe ich keine Kiste. Nicht, solange der
+  Hauptmann herschaut.").
+- Steps: (1) talk to the carter in his language; "Schaff den Karren weg" gets the same answer as the
+  captain's shouting; "Was fehlt dir?" gives the real reason: horse and axle lost, nobody writes that
+  down. (2) Ask the captain for a stamped requisition receipt (the argument: without it the man will not
+  move, and without him the cart will not). (3) Give the receipt: the carter unloads. (4) Take the
+  handspike lying by the dismantled mountain gun and give it to the carter: the axle is levered up,
+  propped on a stone, the cart pushed to the roadside.
+- The report (captain, "Ich melde, was ich weiß"): only what a living man could have seen. "Elf Mann,
+  noch oben" (false, costs a day) and "Ich weiß es nicht" are refused; "niemand mehr" must be justified:
+  "Ich habe gesehen, wie sie gegangen sind" makes the captain ask how a man with a hole in him watched
+  them leave (recoverable); the abatis burnt behind them (seen in the gorge) or the crows back in the
+  beeches (look at the slope) are accepted. The first talk with the captain also writes Mijo into the
+  list: "Neunzehn Verwundete. Mit Ihnen."
+
+### 9.3 Das Feldzelt: the interrogation
+- Staged as a close tableau at the painting's own scale (no walking): Mijo, the old farmer on his chair,
+  a soldier, the major.
+- Stage 1 – address: the harsh "du" question (as the major asks it) and silence fail; after two
+  failures the narrator states the custom. "Onkel. Wo sind sie?" works. The farmer's forty seconds are
+  shown in his own language (ijekavian): not knowing, mowing hay when they took him, his brother killed
+  at Nevesinje in 1875, a curse on the emperor.
+- Stage 2 – translation: literal translation sets the persistent flag `ko.protocolCurse` (the curse is
+  now an offence in the record); "Er sagt, er weiß es nicht." (the content) is the clean path; silence
+  fails. Clue: the record book's motto "Quod non est in actis, non est in mundo".
+- Stage 3 – the major orders more beating: pity and rank fail (after two failures the narrator says
+  what the major listens to); the hand (two fingers missing, a scythe; close-up) is an optional
+  argument; the consequence ("he will give you a name, any name … six dead you ordered yourself")
+  stops it. The ending line reflects the record. Exit: "Bis Sarajevo waren es noch elf Tage."
