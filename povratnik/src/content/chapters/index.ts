@@ -9,6 +9,7 @@ import { elftageChapter } from './c05_elftage';
 import { zaesurChapter } from './c06_zaesur';
 import { anconaChapter, anconaDuel } from './c07_ancona';
 import { herbergeChapter, herbergeDuel } from './c08_herberge';
+import { kolonneChapter } from './c09_kolonne';
 
-export const CHAPTERS: ChapterDef[] = [sarajevo, weideChapter, dorfChapter, povratnikChapter, elftageChapter, zaesurChapter, anconaChapter, herbergeChapter];
+export const CHAPTERS: ChapterDef[] = [sarajevo, weideChapter, dorfChapter, povratnikChapter, elftageChapter, zaesurChapter, anconaChapter, herbergeChapter, kolonneChapter];
 export const COMBATS: CombatDef[] = [anconaDuel, herbergeDuel];

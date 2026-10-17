@@ -1,0 +1,141 @@
+== Die Kolonne – Von der Save nach Sarajevo, August 1878 / Dreihundertsechsundsechzig Jahre nach der Herberge. / Österreich-Ungarn marschiert in Bosnien ein. Mijo geht mit, als Dolmetscher. ==
+  (Es dauerte ungefähr sieben Minuten. Er kannte das. Es wurde nicht kürzer.)
+  (Über ihm schossen zweihundert Mann in den Buchenwald. Elf, schätzte er, lagen dort oben.)
+  (Elf waren es nicht. Es waren neun.)
+  MIJO: Die Wunde ist zu.
+  MIJO: Und der Rauch steht noch. Lange steht er nicht mehr.
+> look self
+  MIJO: Der Rock ist vorn aufgerissen, unter der letzten Rippe. Hinten über der Hüfte noch einmal.
+  MIJO: Darunter ist Haut. Glatt. Nur das, was getrocknet ist.
+  MIJO: Ein Loch im Rock und keines im Mann. Das sieht jeder Sanitäter auf zehn Schritt.
+> use pferd
+  MIJO: Ich fahre mit der flachen Hand durch das Blut an seinem Hals und dann über den Rock.
+  MIJO: Jetzt ist es viel Blut. Aber man sieht nicht mehr, wo meines aufhört.
+  (Ein Mann mit blutigem Rock fällt nach einem Gefecht nicht auf. Ein Mann ohne Wunde schon.)
+> take tornister
+  MIJO: Ich öffne die Klappe und nehme das Verbandpäckchen heraus.
+  MIJO: Er braucht es nicht mehr. Ich eigentlich auch nicht.
+> verband -> pferd
+  MIJO: Ich drücke den Verband in das Blut an seinem Hals.
+  MIJO: Ein Verband über einem Durchschuss bleibt nicht weiß.
+> verband_blutig -> self
+  MIJO: Ich schiebe den Verband durch den Riss und ziehe die Binde zweimal um den Leib.
+  MIJO: Fest genug, dass es wehtun müsste.
+  (Er verband eine Wunde, die es nicht mehr gab. Es sah aus wie die Arbeit eines Mannes, der Schmerzen hat.)
+> go vorn
+  (Fünfundvierzig Minuten dauerte das Gefecht. Nach einer Stunde und zehn Minuten war die Enge frei.)
+  (Vier Tote. Neunzehn Verwundete, davon sechs schwer. Achtzehnhundert Patronen.)
+  (Einer der neunzehn war keiner.)
+-> ko_spitze (start)
+  (An der Spitze stand alles. Ein Karren lag schief in der Straße, und davor stand ein Hauptmann mit einem Notizbuch.)
+  DER HAUPTMANN: Weg damit! Verstehst du? Weg!
+  (Der Fuhrmann verstand die Worte nicht. Den Ton verstand er.)
+  MIJO: Der Karren aus der Enge. Sie haben ihn ohne Pferd bis hierher gezogen.
+> look karren
+  MIJO: Die Achse ist durch, das Rad steht schief. Oben noch die Kisten.
+  MIJO: So bewegt den keiner. Erst abladen, dann die Achse anheben und etwas darunter.
+> talk actor:ko_fuhrmann
+  (Mijo sprach ihn in seiner Sprache an. Der Mann sah auf, als hätte ihn seit Tagen niemand gefragt.)
+  DER FUHRMANN: Was willst du? Schreien kann der da selbst.
+  ? Schaff den Karren weg. | Was fehlt dir? | Bleib bei deinem Karren.
+> choose ask
+  MIJO: Was fehlt dir?
+  DER FUHRMANN: Das Pferd liegt in der Enge. Die Achse ist hin. Wer bezahlt mir das?
+  DER FUHRMANN: Der da schreibt alles in sein Buch. Nur das nicht.
+  ? Schaff den Karren weg. | Was fehlt dir? | Ich besorge dir ein Papier. | Bleib bei deinem Karren.
+> choose __bye
+  MIJO: Bleib bei deinem Karren.
+  DER FUHRMANN: Geh mit Gott.
+> talk actor:ko_hm
+  DER HAUPTMANN: Der Dolmetscher. Man hat Sie fallen sehen.
+  MIJO: Streifschuss, Herr Hauptmann.
+  (Der Hauptmann sah auf den Verband und auf das Blut, und dann in sein Buch.)
+  DER HAUPTMANN: Neunzehn Verwundete. Mit Ihnen.
+  (Er schrieb es auf. Damit war es so.)
+  ? Warum geht es nicht weiter? | Der Fuhrmann will einen Schein. Für Pferd und Achse. | Ich melde, was ich weiß. | Herr Hauptmann.
+> choose schein
+  MIJO: Der Fuhrmann will einen Schein. Für Pferd und Achse.
+  DER HAUPTMANN: Einen Schein. Für einen Karren, der mir die Straße versperrt.
+  MIJO: Ohne Schein rührt er sich nicht. Und ohne ihn bewegen Sie den Karren nicht.
+  (Der Hauptmann riss eine Seite aus seinem Notizbuch, schrieb vier Zeilen und drückte den Stempel darauf.)
+  DER HAUPTMANN: Damit er still ist.
+  ? Warum geht es nicht weiter? | Ich melde, was ich weiß. | Herr Hauptmann.
+> choose __bye
+  MIJO: Herr Hauptmann.
+> schein -> actor:ko_fuhrmann
+  MIJO: Hier. Pferd und Achse, mit Stempel.
+  DER FUHRMANN: Lesen kann ich es nicht. Aber der Stempel ist echt.
+  (Er lud ab, Kiste um Kiste. Zwei Soldaten halfen, als sie sahen, dass es vorwärtsging.)
+> take stange
+  MIJO: Ich nehme ihn. Tragen darf auch ein Verwundeter.
+> stange -> actor:ko_fuhrmann
+  MIJO: Hier. Ein Richtbaum.
+  (Der Fuhrmann setzte die Stange unter die Achse, zwei Soldaten hängten sich daran, und er schob einen Stein darunter.)
+  (Dann schoben sie den Karren an den Rand.)
+  DER FUHRMANN: Fertig. Sag dem da, er soll nicht mehr schreien.
+> look hang
+  MIJO: Der Hang über der Enge. Die Krähen sind zurück, sie sitzen wieder in den Kronen.
+  MIJO: Mit Leuten darunter tun sie das nicht.
+> talk actor:ko_hm
+  DER HAUPTMANN: Was gibt es?
+  ? Warum geht es nicht weiter? | Ich melde, was ich weiß. | Herr Hauptmann.
+> choose melden
+  MIJO: Ich melde, was ich weiß.
+  DER HAUPTMANN: Der Hang. Schicke ich Leute hinauf?
+  ? Da oben ist niemand mehr. | Elf Mann. Sie liegen noch oben. | Das weiß ich nicht.
+> choose leer
+  MIJO: Da oben ist niemand mehr.
+  DER HAUPTMANN: Woher wissen Sie das?
+  ? Ich habe gesehen, wie sie gegangen sind. | Die Krähen sitzen wieder in den Buchen. Mit Leuten darunter tun sie das nicht. | Ich nehme es an.
+> choose kraehen
+  MIJO: Die Krähen sitzen wieder in den Buchen. Mit Leuten darunter tun sie das nicht.
+  DER HAUPTMANN: Gut. Und die Straße?
+  MIJO: Der Karren steht am Rand. Die Straße ist frei.
+  (Der Hauptmann sah ihn an, etwas zu lange, und fragte nicht, woher er das alles wusste.)
+  DER HAUPTMANN: Abmarsch in zehn Minuten.
+  (Es dauerte siebzehn Minuten, dann setzte sich die Kolonne wieder in Bewegung.)
+  (Am Abend, im Lager bei einer Kleinstadt, schickte man nach dem Dolmetscher.)
+-> ko_zelt (start)
+  (Es roch nach heißer Leinwand, nach Petroleum und nach dem Mann, der seit zwei Tagen hier saß.)
+  DER MAJOR: Der Dolmetscher. Endlich. Fragen Sie ihn, wo die Aufständischen sind.
+> talk bauer
+  (Er sah nicht auf.)
+  ? Wo sind die Aufständischen? | (Nichts sagen.) | Onkel. Wo sind sie? | (Sich abwenden.)
+> choose onkel
+  MIJO: Onkel. Wo sind sie?
+  (Er fragte in der Sprache des Mannes. Nicht „du“. Onkel.)
+  (Der Bauer sah auf. Er hielt es für einen Trick und antwortete trotzdem.)
+  DER BAUER: Ne znam, gospodine. Ne znam gdje su.
+  DER BAUER: Kosio sam sijeno kad su me uzeli. Kosio sam.
+  DER BAUER: Brat mi je pao kod Nevesinja, sedamdeset i pete. Niko mi ga nije vratio.
+  DER BAUER: Prvo Turci, sad vi. Proklet bio vaš car. I vaša majka, i njegova.
+  DER BAUER: Pustite me kući.
+  (Vierzig Sekunden, sehr schnell und sehr leise. Einmal brach ihm die Stimme.)
+  DER MAJOR: Nun?
+  ? (Wörtlich übersetzen.) | Er sagt, er weiß es nicht. | (Schweigen.) | (Sich abwenden.)
+> choose inhalt
+  MIJO: Er sagt, er weiß es nicht.
+  DER MAJOR: Er hat vierzig Sekunden geredet.
+  MIJO: Ja.
+  DER MAJOR: Und Sie übersetzen mir vier Worte?
+  MIJO: Ich übersetze Ihnen den Inhalt.
+  (Der Rest war ein Fluch. Und ein toter Bruder.)
+  MIJO: Wollen Sie das im Protokoll?
+  DER MAJOR: Sie sind ein unverschämter Kerl.
+  MIJO: Ich bin ein genauer Kerl, Herr Major. Das wird oft verwechselt.
+  DER MAJOR: Schlagt ihn noch einmal. Dann redet er.
+  (Der Soldat an der Zeltstange stieß sich ab und kam heran.)
+  ? Der Mann hat nichts getan. | Ich bin hier der Dolmetscher, nicht Sie. | Er wird Ihnen irgendwann einen Namen nennen. Irgendeinen. | (Sich abwenden.)
+> choose folge
+  MIJO: Er wird Ihnen irgendwann einen Namen nennen. Irgendeinen.
+  MIJO: Zwanzig Mann in ein leeres Dorf. Auf dem Rückweg schießt der Wald.
+  MIJO: Dann haben Sie sechs Tote, und Sie werden nie erfahren, dass Sie sie selbst bestellt haben.
+  MIJO: Ich sage das nicht aus Mitleid mit dem Mann. Ich sage es, weil ich es öfter gesehen habe, als Sie glauben würden.
+  (Der Major ließ nicht weiter schlagen. Nicht aus Einsicht.)
+  (Der Bauer wurde am nächsten Morgen entlassen, weil man ihm nichts nachweisen konnte.)
+  (Er ging nicht nach Hause. Zwei Tage in diesem Zelt genügen.)
+  (Im Protokoll stand ein einziger Satz: Der Befragte gibt an, nichts zu wissen.)
+> go ausgang
+  (Am nächsten Morgen ging die Kolonne weiter.)
+  (Bis Sarajevo waren es noch elf Tage.)
+== Ende des Kapitels ==

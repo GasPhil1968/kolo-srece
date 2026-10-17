@@ -297,6 +297,47 @@ export const solveHerberge: Solver = (sim) => {
   return act('tor', 'go');
 };
 
+export const solveKolonne: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`ko.${n}`];
+  const inv = (i: string) => s.inventory.includes(i);
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const id of ['give', 'pole', 'onkel', 'inhalt', 'folge', 'leer', 'kraehen', 'rauch']) if (opts.includes(id)) return choose(id);
+    if (opts.includes('ask') && !fl('fmGrund')) return choose('ask');
+    if (opts.includes('schein') && fl('fmGrund') && !inv('schein') && !fl('unloaded')) return choose('schein');
+    if (opts.includes('melden') && fl('lifted') && !fl('reported')) return choose('melden');
+    return choose(opts.includes('__bye') ? '__bye' : opts[0]);
+  }
+  if (s.room === 'ko_enge') {
+    if (!fl('wound')) return act('self', 'look');
+    if (!fl('bloody')) return act('pferd', 'use');
+    if (!fl('bandaged')) {
+      if (inv('verband_blutig')) return use('verband_blutig', 'self');
+      if (inv('verband')) return use('verband', 'pferd');
+      return act('tornister', 'take');
+    }
+    return act('vorn', 'go');
+  }
+  if (s.room === 'ko_spitze') {
+    if (!fl('sahKarren')) return act('karren', 'look');
+    if (!fl('unloaded')) {
+      if (inv('schein')) return use('schein', 'actor:ko_fuhrmann');
+      return act(fl('fmGrund') ? 'actor:ko_hm' : 'actor:ko_fuhrmann', 'talk');
+    }
+    if (!fl('lifted')) return inv('stange') ? use('stange', 'actor:ko_fuhrmann') : act('stange', 'take');
+    if (!fl('sahKraehen')) return act('hang', 'look');
+    return act('actor:ko_hm', 'talk');
+  }
+  if (s.room === 'ko_zelt') {
+    if (!fl('asked')) return act('bauer', 'talk');
+    if (!fl('stopped')) return act('actor:ko_major', 'talk');
+    return act('ausgang', 'go');
+  }
+  return null;
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
@@ -306,4 +347,5 @@ export const SOLVERS: Record<string, Solver> = {
   zaesur: solveZaesur,
   ancona: solveAncona,
   herberge: solveHerberge,
+  kolonne: solveKolonne,
 };

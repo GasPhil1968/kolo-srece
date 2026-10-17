@@ -524,7 +524,7 @@ export const herbergeChapter: ChapterDef = {
   card: { image: 'intro_hof', cine: 'cine_hof_a', lines: T.card },
   pc: { character: 'mijo1512', name: T.names.mijo, color: C.pc },
   start: { room: 'hg_stube', entry: 'start' },
-  next: null,
+  next: 'kolonne',
   journal: T.journal,
   items: [],
   self: {

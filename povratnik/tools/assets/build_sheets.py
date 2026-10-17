@@ -158,7 +158,7 @@ def build_props(only: set[str]) -> dict:
         # Top-left corner of the output inside the crop (pieces cut from one painting are placed
         # against each other with it).
         ox, oy = 0, 0
-        processed = not isinstance(spec, str) and any(k in spec for k in ('crop', 'poly', 'clean', 'rotate', 'tile', 'mul', 'gain'))
+        processed = not isinstance(spec, str) and any(k in spec for k in ('crop', 'poly', 'clean', 'rotate', 'tile', 'mul', 'gain', 'cloth'))
         if src.endswith('.webp') and not processed:
             shutil.copyfile(ref(src), dst)
         else:
@@ -196,6 +196,15 @@ def build_props(only: set[str]) -> dict:
                     a[:, :, :3] *= np.array(spec['mul'], np.float32)
                 if spec.get('gain'):
                     a[:, :, 3] *= float(spec['gain'])
+                im = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+            if not isinstance(spec, str) and spec.get('cloth'):
+                # A patch of uniform cloth matched to the colour of the uniform it is worn on: only the
+                # blue cloth is shifted (weighted by how blue a pixel is); skin, blood and linen keep theirs.
+                a = np.array(im).astype(np.float32)
+                rgb = a[:, :, :3]
+                w = np.clip((rgb[:, :, 2] - rgb[:, :, 0] - 4) / 12, 0, 1)[..., None]
+                ratio = np.array(spec['cloth'][1], np.float32) / np.array(spec['cloth'][0], np.float32)
+                a[:, :, :3] = rgb * (1 - w) + rgb * ratio * w
                 im = Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
             if not isinstance(spec, str) and spec.get('clean'):
                 # A single object cut from an icon sheet: drop slivers of the neighbouring cells, trim.

@@ -56,6 +56,15 @@ FLAT_TOP_LIMIT = 0.62  # crown cut off in the idle cell (straight wide top edge)
 FORCE_WALK_STAND: set[str] = set()
 # Hats, turbans and tied-back hair have naturally flat tops; their idle cells were checked visually and are complete.
 FORCE_IDLE = {'macleod', 'emin', 'katib', 'soldat', 'dorfalter'}
+# Sheets whose idle cells are painted facing left (the walk cycles all face right): the stand animation
+# carries its own facing so the renderer mirrors it the right way.
+STAND_FACES_LEFT = {2}
+# Points measured on single frames (offsets from the planted feet, source pixels, as painted): where
+# something is attached to the figure. mijo1878: the exit wound on the tunic front under the last rib
+# (shown as a torn hole, then smeared with blood, then a dressing).
+POINTS = {
+    'mijo1878': {'stand_0': [[-12, -132]], **{f'walk_{i}': [[16, -104]] for i in range(8)}},
+}
 
 
 def cell(img: np.ndarray, cx: int, cy: int, cw: int, ch: int) -> np.ndarray:
@@ -119,17 +128,22 @@ def build(keys: list[str] | None = None) -> dict:
         ax = torso_center_x(sc[:, :, 3], b[1], b[3])
         atlas.frames.append(frame_from_cell('stand_0', sc, b[3], ax, stats))
         frames = pack(atlas, out_dir)
+        stand_anim = {'frames': ['stand_0'], 'fps': 1, 'loop': True, 'refH': stand_h}
+        if n in STAND_FACES_LEFT and stand_source.startswith(f'sprites/char_0{n}.webp'):
+            stand_anim['facing'] = -1
         meta[key] = {
             'atlas': f'chars/{key}',
             'walkSpeed': WALK_SPEED,
             'anims': {
-                'stand': {'frames': ['stand_0'], 'fps': 1, 'loop': True, 'refH': stand_h},
+                'stand': stand_anim,
                 'walk': {'frames': [f'walk_{i}' for i in range(8)], 'fps': WALK_FPS, 'loop': True,
                          'refH': round(walk_h / WALK_SHORTEN, 1)},
             },
             'frames': frames,
             'source': {'stand': stand_source, 'walk': f'sprites/walk_0{n}.webp row {row}'},
         }
+        if key in POINTS:
+            meta[key]['points'] = POINTS[key]
         print(f'{key:12s} stand_h={stand_h} walk_h={walk_h} flat={ft:.2f} fragments={stats["fragments"]} defringed={stats["defringed"]}  stand<-{stand_source}')
     return meta
 

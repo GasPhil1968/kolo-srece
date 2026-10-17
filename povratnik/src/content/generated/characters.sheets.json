@@ -8405,6 +8405,74 @@
   "source": "fx/fx_smoke_cycle.webp",
   "walkSpeed": 150
  },
+ "smoke_enge": {
+  "anims": {
+   "stand": {
+    "fps": 2,
+    "frames": [
+     "f0",
+     "f1",
+     "f2",
+     "f3",
+     "f4",
+     "f5"
+    ],
+    "loop": true,
+    "refH": 240
+   },
+   "thin": {
+    "fps": 1,
+    "frames": [
+     "f5",
+     "f0"
+    ],
+    "loop": true,
+    "refH": 240
+   }
+  },
+  "atlas": "atlas/smoke_enge",
+  "facing": 1,
+  "frames": {
+   "f0": {
+    "ax": 0.89189,
+    "ay": 0.9949,
+    "h": 196,
+    "w": 148
+   },
+   "f1": {
+    "ax": 0.84916,
+    "ay": 0.99533,
+    "h": 214,
+    "w": 179
+   },
+   "f2": {
+    "ax": 0.78222,
+    "ay": 0.99563,
+    "h": 229,
+    "w": 225
+   },
+   "f3": {
+    "ax": 0.79688,
+    "ay": 0.99563,
+    "h": 229,
+    "w": 192
+   },
+   "f4": {
+    "ax": 0.87273,
+    "ay": 0.99535,
+    "h": 215,
+    "w": 165
+   },
+   "f5": {
+    "ax": 0.92405,
+    "ay": 0.9949,
+    "h": 196,
+    "w": 158
+   }
+  },
+  "source": "polish-v3/enge-smoke.png",
+  "walkSpeed": 150
+ },
  "spirit_an": {
   "anims": {
    "crumble": {

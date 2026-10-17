@@ -68,6 +68,11 @@ SHEETS = {
         'src': 'fx/fx_steam_cycle.webp', 'grid': (4, 2), 'refH': 128, 'anchor': 'bottom', 'anchor_x': 64, 'defringe': False, 'clean': False,
         'anims': {'stand': {'frames': list(range(8)), 'fps': 6, 'loop': True}},
     },
+    'smoke_enge': {
+        # The smoke over the burning abatis in the gorge (3 x 2 cells, the column's root at x 200).
+        'src': 'polish-v3/enge-smoke.png', 'grid': (3, 2), 'refH': 240, 'anchor': 'bottom', 'anchor_x': 200, 'defringe': False, 'clean': False,
+        'anims': {'stand': {'frames': [0, 1, 2, 3, 4, 5], 'fps': 2, 'loop': True}, 'thin': {'frames': [5, 0], 'fps': 1, 'loop': True}},
+    },
     'flame': {
         'src': 'sprites/fire.webp', 'grid': (8, 1), 'refH': 112, 'anchor': 'bottom', 'anchor_x': 56, 'defringe': False,
         'anims': {'stand': {'frames': list(range(8)), 'fps': 10, 'loop': True}},
@@ -631,6 +636,25 @@ PROPS = {
     'prop_hof_body': 'combat/hof_body.webp',
     'fx_rain': 'fx/fx_rain.webp',
     'fx_water': 'fx/fx_water.webp',
+    # Kolonne 1878
+    'prop_dead_horse': 'props/prop_dead_horse.webp',
+    'prop_fallen_soldier': 'props/prop_fallen_soldier.webp',
+    'prop_backpack': 'props/prop_backpack.webp',
+    # The torn tunic, worn on Mijo at his measured wound point: the patches' blue cloth matched to the
+    # grey-blue of the 1878 uniform (skin, blood and linen unchanged).
+    'prop_uniform_hole': {'src': 'props/prop_uniform_hole.webp', 'cloth': [[39, 46, 64], [80, 82, 88]]},
+    'prop_uniform_blood': {'src': 'props/prop_uniform_blood.webp', 'cloth': [[42, 47, 62], [80, 82, 88]]},
+    'prop_uniform_bandage': {'src': 'props/prop_uniform_bandage.webp', 'cloth': [[40, 41, 52], [80, 82, 88]]},
+    # The carter's cart in three states: loaded with the axle broken, the same with the crates cut away
+    # above the rim (unloaded), and propped on a stone; the crates on their own.
+    'prop_karren_voll': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [0, 256, 256, 256]},
+    'prop_karren_leer': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [0, 256, 256, 256], 'poly': [[0, 101], [40, 99], [256, 101], [256, 256], [0, 256]]},
+    'prop_karren_stein': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [256, 256, 256, 256]},
+    'prop_kisten_ko': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [768, 256, 256, 256]},
+    # The pole (a gun's handspike), turned flatter so that it lies on the road.
+    'prop_stange': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [768, 768, 256, 256], 'rotate': -24},
+    'prop_bauer_seated': 'props/prop_bauer_seated.webp',
+    'prop_hand_finger': 'props/prop_missing_fingers_hand.webp',
 }
 
 ICONS = {
@@ -658,4 +682,7 @@ ICONS = {
     'tau_haken': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 2)},
     'salzsack': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 3)},
     'klinge': {'src': 'ui/q_inventory_blade.webp'},
+    'verband': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 12)},
+    'verband_blutig': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 13)},
+    'stange': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 15)},
 }

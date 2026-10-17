@@ -59,7 +59,10 @@ sim.start(chapter);
 const solver = SOLVERS[chapter];
 let guard = 0;
 while (sim.engine.state.chapter === chapter && !sim.engine.gameEnded) {
-  if (++guard > 400) throw new Error('solver exceeded 400 steps');
+  if (++guard > 400) {
+    console.error(lines.slice(0,80).join('\n'));
+    throw new Error('solver exceeded 400 steps');
+  }
   sim.settle();
   if (sim.engine.state.chapter !== chapter || sim.engine.gameEnded) break;
   const step = solver(sim);

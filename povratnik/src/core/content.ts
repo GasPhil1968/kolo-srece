@@ -269,7 +269,16 @@ export interface ChapterDef {
   dateline: string;
   card: { image: string; cine?: string; lines: readonly string[] };
   /** Character key the player controls in this chapter. */
-  pc: { character: string; name: string; color: string; portrait?: string; relHeight?: number };
+  pc: {
+    character: string;
+    name: string;
+    color: string;
+    portrait?: string;
+    relHeight?: number;
+    /** An image worn on the figure at its measured point 0 (a torn tunic, a stain, a dressing).
+     *  Width and height are fractions of the adult display height, so it scales with the figure. */
+    attach?: Dyn<{ image: string; w: number; h: number } | null>;
+  };
   start: { room: string; entry: string };
   rooms: RoomDef[];
   actors: ActorDef[];

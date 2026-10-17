@@ -617,6 +617,12 @@
   "x": 735,
   "y": 274
  },
+ "prop_backpack": {
+  "file": "props/prop_backpack.webp",
+  "h": 92,
+  "source": "props/prop_backpack.webp",
+  "w": 128
+ },
  "prop_balken": {
   "file": "props/prop_balken.webp",
   "h": 171,
@@ -642,6 +648,12 @@
   "h": 88,
   "source": "ui/inv.webp",
   "w": 88
+ },
+ "prop_bauer_seated": {
+  "file": "props/prop_bauer_seated.webp",
+  "h": 316,
+  "source": "props/prop_bauer_seated.webp",
+  "w": 252
  },
  "prop_bread": {
   "file": "props/prop_bread.webp",
@@ -695,6 +707,12 @@
   "source": "props/prop_counting_stall.webp",
   "w": 412
  },
+ "prop_dead_horse": {
+  "file": "props/prop_dead_horse.webp",
+  "h": 174,
+  "source": "props/prop_dead_horse.webp",
+  "w": 422
+ },
  "prop_dzezva": {
   "file": "props/prop_dzezva.webp",
   "h": 256,
@@ -706,6 +724,12 @@
   "h": 189,
   "source": "povratnik1476/prop_eimer_gefallen.webp",
   "w": 256
+ },
+ "prop_fallen_soldier": {
+  "file": "props/prop_fallen_soldier.webp",
+  "h": 180,
+  "source": "props/prop_fallen_soldier.webp",
+  "w": 378
  },
  "prop_fenster_nacht": {
   "file": "props/prop_fenster_nacht.webp",
@@ -734,6 +758,12 @@
   ],
   "source": "puzzles-v6/items-rescue.png",
   "w": 78
+ },
+ "prop_hand_finger": {
+  "file": "props/prop_hand_finger.webp",
+  "h": 152,
+  "source": "props/prop_missing_fingers_hand.webp",
+  "w": 112
  },
  "prop_hausnummer3": {
   "file": "props/prop_hausnummer3.webp",
@@ -782,6 +812,46 @@
   "h": 266,
   "source": "props/prop_kaffeestand.webp",
   "w": 300
+ },
+ "prop_karren_leer": {
+  "file": "props/prop_karren_leer.webp",
+  "h": 123,
+  "origin": [
+   20,
+   355
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 228
+ },
+ "prop_karren_stein": {
+  "file": "props/prop_karren_stein.webp",
+  "h": 125,
+  "origin": [
+   271,
+   350
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 230
+ },
+ "prop_karren_voll": {
+  "file": "props/prop_karren_voll.webp",
+  "h": 158,
+  "origin": [
+   20,
+   320
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 228
+ },
+ "prop_kisten_ko": {
+  "file": "props/prop_kisten_ko.webp",
+  "h": 195,
+  "origin": [
+   821,
+   298
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 167
  },
  "prop_klinge": {
   "file": "props/prop_klinge.webp",
@@ -991,6 +1061,12 @@
   "source": "elf-tage/prop_sense.png",
   "w": 104
  },
+ "prop_stange": {
+  "file": "props/prop_stange.webp",
+  "h": 56,
+  "source": "puzzles-v6/items-rescue.png",
+  "w": 250
+ },
  "prop_stone_sitters": {
   "file": "props/prop_stone_sitters.webp",
   "h": 290,
@@ -1056,6 +1132,24 @@
   "h": 85,
   "source": "elf-tage/prop_tuch_krug_brot.png",
   "w": 150
+ },
+ "prop_uniform_bandage": {
+  "file": "props/prop_uniform_bandage.webp",
+  "h": 140,
+  "source": "props/prop_uniform_bandage.webp",
+  "w": 100
+ },
+ "prop_uniform_blood": {
+  "file": "props/prop_uniform_blood.webp",
+  "h": 140,
+  "source": "props/prop_uniform_blood.webp",
+  "w": 100
+ },
+ "prop_uniform_hole": {
+  "file": "props/prop_uniform_hole.webp",
+  "h": 140,
+  "source": "props/prop_uniform_hole.webp",
+  "w": 100
  },
  "prop_watchers": {
   "file": "props/prop_watchers.webp",

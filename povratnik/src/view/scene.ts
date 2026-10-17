@@ -271,6 +271,7 @@ export class GameScene extends Phaser.Scene {
     cam.setScroll(sx, sy);
     this.syncLayers(room);
     this.syncActors(room);
+    this.syncAttach();
     this.syncInsert();
     const shade = room.shade !== undefined ? dyn(room.shade, s) : 0;
     this.shadeRect.setFillStyle(room.shadeColor ?? 0x0a1028, 1).setAlpha(shade).setVisible(shade > 0.001);
@@ -395,6 +396,37 @@ export class GameScene extends Phaser.Scene {
 
   private decorViews = new Map<string, Phaser.GameObjects.Sprite>();
   private decorLift = new Map<string, number>();
+  private attachView: Phaser.GameObjects.Image | null = null;
+
+  /** The chapter's worn image on the player character, pinned to the frame's measured point 0. */
+  private syncAttach(): void {
+    const spec = this.engine.chapter.pc.attach;
+    const a = spec ? dyn(spec, this.engine.state) : null;
+    const v = this.actorViews.get('pc');
+    const p = a && v ? this.actorPoint('pc', 0) : null;
+    if (!a || !v || !p) {
+      this.attachView?.setVisible(false);
+      return;
+    }
+    const tf = this.textureFor(a.image);
+    if (!this.textures.exists(tf.texture)) {
+      this.ensure([tf.texture]);
+      this.attachView?.setVisible(false);
+      return;
+    }
+    if (!this.attachView) this.attachView = this.add.image(p.x, p.y, tf.texture, tf.frame);
+    else if (this.attachView.texture.key !== tf.texture) this.attachView.setTexture(tf.texture, tf.frame);
+    const a0 = this.engine.state.actors.pc;
+    const h = ADULT_H * this.engine.scaleAt(a0.y, undefined, a0.x) * (this.engine.chapter.pc.relHeight ?? 1);
+    this.attachView
+      .setOrigin(0.5, 0.5)
+      .setPosition(p.x, p.y)
+      .setDisplaySize(a.w * h, a.h * h)
+      .setFlipX(v.sprite.flipX)
+      .setTint(v.sprite.tintTopLeft)
+      .setDepth(v.sprite.depth + 0.1)
+      .setVisible(true);
+  }
 
   // ---------------------------------------------------------------- close-up insert
 
