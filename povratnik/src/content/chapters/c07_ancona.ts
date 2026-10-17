@@ -77,7 +77,7 @@ const hafen: RoomDef = {
   width: 1300,
   perspective: persp2(404, 162, 458, 186),
   walk: [{ outer: [70, 462, 882, 462, 944, 404, 880, 404, 880, 420, 500, 420, 500, 404, 70, 404] }],
-  entries: { start: { x: 150, y: 452, face: 1 } },
+  entries: { start: { x: 150, y: 452, face: 1 }, gasse: { x: 110, y: 440, face: 1 } },
   assets: ['atlas/bird'],
   decor: [
     pigeon('p1', 0, [[830, 168], [838, 140], [852, 112], [866, 104], [858, 128], [834, 166]]),
@@ -102,6 +102,17 @@ const hafen: RoomDef = {
   ambient: [{ fx: 'birds', x: 980, y: 40, params: { area: '960,30,320,90', count: 3, speed: 30, scale: 0.12 } }],
   hotspots: [
     { id: 'speicher', name: T.hafen.speicher.name, shape: R(0, 0, 870, 245), walkTo: null, on: { look: T.hafen.speicher.look } },
+    {
+      id: 'gasse',
+      name: T.gasse.name,
+      shape: R(0, 250, 60, 200),
+      walkTo: { x: 90, y: 440, face: -1 },
+      priority: 3,
+      exit: { room: 'an_gasse', entry: 'hafen' },
+      exitDir: 'left',
+      verbs: ['look', 'go'],
+      on: { look: T.gasse.zurueck.look },
+    },
     ...GATES.map((g, i) => ({
       id: `tor${i + 1}`,
       name: T.hafen.tore[i].name,
@@ -123,7 +134,13 @@ const hafen: RoomDef = {
       verbs: ['look', 'go'],
       on: {
         look: (c: ScriptCtx) => lines(PC, c.is(f('pigeons')) || c.is(f('sensed')) ? T.hafen.tor6.lookKnown : T.hafen.tor6.look),
-        go: enterWarehouse,
+        go: function* (c: ScriptCtx): Script {
+          if (!c.is(f('gassenTor'))) {
+            yield* lines(PC, T.gasse.tor6Locked);
+            return;
+          }
+          yield* enterWarehouse(c);
+        },
       },
       items: { an_dukaten: T.hafen.dukatenTor },
     },
@@ -618,6 +635,87 @@ function* takeBlade(c: ScriptCtx): Script {
   yield say(PC, T.lager.klinge.take);
 }
 
+// ======================================================================================== back lane
+
+// The lane behind the six warehouses (bg_hintergasse). Six back doors, all alike. Fresh cart tracks run from
+// the harbour and end at the fifth door: that is where last night's goods went in. The other five doors each
+// tell their own story (a rope, a chalk tally, a wedge, a puddle, a broken cup) and refuse Mijo.
+const GASSE_DOORS: [number, number, number, number][] = [
+  [364, 218, 59, 107],
+  [495, 211, 67, 120],
+  [653, 208, 75, 130],
+  [824, 203, 76, 142],
+  [962, 198, 89, 153],
+  [1130, 195, 92, 161],
+];
+
+function* lookTracks(c: ScriptCtx): Script {
+  c.set(f('spuren'));
+  if (c.is(f('spuren'))) yield* lines(PC, T.gasse.spuren.look);
+  yield say(PC, T.gasse.spuren.again);
+}
+
+function* goFifthDoor(c: ScriptCtx): Script {
+  if (!c.is(f('spuren'))) {
+    yield say(PC, T.gasse.tuer5NotYet);
+    return;
+  }
+  c.set(f('gassenTor'));
+  c.journal('gasse', 'done');
+  yield* lines(PC, T.gasse.tuer[4].go);
+}
+
+const gasse: RoomDef = {
+  id: 'an_gasse',
+  title: T.rooms.gasse,
+  bg: 'bg_hintergasse',
+  width: 1300,
+  perspective: persp2(330, 160, 462, 215),
+  walk: [{ outer: [40, 470, 1260, 470, 1260, 376, 40, 376] }],
+  entries: { hafen: { x: 110, y: 440, face: 1 } },
+  assets: ['bg_hintergasse'],
+  hotspots: [
+    {
+      id: 'zurueck',
+      name: T.gasse.zurueck.name,
+      shape: R(0, 240, 60, 220),
+      walkTo: null,
+      priority: 3,
+      exit: { room: 'an_hafen', entry: 'gasse' },
+      exitDir: 'left',
+      verbs: ['look', 'go'],
+      on: { look: T.gasse.zurueck.look },
+    },
+    {
+      id: 'spuren',
+      name: T.gasse.spuren.name,
+      shape: R(930, 360, 220, 110),
+      walkTo: { x: 1000, y: 430, face: 1 },
+      priority: 2,
+      verbs: ['look'],
+      on: { look: lookTracks },
+    },
+    ...T.gasse.tuer.map((t, i) => {
+      const [x, y, w, h] = GASSE_DOORS[i];
+      return {
+        id: `tuer${i + 1}`,
+        name: t.name,
+        shape: R(x, y, w, h),
+        walkTo: { x: x + w / 2, y: 392, face: -1 as const },
+        priority: 2,
+        verbs: ['look', 'go'],
+        on: {
+          look: t.look,
+          go: i === 4 ? goFifthDoor : t.go,
+        },
+      };
+    }),
+  ],
+  onEnter: function* (c: ScriptCtx): Script {
+    c.journal('gasse');
+  },
+};
+
 const lager: RoomDef = {
   id: 'an_lager',
   title: T.rooms.lager,
@@ -893,6 +991,7 @@ export const anconaChapter: ChapterDef = {
   ],
   dialogues: [],
   hint: (s) => {
+    if (!fl(s, 'gassenTor') && (s.room === 'an_hafen' || s.room === 'an_gasse')) return { id: 'an.gasse', steps: T.hints.gasse };
     if (s.room === 'an_hafen') return { id: 'an.speicher', steps: T.hints.speicher };
     if (!fl(s, 'risen')) return { id: 'an.kampf', steps: T.hints.kampf };
     if (!fl(s, 'planksMoved')) return { id: 'an.bretter', steps: T.hints.bretter };
@@ -911,7 +1010,7 @@ export const anconaChapter: ChapterDef = {
     c.journal('speicher');
   },
   resumes: { prefight, duel, after: afterDuel, quickening: quickeningRun },
-  rooms: [hafen, lager],
+  rooms: [hafen, gasse, lager],
 };
 
 function* combineRope(c: ScriptCtx): Script {

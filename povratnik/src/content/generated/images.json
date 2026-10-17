@@ -203,6 +203,13 @@
   "source": "ancona-v2/port-clean.webp",
   "w": 1300
  },
+ "bg_hintergasse": {
+  "derived": "new painting (generated), 1300x470",
+  "file": "bg/bg_hintergasse.webp",
+  "h": 470,
+  "source": "bg/bg_hintergasse.webp",
+  "w": 1300
+ },
  "bg_hochzeit": {
   "file": "bg/bg_hochzeit.webp",
   "h": 470,

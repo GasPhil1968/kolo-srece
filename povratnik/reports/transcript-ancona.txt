@@ -1,6 +1,16 @@
 == Ancona – Adriaküste, Mai 1507 / Mijo ist einundfünfzig Jahre alt und sieht aus wie einundzwanzig. / Er hat noch nie einen sterben sehen, der nicht tot blieb. ==
   (Vier Jahre bei Alessandro. Dann ein Zettel, ein Päckchen und ein Ort: Ancona.)
   MIJO: Hundert Dukaten. Ich soll sie einem Griechen bringen, der am Hafen wartet.
+> go gasse
+-> an_gasse (hafen)
+> look spuren
+  MIJO: Zwei Radspuren im Pflaster, frisch. Pferdemist dazwischen, noch nicht getrocknet.
+  MIJO: Sie kommen vom Hafen herauf und enden an einer Tür. Sonst fährt hier niemand um diese Stunde.
+  MIJO: Die Spuren enden an einer Tür. Welche, muss ich an den Türen sehen.
+> go tuer5
+  MIJO: Die Spuren enden hier. Hier wurde gestern die Ware abgeladen, und hier ist das Lagerhaus, nach dem ich frage.
+> go zurueck
+-> an_hafen (gasse)
 > go tor6
   MIJO: Ein Druck hinter den Augen. Ein Ziehen in den Zähnen.
   MIJO: So war es jeden Morgen bei Alessandro, bis man es nicht mehr merkte. Hier ist es stärker.
@@ -99,3 +109,7 @@
 > go tor
   (Er ging hinaus. Und der andere ging mit ihm.)
 == Ende des Kapitels ==
+== Die Herberge – An der Straße nach Mailand, November 1512 / Fünf Jahre nach Ancona. / Ein Licht am Weg. Der Regen bleibt vor der Tür. ==
+  (Mijo war wegen des Regens dort und aus keinem anderen Grund.)
+  (Der Raum war niedrig und voll und roch nach nassen Mänteln.)
+  MIJO: Ein Teller, ein Feuer, ein Dach. Morgen weiter nach Norden.

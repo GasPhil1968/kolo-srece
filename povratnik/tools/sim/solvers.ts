@@ -264,6 +264,8 @@ export const solveAncona: Solver = (sim) => {
     for (const p of ['true', 'meister', 'woher', 'geld', 'strike']) if (opts.includes(p)) return choose(p);
     return choose(opts[opts.length - 1]);
   }
+  if (s.room === 'an_gasse') return fl('gassenTor') ? act('zurueck', 'go') : fl('spuren') ? act('tuer5', 'go') : act('spuren', 'look');
+  if (s.room === 'an_hafen' && !fl('gassenTor')) return act('gasse', 'go');
   if (s.room === 'an_hafen') return act('tor6', 'go');
   if (!fl('risen')) return null;
   if (!fl('read')) return act('klinge', 'read');

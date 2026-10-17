@@ -12,7 +12,7 @@ export const T = {
     haendler: 'Ein Händler',
     paar: 'Die beiden',
   },
-  rooms: { hafen: 'Der Hafen von Ancona', lager: 'Das leere Lagerhaus' },
+  rooms: { hafen: 'Der Hafen von Ancona', gasse: 'Die Hintergasse', lager: 'Das leere Lagerhaus' },
   intro: {
     n1: 'Vier Jahre bei Alessandro. Dann ein Zettel, ein Päckchen und ein Ort: Ancona.',
     a: 'Hundert Dukaten. Ich soll sie einem Griechen bringen, der am Hafen wartet.',
@@ -22,6 +22,7 @@ export const T = {
     kampf: 'Der Fremde im Lagerhaus.',
     tor: 'Hinauskommen. Ein Balken liegt vor dem Tor.',
     klinge: 'Seine Klinge.',
+    gasse: 'Welches der sechs Lagerhäuser gestern Ware bekam. Die Spuren in der Hintergasse wissen es.',
   },
   items: {
     dukaten: { name: 'Hundert Dukaten', look: ['In Leinen eingeschlagen und verschnürt. Schwerer, als es aussieht.', 'Ich habe nicht nachgezählt. Alessandro zählt für alle.'] },
@@ -251,7 +252,58 @@ export const T = {
     },
     self: 'Die Hände zittern nicht mehr. Das ist fast das Schlimmste.',
   },
+  gasse: {
+    name: 'Die Hintergasse',
+    zurueck: { name: 'Zurück zum Hafen', look: 'Der Weg zurück zur Kaimauer.' },
+    tuer5NotYet: 'Ich weiß nicht, ob die Spur hierher führt. Ich will nicht raten.',
+    tor6Locked: ['Das Lagerhaus hinter diesem Tor. Es sieht aus wie die anderen fünf.', 'Welches der sechs bekam gestern Ware? Die Hintergasse weiß es, wenn ich sie lese.'],
+    spuren: {
+      name: 'Die Radspuren',
+      look: [
+        'Zwei Radspuren im Pflaster, frisch. Pferdemist dazwischen, noch nicht getrocknet.',
+        'Sie kommen vom Hafen herauf und enden an einer Tür. Sonst fährt hier niemand um diese Stunde.',
+      ],
+      again: 'Die Spuren enden an einer Tür. Welche, muss ich an den Türen sehen.',
+    },
+    tuer: [
+      {
+        name: 'Die erste Tür',
+        look: 'Kreidestriche neben der Tür, in Vierergruppen gezählt. Ein Händler rechnet hier, angekommen ist niemand.',
+        go: 'Verriegelt, und die Striche sind alt. Hier ist seit Wochen nichts mehr abgeladen worden.',
+      },
+      {
+        name: 'Die zweite Tür',
+        look: 'Ein Seil hängt über der Tür, über einen Haken geschlungen. Es ist grau und ausgefranst vom Regen.',
+        go: 'Das Seil hängt hier seit Jahren. Hier wird nichts angeliefert.',
+      },
+      {
+        name: 'Die dritte Tür',
+        look: 'Eine Pfütze vor der Tür, salzig. Sie stammt von den Wellen im Hafen, nicht von einem Wagen.',
+        go: 'Verriegelt. Das Wasser hier kommt vom Meer, nicht von einem Karren.',
+      },
+      {
+        name: 'Die vierte Tür',
+        look: 'Ein Holzkeil liegt unter der Tür. Sie ist seit Monaten nicht bewegt worden.',
+        go: 'Der Keil hält sie zu. Hier ist niemand ein- oder ausgegangen.',
+      },
+      {
+        name: 'Die fünfte Tür',
+        look: 'Eine breite Tür, frisch geschmiert, die Angeln glänzen. Hier wird oft geöffnet.',
+        go: 'Die Spuren enden hier. Hier wurde gestern die Ware abgeladen, und hier ist das Lagerhaus, nach dem ich frage.',
+      },
+      {
+        name: 'Die sechste Tür',
+        look: 'Eine Weinscherbe auf dem Pflaster, rot angetrocknet. Ein Streit, vielleicht gestern Nacht.',
+        go: 'Verriegelt. Der einzige Wein hier kam auf dem Rücken eines Mannes.',
+      },
+    ],
+  },
   hints: {
+    gasse: [
+      'Die Frage ist, welches Lagerhaus gestern Ware bekam.',
+      'Die Hintergasse hat die Antwort. Sieh dir die Spuren auf dem Pflaster an.',
+      'Die Spuren enden an einer Tür. Sieh dir die Türen an und sag es dir selbst, bevor du hineingehst.',
+    ],
     speicher: [
       'Alessandros Zettel sagt: Er wartet, wo es hell ist.',
       'In einem Speicher ist es nur hell, wenn das Dach offen ist. Sieh über die Dächer.',
