@@ -165,6 +165,11 @@ export interface RoomDef {
   ambient?: AmbientDef[];
   /** Multiply tint for actors in this room (night scenes), e.g. 0x9aa6c8. */
   actorTint?: Dyn<number>;
+  /** Darken the whole picture for dusk and night (0..1) with this colour (default deep blue). */
+  shade?: Dyn<number>;
+  shadeColor?: number;
+  /** The player cannot walk here (lying in cover, a painted full frame). Interactions happen in place. */
+  noWalk?: Dyn<boolean>;
   onEnter?: ScriptFn;
   /** Synchronous state set-up at the moment the room is swapped in, before it fades in
    * (e.g. people who came home ahead of the player). No commands. */
@@ -193,6 +198,14 @@ export interface ActorDef {
   talkOffset?: number;
   /** Fixed spot to stand at instead (e.g. in front of a counter). */
   talkSpot?: Dyn<Spot>;
+}
+
+export interface SelfDef {
+  name: Dyn<string>;
+  visible?: Cond;
+  verbs?: Dyn<Verb[]>;
+  on?: Partial<Record<Verb, Handler>>;
+  items?: Partial<Record<string, Handler>>;
 }
 
 export interface ItemDef {
@@ -261,6 +274,8 @@ export interface ChapterDef {
   intro?: ScriptFn;
   /** Resumable sequences for checkpoints, keyed by id. */
   resumes?: Record<string, ScriptFn>;
+  /** The player character as a target (target id 'self'): looking at oneself, tearing a shirt, … */
+  self?: SelfDef;
   next: string | null;
   /** Bundles to preload for the chapter. */
   assets?: string[];
@@ -281,7 +296,7 @@ export interface ScriptCtx {
   journal(id: string, status?: 'open' | 'done'): void;
   seen(id: string): boolean;
   mark(id: string): void;
-  place(actor: string, p: Partial<{ room: string | null; x: number; y: number; facing: Facing; pose: string; hidden: boolean; character: string }>): void;
+  place(actor: string, p: Partial<{ room: string | null; x: number; y: number; facing: Facing; pose: string; hidden: boolean; character: string; gait: string }>): void;
   /** Run a dialogue tree with its options until the player leaves. */
   dialogue(id: string): Script;
   /** Speak lines in sequence for the player character. */

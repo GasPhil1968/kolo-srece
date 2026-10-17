@@ -36,6 +36,8 @@ export const UI = {
     down: 'Hinunterklettern',
     count: 'Zählen',
     watch: 'Zusehen',
+    tear: 'Abreißen',
+    greet: 'Grüßen',
   } as Record<string, string>,
   useWith: (item: string) => `${item} benutzen mit …`,
   useOn: (item: string, target: string) => `${item} benutzen mit ${target}`,

@@ -139,8 +139,35 @@ export const solveDorf: Solver = (sim) => {
   return act('stall', 'watch');
 };
 
+// ----------------------------------------------------------------------------------- chapter 4
+
+export const solvePovratnik: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`po.${n}`];
+  const has = (i: string) => s.inventory.includes(i);
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const want of ['up', 'hide']) if (opts.includes(want)) return choose(want);
+    return pickOption(sim, []);
+  }
+  if (s.room === 'po_senke') return fl('ivoGone') ? act('waffen', 'use') : act('actor:ivo76', 'talk');
+  if (s.room === 'po_bilder') return act('ich', 'stand');
+  if (s.room === 'po_weg') {
+    if (!fl('drank')) return act('quelle', 'drink');
+    if (!has('krug') && !has('krug_schlinge')) return act('kapelle', 'take');
+    if (has('krug') && !fl('full')) return use('krug', 'quelle');
+    if (!has('krug_schlinge') && !has('streifen')) return act('self', 'tear');
+    if (has('krug') && has('streifen')) return use('krug', 'item:streifen');
+    return act('pfad', 'go');
+  }
+  if (!fl('stipanFled')) return fl('stipanCame') ? act('actor:stipan76', 'greet') : { k: 'walk', x: 520, y: 436 };
+  return act('tuer', 'knock');
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
   dorf: solveDorf,
+  povratnik: solvePovratnik,
 };

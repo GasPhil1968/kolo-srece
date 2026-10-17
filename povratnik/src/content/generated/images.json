@@ -1,4 +1,40 @@
 {
+ "bg_burial_0": {
+  "file": "bg/bg_burial_0.webp",
+  "h": 470,
+  "source": "povratnik1476/burial.png",
+  "w": 960
+ },
+ "bg_burial_1": {
+  "file": "bg/bg_burial_1.webp",
+  "h": 470,
+  "source": "povratnik1476/burial.png",
+  "w": 960
+ },
+ "bg_burial_2": {
+  "file": "bg/bg_burial_2.webp",
+  "h": 470,
+  "source": "povratnik1476/burial.png",
+  "w": 960
+ },
+ "bg_burial_3": {
+  "file": "bg/bg_burial_3.webp",
+  "h": 470,
+  "source": "povratnik1476/burial.png",
+  "w": 960
+ },
+ "bg_burial_4": {
+  "file": "bg/bg_burial_4.webp",
+  "h": 470,
+  "source": "povratnik1476/burial.png",
+  "w": 960
+ },
+ "bg_burial_5": {
+  "file": "bg/bg_burial_5.webp",
+  "h": 470,
+  "source": "povratnik1476/burial.png",
+  "w": 960
+ },
  "bg_dorf_1476_nacht": {
   "file": "bg/bg_dorf_1476_nacht.webp",
   "h": 470,
@@ -34,6 +70,54 @@
   "h": 470,
   "source": "bg/bg_enge.webp",
   "w": 1180
+ },
+ "bg_erde_0": {
+  "file": "bg/bg_erde_0.webp",
+  "h": 470,
+  "source": "povratnik1476/erde_0.webp",
+  "w": 960
+ },
+ "bg_erde_1": {
+  "file": "bg/bg_erde_1.webp",
+  "h": 470,
+  "source": "povratnik1476/erde_1.webp",
+  "w": 960
+ },
+ "bg_erde_2": {
+  "file": "bg/bg_erde_2.webp",
+  "h": 470,
+  "source": "povratnik1476/erde_2.webp",
+  "w": 960
+ },
+ "bg_erde_3": {
+  "file": "bg/bg_erde_3.webp",
+  "h": 470,
+  "source": "povratnik1476/erde_3.webp",
+  "w": 960
+ },
+ "bg_erde_4": {
+  "file": "bg/bg_erde_4.webp",
+  "h": 470,
+  "source": "povratnik1476/erde_4.webp",
+  "w": 960
+ },
+ "bg_erde_5": {
+  "file": "bg/bg_erde_5.webp",
+  "h": 470,
+  "source": "povratnik1476/erde_5.webp",
+  "w": 960
+ },
+ "bg_erde_6": {
+  "file": "bg/bg_erde_6.webp",
+  "h": 470,
+  "source": "povratnik1476/erde_6.webp",
+  "w": 960
+ },
+ "bg_erde_7": {
+  "file": "bg/bg_erde_7.webp",
+  "h": 470,
+  "source": "povratnik1476/erde_7.webp",
+  "w": 960
  },
  "bg_et_brand": {
   "file": "bg/bg_et_brand.webp",
@@ -482,6 +566,15 @@
   "x": 374,
   "y": 339
  },
+ "occ_rw_juniper": {
+  "derived": "occluder cut along a traced outline",
+  "file": "props/occ_rw_juniper.webp",
+  "h": 201,
+  "source": "povratnik1476/bg_rueckweg.webp",
+  "w": 453,
+  "x": 638,
+  "y": 209
+ },
  "occ_weide_wall": {
   "derived": "occluder cut along a traced outline",
   "file": "props/occ_weide_wall.webp",
@@ -520,6 +613,18 @@
   "h": 256,
   "source": "props/prop_sarajevo_dzezva.webp",
   "w": 256
+ },
+ "prop_eimer_gefallen": {
+  "file": "props/prop_eimer_gefallen.webp",
+  "h": 189,
+  "source": "povratnik1476/prop_eimer_gefallen.webp",
+  "w": 256
+ },
+ "prop_fenster_nacht": {
+  "file": "props/prop_fenster_nacht.webp",
+  "h": 291,
+  "source": "povratnik1476/prop_fenster_nacht.webp",
+  "w": 320
  },
  "prop_fensterplane": {
   "file": "props/prop_fensterplane.webp",

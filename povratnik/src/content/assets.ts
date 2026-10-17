@@ -21,6 +21,8 @@ export interface AnimMeta {
   refH: number;
   /** Optional per-animation atlas override (actions drawn on other sheets). */
   atlas?: string;
+  /** Ground speed when used as a walking animation (px/s at scale 1). */
+  speed?: number;
 }
 
 export interface CharMeta {
@@ -70,8 +72,8 @@ export function engineMeta(): AssetMeta {
   const characters: AssetMeta['characters'] = {};
   for (const k of allCharKeys()) {
     const c = charMeta(k)!;
-    const anims: Record<string, { frames: number; fps: number; loop: boolean }> = {};
-    for (const [n, a] of Object.entries(c.anims)) anims[n] = { frames: a.frames.length, fps: a.fps, loop: a.loop };
+    const anims: Record<string, { frames: number; fps: number; loop: boolean; speed?: number }> = {};
+    for (const [n, a] of Object.entries(c.anims)) anims[n] = { frames: a.frames.length, fps: a.fps, loop: a.loop, speed: a.speed };
     characters[k] = { anims, walkSpeed: c.walkSpeed };
   }
   return { characters };

@@ -61,6 +61,11 @@ BACKGROUNDS = {
     'bg_steinblock78': 'village-polish/bg_steinblock78_1878.webp',
     'bg_fremdesdorf': 'village-polish/bg_fremdesdorf_1878.webp',
     'bg_ending': 'bg/bg_ending.webp',
+    # 1476: the burial (3 x 2 full frames of 960 x 470 in one sheet) and waking in the grave
+    # (eight full-frame paintings with the grave visibly dug open; registered but unused in the old
+    # build, which showed sprites on an intact mound).
+    **{f'bg_burial_{i}': {'src': 'povratnik1476/burial.png', 'crop': [(i % 3) * 960, (i // 3) * 470, 960, 470]} for i in range(6)},
+    **{f'bg_erde_{i}': f'povratnik1476/erde_{i}.webp' for i in range(8)},
 }
 
 # Full-screen images for chapter cards and menus (960 x 600) and the logo.
@@ -95,12 +100,18 @@ def main() -> None:
     only = set(sys.argv[1:])
     meta = {}
     for group, table, sub in (('bg', BACKGROUNDS, 'bg'), ('screen', SCREENS, 'screens'), ('cine', CINES, 'cine')):
-        for key, src in table.items():
+        for key, spec in table.items():
             if only and key not in only:
                 continue
+            src = spec if isinstance(spec, str) else spec['src']
+            crop = None if isinstance(spec, str) else spec.get('crop')
             im = Image.open(ref(src))
             out = os.path.join(PUBLIC, sub, f'{key}.webp')
-            if src.endswith('.webp'):
+            if crop:
+                x, y, w, h = crop
+                im = im.convert('RGB').crop((x, y, x + w, y + h))
+                save_webp(im, out, quality=90)
+            elif src.endswith('.webp'):
                 # Already WebP: copy the original bytes (no generation loss).
                 ensure_dir(os.path.dirname(out))
                 shutil.copyfile(ref(src), out)

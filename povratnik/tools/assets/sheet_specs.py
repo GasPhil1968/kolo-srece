@@ -127,6 +127,100 @@ SHEETS = {
         'src': 'props/prop_village_crowd_fear.webp', 'grid': (2, 3), 'refH': 172, 'anchor': 'bottom', 'anchor_x': 140, 'clean': False,
         'anims': {'stand': {'frames': timed([0, 1, 0, 2, 5, 0, 3, 5, 0, 4, 5], [4.3, 1.4, 3.1, 2.1, 2.0, 3.7, 1.8, 1.6, 4.9, 1.1, 1.6], 10), 'fps': 10, 'loop': True}},
     },
+    # --- 1476 ----------------------------------------------------------------------------------
+    # Mijo at 21 (povratnik1476/*): all sheets share 270x240 cells, feet at (135, 214.5), a standing
+    # figure 195 px tall (mijo_actions_frames.json referenceHeight), native facing right.
+    'mijo1476': {
+        'src': 'povratnik1476/mijo.webp', 'grid': (10, 8), 'refH': 195, 'anchor': (135, 214.5), 'walkSpeed': 120,
+        'extra': {
+            'a': {'src': 'povratnik1476/mijo_actions.png', 'grid': (6, 4), 'anchor': (135, 214.5)},
+            'd': {'src': 'povratnik1476/mijo_death.png', 'grid': (4, 2), 'anchor': (135, 214.5)},
+            'r': {'src': 'povratnik1476/mijo_recovery.png', 'grid': (4, 1), 'anchor': (135, 214.5)},
+        },
+        'anims': {
+            'stand': {'frames': [12], 'loop': True},
+            'walk': {'frames': [0, 1, 2, 3, 4, 5], 'fps': 8, 'loop': True},
+            'slow': {'frames': [6, 7, 8, 9, 10, 11], 'fps': 4.5, 'loop': True, 'speed': 62},
+            'weary': {'frames': ['a6', 'a7', 'a8', 'a9', 'a10', 'a11'], 'fps': 5.5, 'loop': True, 'speed': 80},
+            'helmet': {'frames': [14, 15, 16, 17], 'fps': 4},
+            'helmetStand': {'frames': [14], 'loop': True},
+            'prone': {'frames': [18], 'loop': True},
+            'proneLook': {'frames': [19], 'loop': True},
+            'thrust': {'frames': [20, 21, 22, 23, 24], 'fps': 5},
+            'retch': {'frames': [31, 32, 33, 34], 'fps': 4},
+            'neck': {'frames': [41, 42, 43, 44], 'fps': 4},
+            'sit': {'frames': [45, 46], 'fps': 0.6, 'loop': True},
+            'rise': {'frames': [47, 48, 49, 50, 51, 52], 'fps': 4},
+            'spit': {'frames': [53, 54, 55], 'fps': 3.5},
+            'wash': {'frames': [62, 63, 64, 65], 'fps': 3.5},
+            'freeze': {'frames': [66, 67], 'fps': 0.8, 'loop': True},
+            'half': {'frames': [68, 69, 70], 'fps': 3},
+            'listen': {'frames': [71, 72], 'fps': 0.7, 'loop': True},
+            'raise': {'frames': [73, 74, 75], 'fps': 3},
+            'lower': {'frames': [76, 77, 78, 79], 'fps': 3},
+            'drink': {'frames': ['a0', 'a1', 'a2', 'a3', 'a4', 'a5'], 'fps': 1.6},
+            'stumble': {'frames': ['a12', 'a13', 'a14', 'a15'], 'fps': 3.5},
+            'sitdown': {'frames': ['a16', 'a17', 'a18', 'a19'], 'fps': 3},
+            'rest': {'frames': ['a20', 'a21'], 'fps': 0.5, 'loop': True},
+            'death': {'frames': ['d0', 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7'], 'fps': 2.5},
+            'deathRest': {'frames': ['d7'], 'loop': True},
+        },
+    },
+    # The raider (povratnik1476/attacker.png, 4 cells of 300x270): poised, raised, the horizontal cut,
+    # follow-through. Non-graphic: no blood anywhere in the sheet.
+    'raider': {
+        'src': 'povratnik1476/attacker.png', 'grid': (4, 1), 'refH': 210, 'anchor': (150, 249.5),
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'strike': {'frames': [0, 1, 2, 3], 'fps': 3.2}, 'after': {'frames': [3], 'loop': True}},
+    },
+    # Ivo, a boy from the village (irregular frames, anchors from povratnik-1476-side-poses).
+    'ivo': {
+        'src': 'povratnik1476/ivo.webp', 'refH': 384,
+        'rects': [[107, 15, 298, 355], [574, 15, 333, 355], [1042, 14, 325, 357], [196, 375, 154, 389], [625, 377, 152, 387],
+                  [976, 391, 318, 373], [108, 760, 325, 348], [547, 760, 341, 348], [985, 765, 314, 343]],
+        'anchors': [(93, 353), (95, 353), (97, 354), (74, 384), (72.5, 382), (148, 368), (163, 343), (185, 343), (154, 338)],
+        'anims': {
+            'stand': {'frames': [0], 'loop': True, 'refH': 354},
+            'point': {'frames': [0, 1, 2], 'fps': 2.5, 'refH': 354},
+            'pray': {'frames': [3, 4], 'fps': 1.2, 'loop': True},
+            'walk': {'frames': [5, 6, 7, 8], 'fps': 9, 'loop': True},
+        },
+        'walkSpeed': 260,
+    },
+    # Stipan, a neighbour fetching water at night (5x4 cells of 320x320, feet at y 286).
+    'stipan': {
+        'src': 'povratnik1476/stipan.webp', 'grid': (5, 4), 'refH': 240, 'ground': 286,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'walk': {'frames': [0, 1, 2, 3, 4, 5], 'fps': 7, 'loop': True},
+            'near': {'frames': [6, 7, 8, 9], 'fps': 2.2},
+            'recognize': {'frames': [10, 11], 'fps': 1.6},
+            'drop': {'frames': [12, 13, 14, 15], 'fps': 4},
+            'run': {'frames': [16, 17, 18, 19], 'fps': 10, 'loop': True},
+        },
+        'walkSpeed': 110,
+    },
+    # A woman on the path with a bundle on her head (irregular frames of one walk cycle).
+    'frau': {
+        'src': 'povratnik1476/frau.webp', 'refH': 335,
+        'rects': [[31, 3, 194, 405], [314, 9, 206, 399], [576, 6, 203, 402], [841, 4, 214, 404], [1110, 6, 237, 402], [1406, 9, 224, 399],
+                  [1670, 9, 241, 399], [23, 409, 218, 397], [310, 410, 184, 396], [577, 412, 198, 394], [852, 412, 224, 394],
+                  [1135, 413, 219, 393], [1407, 415, 225, 391], [1663, 416, 221, 390]],
+        'anchors': [(104.5, 400), (95.5, 394), (115, 397), (120.5, 399), (124, 397), (96.5, 394), (112.5, 394), (111, 392),
+                    (100.5, 391), (108, 389), (109, 389), (100, 388), (97.5, 386), (105.5, 385)],
+        'anims': {'stand': {'frames': [4], 'loop': True}, 'walk': {'frames': list(range(14)), 'fps': 7, 'loop': True}},
+        'walkSpeed': 70,
+    },
+    # Dust of riders on the far ridge (two cloud shapes, slowly alternating).
+    'staub': {
+        'src': 'povratnik1476/staub.webp', 'refH': 232, 'clean': False, 'defringe': False,
+        'rects': [[35, 253, 1057, 232], [1137, 297, 978, 194]], 'anchors': [(528.5, 116), (489, 97)],
+        'anims': {'stand': {'frames': [0, 1], 'fps': 0.8, 'loop': True}},
+    },
+    # Water running from the spring spout (povratnik1476/water.png, 4x2 cells of 204x123).
+    'quellwasser': {
+        'src': 'povratnik1476/water.png', 'grid': (4, 2), 'refH': 123, 'anchor': (0, 0), 'clean': False, 'defringe': False,
+        'anims': {'stand': {'frames': list(range(8)), 'fps': 10, 'loop': True}},
+    },
 }
 
 PROPS = {
@@ -164,6 +258,9 @@ PROPS = {
     'prop_tally13': 'props/prop_tally13.webp',
     'prop_tally9': 'props/prop_tally9.webp',
     'prop_herd_return': 'props/prop_herd_return.webp',
+    # 1476
+    'prop_fenster_nacht': 'povratnik1476/prop_fenster_nacht.webp',
+    'prop_eimer_gefallen': 'povratnik1476/prop_eimer_gefallen.webp',
 }
 
 ICONS = {
@@ -175,4 +272,7 @@ ICONS = {
     'wacholder': {'src': 'ui/inv.webp', 'cell': (4, 4, 9)},
     'kerbhoelzer': {'src': 'ui/inv.webp', 'cell': (4, 4, 13)},
     'kerbholz': {'src': 'props/prop_tally13.webp'},
+    'krug': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 9)},
+    'streifen': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 12)},
+    'krug_schlinge': {'src': 'puzzles-v6/travel-tools.png', 'cell': (4, 4, 3)},
 }

@@ -4,6 +4,7 @@ import type { Engine, EngineEvent } from '../core/engine';
 import type { GameScene, SceneHooks, Target } from '../view/scene';
 import { dyn } from '../core/content';
 import { UI, verbLabel } from '../content/text/de/ui';
+import { imageMeta } from '../content/assets';
 import { button, clear, el } from './dom';
 import { Menus } from './menus';
 import { Saves, SlotId, Store } from '../platform/storage';
@@ -489,7 +490,7 @@ export class GameUI implements SceneHooks {
       this.cardRef = c;
       const idx = this.engine.content.order.indexOf(this.engine.state.chapter);
       const card = el('div', { class: 'overlay card', 'data-testid': 'card' });
-      if (c.image) card.append(el('img', { class: 'bg', src: `assets/screens/${c.image}.webp`, alt: '' }));
+      if (c.image) card.append(el('img', { class: 'bg', src: `assets/${imageMeta(c.image)?.file ?? `screens/${c.image}.webp`}`, alt: '' }));
       card.append(el('div', { class: 'shade' }));
       if (c.cine) {
         const cine = el('div', { class: 'cine', style: `background-image:url(assets/cine/${c.cine}.webp)` });

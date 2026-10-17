@@ -27,6 +27,8 @@ export interface AnimInfo {
   frames: number;
   fps: number;
   loop: boolean;
+  /** Ground speed when this animation is used for walking (px/s at scale 1). */
+  speed?: number;
 }
 
 export interface CharacterInfo {
@@ -93,6 +95,8 @@ export interface VignetteView {
 interface ActorRT {
   path: Vec[];
   speed: number;
+  /** Walking animation for the current path (scripted walks), overriding the actor's gait. */
+  walkAnim?: string;
   anim: { name: string; t: number; loop: boolean; times: number; rest: boolean } | null;
   walkT: number;
   arrivedFace?: Facing;
@@ -321,7 +325,7 @@ export class Engine {
     const a = this.state.actors[id];
     const r = this.rt.get(id);
     if (r?.anim) return { name: r.anim.name, t: r.anim.t, loop: r.anim.loop, times: r.anim.times };
-    if (r && r.path.length) return { name: 'walk', t: r.walkT, loop: true, times: 1 };
+    if (r && r.path.length) return { name: r.walkAnim ?? a?.gait ?? 'walk', t: r.walkT, loop: true, times: 1 };
     const info = a ? this.charInfo(a.character)?.anims[a.pose] : undefined;
     // A non-looping resting pose shows its last frame.
     if (info && !info.loop) return { name: a.pose, t: 1e6, loop: false, times: 1 };
@@ -451,7 +455,7 @@ export class Engine {
 
   // ------------------------------------------------------------------ actors
 
-  placeActor(id: string, p: Partial<{ room: string | null; x: number; y: number; facing: Facing; pose: string; hidden: boolean; character: string }>): void {
+  placeActor(id: string, p: Partial<{ room: string | null; x: number; y: number; facing: Facing; pose: string; hidden: boolean; character: string; gait: string }>): void {
     let a = this.state.actors[id];
     if (!a) {
       const def = this.actorDef(id);
@@ -480,7 +484,7 @@ export class Engine {
     return r;
   }
 
-  private startWalk(id: string, to: Vec, speed?: number, face?: Facing, direct?: { via?: [number, number][] }): boolean {
+  private startWalk(id: string, to: Vec, speed?: number, face?: Facing, direct?: { via?: [number, number][] }, anim?: string): boolean {
     const a = this.state.actors[id];
     if (!a || a.room !== this.state.room) return false;
     const room = this.room;
@@ -494,7 +498,9 @@ export class Engine {
     r.anim = null;
     r.path = path;
     r.arrivedFace = face;
-    r.speed = speed ?? this.charInfo(a.character)?.walkSpeed ?? 120;
+    r.walkAnim = anim;
+    const info = this.charInfo(a.character);
+    r.speed = speed ?? info?.anims[anim ?? a.gait ?? 'walk']?.speed ?? info?.walkSpeed ?? 120;
     if (!path.length) {
       if (face) a.facing = face;
       return false;
@@ -528,6 +534,7 @@ export class Engine {
       }
       if (!r.path.length) {
         r.walkT = 0;
+        r.walkAnim = undefined;
         if (r.arrivedFace) a.facing = r.arrivedFace;
       }
     }
@@ -744,7 +751,7 @@ export class Engine {
     switch (i.k) {
       case 'walk': {
         // A hidden player character (seated in a prop, lying down) does not walk.
-        if (this.state.actors[PC]?.hidden) return false;
+        if (this.state.actors[PC]?.hidden || this.noWalk()) return false;
         this.pendingAct = null;
         this.startWalk(PC, { x: i.x, y: i.y });
         return true;
@@ -760,7 +767,7 @@ export class Engine {
         const spot = this.approachSpot(tgt);
         if (spot === undefined) return false;
         this.pendingAct = { intent: i, target: tgt };
-        if (spot && !this.state.actors[PC]?.hidden) {
+        if (spot && !this.state.actors[PC]?.hidden && !this.noWalk()) {
           const moving = this.startWalk(PC, spot, undefined, spot.face);
           if (moving) return true;
         }
@@ -776,8 +783,15 @@ export class Engine {
     return false;
   }
 
+  /** The player character is a target in this chapter (and room) right now. */
+  selfTarget(): boolean {
+    const d = this.chapter.self;
+    return !!d && (!d.visible || d.visible(this.state)) && !this.state.actors[PC]?.hidden;
+  }
+
   /** Where the player stands to interact with target; null = in place; undefined = invalid target. */
   private approachSpot(target: string): Spot | null | undefined {
+    if (target === 'self') return this.selfTarget() ? null : undefined;
     if (target.startsWith('actor:')) {
       const id = target.slice(6);
       const a = this.state.actors[id];
@@ -829,6 +843,12 @@ export class Engine {
   }
 
   verbsFor(target: string): Verb[] {
+    if (target === 'self') {
+      const d = this.chapter.self;
+      if (!d || !this.selfTarget()) return [];
+      if (d.verbs) return dyn(d.verbs, this.state);
+      return orderVerbs([...new Set<Verb>(['look', ...Object.keys(d.on ?? {})])]);
+    }
     if (target.startsWith('actor:')) {
       const def = this.actorDef(target.slice(6));
       if (!def) return [];
@@ -867,7 +887,12 @@ export class Engine {
       id = `combine:${i.item}+${other}`;
     } else if (i.k === 'act' || i.k === 'useItem') {
       const tgt = i.target;
-      if (tgt.startsWith('actor:')) {
+      if (tgt === 'self') {
+        const d = this.chapter.self;
+        if (!d || !this.selfTarget()) return;
+        handler = i.k === 'act' ? d.on?.[i.verb] ?? (i.verb === 'look' ? generic('look') : generic('use')) : d.items?.[i.item] ?? generic('useItem');
+        id = i.k === 'act' ? `${i.verb}:self` : `item:${i.item}>self`;
+      } else if (tgt.startsWith('actor:')) {
         const aid = tgt.slice(6);
         const def = this.actorDef(aid);
         if (!def) return;
@@ -1039,7 +1064,7 @@ export class Engine {
         };
       }
       case 'walk': {
-        const moving = this.startWalk(cmd.actor, { x: cmd.x, y: cmd.y }, cmd.speed, cmd.face, cmd.direct ? { via: cmd.via } : undefined);
+        const moving = this.startWalk(cmd.actor, { x: cmd.x, y: cmd.y }, cmd.speed, cmd.face, cmd.direct ? { via: cmd.via } : undefined, cmd.anim);
         if (!moving) {
           // Unreachable or already there: arrive in place, never hang.
           const a = this.state.actors[cmd.actor];
@@ -1389,6 +1414,11 @@ export class Engine {
       this.stepRunner(0);
       return;
     }
+  }
+
+  private noWalk(): boolean {
+    const r = this.content.rooms.get(this.state.room);
+    return !!(r?.noWalk !== undefined && dyn(r.noWalk, this.state));
   }
 
   /** Developer and test helper: change rooms through the normal transition (prepare, onEnter, autosave). */

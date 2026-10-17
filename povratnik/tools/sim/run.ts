@@ -46,7 +46,8 @@ function checkInvariants(sim: Sim): string | null {
   if (!pc || pc.room !== s.room) return 'player not in current room';
   const room = e.room;
   const nav = e.navFor(room);
-  if (!nav.isWalkable(pc)) {
+  // Scripted walks may leave the walk area (off-screen exits); free play may not.
+  if (e.inputMode() === 'free' && !e.gameEnded && !pc.hidden && !nav.isWalkable(pc)) {
     const n = nav.nearestWalkable(pc);
     if (Math.hypot(n.x - pc.x, n.y - pc.y) > 4) return `player off walkable area at ${pc.x.toFixed(0)},${pc.y.toFixed(0)} in ${room.id}`;
   }

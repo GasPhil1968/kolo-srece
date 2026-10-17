@@ -118,6 +118,7 @@ export class Sim {
     const e = this.engine;
     const out = e.visibleHotspots().map((h) => h.id);
     for (const id of e.roomActors()) if (id !== 'pc' && e.actorDef(id)) out.push(`actor:${id}`);
+    if (e.selfTarget()) out.push('self');
     return out;
   }
 

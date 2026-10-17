@@ -48,6 +48,8 @@ export class GameScene extends Phaser.Scene {
   private actorViews = new Map<string, ActorView>();
   private layerViews = new Map<string, Phaser.GameObjects.Image | Phaser.GameObjects.Sprite>();
   private fadeRect!: Phaser.GameObjects.Rectangle;
+  /** Dusk and night: darkens the picture under the fade and above everything in the room. */
+  private shadeRect!: Phaser.GameObjects.Rectangle;
   private roomId = '';
   private loadingKeys = new Set<string>();
   private ready = false;
@@ -73,6 +75,7 @@ export class GameScene extends Phaser.Scene {
     cam.setViewport(0, 0, VIEW_W * R, VIEW_H * R);
     cam.setBackgroundColor('#000000');
     this.fadeRect = this.add.rectangle(0, 0, VIEW_W, VIEW_H, 0x000000, 1).setOrigin(0, 0).setScrollFactor(0).setDepth(100000);
+    this.shadeRect = this.add.rectangle(0, 0, VIEW_W, VIEW_H, 0x0a1028, 1).setOrigin(0, 0).setScrollFactor(0).setDepth(60000).setVisible(false);
     this.highlightGfx = this.add.graphics().setDepth(90000);
     this.ambience = new Ambience(this);
     this.input.mouse?.disableContextMenu();
@@ -264,6 +267,8 @@ export class GameScene extends Phaser.Scene {
     cam.setScroll(sx, sy);
     this.syncLayers(room);
     this.syncActors(room);
+    const shade = room.shade !== undefined ? dyn(room.shade, s) : 0;
+    this.shadeRect.setFillStyle(room.shadeColor ?? 0x0a1028, 1).setAlpha(shade).setVisible(shade > 0.001);
     this.ambience.update(dt, engine);
     this.drawHighlight(room);
   }
@@ -466,6 +471,13 @@ export class GameScene extends Phaser.Scene {
       if (this.alphaAt(sp, wx, wy) > 40 || this.nearBody(sp, wx, wy)) {
         const def = engine.actorDef(id)!;
         return { id: `actor:${id}`, name: dyn(def.name, s), exit: false };
+      }
+    }
+    // The player character, when the chapter makes it a target (looking at oneself, the torn shirt).
+    if (engine.selfTarget()) {
+      const v = this.actorViews.get('pc');
+      if (v && v.sprite.visible && v.sprite.getBounds().contains(wx, wy) && (this.alphaAt(v.sprite, wx, wy) > 40 || this.nearBody(v.sprite, wx, wy))) {
+        return { id: 'self', name: dyn(engine.chapter.self!.name, s), exit: false };
       }
     }
     // Hotspots bound to (moving) decor figures, front to back.

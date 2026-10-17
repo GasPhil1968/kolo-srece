@@ -15,6 +15,8 @@ export interface ActorPlacement {
   /** Persistent resting pose ('stand', 'sit', 'lie', ...). Transient script poses are not saved. */
   pose: string;
   hidden: boolean;
+  /** Walking animation when not the default 'walk' (e.g. 'weary' on the way home in 1476). */
+  gait?: string;
 }
 
 export interface GameState {

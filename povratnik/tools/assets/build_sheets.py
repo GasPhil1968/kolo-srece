@@ -103,6 +103,8 @@ def build_sheet(key: str, spec: dict) -> dict:
             'loop': a.get('loop', False),
             'refH': a.get('refH', spec['refH']),
         }
+        if 'speed' in a:
+            meta_anims[name]['speed'] = a['speed']
     return {
         'atlas': f'atlas/{key}',
         'walkSpeed': spec.get('walkSpeed', 150),
