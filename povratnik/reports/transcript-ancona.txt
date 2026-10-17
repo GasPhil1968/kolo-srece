@@ -1,0 +1,101 @@
+== Ancona – Adriaküste, Mai 1507 / Mijo ist einundfünfzig Jahre alt und sieht aus wie einundzwanzig. / Er hat noch nie einen sterben sehen, der nicht tot blieb. ==
+  (Vier Jahre bei Alessandro. Dann ein Zettel, ein Päckchen und ein Ort: Ancona.)
+  MIJO: Hundert Dukaten. Ich soll sie einem Griechen bringen, der am Hafen wartet.
+> go tor6
+  MIJO: Ein Druck hinter den Augen. Ein Ziehen in den Zähnen.
+  MIJO: So war es jeden Morgen bei Alessandro, bis man es nicht mehr merkte. Hier ist es stärker.
+  MIJO: Es steht einen Spalt offen. Drinnen ist es hell.
+  (Er hat es nicht zufällig gewählt: kein Dach heißt Licht, und Licht heißt, dass man sieht, was man tut.)
+  (Er ging hinein. Die Halle war leer, der Boden aus Backstein, und im Dachriss stand die Sonne.)
+-> an_lager (tor)
+  MIJO: Ich bringe hundert Dukaten. Alessandro schickt mich.
+  DER FREMDE: Natürlich bringst du Geld.
+  (Er lässt die Hand am Gürtel.)
+  DER FREMDE: Wie alt bist du?
+  ? Einundfünfzig. Einunddreißig davon so. | Alt genug.
+> choose true
+  MIJO: Einundfünfzig. Einunddreißig davon so.
+  DER FREMDE: Einunddreißig. Und er hat dich allein geschickt.
+  ? Nimm das Geld. Dann gehe ich. | Was hat er dir von mir gesagt? | Woher kommst du?
+> choose meister
+  MIJO: Was hat er dir von mir gesagt?
+  DER FREMDE: Dass er einen bei sich hat. Der noch nicht lange dabei ist.
+  ? Nimm das Geld. Dann gehe ich. | Woher kommst du?
+> choose woher
+  MIJO: Woher kommst du?
+  DER FREMDE: Aus einer Stadt, die vier Tage gebrannt hat. Die Angreifer trugen mein eigenes Kreuz.
+  DER FREMDE: Seitdem fechte ich. Dreihundert Jahre gegen Fechter.
+  ? Nimm das Geld. Dann gehe ich.
+> choose geld
+  MIJO: Nimm das Geld. Dann gehe ich.
+  DER FREMDE: Behalt es. Das Geld ist nicht der Preis.
+  (Da verstand er, was er mitgebracht hatte.)
+  (Das Gespräch verstummt. Der Fremde schließt kurz die Augen.)
+  [Seine Spitze sinkt bis zum Knie. Er kommt von unten.]
+> combat tief
+  [Klinge an Klinge, tief. Der Hieb bleibt hängen.]
+  [Er holt weit aus. Die Klinge liegt quer, in Hüfthöhe, hinter seinem Rücken.]
+> combat weg
+  [Zurück, eine Handbreit. Die Klinge streift die Luft vor seiner Hüfte.]
+  [Eine Pause. Dann dreht er die Hüfte ein, die Klinge hoch hinter der Schulter.]
+> combat hinein
+  [Diesen Hieb kennt Mijo. Vier Jahre lang, jeden zweiten Tag. Nach vorn, unter den Arm, den Ellbogen unters Kinn. Er fällt, und Mijo fällt mit.]
+  [Am Boden. Die Schwerter liegen irgendwo hinter ihnen. Er will unter Mijo heraus, sein Kragen ist nah.]
+> combat kragen
+  [Nicht loslassen. Das ist die ganze Kunst, und sie stammt von einer Weide.]
+  [Er rollt über Mijo und drückt mit dem ganzen Körper. Unter ihnen geben die Backsteine nach.]
+> combat gewicht
+  [Nicht dagegen. Mit ihm. Er rollt weiter, als er wollte, und Mijo ist oben.]
+  [Er reißt die Arme hoch und schlägt nach Mijo. Mijos linke Hand ist frei.]
+> combat daumen
+  [Was niemand tut, den man kennt. Dreihundert Jahre gegen Fechter – und keiner hat je das getan.]
+  [close-up: thumb_an press]
+  (Fair ist eine Regel aus einer Fechtschule. Hier gilt sie nicht.)
+  (Er ließ ihn los. Der Fremde kniete und hielt sich das Auge.)
+  MIJO: Steh auf. Nimm dein Schwert.
+  DER FREMDE: Nein.
+  DER FREMDE: Damit du dir besser vorkommst? Ich habe verloren.
+  (Seine Hände fanden den Griff erst beim zweiten Mal.)
+  DER FREMDE: Nimm du es. Es ist besser als deins. Es wird dich überleben.
+  MIJO: Warum?
+  DER FREMDE: Frag deinen Meister.
+  ? Zuschlagen. | Das Schwert sinken lassen.
+> choose strike
+  (Er schlug einmal.)
+  (Es reichte nicht.)
+  (Er schlug ein zweites Mal.)
+  (Dann war es still im Lagerhaus.)
+  (Etwas kam aus dem Hals des Toten. Licht, oder etwas, das sich wie Licht benahm.)
+  (Der Körper hörte auf, ihm zu gehören.)
+  (Nicht das Bewusstsein. Die Grenze, an der er aufhörte und alles andere anfing.)
+  (Das Schwert glitt ihm aus der Hand.)
+  MIJO: Es geht nicht weg.
+  (Nach einer Weile kam er auf die Beine.)
+> read klinge
+  (Er las sie, und er verstand sie, und er wird sie nie wieder verstehen.)
+  MIJO: Nikephoros. Der den Sieg trägt. So hieß er.
+  (Ein Zimmer in Rimini. Ein Tisch. Zwei Männer.)
+  ALESSANDRO: Ich habe einen bei mir. Der ist noch nicht lange dabei.
+  NIKEPHOROS: Wie lange?
+  ALESSANDRO: Kurz genug.
+  (Was in einem Zimmer in Rimini gesagt worden war, wusste er auch.)
+> take haufen
+  MIJO: Die Bretter sind leicht. Ich werfe sie zur Seite. Der Balken bleibt liegen.
+> take tau
+  MIJO: Ich rolle es auf und nehme es.
+> take haken
+  MIJO: Ich nehme den Haken.
+> an_tau -> item:an_haken
+  MIJO: Ich knote den Haken an das Tau. Fest.
+> an_tau_haken -> rolle
+  MIJO: Ich werfe das Hakenende über die Rolle. Beim dritten Mal läuft es durch.
+> use balken
+  MIJO: Ich ziehe das Hakenende herunter, lege das Tau als Schlinge um beide Enden und hänge den Haken ein.
+> take salzsack
+  MIJO: Ich hebe ihn nicht. Ich schleife ihn hinter mir her.
+> an_salzsack -> rolle
+  MIJO: Ich binde den Sack an das freie Ende und ziehe mit. Der Sack sinkt, der Balken steigt.
+  MIJO: Der Sack setzt neben dem Pfosten auf. Ich mache das Tau daran fest. Das Tor ist frei.
+> go tor
+  (Er ging hinaus. Und der andere ging mit ihm.)
+== Ende des Kapitels ==

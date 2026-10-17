@@ -36,6 +36,8 @@ export interface CharMeta {
   extra?: Record<string, Record<string, FrameMeta>>;
   /** Native facing of the art (1 = right, -1 = left). */
   facing?: number;
+  /** Measured points per frame in cell coordinates (e.g. the end points of a discharge). */
+  points?: Record<string, number[][]>;
 }
 
 export interface ImageMeta {

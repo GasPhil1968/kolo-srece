@@ -58,13 +58,14 @@ export class Sim {
     this.settle();
   }
 
-  /** Advance until idle, a choice or combat waits; returns the mode. Fails on timeouts. */
+  /** Advance until idle, a choice or an open combat decision waits; returns the mode. Fails on timeouts. */
   settle(maxSeconds = 900): InputMode {
     const e = this.engine;
     let t = 0;
     for (;;) {
       const m = e.inputMode();
-      if (m === 'choice' || m === 'combat') return m;
+      // A fight waits for input only while a decision is open (cues); its other phases play on.
+      if (m === 'choice' || (m === 'combat' && (!e.combat || e.combat.phase === 'cue'))) return m;
       if (m === 'free' && !e.isWalking('pc')) {
         // one more tick lets rules fire
         e.update(this.dt);

@@ -312,6 +312,119 @@ SHEETS = {
         'src': 'elf-tage/uncle_hands.png', 'grid': (4, 2), 'refH': 200, 'anchor': 'bottom', 'anchor_x': 140,
         'anims': {'stand': {'frames': [6], 'loop': True}, 'cut': {'frames': [6], 'loop': True}, 'healed': {'frames': [7], 'loop': True}},
     },
+    # --- Ancona, May 1507 ------------------------------------------------------------------------
+    # The duel, the talk after it and the execution are painted as pairs on 384 x 216 cells (Mijo left,
+    # facing right; Nikephoros right, facing left; common ground line at y 208). The pair is drawn as one
+    # figure anchored on that line, so every frame keeps its place on the floor. In three wind-up cells of
+    # sword-a Mijo's hand is painted empty; his own sword (ancona-v4/mijo-sword.png) is put back at the hand.
+    'duel_an': {
+        'src': 'ancona-v2/sword-a.webp', 'grid': (4, 4), 'refH': 188, 'anchor': (192, 208), 'clean': False,
+        'patches': {
+            8: [{'src': 'ancona-v4/mijo-sword.png', 'at': (61, 130), 'anchor': (13.63, 11.33), 'rot': 0.28}],
+            12: [{'src': 'ancona-v4/mijo-sword.png', 'at': (53, 127), 'anchor': (13.63, 11.33), 'rot': 0.39}],
+            13: [{'src': 'ancona-v4/mijo-sword.png', 'at': (67, 139), 'anchor': (13.63, 11.33), 'rot': 0.24}],
+        },
+        'extra': {
+            'b': {'src': 'ancona-v2/sword-b.webp', 'grid': (4, 4), 'anchor': (192, 208)},
+            'g': {'src': 'ancona-v2/grapple-a.webp', 'grid': (4, 4), 'anchor': (192, 208)},
+            'h': {'src': 'ancona-v2/grapple-b.webp', 'grid': (4, 4), 'anchor': (192, 208)},
+            'x': {'src': 'ancona-v2/execution.webp', 'grid': (4, 4), 'anchor': (192, 208)},
+        },
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'mijoTalk': {'frames': [1], 'loop': True},
+            'nikTalk': {'frames': [2], 'loop': True},
+            'belt': {'frames': [3], 'loop': True},
+            'draw': {'frames': [4, 5, 6, 7], 'fps': 2.4},
+            'guard': {'frames': [7], 'loop': True},
+            'lowCue': {'frames': [8], 'loop': True},
+            'lowGood': {'frames': [9, 10, 11], 'fps': 3},
+            'hipCue': {'frames': [12], 'loop': True},
+            'hipGood': {'frames': [13, 14, 15], 'fps': 3},
+            'guard2': {'frames': [15], 'loop': True},
+            'hurt': {'frames': ['b12', 'b13'], 'fps': 2.5},
+            'turnCue': {'frames': ['b0', 'b1'], 'fps': 1.6},
+            'turnGood': {'frames': ['b2', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b9', 'b10', 'b11'], 'fps': 4},
+            'gripCue': {'frames': ['g8'], 'loop': True},
+            'gripGood': {'frames': ['g9'], 'fps': 1.2},
+            'gripFail': {'frames': ['g10', 'g11', 'g12'], 'fps': 2.5},
+            'weightCue': {'frames': ['h0'], 'loop': True},
+            'weightGood': {'frames': ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7'], 'fps': 3.5},
+            'weightFail': {'frames': ['h1', 'h0'], 'fps': 2},
+            'thumbCue': {'frames': ['h7'], 'loop': True},
+            'thumbGood': {'frames': ['h8', 'h9', 'h10', 'h11'], 'fps': 2.5},
+            'thumbFail': {'frames': ['g13', 'g14', 'g15'], 'fps': 2.5},
+            'pin': {'frames': ['h12', 'h13', 'h14', 'h15'], 'fps': 2},
+            'pinned': {'frames': ['h15'], 'loop': True},
+            'after': {'frames': ['x0'], 'loop': True},
+            'takeSword': {'frames': ['x1', 'x2', 'x3'], 'fps': 1.6},
+            'kneels': {'frames': ['x3'], 'loop': True},
+            'blow1': {'frames': ['x4', 'x5', 'x6', 'x7'], 'fps': 3},
+            'blow2': {'frames': ['x8', 'x9'], 'fps': 3},
+            'cut': {'frames': ['x10'], 'loop': True},
+            'fall': {'frames': ['x11', 'x12', 'x13', 'x14'], 'fps': 2.2},
+            'turnAway': {'frames': ['x15'], 'loop': True},
+        },
+    },
+    # The thumb close-up (16 opaque panels), shown framed over the scene.
+    'thumb_an': {
+        'src': 'ancona-v2/thumb.webp', 'grid': (4, 4), 'refH': 216, 'anchor': (192, 216), 'clean': False, 'defringe': False,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'press': {'frames': list(range(16)), 'fps': 2.6}},
+    },
+    # The severed head (eight roll angles; 7 lies on its side). refH puts the head at the pair's scale:
+    # about 45 px of a 188 px figure, painted 80 px wide in its cell.
+    'head_an': {
+        'src': 'ancona-v2/head.webp', 'grid': (4, 2), 'refH': 334, 'anchor': (96, 124),
+        'anims': {'stand': {'frames': [7], 'loop': True}, 'roll': {'frames': list(range(8)), 'fps': 9, 'loop': True}},
+    },
+    # The first Quickening (ancona-v6): Mijo at the warehouse camera, standing figure 250 px, feet at
+    # (160, 302) on both sheets: standing with the sword, the stiffening, arching, kneeling spasms; the
+    # exhausted kneel. (He keeps the sword from the execution, so the pick-up sheet is not used.)
+    'mijo_q': {
+        'src': 'ancona-v6/anim_mijo_quickening.png', 'grid': (8, 4), 'refH': 250, 'anchor': (160, 302), 'clean': False, 'walkSpeed': 110,
+        'extra': {
+            'e': {'src': 'ancona-v6/anim_mijo_erschoepft.png', 'grid': (4, 2), 'anchor': (160, 302)},
+        },
+        # The sword hand in every frame of the main sheet (offsets from the planted feet), so that the
+        # discharge ends in the hand while he is thrown to his knees.
+        'anchorPoints': {0: [(-52, -99)], 1: [(-55, -101)], 2: [(-55, -101)], 3: [(-56, -100)], 4: [(-71, -110)], 5: [(-72, -112)], 6: [(-72, -116)], 7: [(-67, -108)], 8: [(-79, -111)], 9: [(-82, -105)], 10: [(-85, -91)], 11: [(-80, -70)], 12: [(-81, -49)], 13: [(-79, -30)], 14: [(-82, -32)], 15: [(-70, -47)], 16: [(-71, -56)], 17: [(-71, -53)], 18: [(-63, -50)], 19: [(-63, -47)], 20: [(-69, -43)], 21: [(-70, -25)], 22: [(-79, -40)], 23: [(-68, -34)], 24: [(-6, -19)]},
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'stiffen': {'frames': [0, 1, 2, 3, 4, 5, 6, 7], 'fps': 4},
+            'strike1': {'frames': [8, 9, 10, 11, 12, 13, 14], 'fps': 10},
+            'strike1Hold': {'frames': [13, 14], 'fps': 6, 'loop': True},
+            'collapse': {'frames': [15, 16, 17, 18, 19, 20], 'fps': 9},
+            'spasm': {'frames': [16, 17, 18, 19, 18, 17], 'fps': 10, 'loop': True},
+            'folded': {'frames': [21], 'loop': True},
+            'strike2': {'frames': [22, 23, 24], 'fps': 4},
+            'strike2Hold': {'frames': [24], 'loop': True},
+            'recover': {'frames': ['e0', 'e1', 'e2', 'e3'], 'fps': 3},
+            'breathe': {'frames': ['e3', 'e4', 'e5', 'e4'], 'fps': 2, 'loop': True},
+            'sitBack': {'frames': ['e5', 'e6', 'e7'], 'fps': 1.6},
+            'kneelRest': {'frames': ['e7'], 'loop': True},
+        },
+    },
+    # Nikephoros' likeness breaking into flakes and smoke, standing over his body.
+    'spirit_an': {
+        'src': 'ancona-v6/anim_nikephoros_zerfall.png', 'grid': (4, 2), 'refH': 259, 'anchor': (137, 274), 'clean': False,
+        'anims': {'stand': {'frames': [0], 'loop': True}, 'crumble': {'frames': list(range(8)), 'fps': 3.2}},
+    },
+    # Roof planks, a crate board, a barrel hoop; salt spray and dust.
+    'debris_an': {
+        'src': 'ancona-v6/anim_lagerhaus_truemmer.png', 'grid': (4, 2), 'refH': 216, 'anchor': (192, 196), 'clean': False,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True}, 'plank': {'frames': [0], 'loop': True}, 'plank2': {'frames': [1], 'loop': True},
+            'board': {'frames': [2], 'loop': True}, 'hoop': {'frames': [3], 'loop': True},
+            'salt': {'frames': [4, 5], 'fps': 5, 'loop': True}, 'dust': {'frames': [6, 7], 'fps': 2.5},
+        },
+    },
+    # Electric discharges (24 cells of 256 px). Kept whole (anchor at the cell origin) because each cell
+    # carries measured end points (neck, wrist, roof) used to place it between the body and Mijo.
+    'qbolt': {
+        'src': 'ancona-v6/anim_quickening_blitze.png', 'grid': (6, 4), 'refH': 256, 'anchor': (0, 0), 'clean': False, 'defringe': False,
+        'points': 'ancona-v6/anim_quickening_blitze.frames.json',
+        'anims': {'stand': {'frames': [6], 'loop': True}, 'one': {'frames': list(range(12)), 'fps': 9}, 'two': {'frames': list(range(12, 24)), 'fps': 9}},
+    },
 }
 
 PROPS = {
@@ -367,6 +480,28 @@ PROPS = {
     'prop_wetzstein': {'clean': True, 'src': 'elf-tage-v7/raufe-zustaende.png', 'crop': [384, 768, 384, 256]},
     'prop_schwad': {'clean': True, 'src': 'elf-tage-v7/raufe-zustaende.png', 'crop': [768, 768, 384, 256]},
     'prop_balken': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [256, 0, 256, 256]},
+    # Ancona 1507
+    'prop_salz': 'props/prop_salz.webp',
+    'prop_klinge': 'props/prop_klinge.webp',
+    'prop_remains_an': {'clean': True, 'src': 'ancona-v2/remains.webp', 'crop': [1152, 0, 384, 384]},
+    'prop_balken_hoch': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [512, 0, 256, 256]},
+    'prop_tau': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [0, 0, 256, 256]},
+    'prop_haken': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [256, 0, 256, 256]},
+    'prop_salzsack': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [768, 0, 256, 256]},
+    # The gate after the roof came down, cut from the same paintings: the pile split into its planks and
+    # the beam (turned level), the hanging block alone, the sling around the beam, a longer rope made of
+    # a stretch of the block's own rope repeated (four twists of six pixels each), the hook on its rope.
+    'prop_bretter_an': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [256, 0, 256, 256],
+                        'poly': [[0, 0], [256, 0], [256, 205], [232, 205], [214, 198], [200, 194], [178, 191], [150, 184], [110, 175], [90, 173], [66, 170], [48, 166], [18, 172], [0, 172]]},
+    'prop_querbalken': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [256, 0, 256, 256], 'rotate': 9.4,
+                        'poly': [[18, 184], [44, 171], [62, 171], [90, 176], [110, 180], [150, 190], [178, 197], [200, 199], [214, 204], [232, 212], [232, 250], [18, 250]]},
+    'prop_rollblock': {'src': 'puzzles-v6/props-states.png', 'crop': [512, 0, 256, 256], 'poly': [[0, 0], [256, 0], [256, 84], [0, 84]]},
+    'prop_schlinge': {'clean': True, 'src': 'puzzles-v6/props-states.png', 'crop': [512, 0, 256, 256], 'poly': [[0, 100], [256, 100], [256, 256], [0, 256]]},
+    'prop_seil_an': {'src': 'puzzles-v6/props-states.png', 'crop': [636, 12, 12, 24], 'tile': 9},
+    'prop_hakentau': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [512, 0, 256, 256]},
+    'fx_neck': 'ancona-v5/first-neck.png',
+    # The memory of Rimini as Nikephoros saw it: the candle-lit table and the two men's hands, no faces.
+    'mem_rimini': {'src': 'sprites/q_rimini.webp', 'crop': [380, 214, 300, 186]},
 }
 
 ICONS = {
@@ -388,4 +523,10 @@ ICONS = {
     'wetzstein': {'src': 'elf-tage-v7/raufe-zustaende.png', 'cell': (4, 4, 13)},
     'tuch': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 8)},
     'tuch_nass': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 10)},
+    'dukaten': {'src': 'ui/inv.webp', 'cell': (4, 4, 15)},
+    'tau': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 0)},
+    'haken': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 1)},
+    'tau_haken': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 2)},
+    'salzsack': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 3)},
+    'klinge': {'src': 'ui/q_inventory_blade.webp'},
 }

@@ -173,10 +173,10 @@ export const UI = {
     assets: 'Einige Bilder konnten nicht geladen werden.',
   },
   combat: {
-    hits: 'Treffer',
-    progress: 'Vorteil',
+    progress: 'Fortschritt',
     time: 'Zeit',
     relaxed: 'ohne Zeitdruck',
+    cuts: (n: number) => (n === 1 ? 'Ein Schnitt' : `${n} Schnitte`),
   },
   inspect: 'Genau ansehen',
 } as const;

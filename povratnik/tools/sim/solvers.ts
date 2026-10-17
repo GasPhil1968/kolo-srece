@@ -253,6 +253,31 @@ export const solveZaesur: Solver = (sim) => {
   return act('actor:mijo96z', 'talk');
 };
 
+export const solveAncona: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`an.${n}`];
+  const has = (i: string) => s.inventory.includes(i);
+  if (e.inputMode() === 'combat' && e.combat) return { k: 'combat', action: e.combat.current.answer };
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const p of ['true', 'meister', 'woher', 'geld', 'strike']) if (opts.includes(p)) return choose(p);
+    return choose(opts[opts.length - 1]);
+  }
+  if (s.room === 'an_hafen') return act('tor6', 'go');
+  if (!fl('risen')) return null;
+  if (!fl('read')) return act('klinge', 'read');
+  if (!fl('planksMoved')) return act('haufen', 'take');
+  if (!fl('rigged')) {
+    if (has('an_tau_haken')) return use('an_tau_haken', 'rolle');
+    if (has('an_tau') && has('an_haken')) return use('an_tau', 'item:an_haken');
+    return has('an_tau') ? act('haken', 'take') : act('tau', 'take');
+  }
+  if (!fl('hooked')) return act('balken', 'use');
+  if (!fl('beamUp')) return has('an_salzsack') ? use('an_salzsack', 'rolle') : act('salzsack', 'take');
+  return act('tor', 'go');
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
@@ -260,4 +285,5 @@ export const SOLVERS: Record<string, Solver> = {
   povratnik: solvePovratnik,
   elftage: solveElftage,
   zaesur: solveZaesur,
+  ancona: solveAncona,
 };

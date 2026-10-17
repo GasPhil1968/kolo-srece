@@ -7,6 +7,7 @@ import { dyn, LayerDef, RoomDef } from '../core/content';
 import { ADULT_H, charMeta, imageMeta, CharMeta, FrameMeta } from '../content/assets';
 import { pointInPoly, toPoints } from '../core/geom';
 import { Ambience } from './ambience';
+import { FxLayer } from './fx';
 import { placeDecor, DecorPlacement } from '../core/decor';
 
 export const R = 2;
@@ -54,6 +55,7 @@ export class GameScene extends Phaser.Scene {
   private loadingKeys = new Set<string>();
   private ready = false;
   private ambience!: Ambience;
+  private fxLayer!: FxLayer;
   highlight = false;
   private highlightGfx!: Phaser.GameObjects.Graphics;
   /** Accumulated dt while the engine is held (hidden tab etc.). */
@@ -78,6 +80,7 @@ export class GameScene extends Phaser.Scene {
     this.shadeRect = this.add.rectangle(0, 0, VIEW_W, VIEW_H, 0x0a1028, 1).setOrigin(0, 0).setScrollFactor(0).setDepth(60000).setVisible(false);
     this.highlightGfx = this.add.graphics().setDepth(90000);
     this.ambience = new Ambience(this);
+    this.fxLayer = new FxLayer(this);
     this.input.mouse?.disableContextMenu();
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => this.onMove(p));
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => this.onDown(p));
@@ -225,6 +228,7 @@ export class GameScene extends Phaser.Scene {
     for (const v of this.layerViews.values()) v.destroy();
     this.layerViews.clear();
     this.ambience.clear();
+    this.fxLayer.clear();
   }
 
   // ---------------------------------------------------------------- frame
@@ -271,6 +275,7 @@ export class GameScene extends Phaser.Scene {
     const shade = room.shade !== undefined ? dyn(room.shade, s) : 0;
     this.shadeRect.setFillStyle(room.shadeColor ?? 0x0a1028, 1).setAlpha(shade).setVisible(shade > 0.001);
     this.ambience.update(dt, engine);
+    this.fxLayer.update(engine, (keys) => void this.ensure(keys), (id, k) => this.actorPoint(id, k));
     this.drawHighlight(room);
   }
 
@@ -523,11 +528,28 @@ export class GameScene extends Phaser.Scene {
         const b = lv.getBounds();
         return { x: b.x + b.width * frac - this.cameras.main.scrollX, y: b.y - this.cameras.main.scrollY };
       }
+      // Painted as part of another figure (a pair of fighters): a fixed point in the room.
+      const spot = this.engine.room.speakers?.[actorId];
+      if (spot) {
+        const p = dyn(spot, this.engine.state);
+        return { x: p.x - this.cameras.main.scrollX, y: p.y - this.cameras.main.scrollY };
+      }
       return null;
     }
     if (!v || !a || a.room !== this.engine.state.room) return null;
     const top = v.sprite.getTopCenter();
     return { x: a.x - this.cameras.main.scrollX, y: (top.y ?? a.y - 150) - this.cameras.main.scrollY };
+  }
+
+  /** A measured point of an actor's current frame (e.g. his sword hand) in room coordinates. */
+  actorPoint(actorId: string, k: number): { x: number; y: number } | null {
+    const v = this.actorViews.get(actorId);
+    const a = this.engine.state.actors[actorId];
+    if (!v || !a || !v.sprite.visible) return null;
+    const p = charMeta(a.character)?.points?.[v.sprite.frame.name]?.[k];
+    if (!p) return null;
+    const dir = v.sprite.flipX ? -1 : 1;
+    return { x: v.sprite.x + p[0] * Math.abs(v.sprite.scaleX) * dir, y: v.sprite.y + p[1] * v.sprite.scaleY };
   }
 
   actorBounds(actorId: string): Phaser.Geom.Rectangle | null {

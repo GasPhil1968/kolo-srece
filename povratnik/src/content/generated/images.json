@@ -249,7 +249,7 @@
   "file": "bg/bg_lagerhaus_zerstoert.webp",
   "h": 470,
   "source": "ancona-v6/bg_lagerhaus_zerstoert.png",
-  "w": 960
+  "w": 1040
  },
  "bg_landing": {
   "file": "bg/bg_landing.webp",
@@ -479,6 +479,12 @@
   "source": "fx/fx_dust_mote.webp",
   "w": 12
  },
+ "fx_neck": {
+  "file": "props/fx_neck.webp",
+  "h": 128,
+  "source": "ancona-v5/first-neck.png",
+  "w": 128
+ },
  "intro_akt2": {
   "file": "screens/intro_akt2.webp",
   "h": 600,
@@ -551,6 +557,12 @@
   "source": "intros/cine_title.webp",
   "w": 1200
  },
+ "mem_rimini": {
+  "file": "props/mem_rimini.webp",
+  "h": 186,
+  "source": "sprites/q_rimini.webp",
+  "w": 300
+ },
  "menu_keyart": {
   "file": "screens/menu_keyart.webp",
   "h": 600,
@@ -587,8 +599,22 @@
  "prop_balken": {
   "file": "props/prop_balken.webp",
   "h": 171,
+  "origin": [
+   280,
+   73
+  ],
   "source": "puzzles-v6/props-states.png",
   "w": 221
+ },
+ "prop_balken_hoch": {
+  "file": "props/prop_balken_hoch.webp",
+  "h": 230,
+  "origin": [
+   526,
+   8
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 234
  },
  "prop_band": {
   "file": "props/prop_band.webp",
@@ -607,6 +633,16 @@
   "h": 188,
   "source": "elf-tage-v7/raufe-zustaende.png",
   "w": 370
+ },
+ "prop_bretter_an": {
+  "file": "props/prop_bretter_an.webp",
+  "h": 125,
+  "origin": [
+   303,
+   73
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 198
  },
  "prop_cheese": {
   "file": "props/prop_cheese.webp",
@@ -643,6 +679,22 @@
   "h": 154,
   "source": "props/prop_fensterplane.webp",
   "w": 62
+ },
+ "prop_haken": {
+  "file": "props/prop_haken.webp",
+  "h": 155,
+  "source": "puzzles-v6/items-rescue.png",
+  "w": 102
+ },
+ "prop_hakentau": {
+  "file": "props/prop_hakentau.webp",
+  "h": 160,
+  "origin": [
+   596,
+   48
+  ],
+  "source": "puzzles-v6/items-rescue.png",
+  "w": 78
  },
  "prop_hausnummer3": {
   "file": "props/prop_hausnummer3.webp",
@@ -686,6 +738,12 @@
   "source": "props/prop_kaffeestand.webp",
   "w": 300
  },
+ "prop_klinge": {
+  "file": "props/prop_klinge.webp",
+  "h": 80,
+  "source": "props/prop_klinge.webp",
+  "w": 320
+ },
  "prop_klotz": {
   "file": "props/prop_klotz.webp",
   "h": 124,
@@ -727,6 +785,12 @@
   "h": 64,
   "source": "props/prop_sarajevo_notes.webp",
   "w": 256
+ },
+ "prop_querbalken": {
+  "file": "props/prop_querbalken.webp",
+  "h": 51,
+  "source": "puzzles-v6/props-states.png",
+  "w": 208
  },
  "prop_radio_an": {
   "file": "props/prop_radio_an.webp",
@@ -782,11 +846,49 @@
   "source": "elf-tage-v7/raufe-zustaende.png",
   "w": 384
  },
+ "prop_remains_an": {
+  "file": "props/prop_remains_an.webp",
+  "h": 98,
+  "source": "ancona-v2/remains.webp",
+  "w": 348
+ },
+ "prop_rollblock": {
+  "file": "props/prop_rollblock.webp",
+  "h": 77,
+  "origin": [
+   626,
+   8
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 36
+ },
  "prop_rose": {
   "file": "props/prop_rose.webp",
   "h": 78,
   "source": "props/prop_sarajevo_rose.webp",
   "w": 168
+ },
+ "prop_salz": {
+  "file": "props/prop_salz.webp",
+  "h": 80,
+  "source": "props/prop_salz.webp",
+  "w": 720
+ },
+ "prop_salzsack": {
+  "file": "props/prop_salzsack.webp",
+  "h": 148,
+  "source": "puzzles-v6/items-rescue.png",
+  "w": 169
+ },
+ "prop_schlinge": {
+  "file": "props/prop_schlinge.webp",
+  "h": 138,
+  "origin": [
+   526,
+   100
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 234
  },
  "prop_schublade_offen": {
   "file": "props/prop_schublade_offen.webp",
@@ -803,8 +905,22 @@
  "prop_seil": {
   "file": "props/prop_seil.webp",
   "h": 173,
+  "origin": [
+   796,
+   572
+  ],
   "source": "elf-tage-v7/raufe-zustaende.png",
   "w": 295
+ },
+ "prop_seil_an": {
+  "file": "props/prop_seil_an.webp",
+  "h": 216,
+  "origin": [
+   636,
+   12
+  ],
+  "source": "puzzles-v6/props-states.png",
+  "w": 12
  },
  "prop_sense": {
   "file": "props/prop_sense.webp",
@@ -859,6 +975,12 @@
   "h": 56,
   "source": "props/prop_tasse_voll.webp",
   "w": 94
+ },
+ "prop_tau": {
+  "file": "props/prop_tau.webp",
+  "h": 139,
+  "source": "puzzles-v6/items-rescue.png",
+  "w": 196
  },
  "prop_tuch_krug": {
   "file": "props/prop_tuch_krug.webp",

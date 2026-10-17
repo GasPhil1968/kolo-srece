@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-10-17T02:13:55.634Z",
+  "runs": 600,
+  "passed": 600,
+  "failed": 0,
+  "seconds": 3.803,
+  "byChapter": {
+    "ancona": {
+      "runs": 600,
+      "ok": 600,
+      "warmSteps": 7250,
+      "randomSteps": 25227,
+      "saveLoads": 1580
+    }
+  },
+  "failures": []
+}

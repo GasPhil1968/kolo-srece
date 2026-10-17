@@ -17,7 +17,7 @@ import {
   Spot,
   Verb,
 } from './content';
-import { CombatRuntime, CombatDef } from './combat';
+import { CombatRuntime, CombatDef, DuelPose } from './combat';
 import { UI_LINES } from './uilines';
 
 // ---------------------------------------------------------------------------------------------
@@ -222,7 +222,7 @@ export class Engine {
   shakeAmp = 0;
   fx = new Map<string, Record<string, number | string | boolean>>();
   combat: CombatRuntime | null = null;
-  private lastCombat: 'won' | 'yielded' | null = null;
+  private lastCombat: 'won' | null = null;
   private rt = new Map<string, ActorRT>();
   private nav = new Map<string, { key: string; mesh: NavMesh }>();
   private pendingAct: { intent: Intent; target: string } | null = null;
@@ -1091,7 +1091,7 @@ export class Engine {
         return { cmd, update: (_dt, instant) => (instant ? this.finishWalk(cmd.actor) : !this.isWalking(cmd.actor)) };
       }
       case 'waitActor':
-        return { cmd, update: (_dt, instant) => (instant ? this.finishWalk(cmd.actor) : !this.isWalking(cmd.actor) && !this.rt.get(cmd.actor)?.anim) };
+        return { cmd, update: (_dt, instant) => (instant ? this.finishWalk(cmd.actor) : !this.isWalking(cmd.actor) && this.animSettled(cmd.actor)) };
       case 'face': {
         const a = this.state.actors[cmd.actor];
         if (a) {
@@ -1232,14 +1232,23 @@ export class Engine {
       case 'combat': {
         const def = this.content.combats.get(cmd.id);
         if (!def) throw new Error(`unknown combat ${cmd.id}`);
-        this.combat = new CombatRuntime(def, this.settings);
+        const c0 = new CombatRuntime(def, this.settings);
+        this.combat = c0;
         this.lastCombat = null;
+        let seq = -1;
+        const apply = () => {
+          if (c0.poseSeq === seq) return;
+          seq = c0.poseSeq;
+          this.applyDuelPose(def, c0.pose);
+        };
+        apply();
         return {
           cmd,
           update: (dt, instant) => {
             const c = this.combat;
             if (!c) return true;
             c.update(this.instant ? 0 : dt, instant && this.instant);
+            apply();
             if (c.outcome) {
               this.lastCombat = c.outcome;
               this.combat = null;
@@ -1252,6 +1261,47 @@ export class Engine {
       case 'endChapter':
         return this.beginChapterEnd(cmd);
     }
+  }
+
+  /** Show a duel pose: the pair figure alone, or the two fighters in their poses. */
+  private applyDuelPose(def: CombatDef, p: DuelPose): void {
+    const show = (id: string | undefined, anim: string | undefined) => {
+      if (!id) return;
+      const a = this.state.actors[id];
+      if (!a) throw new Error(`combat ${def.id}: unknown actor ${id}`);
+      a.hidden = !anim;
+      if (anim) this.setActorPose(id, anim);
+    };
+    if (p.pair) {
+      show(def.pair, p.pair);
+      if (def.opp) this.state.actors[def.opp].hidden = true;
+      this.state.actors[def.pc].hidden = true;
+    } else {
+      if (def.pair) this.state.actors[def.pair].hidden = true;
+      show(def.pc, p.pc);
+      show(def.opp, p.opp);
+    }
+  }
+
+  /** Start an animation on an actor and keep its last frame (looping ones keep looping). */
+  private setActorPose(id: string, anim: string): void {
+    const a = this.state.actors[id];
+    const info = this.charInfo(a.character)?.anims[anim];
+    if (!info) throw new Error(`${id}: ${a.character} has no animation ${anim}`);
+    const r = this.rtOf(id);
+    r.path = [];
+    r.anim = { name: anim, t: 0, loop: info.loop, times: 1, rest: true };
+    a.pose = anim;
+  }
+
+  /** No one-shot animation still playing. A looping pose, or a resting pose that has been shown
+   * through to its last frame (it stays attached to hold that frame), counts as settled. */
+  private animSettled(id: string): boolean {
+    const an = this.rt.get(id)?.anim;
+    if (!an || an.loop) return true;
+    const a = this.state.actors[id];
+    const info = a && this.charInfo(a.character)?.anims[an.name];
+    return !info || an.t >= (info.frames * an.times) / info.fps;
   }
 
   private finishWalk(id: string): boolean {

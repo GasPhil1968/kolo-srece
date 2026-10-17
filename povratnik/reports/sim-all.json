@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-10-17T02:23:54.513Z",
+  "runs": 700,
+  "passed": 700,
+  "failed": 0,
+  "seconds": 5.359,
+  "byChapter": {
+    "sarajevo": {
+      "runs": 100,
+      "ok": 100,
+      "warmSteps": 973,
+      "randomSteps": 3931,
+      "saveLoads": 182
+    },
+    "weide": {
+      "runs": 100,
+      "ok": 100,
+      "warmSteps": 917,
+      "randomSteps": 4481,
+      "saveLoads": 266
+    },
+    "dorf": {
+      "runs": 100,
+      "ok": 100,
+      "warmSteps": 783,
+      "randomSteps": 3409,
+      "saveLoads": 190
+    },
+    "povratnik": {
+      "runs": 100,
+      "ok": 100,
+      "warmSteps": 823,
+      "randomSteps": 2606,
+      "saveLoads": 167
+    },
+    "elftage": {
+      "runs": 100,
+      "ok": 100,
+      "warmSteps": 1570,
+      "randomSteps": 6143,
+      "saveLoads": 325
+    },
+    "zaesur": {
+      "runs": 100,
+      "ok": 100,
+      "warmSteps": 527,
+      "randomSteps": 2828,
+      "saveLoads": 150
+    },
+    "ancona": {
+      "runs": 100,
+      "ok": 100,
+      "warmSteps": 1304,
+      "randomSteps": 3422,
+      "saveLoads": 206
+    }
+  },
+  "failures": []
+}

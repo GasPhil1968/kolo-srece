@@ -176,6 +176,8 @@ export interface RoomDef {
   elevation?: (x: number, y: number) => number;
   /** The player cannot walk here (lying in cover, a painted full frame). Interactions happen in place. */
   noWalk?: Dyn<boolean>;
+  /** Where speech of hidden actors appears (room coordinates): men painted together in one figure. */
+  speakers?: Record<string, Dyn<{ x: number; y: number }>>;
   /** What the player character says when a walk is refused in a no-walk room (null = nothing). */
   noWalkSay?: Dyn<string | null>;
   onEnter?: ScriptFn;
@@ -316,7 +318,7 @@ export interface ScriptCtx {
   readonly room: RoomDef;
   readonly reducedMotion: boolean;
   /** Last combat result. */
-  readonly combatResult: 'won' | 'yielded' | null;
+  readonly combatResult: 'won' | null;
   emit(cmd: Cmd): Cmd;
 }
 

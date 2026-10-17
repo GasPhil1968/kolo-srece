@@ -64,9 +64,21 @@ while (sim.engine.state.chapter === chapter && !sim.engine.gameEnded) {
   if (sim.engine.state.chapter !== chapter || sim.engine.gameEnded) break;
   const step = solver(sim);
   if (!step) throw new Error(`solver found no next step in ${sim.engine.state.room}`);
-  const label = step.k === 'act' ? `${step.verb} ${step.target}` : step.k === 'useItem' ? `${step.item} -> ${step.target}` : step.k === 'choose' ? `choose ${step.id}` : step.k;
+  const fight = sim.engine.combat;
+  if (fight && step.k === 'combat') lines.push(`  [${fight.message}]`);
+  const label =
+    step.k === 'act'
+      ? `${step.verb} ${step.target}`
+      : step.k === 'useItem'
+        ? `${step.item} -> ${step.target}`
+        : step.k === 'choose'
+          ? `choose ${step.id}`
+          : step.k === 'combat'
+            ? `combat ${step.action}`
+            : step.k;
   lines.push(`> ${label}`);
   sim.do(step);
+  if (fight && step.k === 'combat') lines.push(`  [${fight.message}]`);
 }
 sim.settle();
 const text = lines.join('\n') + '\n';

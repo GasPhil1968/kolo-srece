@@ -46,7 +46,9 @@ BACKGROUNDS = {
     # Ancona
     'bg_hafen': 'ancona-v2/port-clean.webp',
     'bg_lagerhaus': 'bg/bg_lagerhaus.webp',
-    'bg_lagerhaus_zerstoert': 'ancona-v6/bg_lagerhaus_zerstoert.png',
+    # The destroyed warehouse was painted over bg_lagerhaus squeezed to 960 px; widened back to the
+    # original 1040 px so that both share one geometry (one room, two states).
+    'bg_lagerhaus_zerstoert': {'src': 'ancona-v6/bg_lagerhaus_zerstoert.png', 'resize': [1040, 470]},
     # Herberge / Hof
     'bg_gaststube': 'bg/bg_gaststube_clean.webp',
     'bg_hof': 'bg/bg_hof.webp',
@@ -105,9 +107,13 @@ def main() -> None:
                 continue
             src = spec if isinstance(spec, str) else spec['src']
             crop = None if isinstance(spec, str) else spec.get('crop')
+            resize = None if isinstance(spec, str) else spec.get('resize')
             im = Image.open(ref(src))
             out = os.path.join(PUBLIC, sub, f'{key}.webp')
-            if crop:
+            if resize:
+                im = im.convert('RGB').resize(tuple(resize), Image.LANCZOS)
+                save_webp(im, out, quality=90)
+            elif crop:
                 x, y, w, h = crop
                 im = im.convert('RGB').crop((x, y, x + w, y + h))
                 save_webp(im, out, quality=90)

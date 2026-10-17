@@ -31,11 +31,30 @@ def grid_rects(spec: dict, img: np.ndarray) -> list[tuple[int, int, int, int]]:
     return [(c * cw, r * ch, cw, ch) for r in range(rows) for c in range(cols)]
 
 
+def apply_patch(cell: np.ndarray, patch: dict) -> np.ndarray:
+    """Paste an object image into a cell, rotated about its anchor point: an item a painted hand is
+    missing in a single frame (a sword the neighbouring frames show) is put back from the same artwork."""
+    import math
+    obj = Image.open(ref(patch['src'])).convert('RGBA')
+    ax, ay = patch['anchor']
+    pad = int(max(obj.width, obj.height) * 2)
+    big = Image.new('RGBA', (pad, pad), (0, 0, 0, 0))
+    big.alpha_composite(obj, (int(pad / 2 - ax), int(pad / 2 - ay)))
+    rot = big.rotate(-math.degrees(patch.get('rot', 0.0)), resample=Image.BICUBIC, center=(pad / 2, pad / 2))
+    base = Image.fromarray(cell)
+    hx, hy = patch['at']
+    base.alpha_composite(rot, (int(hx - pad / 2), int(hy - pad / 2)))
+    return np.array(base)
+
+
 def source_cells(spec: dict) -> list[np.ndarray]:
     img = load_rgba(ref(spec['src']))
     cells = []
-    for (x, y, w, h) in grid_rects(spec, img):
+    patches = spec.get('patches', {})
+    for i, (x, y, w, h) in enumerate(grid_rects(spec, img)):
         c = img[y:y + h, x:x + w].copy()
+        for patch in patches.get(i, []):
+            c = apply_patch(c, patch)
         if spec.get('clean', True):
             c, _ = keep_main_blob(c, near=spec.get('near', 6))
         cells.append(c)
@@ -47,7 +66,7 @@ def build_sheet(key: str, spec: dict) -> dict:
     (e.g. a walk cycle painted on another sheet of the same animal)."""
     sources = {'': spec, **{p: {**spec, **{k: v for k, v in sub.items()}} for p, sub in spec.get('extra', {}).items()}}
     for p, sub in spec.get('extra', {}).items():  # extra sources default to their own anchoring
-        for k in ('anchors', 'anchor', 'anchor_x', 'ground', 'rects'):
+        for k in ('anchors', 'anchor', 'anchor_x', 'ground', 'rects', 'patches'):
             if k not in sub:
                 sources[p].pop(k, None)
     cells_by = {p: source_cells(src) for p, src in sources.items()}
@@ -107,7 +126,7 @@ def build_sheet(key: str, spec: dict) -> dict:
             meta_anims[name]['speed'] = a['speed']
         if 'facing' in a:
             meta_anims[name]['facing'] = a['facing']
-    return {
+    out = {
         'atlas': f'atlas/{key}',
         'walkSpeed': spec.get('walkSpeed', 150),
         'anims': meta_anims,
@@ -115,6 +134,15 @@ def build_sheet(key: str, spec: dict) -> dict:
         'source': spec['src'] + ''.join(f' + {sub["src"]}' for sub in spec.get('extra', {}).values()),
         'facing': spec.get('facing', 1),
     }
+    if 'points' in spec:
+        # Measured points per cell (cell coordinates), e.g. the end points of each discharge. The cells
+        # are anchored at their origin, so these are also offsets from the anchor.
+        pts = json.load(open(ref(spec['points'])))['endpointSourceAnchors']
+        out['points'] = {f'f{i}': pts[i] for i in sorted({split(f)[1] for f in used if split(f)[0] == ''})}
+    if 'anchorPoints' in spec:
+        # Points measured by eye in each cell, given as offsets from the anchor (source pixels).
+        out['points'] = {f'f{i}': [list(p) for p in pts] for i, pts in spec['anchorPoints'].items()}
+    return out
 
 
 def build_props(only: set[str]) -> dict:
@@ -127,6 +155,9 @@ def build_props(only: set[str]) -> dict:
         ensure_dir(os.path.dirname(dst))
         im = Image.open(ref(src))
         crop = None if isinstance(spec, str) else spec.get('crop')
+        # Top-left corner of the output inside the crop (pieces cut from one painting are placed
+        # against each other with it).
+        ox, oy = 0, 0
         if src.endswith('.webp') and not crop:
             shutil.copyfile(ref(src), dst)
         else:
@@ -143,14 +174,31 @@ def build_props(only: set[str]) -> dict:
                 a[:, :, 3] = (a[:, :, 3].astype(np.uint16) * (np.array(mask) // 255)).astype(np.uint8)
                 b = bbox(a[:, :, 3], 20)
                 im = Image.fromarray(a).crop(b) if b else Image.fromarray(a)
+                if b:
+                    ox, oy = ox + b[0], oy + b[1]
+            if not isinstance(spec, str) and spec.get('rotate'):
+                # Turned about its centre (a beam lying level instead of askew); no longer aligned.
+                im = im.rotate(spec['rotate'], resample=Image.BICUBIC, expand=True)
+                ox, oy = 0, 0
+            if not isinstance(spec, str) and spec.get('tile'):
+                # A rope made longer by repeating a stretch of the same rope (a whole number of twists).
+                n = int(spec['tile'])
+                long = Image.new('RGBA', (im.width, im.height * n), (0, 0, 0, 0))
+                for i in range(n):
+                    long.alpha_composite(im, (0, i * im.height))
+                im = long
             if not isinstance(spec, str) and spec.get('clean'):
                 # A single object cut from an icon sheet: drop slivers of the neighbouring cells, trim.
                 a, _ = keep_main_blob(np.array(im), near=spec.get('near', 8))
                 b = bbox(a[:, :, 3], 20)
                 im = Image.fromarray(a).crop(b) if b else Image.fromarray(a)
+                if b:
+                    ox, oy = ox + b[0], oy + b[1]
             save_webp(im, dst, quality=92)
             im = Image.open(dst)
         out[key] = {'file': f'props/{key}.webp', 'w': im.width, 'h': im.height, 'source': src}
+        if crop and not (not isinstance(spec, str) and spec.get('rotate')):
+            out[key]['origin'] = [crop[0] + ox, crop[1] + oy]
     return out
 
 
@@ -183,7 +231,21 @@ def build_icons(only: set[str]) -> None:
         print('icon', key)
 
 
+def check_unique_keys() -> None:
+    """A key written twice in sheet_specs.py silently replaces the first entry (a Python dict literal):
+    refuse to build until every sheet, prop and icon key is unique."""
+    import ast
+    src = open(os.path.join(os.path.dirname(__file__), 'sheet_specs.py')).read()
+    for node in ast.walk(ast.parse(src)):
+        if isinstance(node, ast.Assign) and isinstance(node.value, ast.Dict) and isinstance(node.targets[0], ast.Name):
+            keys = [k.value for k in node.value.keys if isinstance(k, ast.Constant)]
+            dup = sorted({k for k in keys if keys.count(k) > 1})
+            if dup:
+                raise SystemExit(f'sheet_specs.{node.targets[0].id}: duplicate keys {dup}')
+
+
 def main() -> None:
+    check_unique_keys()
     only = set(sys.argv[1:])
     path = os.path.join(GENERATED, 'characters.sheets.json')
     chars = json.load(open(path)) if os.path.exists(path) else {}

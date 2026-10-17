@@ -1,9 +1,10 @@
 // Seeded simulations against the production engine and content.
 //   npx tsx tools/sim/run.ts --runs 2000 [--chapter sarajevo] [--seed 1] [--report reports/sim.json]
-// Every run: start a chapter, play a random prefix of 0-150 actions (any verb on any target, any item
-// on anything, random dialogue choices, walking, skipping, hints, save/load round trips), check the
-// invariants after every step, then let the chapter's solver finish the chapter from wherever the
-// random play left it. A run fails on any script error, stuck input lock, invalid save, refused load
+// Every run: start a chapter, let the solver play a random number of steps (so that random play also
+// starts from late stages: a fight, an aftermath), play a random stretch of 0-150 actions (any verb on
+// any target, any item on anything, random dialogue choices and fight answers, walking, skipping,
+// hints, save/load round trips), check the invariants after every step, then let the chapter's solver
+// finish the chapter from wherever the random play left it. A run fails on any script error, stuck input lock, invalid save, refused load
 // or if the solver cannot finish the chapter (softlock).
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -16,6 +17,7 @@ interface RunResult {
   seed: number;
   chapter: string;
   ok: boolean;
+  warmSteps: number;
   randomSteps: number;
   solverSteps: number;
   saveLoads: number;
@@ -95,10 +97,23 @@ function randomIntent(sim: Sim, rng: Rng): Intent | 'saveload' {
 function runOne(seed: number, chapter: string): RunResult {
   const rng = new Rng(seed);
   const sim = new Sim({ instant: true });
-  const res: RunResult = { seed, chapter, ok: false, randomSteps: 0, solverSteps: 0, saveLoads: 0 };
+  const res: RunResult = { seed, chapter, ok: false, warmSteps: 0, randomSteps: 0, solverSteps: 0, saveLoads: 0 };
   const solver = SOLVERS[chapter];
   try {
     sim.start(chapter);
+    // Warm-up: a random number of solver steps (none in a third of the runs).
+    const warm = rng.next() < 0.34 ? 0 : 1 + rng.int(60);
+    for (let i = 0; i < warm; i++) {
+      sim.settle();
+      if (sim.engine.state.chapter !== chapter || sim.engine.gameEnded) break;
+      const step = solver(sim);
+      if (!step) break;
+      sim.do(step);
+      sim.settle();
+      res.warmSteps++;
+      const bad = checkInvariants(sim);
+      if (bad) throw new Error(bad);
+    }
     const steps = rng.int(151);
     for (let i = 0; i < steps; i++) {
       if (sim.engine.state.chapter !== chapter || sim.engine.gameEnded) break;
@@ -164,11 +179,12 @@ for (let i = 0; i < RUNS; i++) {
   }
 }
 const failed = results.filter((r) => !r.ok);
-const byChapter: Record<string, { runs: number; ok: number; randomSteps: number; saveLoads: number }> = {};
+const byChapter: Record<string, { runs: number; ok: number; warmSteps: number; randomSteps: number; saveLoads: number }> = {};
 for (const r of results) {
-  const b = (byChapter[r.chapter] ??= { runs: 0, ok: 0, randomSteps: 0, saveLoads: 0 });
+  const b = (byChapter[r.chapter] ??= { runs: 0, ok: 0, warmSteps: 0, randomSteps: 0, saveLoads: 0 });
   b.runs++;
   if (r.ok) b.ok++;
+  b.warmSteps += r.warmSteps;
   b.randomSteps += r.randomSteps;
   b.saveLoads += r.saveLoads;
 }
@@ -184,6 +200,6 @@ const summary = {
 mkdirSync(dirname(REPORT), { recursive: true });
 writeFileSync(REPORT, JSON.stringify(summary, null, 2));
 console.log(`${summary.passed}/${summary.runs} runs passed in ${summary.seconds.toFixed(1)} s -> ${REPORT}`);
-for (const [c, b] of Object.entries(byChapter)) console.log(`  ${c}: ${b.ok}/${b.runs} ok, ${b.randomSteps} random steps, ${b.saveLoads} save/load`);
+for (const [c, b] of Object.entries(byChapter)) console.log(`  ${c}: ${b.ok}/${b.runs} ok, ${b.warmSteps} solver warm-up steps, ${b.randomSteps} random steps, ${b.saveLoads} save/load`);
 void dyn;
 process.exit(failed.length ? 1 : 0);

@@ -568,10 +568,12 @@ export class GameUI implements SceneHooks {
       this.combatSig = '';
     }
     const acts = c.actions;
-    const sig = `${c.phase}|${c.message}|${acts.map((a) => a.id).join(',')}|${c.hits}|${c.progress}`;
+    const sig = `${c.phase}|${c.message}|${acts.map((a) => a.id).join(',')}|${c.failures}|${c.progress}`;
     if (sig !== this.combatSig) {
       this.combatSig = sig;
       clear(this.combatEl);
+      this.combatEl.classList.toggle('decide', c.phase === 'cue');
+      this.combatEl.classList.toggle('fail', c.phase === 'fail');
       this.combatEl.append(el('div', { class: 'cue', 'data-testid': 'combat-cue', text: c.message }));
       const row = el('div', { class: 'acts' });
       acts.forEach((a, i) => {
@@ -580,19 +582,18 @@ export class GameUI implements SceneHooks {
       });
       this.combatEl.append(row);
       const meter = el('div', { class: 'meter' });
-      meter.append(el('div', { text: UI.combat.time }));
+      meter.append(el('div', { text: Number.isFinite(c.window) ? UI.combat.time : UI.combat.relaxed }));
       const bar = el('div', { class: 'bar' }, [el('i', { class: 'fill' })]);
       meter.append(bar);
-      const hurt = el('div', { class: 'pips hurt' });
-      for (let i = 0; i < c.def.endurance; i++) hurt.append(el('span', { class: i < c.hits ? 'on' : '' }));
       const prog = el('div', { class: 'pips' });
-      for (let i = 0; i < c.def.needed; i++) prog.append(el('span', { class: i < c.progress ? 'on' : '' }));
-      meter.append(el('div', { text: UI.combat.hits }), hurt, el('div', { text: UI.combat.progress }), prog);
+      for (let i = 0; i < c.def.steps.length; i++) prog.append(el('span', { class: i < c.progress ? 'on' : '' }));
+      meter.append(el('div', { text: UI.combat.progress }), prog);
+      if (c.failures) meter.append(el('div', { class: 'cuts', text: UI.combat.cuts(c.failures) }));
       this.combatEl.append(meter);
     }
     const fill = this.combatEl.querySelector('.fill') as HTMLElement | null;
     if (fill) {
-      const decision = c.phase === 'cue' || c.phase === 'opening';
+      const decision = c.phase === 'cue';
       const frac = decision && Number.isFinite(c.window) ? c.timeLeft / c.window : decision ? 1 : 0;
       fill.style.width = `${Math.round(frac * 100)}%`;
     }
