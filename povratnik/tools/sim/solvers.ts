@@ -235,10 +235,29 @@ export const solveElftage: Solver = (sim) => {
   }
 };
 
+export const solveZaesur: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`za.${n}`];
+  const has = (i: string) => s.inventory.includes(i);
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    return choose(opts.includes('boy') ? 'boy' : opts[opts.length - 1]);
+  }
+  if (!fl('refilled')) return has('za_tasse') ? use('za_tasse', 'actor:mijo96z') : act('tasseMac', 'take');
+  if (!fl('pageRead')) {
+    if (!fl('lamp')) return act('lampe', 'use');
+    if (fl('bandDesk')) return act('lupe', 'use');
+    return has('za_band') ? use('za_band', 'lampe') : act('band', 'take');
+  }
+  return act('actor:mijo96z', 'talk');
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
   dorf: solveDorf,
   povratnik: solvePovratnik,
   elftage: solveElftage,
+  zaesur: solveZaesur,
 };

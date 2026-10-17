@@ -788,6 +788,12 @@
   "source": "props/prop_sarajevo_rose.webp",
   "w": 168
  },
+ "prop_schublade_offen": {
+  "file": "props/prop_schublade_offen.webp",
+  "h": 158,
+  "source": "props/prop_schublade_offen.webp",
+  "w": 306
+ },
  "prop_schwad": {
   "file": "props/prop_schwad.webp",
   "h": 133,

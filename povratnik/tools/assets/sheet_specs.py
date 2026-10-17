@@ -335,6 +335,7 @@ PROPS = {
     'prop_zeitung': 'props/prop_zeitung.webp',
     'prop_kaffeestand': 'props/prop_kaffeestand.webp',
     'prop_kafana_counter': 'sarajevo-v6/kafana-counter.webp',
+    'prop_schublade_offen': 'props/prop_schublade_offen.webp',
     'prop_band': {'src': 'ui/inv.webp', 'crop': [0, 0, 88, 88]},
     # Weide 1467
     'prop_juniper': 'props/prop_juniper.webp',

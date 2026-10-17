@@ -1377,7 +1377,7 @@ export const elftageChapter: ChapterDef = {
   card: { image: 'bg_et_hof', lines: T.card },
   pc: { character: 'mijo_et', name: T.names.mijo, color: C.pc, relHeight: 1 },
   start: { room: 'et_hof', entry: 'start' },
-  next: null,
+  next: 'zaesur',
   journal: T.journal,
   items: [
     {

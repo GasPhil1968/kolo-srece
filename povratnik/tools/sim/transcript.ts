@@ -6,6 +6,7 @@ import { dirname } from 'node:path';
 import { Sim } from './harness';
 import { SOLVERS } from './solvers';
 import type { Cmd } from '../../src/core/cmd';
+import { dyn } from '../../src/core/content';
 
 const args = process.argv.slice(2);
 const chapter = args[0];
@@ -22,8 +23,15 @@ const eng = sim.engine as unknown as { begin(cmd: Cmd): unknown };
 const begin = eng.begin.bind(sim.engine);
 eng.begin = (cmd: Cmd) => {
   switch (cmd.k) {
-    case 'say':
-      lines.push(`  ${cmd.actor === 'pc' ? 'MIJO' : cmd.actor}: ${cmd.text}`);
+    case 'say': {
+      const e = sim.engine;
+      const def = e.actorDef(cmd.actor);
+      const who = cmd.actor === 'pc' ? e.chapter.pc.name : def ? dyn(def.name, e.state) : cmd.actor;
+      lines.push(`  ${who.toUpperCase()}: ${cmd.text}`);
+      break;
+    }
+    case 'vignette':
+      lines.push(`  [${cmd.image}${cmd.captions.length ? ': ' + cmd.captions.join(' / ') : ''}]`);
       break;
     case 'narrate':
       lines.push(`  (${cmd.text})`);
