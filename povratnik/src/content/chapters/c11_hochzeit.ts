@@ -154,8 +154,8 @@ const kamm: RoomDef = {
   assets: ['atlas/hauptmann_hz', 'atlas/infanterie', 'atlas/gaeste_hz', 'prop_field_flask'],
   layers: [{ id: 'flasche', image: 'prop_field_flask', x: 0, y: 0, rect: [247, 231, 29, 49] as Rect4, depth: 330, visible: not('flasche') }],
   decor: [
-    { id: 's1', character: 'infanterie', anim: 'stand', x: 196, y: 394, facing: 1 },
-    { id: 's2', character: 'infanterie', anim: 'look', x: 250, y: 386, facing: 1, phase: 0.3 },
+    { id: 's1', character: 'infanterie', anim: 'stand', x: 332, y: 398, facing: 1 },
+    { id: 's2', character: 'infanterie', anim: 'look', x: 384, y: 390, facing: 1, phase: 0.3 },
   ],
   hotspots: [
     { id: 'dorf', name: T.kamm.dorf.name, shape: R(700, 130, 520, 175), walkTo: null, priority: 1, on: { look: lookVillage } },
