@@ -577,7 +577,7 @@ export const kolonneChapter: ChapterDef = {
     },
   },
   start: { room: 'ko_enge', entry: 'start' },
-  next: null,
+  next: 'lager',
   journal: T.journal,
   items: [
     { id: 'verband', name: T.items.verband.name, icon: 'verband', look: T.items.verband.look },

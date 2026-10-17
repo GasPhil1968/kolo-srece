@@ -655,6 +655,10 @@ PROPS = {
     'prop_stange': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [768, 768, 256, 256], 'rotate': -24, 'mul': [0.72, 0.66, 0.6]},
     'prop_bauer_seated': 'props/prop_bauer_seated.webp',
     'prop_hand_finger': 'props/prop_missing_fingers_hand.webp',
+    # Lager 1878
+    'prop_folder_empty': 'props/prop_folder_empty.webp',
+    'prop_folder_papers': 'props/prop_folder_papers.webp',
+    'prop_rifles': 'props/prop_rifles.webp',
 }
 
 ICONS = {
@@ -685,4 +689,6 @@ ICONS = {
     'verband': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 12)},
     'verband_blutig': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 13)},
     'stange': {'src': 'puzzles-v6/items-rescue.png', 'cell': (4, 4, 15)},
+    'formular': {'src': 'puzzles-v6/props-states.png', 'cell': (4, 4, 8)},
+    'besitzbogen': {'src': 'puzzles-v6/props-states.png', 'cell': (4, 4, 10)},
 }

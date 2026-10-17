@@ -338,6 +338,27 @@ export const solveKolonne: Solver = (sim) => {
   return null;
 };
 
+export const solveLager: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`lg.${n}`];
+  const inv = (i: string) => s.inventory.includes(i);
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const id of ['vierzehn', 'spalte']) if (opts.includes(id)) return choose(id);
+    return choose(opts.includes('__bye') ? '__bye' : opts[0]);
+  }
+  if (!fl('met')) return go(sim, 'lg_lager') ?? act('actor:lg_zeman', 'talk');
+  if (fl('verstanden')) return go(sim, 'lg_lager') ?? act('strasse', 'go');
+  if (!fl('mappe')) return go(sim, 'lg_lager') ?? act('mappe', 'take');
+  if (!fl('namen')) return { k: 'examine', item: 'liste' };
+  if (!fl('weide')) return go(sim, 'lg_stab') ?? act('flurkarte', 'look');
+  if (!fl('spalte') && !inv('besitzbogen')) return use('formular', 'item:liste');
+  if (!fl('spalte')) return go(sim, 'lg_lager') ?? act('actor:lg_zeman', 'talk');
+  if (!fl('register')) return go(sim, 'lg_stab') ?? use('besitzbogen', 'register');
+  return go(sim, 'lg_lager') ?? act('actor:lg_zeman', 'talk');
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
@@ -348,4 +369,5 @@ export const SOLVERS: Record<string, Solver> = {
   ancona: solveAncona,
   herberge: solveHerberge,
   kolonne: solveKolonne,
+  lager: solveLager,
 };

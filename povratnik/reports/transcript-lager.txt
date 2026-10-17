@@ -1,0 +1,69 @@
+== Das Lager – An der Straße nach Sarajevo, September 1878 / Ein Bach hat die Straße weggenommen. / Die Pioniere brauchen drei Tage. Ein Lager, das steht, ist etwas anderes als eine Kolonne, die geht. ==
+  (Am ersten Abend wurde gewaschen, an jedem Rinnsal. Am zweiten fing man an, sich einzurichten.)
+  MIJO: Drei Tage. Zeman will mit mir reden. Er sitzt am Feuer, seit er aus Vitina zurück ist.
+> talk actor:lg_zeman
+  ZEMAN: Ich war heute in Vitina. Elf Männer habe ich gefragt, wie sie heißen. Siebzehn Namen habe ich bekommen.
+  MIJO: Dann haben Sie Glück gehabt. Bei zwölf Männern wären es zweiundzwanzig gewesen.
+  ZEMAN: Ich habe nach dem Familiennamen gefragt. Was soll ich sonst fragen. Er hat zurückgefragt: welchen.
+  ZEMAN: Sie sind Dolmetscher. Sagen Sie mir, was an meinem Formular falsch ist. Die Mappe liegt auf der Kiste.
+  ? Gute Nacht, Herr Zeman.
+> choose __bye
+  MIJO: Gute Nacht, Herr Zeman.
+> take mappe
+  MIJO: Ich nehme den Vordruck und die Liste heraus. Zeman will ja, dass ich sie mir ansehe.
+> examine
+  MIJO: Elf Männer, siebzehn Namen. Zeman hat jeden aufgeschrieben, wie er ihn gehört hat.
+  MIJO: Petar Markov, Petar Kneževića, Petar Jovanović. Derselbe Petar.
+  MIJO: Markov: Sohn des Marko. Kneževići: die Bruderschaft, dreißig Häuser. Jovanović: der Name, den ihm der türkische Steuerschreiber gegeben hat, weil er etwas eintragen musste.
+> go stabszelt
+-> lg_stab (start)
+> look flurkarte
+  MIJO: Zemans Skizze von Vitina. Die Felder mit Kreide nummeriert, eins bis dreiundvierzig.
+  MIJO: Die Weide über dem Dorf hat keine Nummer. Sie gehört keinem. Sie gehört allen.
+  MIJO: Wie unsere, über der Straße, wo der Stein steht.
+> formular -> item:liste
+  MIJO: Ich lege die Liste neben den Vordruck und ziehe eine Spalte nach: Bruderschaft.
+  MIJO: Und eine Zeile für die Weide über dem Dorf. Eigentümer: niemand. Nutzung: alle.
+  (Es war die erste Spalte, die in diesem Herbst jemand für die Leute von Vitina zog. Es war Mijos Handschrift.)
+> go ausgang
+-> lg_lager (zelt)
+> talk actor:lg_zeman
+  ZEMAN: Nun?
+  ? Ein Mann hier hat drei Namen, und alle drei sind richtig. | Auf Ihrem Formular fehlt eine Spalte. | Gute Nacht, Herr Zeman.
+> choose spalte
+  MIJO: Auf Ihrem Formular fehlt eine Spalte.
+  MIJO: Das Feld gehört nicht dem Mann. Es gehört der Bruderschaft.
+  MIJO: Er bestellt es, sein Bruder das Nachbarstück. Ohne Söhne fällt es an die Bruderschaft zurück. Die Weide gehört keinem und allen.
+  MIJO: Für all das ist auf Ihrem Bogen keine Spalte. Ich habe eine dazugezogen.
+  ZEMAN: Und wenn ich es auf einen Namen schreibe?
+  MIJO: Dann besitzt er das Feld, das er bisher nur bestellt hat. Er kann es verpfänden. Die Weide gehört dem, dessen Name zuerst darauf steht.
+  MIJO: In dreißig Jahren gehört das Tal einer Bank. Und jeder einzelne Schritt war korrekt.
+  ZEMAN: Ein Dorf. Vielleicht ist Vitina eine Ausnahme. Ich habe vierzehn Gemeinden, die keinen Ärger machen.
+  ? Ein Mann hier hat drei Namen, und alle drei sind richtig. | Wo liegen die Bögen, die schon ausgefüllt sind? | Gute Nacht, Herr Zeman.
+> choose __bye
+  MIJO: Gute Nacht, Herr Zeman.
+> go stabszelt
+-> lg_stab (start)
+> besitzbogen -> register
+  MIJO: Ich gehe die Bögen durch und halte Zemans Vordruck daneben.
+  MIJO: Vierzehn Gemeinden. In jeder steht in der Eigentümerspalte genau ein Name.
+  MIJO: Keine einzige Weide. Keine Bruderschaft. Als gäbe es sie nicht.
+  (Es war nicht der Fehler eines Beamten. Es war die Form selbst, vierzehnmal korrekt ausgefüllt.)
+> go ausgang
+-> lg_lager (zelt)
+> talk actor:lg_zeman
+  ZEMAN: Nun?
+  ? Ein Mann hier hat drei Namen, und alle drei sind richtig. | Ich war an Ihrem Registerkasten. Es sind vierzehn Dörfer. | Gute Nacht, Herr Zeman.
+> choose vierzehn
+  MIJO: Ich war an Ihrem Registerkasten. Es sind vierzehn Dörfer.
+  MIJO: In jedem Bogen steht in der Eigentümerspalte genau ein Name. In jedem Dorf gibt es eine Weide, die auf keinem Bogen steht.
+  ZEMAN: Sie halten uns für Idioten.
+  MIJO: Nein. Ich halte Sie für ordentlich. Das ist gefährlicher.
+  ZEMAN: Sie verstehen nicht, was geschieht. Wir schreiben es auf, und dann ist es so.
+  ZEMAN: Und Sie sitzen dabei. Sie übersetzen es. Ohne Sie ginge es gar nicht.
+  (Darauf gab Mijo keine Antwort, und Zeman fragte nicht noch einmal.)
+  (Zeman nahm den Bogen trotzdem. Er schickte ihn mit der nächsten Post nach Wien.)
+> go strasse
+  (Am dritten Tag war die Straße geflickt, und die Kolonne setzte sich wieder in Bewegung.)
+  (Zemans Bogen kam im Frühjahr aus Wien zurück. Er trug einen Stempel: unzulässig.)
+== Ende des Kapitels ==

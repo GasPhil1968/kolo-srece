@@ -240,3 +240,24 @@ paper he is now a wounded man and may not lift anything.
   what the major listens to); the hand (two fingers missing, a scythe; close-up) is an optional
   argument; the consequence ("he will give you a name, any name … six dead you ordered yourself")
   stops it. The ending line reflects the record. Exit: "Bis Sarajevo waren es noch elf Tage."
+
+## Chapter 10 – Das Lager (September 1878)
+
+Two rooms: the camp by the washed-out road, the staff tent. The column waits three days; the chapter
+is one inference across both rooms, carried by Zeman's question "what is wrong with my form?".
+
+- (1) Talk to Zeman: eleven men in Vitina, seventeen names; the folder is on the crate (taking it before
+  he has asked is refused). (2) Take the folder: the form (Parzelle, Eigentümer – one line –, Fläche)
+  and his list. (3) Examine the list: one man, three names, all of them right (father's name,
+  brotherhood, the tax scribe's invention). (4) In the staff tent, look at Zeman's sketch of Vitina:
+  forty-three numbered fields, the pasture has no number – it belongs to nobody and to all ("Wie unsere,
+  über der Straße, wo der Stein steht."). (5) Combine form + list: Mijo draws the missing column
+  (Bruderschaft) and a line for the pasture (refused, with the reason, before (3) or (4)). (6) Tell Zeman
+  "Auf Ihrem Formular fehlt eine Spalte": what a single name does (the field can be pledged; "In dreißig
+  Jahren gehört das Tal einer Bank."). Zeman takes Vitina for an exception. (7) Use the form on the
+  register box in the staff tent: fourteen villages, one name each, no pasture anywhere. (8) Tell Zeman:
+  "ordentlich – das ist gefährlicher"; "Ohne Sie ginge es gar nicht." (6) and (7) can come in either
+  order. Exit: the mended road; the form comes back from Vienna stamped "unzulässig".
+- Rehberger (optional): notes everything under Landeskunde, including that Mijo's gunshot "heals fast"
+  (`ko.bandaged`), and reports the farmer's fate according to `ko.protocolCurse` (court-martial in
+  Travnik after the literal translation, released after the content translation).

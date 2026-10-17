@@ -743,6 +743,18 @@
   "source": "props/prop_fensterplane.webp",
   "w": 62
  },
+ "prop_folder_empty": {
+  "file": "props/prop_folder_empty.webp",
+  "h": 76,
+  "source": "props/prop_folder_empty.webp",
+  "w": 140
+ },
+ "prop_folder_papers": {
+  "file": "props/prop_folder_papers.webp",
+  "h": 48,
+  "source": "props/prop_folder_papers.webp",
+  "w": 108
+ },
  "prop_haken": {
   "file": "props/prop_haken.webp",
   "h": 155,
@@ -984,6 +996,12 @@
   "h": 98,
   "source": "ancona-v2/remains.webp",
   "w": 348
+ },
+ "prop_rifles": {
+  "file": "props/prop_rifles.webp",
+  "h": 174,
+  "source": "props/prop_rifles.webp",
+  "w": 126
  },
  "prop_rollblock": {
   "file": "props/prop_rollblock.webp",
