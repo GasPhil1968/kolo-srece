@@ -1,5 +1,8 @@
 {
-  "devDependencies": {
-    "playwright": "^1.62.1"
+  "name": "tri-fildzana",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
   }
 }

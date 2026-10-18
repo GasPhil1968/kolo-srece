@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>TRI FILDŽANA — statistika</title>
+<style>
+  :root{ --zut:#ffd479; --tekst:#f0e4cc; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; padding:20px; background:#14100c; color:var(--tekst);
+        font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  h1{ font-size:24px; margin:0 0 4px; color:var(--zut); letter-spacing:.5px; }
+  .pod{ opacity:.55; font-size:14px; margin-bottom:22px; }
+  .kartice{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:26px; }
+  .k{ background:#1e1810; border:1px solid #3a2e20; border-radius:14px; padding:14px 16px; }
+  .k b{ display:block; font-size:28px; color:var(--zut); font-weight:800; }
+  .k span{ font-size:13px; opacity:.6; }
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+  .box{ background:#1e1810; border:1px solid #3a2e20; border-radius:14px; padding:14px 16px; }
+  .box h2{ font-size:14px; margin:0 0 10px; text-transform:uppercase; letter-spacing:1px; opacity:.65; }
+  .red{ display:flex; align-items:center; gap:10px; margin:5px 0; font-size:14px; }
+  .red i{ font-style:normal; width:34%; opacity:.85; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .bar{ flex:1; height:10px; background:#2a2118; border-radius:5px; overflow:hidden; }
+  .bar div{ height:100%; background:linear-gradient(90deg,#d09540,#ffd479); }
+  .red b{ width:56px; text-align:right; font-variant-numeric:tabular-nums; }
+  .greska{ color:#ff8a6a; }
+  input,button{ font:inherit; background:#241c14; color:var(--tekst); border:1px solid #3a2e20;
+                border-radius:8px; padding:6px 10px; }
+</style>
+</head>
+<body>
+<h1>TRI FILDŽANA — statistika</h1>
+<div class="pod">
+  <span id="raspon">zadnjih 30 dana</span> ·
+  <input id="dana" type="number" value="30" min="1" max="90" style="width:70px">
+  <input id="key" type="text" placeholder="ključ (ako je postavljen)" style="width:190px">
+  <button onclick="ucitaj()">osvježi</button>
+</div>
+
+<div class="kartice" id="kartice"></div>
+<div class="grid" id="grid"></div>
+
+<script>
+const POLJA = [
+  ['zemlja','Zemlje'], ['grad','Gradovi'], ['jezik','Jezik'], ['uredjaj','Uređaj'],
+  ['platforma','Platforma'], ['preglednik','Preglednik'], ['izvor','Odakle dolaze'],
+  ['trajanje','Koliko dugo igraju'], ['dogadjaj','Šta se dešava u igri'],
+  ['sezona','Dostignuta sezona'], ['ekran','Rezolucija'], ['piksel','Piksel-način'], ['zvuk','Zvuk']
+];
+
+function red(ime, broj, max){
+  const p = max ? Math.round(broj / max * 100) : 0;
+  return `<div class="red"><i title="${ime}">${ime}</i>
+    <div class="bar"><div style="width:${p}%"></div></div><b>${broj}</b></div>`;
+}
+
+function tabela(naslov, obj){
+  const parovi = Object.entries(obj || {}).sort((a, b) => b[1] - a[1]).slice(0, 12);
+  if (!parovi.length) return '';
+  const max = parovi[0][1];
+  return `<div class="box"><h2>${naslov}</h2>${parovi.map(([k, v]) => red(k, v, max)).join('')}</div>`;
+}
+
+async function ucitaj(){
+  const dana = document.getElementById('dana').value || 30;
+  const key = document.getElementById('key').value;
+  document.getElementById('raspon').textContent = 'zadnjih ' + dana + ' dana';
+  try{
+    const r = await fetch('/api/stats?dana=' + dana + (key ? '&key=' + encodeURIComponent(key) : ''));
+    if(!r.ok) throw new Error(r.status === 401 ? 'pogrešan ključ' : ('greška ' + r.status));
+    const d = await r.json();
+    const z = d.zbroj;
+    document.getElementById('kartice').innerHTML = [
+      ['Pokretanja', z.posjeta], ['Sesija', z.sesija], ['Minuta ukupno', z.minuta],
+      ['Prosjek po sesiji', z.prosjecnoSek + ' s'], ['Odigranih rundi', z.rundi],
+      ['Partija', z.partije], ['Najveći rekord', z.rekord + ' KM']
+    ].map(([n, v]) => `<div class="k"><b>${v}</b><span>${n}</span></div>`).join('');
+    document.getElementById('grid').innerHTML =
+      POLJA.map(([k, n]) => tabela(n, d.spoji[k])).join('') +
+      tabela('Po danima (pokretanja)', Object.fromEntries((d.dani || []).map(x => [x.dan, x.posjeta])));
+  }catch(e){
+    document.getElementById('grid').innerHTML = '<div class="box greska">' + e.message + '</div>';
+  }
+}
+ucitaj();
+</script>
+</body>
+</html>
