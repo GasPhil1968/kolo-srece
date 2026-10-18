@@ -53,6 +53,32 @@ const css = (result.outputFiles.find((f) => f.path.endsWith('.css'))?.text ?? ''
   (m, _q, p) => (embed[p] ? `url(${embed[p]})` : m),
 );
 
+// Embedded art is split over classic scripts (they also load from file://), about 20 MB each, so that
+// each delivery archive stays under 30 MB.
+const CHUNK = 20_000_000;
+const chunks = [];
+let cur = {};
+let curSize = 0;
+for (const [k, v] of Object.entries(embed)) {
+  const size = JSON.stringify(v).length;
+  if (curSize + size > CHUNK && curSize > 0) {
+    chunks.push(cur);
+    cur = {};
+    curSize = 0;
+  }
+  cur[k] = v;
+  curSize += size;
+}
+if (curSize) chunks.push(cur);
+await mkdir(outDir, { recursive: true });
+const chunkTags = [];
+for (let i = 0; i < chunks.length; i++) {
+  const name = `assets-${i + 1}.js`;
+  const body = `(globalThis.__POV_EMBED__=globalThis.__POV_EMBED__||{});Object.assign(globalThis.__POV_EMBED__,${JSON.stringify(chunks[i]).replace(/<\//g, '<\\/')});`;
+  await writeFile(path.join(outDir, name), body);
+  chunkTags.push(`<script src="${name}"></script>`);
+}
+
 const template = await readFile(path.join(root, 'index.html'), 'utf8');
 const html = template
   .replace('<script type="module" src="/src/main.ts"></script>', '')
@@ -61,12 +87,10 @@ const html = template
     '</body>',
     // A function replacement: the game code contains '$&' and similar, which a string replacement would expand.
     () =>
-    // Embedded data first, then the game. Escaping "</" keeps the inline script from closing early.
-    `<script>globalThis.__POV_EMBED__=${JSON.stringify(embed).replace(/<\//g, '<\\/')};</script>\n` +
-      `<script>${js.replace(/<\/script/gi, '<\\/script')}</script>\n  </body>`,
+    // The embedded art comes first (its own files), then the game. Escaping "</" keeps the inline script intact.
+    `${chunkTags.join('\n')}\n<script>${js.replace(/<\/script/gi, '<\\/script')}</script>\n  </body>`,
   );
 
-await mkdir(outDir, { recursive: true });
 await writeFile(path.join(outDir, 'index.html'), html);
 const size = (await readFile(path.join(outDir, 'index.html'))).length;
-console.log(`standalone/index.html: ${(size / 1e6).toFixed(1)} MB, ${Object.keys(embed).length} embedded assets`);
+console.log(`standalone/index.html: ${(size / 1e6).toFixed(1)} MB, ${Object.keys(embed).length} embedded assets in ${chunks.length} script file(s)`);
