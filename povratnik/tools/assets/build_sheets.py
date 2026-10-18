@@ -49,6 +49,11 @@ def apply_patch(cell: np.ndarray, patch: dict) -> np.ndarray:
 
 def source_cells(spec: dict) -> list[np.ndarray]:
     img = load_rgba(ref(spec['src']))
+    if spec.get('mul'):
+        # A whole sheet recoloured (a second man painted in the same style must not look like the first).
+        img = img.astype(np.float32)
+        img[:, :, :3] *= np.array(spec['mul'], np.float32)
+        img = np.clip(img, 0, 255).astype(np.uint8)
     cells = []
     patches = spec.get('patches', {})
     for i, (x, y, w, h) in enumerate(grid_rects(spec, img)):

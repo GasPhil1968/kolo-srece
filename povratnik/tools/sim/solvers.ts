@@ -387,6 +387,37 @@ export const solveHochzeit: Solver = (sim) => {
   return null;
 };
 
+export const solveRomagna: Solver = (sim) => {
+  const e = sim.engine;
+  const s = e.state;
+  const fl = (n: string) => !!s.flags[`rm.${n}`];
+  if (e.inputMode() === 'combat' && e.combat) return { k: 'combat', action: e.combat.current.answer };
+  if (e.inputMode() === 'choice') {
+    const opts = sim.options();
+    for (const id of ['frage', 'wohin', 'wasser', 'wer', 'gehen']) if (opts.includes(id)) return choose(id);
+    return choose(opts.includes('__bye') ? '__bye' : opts[0]);
+  }
+  if (s.room === 'rm_lager') {
+    if (!fl('warnung')) return act('actor:rm_alessandro', 'talk');
+    if (!fl('wasser')) return go(sim, 'rm_schreib');
+    if (!fl('tomRoute')) return act('actor:rm_tomasino', 'talk');
+    return go(sim, 'rm_vorwerk');
+  }
+  if (s.room === 'rm_schreib') {
+    if (!fl('wasser')) return act('buch', 'look');
+    return go(sim, 'rm_lager');
+  }
+  if (s.room === 'rm_vorwerk') {
+    if (!fl('postWer') && !fl('postTausch')) return act('actor:rm_posten', 'talk');
+    return act('tor', 'go');
+  }
+  if (s.room === 'rm_fluss') {
+    if (!fl('spuren')) return act('spuren', 'look');
+    return act('weide', 'go');
+  }
+  return null;
+};
+
 export const SOLVERS: Record<string, Solver> = {
   sarajevo: solveSarajevo,
   weide: solveWeide,
@@ -399,4 +430,5 @@ export const SOLVERS: Record<string, Solver> = {
   kolonne: solveKolonne,
   lager: solveLager,
   hochzeit: solveHochzeit,
+  romagna: solveRomagna,
 };

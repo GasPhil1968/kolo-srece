@@ -2813,21 +2813,82 @@
  },
  "gattamelata_romagna": {
   "anims": {
-   "alle": {
-    "fps": 6,
+   "angriff": {
+    "fps": 8,
     "frames": [
-     "f0",
-     "f1",
-     "f2",
-     "f3",
-     "f4",
-     "f5",
-     "f6",
-     "f7",
-     "f8",
-     "f9",
-     "f10",
-     "f11"
+     "f1"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "ergibt": {
+    "fps": 8,
+    "frames": [
+     "f10"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "geduckt": {
+    "fps": 8,
+    "frames": [
+     "f5"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "getroffen": {
+    "fps": 8,
+    "frames": [
+     "f3"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "guard": {
+    "fps": 8,
+    "frames": [
+     "f0"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "hebt_sich": {
+    "fps": 8,
+    "frames": [
+     "f9"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "hoch": {
+    "fps": 8,
+    "frames": [
+     "f2"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "kniet": {
+    "fps": 8,
+    "frames": [
+     "f7"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "liegt": {
+    "fps": 8,
+    "frames": [
+     "f8"
+    ],
+    "loop": true,
+    "refH": 320
+   },
+   "sinkt": {
+    "fps": 8,
+    "frames": [
+     "f6"
     ],
     "loop": false,
     "refH": 320
@@ -2879,12 +2940,6 @@
     "ay": 1.0,
     "h": 300,
     "w": 304
-   },
-   "f4": {
-    "ax": 0.36228,
-    "ay": 1.0,
-    "h": 324,
-    "w": 334
    },
    "f5": {
     "ax": 0.68508,
@@ -6059,15 +6114,24 @@
  "mijo1505": {
   "anims": {
    "angriff": {
-    "fps": 4,
+    "fps": 8,
     "frames": [
-     "f0",
      "f1"
     ],
     "loop": true,
     "refH": 326
    },
-   "atmen": {
+   "entwaffnen": {
+    "fps": 5,
+    "frames": [
+     "f3",
+     "f5",
+     "f4"
+    ],
+    "loop": false,
+    "refH": 326
+   },
+   "getroffen": {
     "fps": 8,
     "frames": [
      "f9"
@@ -6075,30 +6139,58 @@
     "loop": true,
     "refH": 326
    },
-   "entwaffnen": {
-    "fps": 6,
+   "greifen": {
+    "fps": 8,
     "frames": [
-     "f2",
-     "f3",
-     "f4",
      "f5"
     ],
-    "loop": false,
+    "loop": true,
+    "refH": 326
+   },
+   "guard": {
+    "fps": 8,
+    "frames": [
+     "f0"
+    ],
+    "loop": true,
     "refH": 326
    },
    "niederhalten": {
-    "fps": 4,
+    "fps": 8,
     "frames": [
-     "f6",
      "f7"
     ],
-    "loop": false,
+    "loop": true,
     "refH": 326
    },
    "stand": {
     "fps": 8,
     "frames": [
      "f11"
+    ],
+    "loop": true,
+    "refH": 326
+   },
+   "stoss": {
+    "fps": 8,
+    "frames": [
+     "f2"
+    ],
+    "loop": true,
+    "refH": 326
+   },
+   "tief": {
+    "fps": 8,
+    "frames": [
+     "f3"
+    ],
+    "loop": true,
+    "refH": 326
+   },
+   "waffe_halten": {
+    "fps": 8,
+    "frames": [
+     "f8"
     ],
     "loop": true,
     "refH": 326
@@ -6163,17 +6255,17 @@
     "h": 362,
     "w": 345
    },
-   "f6": {
-    "ax": 0.50704,
-    "ay": 1.0,
-    "h": 362,
-    "w": 284
-   },
    "f7": {
     "ax": 0.55556,
     "ay": 1.0,
     "h": 362,
     "w": 351
+   },
+   "f8": {
+    "ax": 0.48416,
+    "ay": 1.0,
+    "h": 362,
+    "w": 221
    },
    "f9": {
     "ax": 0.57059,

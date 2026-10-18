@@ -281,3 +281,26 @@ clue was a wedding drum that had to be heard; the rebuild shows it instead.
   bottle in his doorway. Using the flask on him plays the toast (the painted pair). The lane's end is
   refused until the greeting is returned. Ending: "Am nächsten Tag wurde aus demselben Dorf wieder
   geschossen."
+
+## Chapter 13 – Der zweite Tote (Romagna, Juli 1505)
+
+Four rooms: the camp, the paymaster's tent, the outpost, the dry riverbed. Original puzzles; the novel's
+core (a second immortal, Alessandro's warning, the fight in the riverbed) is kept.
+
+- **Warning (camp):** Alessandro tells Mijo that Gattamelata asks where he sleeps. Two answers, both lead on.
+- **Water book (paymaster's tent):** the water ledger gives tent nine fourteen jugs. Nobody's name is written
+  against it. Tomasino (camp) says he carries water to tent nine and, at night, to the riverbed.
+  Deduction: tent nine's man leaves the camp at night, alone.
+- **Outpost:** the sentry says who is relieved and who took the watch in his place (the new man).
+- **Riverbed:** the footprints show someone waited under the willow; looking first is required before walking
+  up to it (early approach is refused with the reason).
+- **Fight (duel, five actions):** overhead cut → parry; thrust → sidestep; close guard → disarm. Disarm is a
+  wrist grip on the sword arm (animation: the arm pulled down, the sword falls to the gravel).
+  The disarm works because the riverbed ground was read first ("Der Boden entscheidet, wo man den Griff fasst").
+- **Ending (open):** let him go (Alessandro: "Das wird dich mehr kosten"), make him name the man who pays
+  (he names the paymaster; flag `rm.ausgefragt`), or finish it (flag `rm.tot`; Alessandro's second rule).
+  Flags `rm.frei`, `rm.ausgefragt`, `rm.tot` are kept for later chapters.
+
+Known limits: the card image is a placeholder (the inn card of chapter 8); the Gattamelata sheet's state
+names are set by frame order (see the frame map in `tools/assets/sheet_specs.py`), not yet checked in a
+playtest by a person.

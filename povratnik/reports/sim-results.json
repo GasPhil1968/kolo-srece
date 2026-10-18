@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-17T20:27:17.756Z",
+  "generatedAt": "2026-10-18T10:23:59.840Z",
   "runs": 300,
   "passed": 300,
   "failed": 0,
-  "seconds": 1.35,
+  "seconds": 1.061,
   "byChapter": {
-    "hochzeit": {
+    "romagna": {
       "runs": 300,
       "ok": 300,
-      "warmSteps": 2284,
-      "randomSteps": 10521,
-      "saveLoads": 715
+      "warmSteps": 2897,
+      "randomSteps": 10114,
+      "saveLoads": 544
     }
   },
   "failures": []

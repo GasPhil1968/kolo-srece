@@ -56,9 +56,11 @@ const css = (result.outputFiles.find((f) => f.path.endsWith('.css'))?.text ?? ''
 const template = await readFile(path.join(root, 'index.html'), 'utf8');
 const html = template
   .replace('<script type="module" src="/src/main.ts"></script>', '')
-  .replace('</head>', `<style>${css}</style>\n  </head>`)
+  .replace('</head>', () => `<style>${css}</style>\n  </head>`)
   .replace(
     '</body>',
+    // A function replacement: the game code contains '$&' and similar, which a string replacement would expand.
+    () =>
     // Embedded data first, then the game. Escaping "</" keeps the inline script from closing early.
     `<script>globalThis.__POV_EMBED__=${JSON.stringify(embed).replace(/<\//g, '<\\/')};</script>\n` +
       `<script>${js.replace(/<\/script/gi, '<\\/script')}</script>\n  </body>`,

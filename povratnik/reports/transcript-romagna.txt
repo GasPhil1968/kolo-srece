@@ -1,0 +1,70 @@
+== Der zweite Tote – Romagna, Juli 1505 / Arbeit hieß bei Alessandro Krieg. / Mijo führt die Bücher. Er kämpft nicht. ==
+  (Sie hatten Dubrovnik im Frühjahr verlassen, weil Alessandro Arbeit gefunden hatte.)
+  (Die Romagna gehörte niemandem, und alle stritten darum. Dazwischen zogen die Kompanien.)
+  MIJO: Bücher, Sold, Botschaften. Das Schreiben ist mein Platz in dieser Kompanie.
+> talk actor:rm_alessandro
+  ALESSANDRO: Der Neue, der sich Gattamelata nennt. Er fragt herum nach dir.
+  MIJO: Was fragt er?
+  ALESSANDRO: Wo du schläfst. Wann du allein bist. Ob du ein Schwert trägst. Er bereitet es vor.
+  MIJO: Ich habe ihm nichts getan.
+  ALESSANDRO: Das ist auch nicht der Grund. Er hält dich für schwächer. Mehr braucht ein Mann wie er nicht.
+  ? Was soll ich tun? | Ich gehe ihm aus dem Weg.
+> choose frage
+  MIJO: Was soll ich tun?
+  ALESSANDRO: Die Augen offen halten. Und merken, wo er sich bewegt, bevor er es tut.
+> go schreib
+-> rm_schreib (lager)
+> look buch
+  MIJO: Das Wasserbuch der Kompanie. Jede Zeile ein Zelt, jede Zeile eine Zahl: Krüge am Tag.
+  MIJO: Die meisten Zelte stehen mit zwei oder drei Krügen, je nach Männern im Zelt.
+  MIJO: Nummer neun steht mit vierzehn Krügen, und in dieser Zeile fehlt ein Name.
+> go ausgang
+-> rm_lager (schreib)
+> talk actor:rm_tomasino
+  TOMASINO: Guten Abend, Herr Schreiber. Ich habe schon drei Mal den Brunnen gefüllt.
+  ? Wohin trägst du das Wasser, wenn es dunkel ist? | Geh schlafen, Tomasino.
+> choose wohin
+  MIJO: Wohin trägst du das Wasser, wenn es dunkel ist?
+  TOMASINO: Zu den Zelten am Brunnen. Und manchmal, wenn der Herr es sagt, zum Fluss, weil dort kein Mensch mehr hingeht.
+  MIJO: Zu welchem Zelt, Tomasino?
+  TOMASINO: Zu dem am Ende der Reihe, Nummer neun. Dorthin muss ich dreimal, sonst schimpft der Quartiermeister.
+  MIJO: Wer wohnt dort?
+  TOMASINO: Ein Mann, der nicht schläft. Er schickt mich nachts zum Fluss und sagt, ich soll nicht reden.
+> go vorwerk
+-> rm_vorwerk (lager)
+> talk actor:rm_posten
+  DER POSTEN: Wer will vorbei? Die Ablösung kommt um Mitternacht. Oder um eins, je nachdem.
+  ? Wer wird heute Nacht abgelöst? | Wer hat getauscht? | Gute Wache.
+> choose wer
+  MIJO: Wer wird heute Nacht abgelöst?
+  DER POSTEN: Der Mann am südlichen Posten, zwei Stunden nach Mitternacht. Der hat es sich vorgestern tauschen lassen. Ein anderer hat es für ihn übernommen.
+> go tor
+  MIJO: Ich gehe hinunter.
+-> rm_fluss (tor)
+> look spuren
+  MIJO: Zwei Paar Fußspuren im Kies. Eines kommt vom Vorwerk herunter, schnell, mit kurzen Schritten.
+  MIJO: Das andere liegt unter dem Weidenbusch, fest eingedrückt. Dort hat jemand lange gestanden. Die Spur endet dort.
+> go weide
+  (Er kam aus dem Busch, ohne ein Wort.)
+  [Ein Hieb von oben, mit dem ganzen Gewicht.]
+> combat parieren
+  [Ich fange ihn über dem Kopf ab. Der Stahl klingt auf Stahl.]
+  [Er tritt ein und sticht tief, zur Seite des Rippenbogens.]
+> combat ausweichen
+  [Ich weiche aus, und der Stoß zieht an meiner Seite vorbei.]
+  [Er hält das Schwert eng am Körper, die Klinge zeigt auf meine Brust. Ein Fehler wird er nicht noch einmal machen.]
+> combat entwaffnen
+  [Ich packe sein Handgelenk, drehe den Körper ein und ziehe den Arm nach unten. Das Schwert fällt in den Kies.]
+  (Gattamelata lag im Kies. Der Atem ging schwer, und aus der Nase lief Blut.)
+  MIJO: Du hast mich für schwächer gehalten.
+  GATTAMELATA: Ich habe dich gelesen.
+  (Mijos Knie lag auf seiner Brust. Die linke Hand des Mannes suchte im Kies nach nichts.)
+  ? Ihn gehen lassen. | Ihn fragen, wer ihn bezahlt. | Weitermachen.
+> choose gehen
+  MIJO: Ich stehe auf und trete zurück. „In einer Stunde kannst du wieder aufstehen. Und dann gehst du. Nicht zurück in diese Kompanie.“
+  MIJO: Gattamelata kroch davon, die Hände in den Kies gekrallt. Er wurde nie wieder gesehen.
+  ALESSANDRO: Alessandro sah zu, wie der Mann im Dunkeln verschwand. „Du hast ihn gehen lassen. Das wird dich mehr kosten, als du denkst.“
+== Ende des Kapitels ==
+== Ancona – Adriaküste, Mai 1507 / Mijo ist einundfünfzig Jahre alt und sieht aus wie einundzwanzig. / Er hat noch nie einen sterben sehen, der nicht tot blieb. ==
+  (Vier Jahre bei Alessandro. Dann ein Zettel, ein Päckchen und ein Ort: Ancona.)
+  MIJO: Hundert Dukaten. Ich soll sie einem Griechen bringen, der am Hafen wartet.

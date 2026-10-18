@@ -375,7 +375,7 @@ export const zaesurChapter: ChapterDef = {
   card: { image: 'intro_zaesur', lines: T.card },
   pc: { character: 'macleod', name: T.names.macleod, color: C.pc },
   start: { room: 'za_zimmer', entry: 'start' },
-  next: 'ancona',
+  next: 'romagna',
   journal: T.journal,
   items: [
     {

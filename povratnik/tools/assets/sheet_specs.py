@@ -109,21 +109,40 @@ SHEETS = {
     # refH = standing height of the figure in its cell. Frame index = row x 4 + column (rows from the top).
     'mijo1505': {
         'src': 'new/mijo1505.png', 'grid': (4, 3), 'refH': 326, 'anchor': 'feet', 'clean': False,
+        # Frame map (row x 4 + column): 0 guard, 1 lunge, 2 thrust, 3 low grip, 4 sword falls to the side,
+        # 5 both hands on the arm, 6 arm held low, 7 kneeling on the pinned man, 8 standing with sword,
+        # 9 hand to chest, 10 standing, sword on the ground, 11 idle.
         'anims': {
             'stand': {'frames': [11], 'loop': True},
+            'guard': {'frames': [0], 'loop': True},
+            'angriff': {'frames': [1], 'loop': True},
+            'stoss': {'frames': [2], 'loop': True},
+            'tief': {'frames': [3], 'loop': True},
+            'greifen': {'frames': [5], 'loop': True},
+            'entwaffnen': {'frames': [3, 5, 4], 'fps': 5, 'loop': False},
+            'niederhalten': {'frames': [7], 'loop': True},
+            'waffe_halten': {'frames': [8], 'loop': True},
+            'getroffen': {'frames': [9], 'loop': True},
             'waffenlos': {'frames': [10], 'loop': True},
-            'atmen': {'frames': [9], 'loop': True},
-            'angriff': {'frames': [0, 1], 'fps': 4, 'loop': True},
-            'entwaffnen': {'frames': [2, 3, 4, 5], 'fps': 6, 'loop': False},
-            'niederhalten': {'frames': [6, 7], 'fps': 4, 'loop': False},
         },
     },
     'gattamelata_romagna': {
-        'src': 'new/gattamelata_romagna.png', 'grid': (4, 3), 'refH': 320, 'anchor': 'feet', 'clean': False,
-        # All twelve frames are kept; the state names are set once the frame map is confirmed in staging.
+        'src': 'new/gattamelata_romagna.png', 'grid': (4, 3), 'refH': 320, 'anchor': 'feet', 'clean': False, 'mul': [0.8, 0.9, 0.85],
+        # Frame map (row x 4 + column): 0 guard, 1 lunge, 2 high cut, 3 arm flung back (hit), 4 crouched with
+        # sword low, 5 hunched, 6 bent over, 7 kneeling with sword on the ground, 8 lying on his back,
+        # 9 half rising, 10 kneeling with hands raised, 11 standing idle.
         'anims': {
             'stand': {'frames': [11], 'loop': True},
-            'alle': {'frames': list(range(12)), 'fps': 6, 'loop': False},
+            'guard': {'frames': [0], 'loop': True},
+            'angriff': {'frames': [1], 'loop': True},
+            'hoch': {'frames': [2], 'loop': True},
+            'getroffen': {'frames': [3], 'loop': True},
+            'geduckt': {'frames': [5], 'loop': True},
+            'sinkt': {'frames': [6], 'loop': False},
+            'kniet': {'frames': [7], 'loop': True},
+            'liegt': {'frames': [8], 'loop': True},
+            'hebt_sich': {'frames': [9], 'loop': True},
+            'ergibt': {'frames': [10], 'loop': True},
         },
     },
     'ferrante': {
