@@ -348,7 +348,9 @@ export class GameScene extends Phaser.Scene {
       const anim = engine.actorAnim(id);
       const def = engine.actorDef(id);
       const rel = id === 'pc' ? engine.chapter.pc.relHeight ?? 1 : def?.relHeight ?? 1;
-      this.applyFigure(v.sprite, meta, anim.name, anim.t, anim.loop, anim.times, a.x, a.y, a.facing, rel, tint);
+      // Without its own walk or talk frames, a figure gets a small procedural bounce so motion still reads.
+      const hop = this.proceduralHop(id, meta, engine.clock);
+      this.applyFigure(v.sprite, meta, anim.name, anim.t, anim.loop, anim.times, a.x, a.y - hop, a.facing, rel, tint);
     }
     for (const [id, v] of this.actorViews) {
       if (!seen.has(id)) {
@@ -511,6 +513,14 @@ export class GameScene extends Phaser.Scene {
   }
 
   /** Set frame, anchor, facing, perspective scale and depth of a figure sprite. */
+  /** Vertical lift in logical pixels: a step bounce while walking, a short nod while speaking. */
+  private proceduralHop(id: string, meta: CharMeta, clock: number): number {
+    const engine = this.engine;
+    if (engine.isWalking(id) && !meta.anims.walk) return Math.abs(Math.sin(Math.PI * 2.2 * clock)) * 3;
+    if (engine.speech?.actor === id && !meta.anims.talk) return Math.abs(Math.sin(Math.PI * 2.6 * clock)) * 1.5;
+    return 0;
+  }
+
   private applyFigure(
     sp: Phaser.GameObjects.Sprite,
     meta: CharMeta,
