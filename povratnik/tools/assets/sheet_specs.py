@@ -105,6 +105,51 @@ SHEETS = {
         'src': 'props/prop_wedding_guests.webp', 'grid': (1, 1), 'refH': 150, 'anchor': 'bottom', 'defringe': False,
         'anims': {'stand': {'frames': [0], 'loop': True}},
     },
+    # --- Romagna 1505 (chapter 13). Sources: the delivered PNG sheets, 4 x 3 cells of 362 px.
+    # refH = standing height of the figure in its cell. Frame index = row x 4 + column (rows from the top).
+    'mijo1505': {
+        'src': 'new/mijo1505.png', 'grid': (4, 3), 'refH': 326, 'anchor': 'feet', 'clean': False,
+        'anims': {
+            'stand': {'frames': [11], 'loop': True},
+            'waffenlos': {'frames': [10], 'loop': True},
+            'atmen': {'frames': [9], 'loop': True},
+            'angriff': {'frames': [0, 1], 'fps': 4, 'loop': True},
+            'entwaffnen': {'frames': [2, 3, 4, 5], 'fps': 6, 'loop': False},
+            'niederhalten': {'frames': [6, 7], 'fps': 4, 'loop': False},
+        },
+    },
+    'gattamelata_romagna': {
+        'src': 'new/gattamelata_romagna.png', 'grid': (4, 3), 'refH': 320, 'anchor': 'feet', 'clean': False,
+        # All twelve frames are kept; the state names are set once the frame map is confirmed in staging.
+        'anims': {
+            'stand': {'frames': [11], 'loop': True},
+            'alle': {'frames': list(range(12)), 'fps': 6, 'loop': False},
+        },
+    },
+    'ferrante': {
+        'src': 'new/ferrante.png', 'grid': (4, 3), 'refH': 352, 'anchor': 'feet', 'clean': False,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'walk': {'frames': [4, 5, 6, 7], 'fps': 8, 'loop': True},
+            'lesen': {'frames': [8, 9, 10, 11], 'fps': 4, 'loop': False},
+        },
+    },
+    'tomasino': {
+        'src': 'new/tomasino.png', 'grid': (4, 3), 'refH': 322, 'anchor': 'feet', 'clean': False,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'walk': {'frames': [4, 5, 6, 7], 'fps': 8, 'loop': True},
+            'pause': {'frames': [8, 9, 10, 11], 'fps': 4, 'loop': False},
+        },
+    },
+    'posten_romagna': {
+        'src': 'new/posten_romagna.png', 'grid': (4, 3), 'refH': 345, 'anchor': 'feet', 'clean': False,
+        'anims': {
+            'stand': {'frames': [0], 'loop': True},
+            'walk': {'frames': [4, 5, 6, 7], 'fps': 8, 'loop': True},
+            'zielen': {'frames': [8, 9, 10, 11], 'fps': 4, 'loop': False},
+        },
+    },
     'smoke_enge': {
         # The smoke over the burning abatis in the gorge (3 x 2 cells, the column's root at x 200).
         'src': 'polish-v3/enge-smoke.png', 'grid': (3, 2), 'refH': 240, 'anchor': 'bottom', 'anchor_x': 200, 'defringe': False, 'clean': False,
@@ -692,6 +737,8 @@ PROPS = {
     'prop_stange': {'clean': True, 'src': 'puzzles-v6/items-rescue.png', 'crop': [768, 768, 256, 256], 'rotate': -24, 'mul': [0.72, 0.66, 0.6]},
     'prop_bauer_seated': 'props/prop_bauer_seated.webp',
     'prop_hand_finger': 'props/prop_missing_fingers_hand.webp',
+    # Romagna 1505: the sword in the riverbed (source resized to 512 x 192).
+    'prop_schwert_boden': {'src': 'new/schwert_am_boden.png', 'resize': [512, 192], 'clean': False},
     # Lager 1878
     'prop_folder_empty': 'props/prop_folder_empty.webp',
     'prop_folder_papers': 'props/prop_folder_papers.webp',

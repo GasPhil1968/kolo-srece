@@ -26,7 +26,13 @@ def ref_root() -> str:
     return r
 
 
+NEW_SOURCES = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sources', 'new')
+
+
 def ref(path: str) -> str:
+    # Art delivered in this repo (its originals are committed under tools/assets/sources/new).
+    if path.startswith('new/'):
+        return os.path.join(NEW_SOURCES, path[len('new/'):])
     return os.path.join(ref_root(), 'assets', path)
 
 

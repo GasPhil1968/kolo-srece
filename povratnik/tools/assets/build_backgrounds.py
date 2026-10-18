@@ -57,6 +57,12 @@ BACKGROUNDS = {
     'bg_kolonnespitze': 'bg/bg_kolonnespitze.webp',
     'bg_feldzelt': 'bg/bg_feldzelt.webp',
     'bg_lager': 'bg/bg_lager.webp',
+    # Romagna 1505 (chapter 13) and Ancona's back lane: new paintings, resized to the room size.
+    'bg_hintergasse': {'src': 'new/bg_hintergasse.png', 'resize': [1300, 470]},
+    'bg_romagna_lager': {'src': 'new/bg_romagna_lager.png', 'resize': [1300, 470]},
+    'bg_romagna_schreibstube': {'src': 'new/bg_romagna_schreibstube.png', 'resize': [1300, 470]},
+    'bg_romagna_vorwerk': {'src': 'new/bg_romagna_vorwerk.png', 'resize': [1300, 470]},
+    'bg_romagna_flussbett': {'src': 'new/bg_romagna_flussbett.png', 'resize': [1300, 470]},
     'bg_stabszelt': 'bg/bg_stabszelt_scaled.webp',
     'bg_hochzeit': 'bg/bg_hochzeit.webp',
     'bg_dorfgasse': 'wedding-polish/dorfgasse-1878.webp',

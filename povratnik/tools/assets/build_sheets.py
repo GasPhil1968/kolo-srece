@@ -158,11 +158,14 @@ def build_props(only: set[str]) -> dict:
         # Top-left corner of the output inside the crop (pieces cut from one painting are placed
         # against each other with it).
         ox, oy = 0, 0
-        processed = not isinstance(spec, str) and any(k in spec for k in ('crop', 'poly', 'clean', 'rotate', 'tile', 'mul', 'gain', 'cloth'))
+        processed = not isinstance(spec, str) and any(k in spec for k in ('crop', 'poly', 'clean', 'rotate', 'tile', 'mul', 'gain', 'cloth', 'resize'))
         if src.endswith('.webp') and not processed:
             shutil.copyfile(ref(src), dst)
         else:
             im = im.convert('RGBA')
+            if not isinstance(spec, str) and spec.get('resize'):
+                # A large painted source scaled to the size it is drawn at.
+                im = im.resize(tuple(spec['resize']), Image.LANCZOS)
             if crop:  # [x, y, w, h]
                 x, y, w, h = crop
                 im = im.crop((x, y, x + w, y + h))

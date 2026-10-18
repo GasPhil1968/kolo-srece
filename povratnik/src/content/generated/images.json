@@ -204,10 +204,9 @@
   "w": 1300
  },
  "bg_hintergasse": {
-  "derived": "new painting (generated), 1300x470",
   "file": "bg/bg_hintergasse.webp",
   "h": 470,
-  "source": "bg/bg_hintergasse.webp",
+  "source": "new/bg_hintergasse.png",
   "w": 1300
  },
  "bg_hochzeit": {
@@ -287,6 +286,30 @@
   "h": 470,
   "source": "sarajevo-v3/prolog.webp",
   "w": 1280
+ },
+ "bg_romagna_flussbett": {
+  "file": "bg/bg_romagna_flussbett.webp",
+  "h": 470,
+  "source": "new/bg_romagna_flussbett.png",
+  "w": 1300
+ },
+ "bg_romagna_lager": {
+  "file": "bg/bg_romagna_lager.webp",
+  "h": 470,
+  "source": "new/bg_romagna_lager.png",
+  "w": 1300
+ },
+ "bg_romagna_schreibstube": {
+  "file": "bg/bg_romagna_schreibstube.webp",
+  "h": 470,
+  "source": "new/bg_romagna_schreibstube.png",
+  "w": 1300
+ },
+ "bg_romagna_vorwerk": {
+  "file": "bg/bg_romagna_vorwerk.webp",
+  "h": 470,
+  "source": "new/bg_romagna_vorwerk.png",
+  "w": 1300
  },
  "bg_rueckweg": {
   "file": "bg/bg_rueckweg.webp",
@@ -1077,6 +1100,12 @@
   "h": 133,
   "source": "elf-tage-v7/raufe-zustaende.png",
   "w": 375
+ },
+ "prop_schwert_boden": {
+  "file": "props/prop_schwert_boden.webp",
+  "h": 192,
+  "source": "new/schwert_am_boden.png",
+  "w": 512
  },
  "prop_seil": {
   "file": "props/prop_seil.webp",
