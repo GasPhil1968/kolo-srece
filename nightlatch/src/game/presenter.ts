@@ -2,6 +2,7 @@
 import Phaser from 'phaser';
 import type { Presenter } from '../engine/presenter';
 import type { CloseupDef, DialogDef, Dir, OptionDef } from '../engine/types';
+import { f, t } from '../i18n';
 import { ctl } from './controller';
 import { RoomScene, VIEW_H } from './RoomScene';
 import { audio, settings } from './services';
@@ -219,11 +220,11 @@ export class RuntimePresenter implements Presenter {
     const g = ctl.game;
     const c = g.content;
     const text =
-      kind === 'item' ? `Got: ${c.items[id]?.name ?? id}` :
-      kind === 'clue' ? `Notebook: ${c.clues[id]?.title ?? id}` :
-      kind === 'unlock' ? `New location: ${c.locations[id]?.name ?? id}` :
-      kind === 'deduction' ? `Deduction: ${c.deductions[id]?.title ?? id}` :
-      kind === 'person' ? `New file: ${c.people[id]?.name ?? id}` :
+      kind === 'item' ? f('Got: {0}', t(c.items[id]?.name ?? id)) :
+      kind === 'clue' ? f('Notebook: {0}', t(c.clues[id]?.title ?? id)) :
+      kind === 'unlock' ? f('New location: {0}', t(c.locations[id]?.name ?? id)) :
+      kind === 'deduction' ? f('Deduction: {0}', t(c.deductions[id]?.title ?? id)) :
+      kind === 'person' ? f('New file: {0}', t(c.people[id]?.name ?? id)) :
       'Your pockets feel lighter.';
     const color = kind === 'deduction' ? 0xffd27a : kind === 'clue' ? 0xc8e0a0 : kind === 'unlock' ? 0x9fd0ff : 0xe8d8b0;
     if (kind === 'clue') audio.sfx('pencil');

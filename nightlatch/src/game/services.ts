@@ -1,6 +1,7 @@
 // Settings, save slots and audio — browser-side services.
 import Phaser from 'phaser';
 import { deserialize, serialize, type GameState } from '../engine/state';
+import { setLang, type Lang } from '../i18n';
 import { asset } from './assets';
 
 // --------------------------------------------------------------------- settings ----
@@ -10,10 +11,12 @@ export interface Settings {
   textSpeed: number; // 0.6 slow, 1 normal, 1.6 fast
   pixelPerfect: boolean;
   hints: boolean;
+  lang: Lang;
 }
 
 const SETTINGS_KEY = 'nightlatch.settings';
-export const settings: Settings = { music: 0.7, sfx: 0.8, textSpeed: 1, pixelPerfect: true, hints: true };
+const browserLang: Lang = typeof navigator !== 'undefined' && /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
+export const settings: Settings = { music: 0.7, sfx: 0.8, textSpeed: 1, pixelPerfect: true, hints: true, lang: browserLang };
 
 export function loadSettings() {
   try {
@@ -22,6 +25,7 @@ export function loadSettings() {
   } catch {
     /* storage unavailable */
   }
+  setLang(settings.lang === 'de' ? 'de' : 'en');
 }
 
 export function saveSettings() {

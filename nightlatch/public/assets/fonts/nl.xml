@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <font>
   <info face="nl" size="10" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="0" aa="0" padding="0,0,0,0" spacing="0,0"/>
-  <common lineHeight="10" base="7" scaleW="128" scaleH="63" pages="1" packed="0"/>
+  <common lineHeight="10" base="7" scaleW="128" scaleH="72" pages="1" packed="0"/>
   <pages>
     <page id="0" file="nl.png"/>
   </pages>
-  <chars count="104">
+  <chars count="114">
     <char id="32" x="0" y="0" width="2" height="9" xoffset="0" yoffset="0" xadvance="3" page="0" chnl="15"/>
     <char id="33" x="8" y="0" width="1" height="9" xoffset="0" yoffset="0" xadvance="2" page="0" chnl="15"/>
     <char id="34" x="16" y="0" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
@@ -101,14 +101,24 @@
     <char id="124" x="96" y="45" width="1" height="9" xoffset="0" yoffset="0" xadvance="2" page="0" chnl="15"/>
     <char id="125" x="104" y="45" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
     <char id="126" x="112" y="45" width="5" height="9" xoffset="0" yoffset="0" xadvance="6" page="0" chnl="15"/>
-    <char id="176" x="120" y="45" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
-    <char id="233" x="0" y="54" width="4" height="9" xoffset="0" yoffset="0" xadvance="5" page="0" chnl="15"/>
-    <char id="8211" x="8" y="54" width="4" height="9" xoffset="0" yoffset="0" xadvance="5" page="0" chnl="15"/>
-    <char id="8212" x="16" y="54" width="6" height="9" xoffset="0" yoffset="0" xadvance="7" page="0" chnl="15"/>
-    <char id="8216" x="24" y="54" width="2" height="9" xoffset="0" yoffset="0" xadvance="3" page="0" chnl="15"/>
-    <char id="8217" x="32" y="54" width="2" height="9" xoffset="0" yoffset="0" xadvance="3" page="0" chnl="15"/>
-    <char id="8220" x="40" y="54" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
-    <char id="8221" x="48" y="54" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
-    <char id="8230" x="56" y="54" width="5" height="9" xoffset="0" yoffset="0" xadvance="6" page="0" chnl="15"/>
+    <char id="171" x="120" y="45" width="5" height="9" xoffset="0" yoffset="0" xadvance="6" page="0" chnl="15"/>
+    <char id="176" x="0" y="54" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
+    <char id="187" x="8" y="54" width="5" height="9" xoffset="0" yoffset="0" xadvance="6" page="0" chnl="15"/>
+    <char id="196" x="16" y="54" width="5" height="9" xoffset="0" yoffset="0" xadvance="6" page="0" chnl="15"/>
+    <char id="214" x="24" y="54" width="5" height="9" xoffset="0" yoffset="0" xadvance="6" page="0" chnl="15"/>
+    <char id="220" x="32" y="54" width="5" height="9" xoffset="0" yoffset="0" xadvance="6" page="0" chnl="15"/>
+    <char id="223" x="40" y="54" width="4" height="9" xoffset="0" yoffset="0" xadvance="5" page="0" chnl="15"/>
+    <char id="228" x="48" y="54" width="4" height="9" xoffset="0" yoffset="0" xadvance="5" page="0" chnl="15"/>
+    <char id="233" x="56" y="54" width="4" height="9" xoffset="0" yoffset="0" xadvance="5" page="0" chnl="15"/>
+    <char id="246" x="64" y="54" width="4" height="9" xoffset="0" yoffset="0" xadvance="5" page="0" chnl="15"/>
+    <char id="252" x="72" y="54" width="4" height="9" xoffset="0" yoffset="0" xadvance="5" page="0" chnl="15"/>
+    <char id="8211" x="80" y="54" width="4" height="9" xoffset="0" yoffset="0" xadvance="5" page="0" chnl="15"/>
+    <char id="8212" x="88" y="54" width="6" height="9" xoffset="0" yoffset="0" xadvance="7" page="0" chnl="15"/>
+    <char id="8216" x="96" y="54" width="2" height="9" xoffset="0" yoffset="0" xadvance="3" page="0" chnl="15"/>
+    <char id="8217" x="104" y="54" width="2" height="9" xoffset="0" yoffset="0" xadvance="3" page="0" chnl="15"/>
+    <char id="8220" x="112" y="54" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
+    <char id="8221" x="120" y="54" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
+    <char id="8222" x="0" y="63" width="3" height="9" xoffset="0" yoffset="0" xadvance="4" page="0" chnl="15"/>
+    <char id="8230" x="8" y="63" width="5" height="9" xoffset="0" yoffset="0" xadvance="6" page="0" chnl="15"/>
   </chars>
 </font>

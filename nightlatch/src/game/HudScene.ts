@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import type { OptionDef } from '../engine/types';
+import { f, t as tr } from '../i18n';
 import { ctl } from './controller';
 import { runOverlay } from './presenter';
 import type { RoomScene } from './RoomScene';
@@ -166,7 +167,7 @@ export class HudScene extends Phaser.Scene {
   updateSentence() {
     if (!ctl.game || this.choosing || !this.sys.isActive()) return;
     if (this.pickResolve) {
-      this.sentence.setText('Show what? (right-click to cancel)');
+      this.sentence.setText(ctl.touch ? 'Show what? (hold to cancel)' : 'Show what? (right-click to cancel)');
       return;
     }
     const held = ctl.heldItem;
@@ -174,10 +175,10 @@ export class HudScene extends Phaser.Scene {
     const h = this.room.hover;
     let s = '';
     if (slotItem) {
-      s = held && held !== slotItem ? `Use ${this.itemName(held)} with ${this.itemName(slotItem)}` : this.itemName(slotItem);
+      s = held && held !== slotItem ? f('Use {0} with {1}', tr(this.itemName(held)), tr(this.itemName(slotItem))) : this.itemName(slotItem);
     } else if (held) {
-      s = h ? `Use ${this.itemName(held)} with ${h.name}` : `Use ${this.itemName(held)} with...`;
-    } else if (h) s = `${h.verb} ${h.name}`;
+      s = h ? f('Use {0} with {1}', tr(this.itemName(held)), tr(h.name)) : f('Use {0} with...', tr(this.itemName(held)));
+    } else if (h) s = `${tr(h.verb)} ${tr(h.name)}`;
     else if (!ctl.game.busy) s = '';
     this.sentence.setText(s);
   }
@@ -250,7 +251,7 @@ export class HudScene extends Phaser.Scene {
           .setInteractive();
         this.dialogObjs.push(bg);
         shown.forEach((o, i) => {
-          const t = this.add.bitmapText(8, top + 4 + i * 10, 'nlo', truncate(o.text, 72)).setTint(0xb8a070)
+          const t = this.add.bitmapText(8, top + 4 + i * 10, 'nlo', truncate(tr(o.text), 72)).setTint(0xb8a070)
             .setDepth(4001).setInteractive({ useHandCursor: true });
           t.on('pointerover', () => t.setTint(0xffffff));
           t.on('pointerout', () => t.setTint(0xb8a070));
@@ -345,7 +346,7 @@ export class HudScene extends Phaser.Scene {
     }
     for (const o of this.hintObjs) o.destroy();
     const text = ctl.game.hint();
-    const t = this.add.bitmapText(160, 20, 'nlo', 'Hint: ' + text).setMaxWidth(280).setOrigin(0.5, 0).setTint(0xffe2a0)
+    const t = this.add.bitmapText(160, 20, 'nlo', f('Hint: {0}', tr(text))).setMaxWidth(280).setOrigin(0.5, 0).setTint(0xffe2a0)
       .setDepth(4500);
     const bg = this.add.rectangle(160, 16, t.width + 10, t.height + 8, 0x06060a, 0.85).setOrigin(0.5, 0)
       .setStrokeStyle(1, 0x7a6230).setDepth(4499);

@@ -1,5 +1,6 @@
 // The detective's notebook: case objectives, clues, people, deductions, timeline.
 import Phaser from 'phaser';
+import { f, t as tr } from '../i18n';
 import { ctl } from './controller';
 import { Overlay } from './overlays';
 import { audio } from './services';
@@ -99,7 +100,7 @@ export class NotebookScene extends Overlay {
     const T = row(0);
     if (this.tab === 'case') {
       const ch = g.chapterDef();
-      this.text(L, row(0), ch ? `CHAPTER ${ch.n}` : 'THE CASE', INK_SOFT);
+      this.text(L, row(0), ch ? f('CHAPTER {0}', ch.n) : 'THE CASE', INK_SOFT);
       this.text(L, row(1), ch ? ch.title : '', INK, 118);
       let r = 3;
       for (const { def, done } of g.objectives()) {
@@ -113,7 +114,7 @@ export class NotebookScene extends Overlay {
       let r2 = 1;
       for (const d of recent) {
         if (r2 > 7) break;
-        const t = this.text(R, row(r2), '— ' + g.content.deductions[d].title, INK, 118);
+        const t = this.text(R, row(r2), '— ' + tr(g.content.deductions[d].title), INK, 118);
         r2 += lines(t);
       }
       if (!recent.length) this.text(R, row(1), 'Not much. Yet.', INK_SOFT);
@@ -131,17 +132,17 @@ export class NotebookScene extends Overlay {
       this.listScroll = start; // don't let the wheel run past the end of the list
       ids.slice(start, start + per).forEach((id, i) => {
         const sel = id === this.selected;
-        this.button(L, row(i), (sel ? '> ' : '') + truncate(getTitle(id), 26), () => {
+        this.button(L, row(i), (sel ? '> ' : '') + truncate(tr(getTitle(id)), 26), () => {
           this.selected = id;
           this.render();
         }, sel ? HILITE : INK);
       });
       if (!ids.length) this.text(L, T, 'Nothing yet.', INK_SOFT);
-      if (ids.length > per) this.text(L, row(12), `${start + 1}-${Math.min(ids.length, start + per)} of ${ids.length} (wheel)`, INK_SOFT);
+      if (ids.length > per) this.text(L, row(12), f('{0}-{1} of {2} (wheel)', start + 1, Math.min(ids.length, start + per), ids.length), INK_SOFT);
       if (this.selected) {
         if (this.tab === 'clues') {
           const c = g.content.clues[this.selected];
-          const head = this.text(R, row(0), c.title.toUpperCase(), HILITE, 118);
+          const head = this.text(R, row(0), tr(c.title).toUpperCase(), HILITE, 118);
           this.text(R, row(lines(head)), c.text, INK, 118);
           if (c.doc) this.button(R, row(12), '[ Read the document ]', () => {
             this.close();
@@ -152,9 +153,9 @@ export class NotebookScene extends Overlay {
           if (pd.portrait && this.textures.get('ui').has('face_' + pd.portrait)) {
             this.objs.push(this.add.image(R + 14, row(1) + 1, 'ui', 'face_' + pd.portrait));
           }
-          this.text(R + 32, row(0), pd.name.toUpperCase(), HILITE, 86);
-          let txt = pd.text;
-          for (const [c, note] of pd.notes ?? []) if (g.cond(c)) txt += '\n— ' + note;
+          this.text(R + 32, row(0), tr(pd.name).toUpperCase(), HILITE, 86);
+          let txt = tr(pd.text);
+          for (const [c, note] of pd.notes ?? []) if (g.cond(c)) txt += '\n— ' + tr(note);
           this.text(R, row(3), txt, INK, 118);
         }
       }
@@ -168,7 +169,7 @@ export class NotebookScene extends Overlay {
       this.listScroll = start; // don't let the wheel run past the end of the list
       ids.slice(start, start + per).forEach((id, i) => {
         const on = id === this.deduceA || id === this.deduceB;
-        this.button(L, row(2 + i), (on ? '* ' : '') + truncate(g.content.clues[id].title, 26), () => {
+        this.button(L, row(2 + i), (on ? '* ' : '') + truncate(tr(g.content.clues[id].title), 26), () => {
           if (this.deduceA === id) this.deduceA = null;
           else if (this.deduceB === id) this.deduceB = null;
           else if (!this.deduceA) this.deduceA = id;
@@ -190,7 +191,7 @@ export class NotebookScene extends Overlay {
           void g.perform({ t: 'deduce', a, b });
         });
       }
-      this.text(R, row(12), `${g.state.deds.length} deductions made.`, INK_SOFT);
+      this.text(R, row(12), f('{0} deductions made.', g.state.deds.length), INK_SOFT);
       return;
     }
     if (this.tab === 'timeline') {
@@ -199,11 +200,11 @@ export class NotebookScene extends Overlay {
         this.text(L, row(0), "There's no timeline to put together right now.", INK_SOFT, 118);
         return;
       }
-      this.text(L, row(0), tl.title.toUpperCase(), HILITE, 118);
+      this.text(L, row(0), tr(tl.title).toUpperCase(), HILITE, 118);
       if (g.state.flags['tl_' + tl.id]) {
         tl.order.forEach((c, i) => {
           const clue = g.content.clues[c];
-          this.text(i < 6 ? L : R, row(2 + (i % 6)), `${clue.time ?? ''}  ${truncate(clue.title, 22)}`, INK, 118);
+          this.text(i < 6 ? L : R, row(2 + (i % 6)), `${clue.time ?? ''}  ${truncate(tr(clue.title), 22)}`, INK, 118);
         });
         this.text(L, row(12), 'Settled.', INK_SOFT);
         return;
@@ -213,7 +214,7 @@ export class NotebookScene extends Overlay {
       // slots
       this.text(L, row(2), 'Click a card, then a slot.', INK_SOFT);
       this.slots.forEach((c, i) => {
-        const label = c ? `${g.content.clues[c].time ?? ''} ${truncate(g.content.clues[c].title, 19)}` : '...........';
+        const label = c ? `${g.content.clues[c].time ?? ''} ${truncate(tr(g.content.clues[c].title), 19)}` : '...........';
         this.button(L, row(3 + i), `${i + 1}. ${label}`, () => {
           if (this.pickedCard) {
             const prev = this.slots.indexOf(this.pickedCard);
@@ -230,14 +231,14 @@ export class NotebookScene extends Overlay {
       const cards = have.filter((c) => !this.slots.includes(c));
       cards.forEach((c, i) => {
         const on = c === this.pickedCard;
-        this.button(R, row(3 + i), `${on ? '> ' : ''}${g.content.clues[c].time ?? '?'} ${truncate(g.content.clues[c].title, 18)}`,
+        this.button(R, row(3 + i), `${on ? '> ' : ''}${g.content.clues[c].time ?? '?'} ${truncate(tr(g.content.clues[c].title), 18)}`,
           () => {
             this.pickedCard = on ? null : c;
             this.render();
           }, on ? HILITE : INK);
       });
       if (have.length < tl.order.length) {
-        this.text(R, row(10), `I'm missing ${tl.order.length - have.length} piece(s) of this.`, INK_SOFT, 128);
+        this.text(R, row(10), f("I'm missing {0} piece(s) of this.", tl.order.length - have.length), INK_SOFT, 128);
       }
       if (this.slots.every((s) => s)) {
         this.button(L, row(12), '[ Check the timeline ]', () => {

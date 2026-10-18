@@ -108,7 +108,14 @@ SPIELEN
 
 Es ist keine Installation und keine Internetverbindung nötig. Spielstände werden im Browser
 gespeichert (Autosave bei jedem Kapitel und wichtigen Ereignissen, dazu 6 freie Speicherplätze).
-Das Spiel ist auf Englisch.
+Sprache: Deutsch oder Englisch, umschaltbar unter Einstellungen > Sprache (ein Browser auf
+Deutsch startet automatisch auf Deutsch).
+
+HANDY / TABLET
+  Quer halten. Antippen = gehen/benutzen, Finger kurz gedrückt halten = ansehen,
+  Gegenstand antippen und dann Ziel antippen = benutzen, mit zwei Fingern tippen = alle
+  anklickbaren Stellen zeigen. Das Spiel schaltet beim ersten Antippen auf Vollbild.
+  Zum Spielen auf dem Handy den Ordner z.B. per Webserver bereitstellen oder dist/ hochladen.
 
 STEUERUNG
   Linksklick auf den Boden ............ gehen
@@ -135,6 +142,8 @@ Firefox or Safari), offline, with nothing to install. Saves are kept by the brow
 
 Left-click: walk / use / take / talk.  Right-click: look.  Click an item, then a target: use it.
 N notebook, M map, H hint, Esc menu, Tab show hotspots, F fullscreen.
+Touch: tap = walk/use, hold = look, two-finger tap = show hotspots.
+Language: Settings > Language (English / Deutsch).
 `,
 );
 

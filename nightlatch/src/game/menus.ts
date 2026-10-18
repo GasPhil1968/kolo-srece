@@ -1,5 +1,6 @@
 // City map, pause menu (save/load/settings), title screen and ending.
 import Phaser from 'phaser';
+import { f, setLang, t } from '../i18n';
 import { ctl } from './controller';
 import { Overlay } from './overlays';
 import { audio, deleteSave, latestSave, readSave, readSaveMeta, saveSettings, settings, SLOTS } from './services';
@@ -49,7 +50,7 @@ export class MapScene extends Overlay {
       pin.on('pointerover', () => {
         pin.setFrame(isHere ? 'pin_here' : 'pin_hi');
         name.setVisible(true);
-        label.setText(isHere ? `${loc.name} (you are here)` : `Go to ${loc.name}`);
+        label.setText(isHere ? f('{0} (you are here)', t(loc.name)) : f('Go to {0}', t(loc.name)));
         audio.sfx('ui_hover');
       });
       pin.on('pointerout', () => {
@@ -120,8 +121,8 @@ export class MenuScene extends Overlay {
       this.t(160, 32, name === 'save' ? 'SAVE GAME' : 'LOAD GAME', CREAM);
       SLOTS.forEach((slot, i) => {
         const m = readSaveMeta(slot);
-        const label = m ? `${slot === 'auto' ? 'Auto' : 'Slot ' + slot}: ${m.label} (${fmtTime(m.time)})` :
-          `${slot === 'auto' ? 'Auto' : 'Slot ' + slot}: empty`;
+        const sl = slot === 'auto' ? t('Auto') : f('Slot {0}', slot);
+        const label = m ? `${sl}: ${t(m.label)} (${fmtTime(m.time)})` : `${sl}: ${t('empty')}`;
         const canUse = name === 'save' ? slot !== 'auto' : !!m;
         const y = 48 + i * 12;
         if (canUse) {
@@ -152,7 +153,7 @@ export class MenuScene extends Overlay {
       SLOTS.forEach((slot, i) => {
         const m = readSaveMeta(slot);
         if (!m) return;
-        this.b(160, 48 + i * 12, `Delete ${slot === 'auto' ? 'autosave' : 'slot ' + slot}`, () => {
+        this.b(160, 48 + i * 12, slot === 'auto' ? t('Delete autosave') : f('Delete slot {0}', slot), () => {
           deleteSave(slot);
           this.page('delete');
         });
@@ -199,12 +200,18 @@ export class MenuScene extends Overlay {
       });
       row(108, 'Hints', settings.hints ? 'On' : 'Off', () => (settings.hints = !settings.hints),
         () => (settings.hints = !settings.hints));
-      this.b(160, 124, this.scale.isFullscreen ? 'Leave fullscreen' : 'Fullscreen', () => {
+      const flipLang = () => {
+        settings.lang = settings.lang === 'de' ? 'en' : 'de';
+        setLang(settings.lang);
+        refreshAllText(this.game);
+      };
+      row(122, 'Language', settings.lang === 'de' ? 'Deutsch' : 'English', flipLang, flipLang);
+      this.b(160, 138, this.scale.isFullscreen ? 'Leave fullscreen' : 'Fullscreen', () => {
         if (this.scale.isFullscreen) this.scale.stopFullscreen();
         else this.scale.startFullscreen();
         this.time.delayedCall(300, () => this.page('settings'));
       });
-      this.b(160, 150, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
+      this.b(160, 158, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
     } else if (name === 'quit') {
       this.t(160, 60, 'Return to the title screen?', CREAM);
       this.t(160, 74, 'Unsaved progress since the last autosave is lost.');
@@ -377,3 +384,11 @@ export class EndScene extends Overlay {
 }
 
 export { Overlay };
+
+/** After switching language: rebuild the title menu and refresh the HUD's texts. */
+function refreshAllText(game: Phaser.Game) {
+  const title = game.scene.getScene('title') as TitleScene;
+  if (game.scene.isSleeping('title') === false && game.scene.isActive('title')) title.buildMenu();
+  const hud = game.scene.getScene('hud') as unknown as { refresh?: () => void };
+  if (game.scene.isActive('hud')) hud.refresh?.();
+}

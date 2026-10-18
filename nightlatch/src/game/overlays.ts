@@ -193,7 +193,7 @@ export class CloseupScene extends Overlay {
     tryBtn.on('pointerover', () => tryBtn.setFrame('btn_try_hi'));
     tryBtn.on('pointerout', () => tryBtn.setFrame('btn_try'));
     tryBtn.on('pointerdown', () => this.submit(this.digits.join('')));
-    this.add.bitmapText(160, 164, 'nl', 'Click above/below a wheel to turn it. Right-click to step back.')
+    this.add.bitmapText(160, 164, 'nl', ctl.touch ? 'Tap above/below a wheel to turn it. Hold to step back.' : 'Click above/below a wheel to turn it. Right-click to step back.')
       .setOrigin(0.5).setTint(0x8a7a60);
   }
 

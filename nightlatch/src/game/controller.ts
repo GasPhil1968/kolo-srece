@@ -5,6 +5,7 @@ import { newState, type GameState } from '../engine/state';
 import { CONTENT } from '../content';
 import { RuntimePresenter } from './presenter';
 import { writeSave } from './services';
+import { isTouch } from './touch';
 
 export const ctl = {
   game: null as unknown as Game,
@@ -21,6 +22,8 @@ export const ctl = {
   autoOverlays: true,
   /** Walking speed multiplier (browser tests walk faster). */
   walkMul: 1,
+  /** Played with a touch screen: tap / hold instead of left / right click. */
+  touch: isTouch,
 
   newGame(state?: GameState) {
     this.presenter = this.presenter ?? new RuntimePresenter();

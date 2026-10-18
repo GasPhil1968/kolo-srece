@@ -77,6 +77,15 @@ HTTP, because browsers won't load the game's assets from a `file://` page.
 | `Tab` or `Space` | show every hotspot in the room |
 | `F` | fullscreen |
 
+**Touch screens** (phones, tablets, landscape): tap = walk / use, press and hold = look (or put
+the held item back), tap an item then a target = use it, two-finger tap = show hotspots. The
+game goes fullscreen on the first touch and fills the screen.
+
+**Languages:** English and a complete German translation (all text: dialogue, items, notebook,
+hints, menus). Switch under Settings → Language; a German browser starts in German. Strings are
+translated at display time (`src/i18n/`, keyed by the English text; `tools/i18n_extract.ts`
+lists every player-visible string).
+
 The game autosaves at every chapter opening and major milestone. **Continue** on the title
 screen resumes the most recent save.
 
