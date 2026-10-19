@@ -8,6 +8,8 @@ const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 await page.goto('file://' + path.resolve('standalone/index.html'));
 await page.waitForSelector('[data-testid=title]', { timeout: 90000 });
+await page.evaluate(() => window.__pov.ui.menus['leaveTitle']());
+await page.waitForTimeout(1500);
 if (which === 'ancona') {
   await page.evaluate(() => {
     const e = window.__pov.engine;
