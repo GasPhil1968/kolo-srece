@@ -30,6 +30,7 @@ if (which === 'ancona') {
 }
 const started = Date.now();
 let lastAct = 0;
+let lastTrace = 0;
 let fought = false;
 while (Date.now() - started < 200000) {
   await page.waitForTimeout(300);
@@ -47,6 +48,11 @@ while (Date.now() - started < 200000) {
     return null;
   });
   if (step) await page.evaluate((i) => window.__pov.engine.intent(i), step);
+  if (Date.now() - lastTrace > 5000) {
+    lastTrace = Date.now();
+    const tr = await page.evaluate(() => { const e = window.__pov.engine; return { t: Math.round(e.clock), mode: e.inputMode(), room: e.state.room, resume: e.state.resume, choice: e.choiceView ? e.choiceView.options.map((o) => o.id).join(',') : '' }; });
+    console.log('trace', JSON.stringify(tr), JSON.stringify(step));
+  }
   if (which !== 'ancona' && !fought && Date.now() - lastAct > 4000) {
     lastAct = Date.now();
     const mode = await page.evaluate(() => window.__pov.engine.inputMode());
