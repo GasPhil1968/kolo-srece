@@ -65,5 +65,6 @@ while (Date.now() - started < 200000) {
 }
 await page.waitForTimeout(3000);
 console.log('errors', errors.length ? errors.slice(0, 3) : 'none', 'fought', fought, await page.evaluate(() => ({ room: window.__pov.engine.state.room, mode: window.__pov.engine.inputMode() })));
+console.log('engine log tail', JSON.stringify(await page.evaluate(() => window.__pov.engine.log.slice(-12))));
 await ctx.close();
 await browser.close();
