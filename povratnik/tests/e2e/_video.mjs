@@ -34,7 +34,7 @@ while (Date.now() - started < 200000) {
   const step = await page.evaluate(() => {
     const e = window.__pov.engine;
     const m = e.inputMode();
-    if (m === 'speech') return { k: 'advance' };
+    if (m === 'speech' || m === 'card') return { k: 'advance' };
     if (m === 'combat' && e.combat) return { k: 'combat', action: e.combat.current.answer };
     if (m === 'choice') {
       const opts = (e.choice ?? e.choiceView)?.options ?? [];
