@@ -11,13 +11,14 @@ await page.waitForSelector('[data-testid=title]', { timeout: 90000 });
 await page.evaluate(() => window.__pov.ui.menus['leaveTitle']());
 await page.waitForTimeout(1500);
 if (which === 'ancona') {
-  await page.evaluate(() => {
+  const loadErr = await page.evaluate(() => {
     const e = window.__pov.engine;
     e.newChapter('ancona');
     const s = JSON.parse(JSON.stringify(e.state));
-    s.room = 'an_duell'; s.resume = 'after';
-    e.load(s);
+    s.room = 'an_hafen'; s.resume = 'after';
+    return e.load(s);
   });
+  console.log('load', loadErr);
 } else {
   await page.evaluate(() => {
     const e = window.__pov.engine;
