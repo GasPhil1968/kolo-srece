@@ -6,6 +6,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Night Latch</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="theme-color" content="#050508">
+<meta name="apple-mobile-web-app-title" content="Night Latch">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="description" content="NIGHT LATCH - a noir point-and-click detective adventure. Brackwater, 1951.">
 <style>
   html, body { margin: 0; height: 100%; background: #050508; overflow: hidden; }
@@ -16,6 +22,9 @@
   #rotate { display: none; position: fixed; inset: 0; z-index: 9; background: #050508; color: #b9a77a;
             font: 16px/1.5 monospace; letter-spacing: 2px; align-items: center; justify-content: center; text-align: center; }
   @media (orientation: portrait) and (pointer: coarse) { #rotate { display: flex; } }
+  #pwa-note { display: none; position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 10;
+              max-width: 90vw; padding: 8px 14px; background: #14110c; color: #e8d8a8; border: 1px solid #b9a77a;
+              font: 14px/1.4 monospace; text-align: center; }
   #boot { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
           color: #b9a77a; font: 14px/1.4 monospace; letter-spacing: 2px; pointer-events: none; }
 </style>
@@ -24,6 +33,21 @@
 <div id="game"></div>
 <div id="rotate">&#x21bb;<br>Bitte Gerät quer halten<br>Please turn your device</div>
 <div id="boot">NIGHT LATCH</div>
+<div id="pwa-note"></div>
+<script>
+  // Offline support: the service worker caches the game on the first visit with a connection.
+  (function () {
+    if (!('serviceWorker' in navigator) || location.protocol === 'file:') return;
+    navigator.serviceWorker.register('sw.js');
+    navigator.serviceWorker.addEventListener('message', function (e) {
+      if (e.data !== 'cached') return;
+      var n = document.getElementById('pwa-note');
+      n.textContent = 'Offline bereit: Night Latch läuft jetzt auch ohne Internet.';
+      n.style.display = 'block';
+      setTimeout(function () { n.style.display = 'none'; }, 6000);
+    });
+  })();
+</script>
 <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

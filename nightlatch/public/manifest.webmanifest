@@ -1,0 +1,16 @@
+{
+  "name": "Night Latch",
+  "short_name": "Night Latch",
+  "description": "A noir point-and-click detective adventure. Brackwater, 1951.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#050508",
+  "theme_color": "#050508",
+  "lang": "de",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

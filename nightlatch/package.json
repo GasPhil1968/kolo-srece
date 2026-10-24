@@ -17,7 +17,8 @@
     "validate": "tsx tools/validate.ts",
     "playtest": "tsx tools/playtest.ts --runs 2000",
     "playtest:sweep": "tsx tools/playtest.ts --runs 2000 --seeds 1,2,3,4,5,6",
-    "e2e": "tsx tests/e2e/run.ts"
+    "e2e": "tsx tests/e2e/run.ts",
+    "build:web": "tsc --noEmit && vite build --outDir dist-web --emptyOutDir && tsx tools/pwa.ts"
   },
   "dependencies": {
     "phaser": "3.90.0"
