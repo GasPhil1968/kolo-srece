@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-18T11:39:41.274Z",
- "url": "file:///tmp/claude-0/-home-user-kolo-srece/6c97336e-6769-5f60-9596-454c3ff23451/scratchpad/z/NightLatch/index.html",
+ "generated": "2026-10-24T17:33:04.758Z",
+ "url": "http://127.0.0.1:44987/",
  "results": [
   {
    "name": "Title screen and menu",
@@ -9,7 +9,7 @@
     {
      "name": "title menu offers New game",
      "ok": true,
-     "info": "New game | Load game | Settings | Credits"
+     "info": "New game | Chapters | Load game | Settings | Credits"
     },
     {
      "name": "title menu offers Settings and Credits",
@@ -35,7 +35,7 @@
      "ok": true
     }
    ],
-   "ms": 4092,
+   "ms": 3950,
    "pageErrors": []
   },
   {
@@ -109,7 +109,7 @@
      "info": "{\"ov\":[\"notebook\"],\"busy\":0,\"lock\":1,\"idle\":false}"
     }
    ],
-   "ms": 13671,
+   "ms": 13439,
    "pageErrors": []
   },
   {
@@ -158,10 +158,10 @@
     {
      "name": "title offers Continue once a save exists",
      "ok": true,
-     "info": "Continue | New game | Load game | Settings | Credits"
+     "info": "Continue | New game | Chapters | Load game | Settings | Credits"
     }
    ],
-   "ms": 13193,
+   "ms": 13133,
    "pageErrors": []
   },
   {
@@ -279,14 +279,14 @@
     {
      "name": "frame rate stays near 60 FPS in every room (software-rendered Chromium)",
      "ok": true,
-     "info": "{\"hotel_room\":60,\"hotel_lobby\":61,\"office\":61,\"nora_flat\":60,\"lantern\":61,\"cold_store\":60,\"pier9\":61,\"pharmacy\":60,\"gazette\":61,\"mission\":61,\"darkroom\":60,\"cemetery\":61,\"commission\":61,\"precinct\":60,\"hask_shop\":61,\"halcyon_gate\":61,\"halcyon_cell\":60,\"halcyon_corridor\":61,\"halcyon_office\":61,\"holding_cell\":61,\"lantern_cellar\":60,\"tunnel\":60,\"calypso_hold\":61,\"calypso_deck\":61,\"calypso_cabin\":60,\"radio_booth\":61,\"clocktower\":60}"
+     "info": "{\"hotel_room\":61,\"hotel_lobby\":60,\"office\":61,\"nora_flat\":59,\"lantern\":61,\"cold_store\":60,\"pier9\":57,\"pharmacy\":57,\"gazette\":61,\"mission\":61,\"darkroom\":60,\"cemetery\":61,\"commission\":60,\"precinct\":61,\"hask_shop\":60,\"halcyon_gate\":59,\"halcyon_cell\":60,\"halcyon_corridor\":60,\"halcyon_office\":60,\"holding_cell\":61,\"lantern_cellar\":59,\"tunnel\":61,\"calypso_hold\":61,\"calypso_deck\":61,\"calypso_cabin\":61,\"radio_booth\":61,\"clocktower\":61}"
     }
    ],
-   "ms": 53387,
+   "ms": 53345,
    "extra": {
     "rooms": 27,
-    "fpsMin": 60,
-    "fpsAvg": 61
+    "fpsMin": 57,
+    "fpsAvg": 60
    },
    "pageErrors": []
   },
@@ -304,7 +304,7 @@
      "info": "1,2,3,4,5,6,7,8"
     }
    ],
-   "ms": 307445,
+   "ms": 307044,
    "extra": {
     "steps": 140,
     "clicks": 576,

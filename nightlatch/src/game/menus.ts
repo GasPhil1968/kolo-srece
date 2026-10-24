@@ -1,6 +1,8 @@
 // City map, pause menu (save/load/settings), title screen and ending.
 import Phaser from 'phaser';
 import { f, setLang, t } from '../i18n';
+import { CHAPTERS } from '../content/chapters';
+import { deserialize } from '../engine/state';
 import { ctl } from './controller';
 import { Overlay } from './overlays';
 import { audio, deleteSave, latestSave, readSave, readSaveMeta, saveSettings, settings, SLOTS } from './services';
@@ -107,6 +109,13 @@ export class MenuScene extends Overlay {
     this.objs.push(o);
     return o;
   }
+  /** Start a chapter from its opening save (tools/chapter_starts.ts). */
+  private startChapter(n: number) {
+    const starts = this.cache.json.get('chapterStarts') as Record<string, string>;
+    const st = deserialize(starts[n]);
+    this.close();
+    fadeAndRun(() => (this.game.scene.getScene('title') as TitleScene).launchGame(st));
+  }
   page(name: string) {
     this.clear();
     if (name === 'main') {
@@ -148,6 +157,16 @@ export class MenuScene extends Overlay {
         this.b(270, 136, 'Delete...', () => this.page('delete'));
       }
       this.b(160, 150, 'Back', () => (this.fromTitle && name === 'load' ? this.close() : this.page('main')));
+    } else if (name === 'chapters') {
+      this.t(160, 32, 'CHAPTERS', CREAM);
+      const starts = this.cache.json.get('chapterStarts') as Record<string, string> | undefined;
+      CHAPTERS.forEach((c, i) => {
+        const y = 48 + i * 12;
+        if (starts?.[c.n]) this.b(160, y, `${c.n}  ${t(c.title)}`, () => this.startChapter(c.n));
+        else this.t(160, y, `${c.n}  ${t(c.title)}`, 0x5a5040);
+      });
+      this.t(160, 146, 'Starts with what the earlier chapters established.', 0x7a6a50);
+      this.b(160, 160, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
     } else if (name === 'delete') {
       this.t(160, 32, 'DELETE A SAVE', CREAM);
       SLOTS.forEach((slot, i) => {
@@ -262,11 +281,12 @@ export class TitleScene extends Phaser.Scene {
       if (st) fadeAndRun(() => this.launchGame(st));
     }]);
     items.push(['New game', () => fadeAndRun(() => this.launchGame())]);
+    items.push(['Chapters', () => this.openMenu('chapters')]);
     items.push(['Load game', () => this.openMenu('load')]);
     items.push(['Settings', () => this.openMenu('settings')]);
     items.push(['Credits', () => this.showCredits()]);
     items.forEach(([label, fn], i) => {
-      this.menu.push(textButton(this, 160, 104 + i * 13, label, fn));
+      this.menu.push(textButton(this, 160, 100 + i * 13, label, fn));
     });
   }
   openMenu(page: string) {

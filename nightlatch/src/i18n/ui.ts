@@ -3,7 +3,7 @@
 export const UI_DE: Record<string, string> = {
   // title & pause menu
   'Continue': 'Weiterspielen', 'New game': 'Neues Spiel', 'Load game': 'Spiel laden', 'Save game': 'Spiel speichern',
-  'Settings': 'Einstellungen', 'Credits': 'Mitwirkende', 'PAUSED': 'PAUSE', 'Resume': 'Weiter', 'Quit to title': 'Zum Titelbild',
+  'Settings': 'Einstellungen', 'Chapters': 'Kapitel', 'CHAPTERS': 'KAPITEL', 'Starts with what the earlier chapters established.': 'Beginnt mit dem, was die früheren Kapitel geklärt haben.', 'Credits': 'Mitwirkende', 'PAUSED': 'PAUSE', 'Resume': 'Weiter', 'Quit to title': 'Zum Titelbild',
   'Tab/Space: show hotspots  N: notebook  M: map  H: hint': 'Tab/Leertaste: Stellen zeigen  N: Notizbuch  M: Karte  H: Tipp',
   'Tap and hold: look at  Two-finger tap: show hotspots': 'Lang drücken: ansehen  Zwei Finger tippen: Stellen zeigen',
   'SAVE GAME': 'SPIEL SPEICHERN', 'LOAD GAME': 'SPIEL LADEN', 'That save is damaged.': 'Dieser Spielstand ist beschädigt.',

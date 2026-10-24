@@ -40,10 +40,14 @@ const sw = readFileSync('pwa/sw.template.js', 'utf8')
   .replace('__FILES__', JSON.stringify(urls, null, 1));
 writeFileSync(join(OUT, 'sw.js'), sw);
 
-// 3. Netlify: the service worker and the start page must never be cached by the CDN
+// 3. the page registers the service worker only in this build
+const html = readFileSync(join(OUT, 'index.html'), 'utf8').replace('<head>', '<head>\n<meta name="nl-offline" content="on">');
+writeFileSync(join(OUT, 'index.html'), html);
+
+// 4. Netlify: the service worker and the start page must never be cached by the CDN
 writeFileSync(join(OUT, '_headers'), '/sw.js\n  Cache-Control: no-cache\n\n/index.html\n  Cache-Control: no-cache\n\n/\n  Cache-Control: no-cache\n');
 
-// 4. the folder and the zip, the same way as the portable build
+// 5. the folder and the zip, the same way as the portable build
 mkdirSync('release', { recursive: true });
 rmSync(`release/${NAME}.zip`, { force: true });
 rmSync(`release/${NAME}`, { recursive: true, force: true });

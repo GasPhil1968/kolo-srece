@@ -13,6 +13,7 @@ export class BootScene extends Phaser.Scene {
   preload() {
     this.load.json('manifest', asset('assets/manifest.json'));
     this.load.json('audioManifest', asset('assets/audio/manifest.json'));
+    this.load.json('chapterStarts', asset('assets/chapter_starts.json'));
     this.load.bitmapFont('nl', asset('assets/fonts/nl.png'), asset('assets/fonts/nl.xml'));
     this.load.bitmapFont('nlo', asset('assets/fonts/nlo.png'), asset('assets/fonts/nlo.xml'));
   }
