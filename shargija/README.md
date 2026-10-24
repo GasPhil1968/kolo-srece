@@ -42,6 +42,12 @@ werden `environment_full`, `dancer_female`, `dancer_male`, `fx_*`, `instrument_p
 - Greifhand in zwei Lagen (`hand_fret_back` hinter dem Hals, `hand_fret_front` davor), Einstellungen
   mit 20-px-Namen und 13–14-px-Untertiteln, Intro/Bećar nebeneinander, größerer ZURÜCK-Knopf.
 
+- Offline-Web-App (iPad/iPhone): `manifest.webmanifest`, Icons und `sw.js` (Service Worker, erzeugt mit
+  `python3 tools/shargija-pwa.py` — nach jeder Änderung an Spiel oder Grafiken neu ausführen). Einmal online
+  geöffnet, speichert er alle 56 Dateien (12,8 MB) und meldet „Offline bereit“; danach startet das Spiel ohne
+  Netz. Neue Fassungen übernimmt das Gerät beim nächsten Online-Start. Auf großen Bildschirmen wachsen die
+  Menüs mit (`zoom` in `fitVeil`). Test: `node tools/shargija-offline-test.js [ordner] [BxH]`.
+
 Prüfung: `node tools/shargija-check.js <ausgabeordner> [BxH]` öffnet das Spiel in Chromium,
 besucht alle Menüs, startet ein Lied und meldet Fehler und fehlende Bilder.
 
