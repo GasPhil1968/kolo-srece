@@ -185,8 +185,15 @@ export const darkroom: RoomDef = {
     },
     cabinet: {
       name: 'cabinet',
-      look: ['A cabinet with a changing bag and a box of photographic paper on the shelf.'],
-      use: ['A changing bag — a black sleeve you load film inside, blind — and a box of paper.'],
+      look: ['A cabinet with a changing bag and a box of photographic paper on the shelf. Its brass lock is the only one in the darkroom.'],
+      use: ['Locked. Photographers keep their chemicals locked, and their secrets in with them.'],
+      items: {
+        wire: [pick(
+          when('!has:loupe & !c3_loupe_taken', anim('reach_side'), sfx('drawer_open'), set('c3_loupe_taken'), give('loupe'),
+            'I work the wire in the lock. Three pins, one spring. Inside, behind the paper, a loupe on a cord.'),
+          otherwise('The cabinet is empty now, apart from the paper.'),
+        )],
+      },
     },
     changing_bag: {
       name: 'changing bag',
@@ -326,9 +333,8 @@ function printSheet() {
   return [anim('reach_side'), sfx('enlarger_hum'), 'I expose a sheet of paper under the enlarger and slide it through the trays.',
     'Developer, stop, fix. An image swims up out of the white like a drowned man.',
     give('contact_sheet'), { take: 'negatives' }, { doc: 'contact_sheet' },
-    clue('photo_trucks'), clue('photo_handshake'), clue('photo_clock'),
-    'Frame four isn’t Pike’s. It’s this room. The wall timer, back open, and a key hanging inside.',
-    'I photographed my own hiding place.'];
+    clue('photo_trucks'), clue('photo_handshake'),
+    'Frame four is too small to make out. Whatever it shows, it isn’t Pike.'];
 }
 
 export { otherwise };

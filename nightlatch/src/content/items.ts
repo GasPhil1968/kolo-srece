@@ -1,4 +1,5 @@
 import type { ItemDef, Script } from '../engine/types';
+import { clue } from './dsl';
 
 const I = (id: string, name: string, look: string | Script, extra: Partial<ItemDef> = {}): ItemDef => ({
   id,
@@ -61,7 +62,13 @@ export const ITEMS: Record<string, ItemDef> = Object.fromEntries(
     I('contact_sheet', 'contact sheet', 'A contact print of the whole roll, still smelling of fixer.', {
       doc: 'contact_sheet',
       evidence: true,
+      combine: {
+        loupe: [{ sfx: 'pencil' }, clue('photo_clock'),
+          'Through the loupe, frame four comes apart into grain. Brick, a wall, a timer with its back panel open.',
+          'And hanging inside it, a small key. I photographed my own hiding place.'],
+      },
     }),
+    I('loupe', 'photographer’s loupe', 'A ten-power brass loupe on a cord. Pike’s, or the darkroom’s. Either way, it hasn’t been used for anything nice.'),
     I('padlock_key', 'padlock key', 'A small steel key. Mine, for my own padlock, which I used to lock myself in. Naturally.'),
     I('steno_pad', "Nora's steno pad", [
       "Nora's stenographer's notebook. Pages of Pitman shorthand,",

@@ -376,6 +376,18 @@ def _wire(ic):
     ic.px([(2, 18)], 'chrome', .35)
 
 
+@icon('loupe')
+def _loupe(ic):
+    # a brass ring on a short handle, with the cord looped over the top
+    import math
+    ring = [(round(9 + 5 * math.cos(math.radians(a))), round(8 + 5 * math.sin(math.radians(a)))) for a in range(0, 360, 5)]
+    lens = ic.ell(9, 8, 3, 3)
+    ic.paint(ic.pix(ring), 'brass', .7, bevel=None)
+    ic.paint(lens, 'chrome', .35, bevel=None)
+    ic.paint(ic.line((13, 12), (18, 17)), 'brass', .55, bevel=None)
+    ic.px([(4, 4), (3, 3)], 'brass', .9)
+
+
 @icon('key9')
 def _key9(ic):
     # wooden fob (left), brass ring (top), brass key hanging (right)

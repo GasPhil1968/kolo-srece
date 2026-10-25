@@ -129,7 +129,7 @@ export const CHAPTERS: ChapterDef[] = [
       ], 'c3_unlocked'),
       O('c3_picks', 'Get my lock picks back from Hask.', 'has:lockpicks', [
         'Hask, downstairs from my office, is holding my picks as collateral.',
-        'Pay Hask with Evelyn\u2019s fifty dollars.',
+        'His drawer is locked. The wire from my hanger should do.',
       ], 'c3_unlocked'),
       O('c3_hill', 'Get inside Halcyon House.', 'c3_end', [
         'Everything points up Gull Hill. Pick Halcyon House on the city map.',

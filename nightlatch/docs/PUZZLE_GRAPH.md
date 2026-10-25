@@ -190,6 +190,7 @@ flowchart TD
   c3_stool["stool @ darkroom"]
   c3_clock["clock @ darkroom"]
   c3_unlock["unlock @ darkroom"]
+  c3_picks["picks @ hask_shop (optional)"]
   c3_grave["grave @ cemetery"]
   c3_cobb["cobb @ cemetery (optional)"]
   c3_lillian["lillian @ commission"]
@@ -202,7 +203,8 @@ flowchart TD
   c3_frank["frank @ precinct (optional)"]
   c3_ded1["ded1"]
   c3_ded2["ded2"]
-  c3_hask["hask @ hask_shop"]
+  c3_loupe["loupe @ darkroom"]
+  c3_frame["frame"]
   c3_hill["hill"]
   c3_climb["climb @ halcyon_gate"]
   start3 --> c3_bag
@@ -217,8 +219,10 @@ flowchart TD
   c3_enlarger --> c3_print
   c3_print --> c3_light
   c3_light --> c3_stool
+  c3_frame --> c3_stool
   c3_stool --> c3_clock
   c3_clock --> c3_unlock
+  c3_unlock --> c3_picks
   c3_unlock --> c3_grave
   c3_unlock --> c3_cobb
   c3_unlock --> c3_lillian
@@ -231,8 +235,10 @@ flowchart TD
   c3_unlock --> c3_frank
   c3_grave --> c3_ded1
   c3_directory --> c3_ded2
-  c3_unlock --> c3_hask
-  c3_hask --> c3_hill
+  start3 --> c3_loupe
+  c3_loupe --> c3_frame
+  c3_print --> c3_frame
+  c3_ded2 --> c3_hill
   c3_hill --> c3_climb
 ```
 
@@ -248,9 +254,10 @@ flowchart TD
 | c3.enlarger | darkroom | `c3_neg_dry & has:negatives` | `c3_neg_in_enlarger` | item negatives → enlarger |
 | c3.print | darkroom | `c3_neg_in_enlarger` | `has:contact_sheet` | use paper_box |
 | c3.light | darkroom | `has:contact_sheet` | `c3_white` | use switch |
-| c3.stool | darkroom | `c3_white` | `c3_stool_moved` | use stool |
+| c3.stool | darkroom | `c3_white & clue:photo_clock` | `c3_stool_moved` | use stool |
 | c3.clock | darkroom | `c3_stool_moved` | `c3_clock_open` | use clock |
 | c3.unlock | darkroom | `has:padlock_key` | `c3_unlocked` | item padlock_key → padlock |
+| c3.picks | hask_shop | `has:wire & c3_unlocked` | `has:lockpicks` | item wire → picks_drawer |
 | c3.grave | cemetery | `c3_unlocked` | `clue:flowers & clue:only_child` | look marsh_grave; look card |
 | c3.cobb | cemetery | `c3_unlocked` | `clue:scarf` | use cobb (says: visitors, bye) |
 | c3.lillian | commission | `c3_unlocked` | `c3_lillian_asked` | use lillian (says: session, who, pad, favor, bye) |
@@ -263,7 +270,8 @@ flowchart TD
 | c3.frank | precinct | `c3_unlocked` | `clue:rest_home` | use delaney; look coat_rack (says: fortynine, lighter, bye) |
 | c3.ded1 | — | `clue:evelyn_claim & clue:only_child` | `ded:evelyn_impostor` | deduce evelyn_claim + only_child |
 | c3.ded2 | — | `clue:phone_halcyon & clue:evelyn_watch` | `ded:evelyn_nurse` | deduce phone_halcyon + evelyn_watch |
-| c3.hask | hask_shop | `has:retainer & c3_unlocked` | `has:lockpicks` | item retainer → hask |
+| c3.loupe | darkroom | `has:wire` | `has:loupe` | item wire → cabinet |
+| c3.frame | — | `has:loupe & has:contact_sheet` | `clue:photo_clock` | combine loupe + contact_sheet |
 | c3.hill | — | `map:halcyon` | `visited:halcyon_gate` | go halcyon_gate |
 | c3.climb | halcyon_gate | `visited:halcyon_gate` | `c3_end` | use ashcan |
 

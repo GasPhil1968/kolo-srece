@@ -1,6 +1,6 @@
 // Characters who appear across several chapters.
 import type { DialogDef } from '../../engine/types';
-import { S, clue, give, set, take } from '../dsl';
+import { S, clue, give, set } from '../dsl';
 
 export const mabel: DialogDef = {
   id: 'mabel',
@@ -290,8 +290,8 @@ export const hask: DialogDef = {
           ],
         },
         {
-          id: 'picks', text: 'Can I have my picks back?', when: 'chapter<=4 & !has:lockpicks & !c3_picks_paid',
-          do: [S('hask', 'When I see money, Thomas, I will see my way to the drawer.')],
+          id: 'picks', text: 'Can I have my picks back?', when: 'chapter<=4 & !has:lockpicks',
+          do: [S('hask', 'Money I can’t use, Thomas. Picks you can. Try the drawer.')],
         },
         {
           id: 'teach', text: 'You taught me to pick locks, didn’t you?', once: true,
@@ -328,15 +328,6 @@ export const hask: DialogDef = {
     },
   },
 };
-
-/** Paying Hask for the padlock gets the lock picks back. */
-export const payHask = [
-  'Fifty dollars. Keep the change, and keep the lecture.',
-  take('retainer'), set('c3_picks_paid'),
-  S('hask', 'The padlock was four dollars. I will keep the change and give you the lecture anyway.'),
-  { sfx: 'drawer_open' }, give('lockpicks'),
-  S('hask', 'Your picks. Pick only what is yours, Thomas. Or what ought to be.'),
-];
 
 export const delaney: DialogDef = {
   id: 'delaney',

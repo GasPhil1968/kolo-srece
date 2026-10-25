@@ -1,6 +1,6 @@
 import type { RoomDef } from '../../engine/types';
-import { S, anim, clue, otherwise, pick, sfx, wait, when } from '../dsl';
-import { payHask, transcribe } from '../dialogs/recurring';
+import { S, anim, clue, give, otherwise, pick, set, sfx, wait, when } from '../dsl';
+import { transcribe } from '../dialogs/recurring';
 import { ch4Arrest } from './halcyon';
 import { ch7Plan } from './calypso';
 
@@ -142,7 +142,7 @@ export const hask_shop: RoomDef = {
   npcs: [{
     id: 'hask', at: 'hask_spot', face: 'down',
     items: {
-      retainer: payHask,
+      retainer: [S('hask', 'Put your money away, Thomas. Those picks are in my drawer, and you know how to open a drawer.')],
       padlock: [{ dialog: 'hask', node: 'root' }],
     },
   }],
@@ -157,6 +157,18 @@ export const hask_shop: RoomDef = {
       name: 'stairs up to the office',
       look: ['The back stairs to my office.'],
       exit: { to: 'office', at: 'from_hask' },
+    },
+    picks_drawer: {
+      name: 'locked drawer under the counter',
+      look: ['A drawer under the counter, locked. A leather roll shows at the back: my lock picks, I’d bet on it.'],
+      use: ['Locked. Hask locks his drawers the way other men breathe.'],
+      items: {
+        wire: [pick(
+          when('!has:lockpicks & !c3_picks_taken', anim('reach_side'), sfx('drawer_open'), set('c3_picks_taken'), give('lockpicks'),
+            'The wire finds the tumblers one at a time. The drawer slides out, and my picks are there in their roll, exactly where Hask would leave them.'),
+          otherwise('The drawer is empty now, apart from the wire I left in the lock.'),
+        )],
+      },
     },
     counter: {
       name: 'counter',
