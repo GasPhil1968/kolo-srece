@@ -19,6 +19,7 @@ export const CLUES: Record<string, ClueDef> = Object.fromEntries(
     C('meridian_file', 'The Meridian file', 'SS Meridian burned at Pier 9 on Oct 21, 1949. Fourteen dead. Ruled accidental; case closed by Lt. Frank Delaney. My own file on it is thinner than I remember.', { doc: 'meridian_file' }),
     C('delaney_warning', "Frank's warning", "Frank Delaney, on the phone: 'Stay away from the Marsh thing, Tommy. You're not police anymore.'"),
     C('nora_letter', "Nora's letter", "A carbon of a letter Nora wrote me: she found proof at the Commission that the Meridian fire was no accident. Her father, Walter, died in it.", { doc: 'carbon_letter' }),
+    C('nora_list', 'Three names', 'A notepad from the Sorrento, pressed into the drawer under a spare pair of stockings. Three names: D. Boone, E. Marsh, T. Rook. The word LANTERN is underlined twice, and Rook is crossed out.'),
     C('lamplighter_record', "'Lullaby of the Lamplighter'", "The record on Nora's gramophone. Deacon Boone Trio. Deacon plays piano at the Blue Lantern."),
     C('family_photo', 'Father and daughter', "A photo in Nora's flat: 'Walter and Nora, Coney Pier, 1946.' Just the two of them."),
     C('searched_flat', 'Someone searched the flat', 'Whoever tossed the place was after papers. They even opened the flour tin.'),

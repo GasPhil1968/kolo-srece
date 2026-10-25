@@ -24,6 +24,7 @@ flowchart TD
   c1_mabel["mabel @ office"]
   c1_hire["hire @ office"]
   c1_file["file @ office (optional)"]
+  c1_drawer["drawer @ nora_flat (optional)"]
   c1_carbon["carbon @ nora_flat"]
   c1_read["read @ nora_flat"]
   c1_record["record @ nora_flat"]
@@ -52,6 +53,8 @@ flowchart TD
   c1_office --> c1_mabel
   c1_office --> c1_hire
   c1_office --> c1_file
+  c1_wire --> c1_drawer
+  c1_hire --> c1_drawer
   c1_hire --> c1_carbon
   c1_carbon --> c1_read
   c1_hire --> c1_record
@@ -82,6 +85,7 @@ flowchart TD
 | c1.mabel | office | `visited:office` | `clue:ask_piano` | use mabel (says: told, nora, calls, bye) |
 | c1.hire | office | `visited:office` | `c1_hired` | use evelyn (says: what, about, reach, take) |
 | c1.file | office | `visited:office` | `clue:meridian_file` | use filing_cabinet |
+| c1.drawer | nora_flat | `has:wire & c1_hired` | `clue:nora_list` | item wire → desk |
 | c1.carbon | nora_flat | `c1_hired` | `c1_carbon_taken` | use wastebasket |
 | c1.read | nora_flat | `has:carbon` | `clue:nora_letter` | item carbon → window |
 | c1.record | nora_flat | `c1_hired` | `clue:lamplighter_record` | use gramophone |

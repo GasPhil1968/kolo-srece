@@ -125,8 +125,8 @@ export const evelyn: DialogDef = {
         {
           id: 'take', text: 'I’ll take the case.', when: 'seen:evelyn.what', next: 'exit',
           do: [
-            S('evelyn', 'Thank you. Here — her spare key, and a photograph.'),
-            give('apt_key'), give('nora_photo'), give('retainer'),
+            S('evelyn', 'Thank you. Here — a photograph of her.'),
+            give('nora_photo'), give('retainer'),
             S('evelyn', 'And fifty dollars, to begin with.'),
             'That’s very prompt.',
             S('evelyn', 'I’m a very prompt woman.'),

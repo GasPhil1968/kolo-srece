@@ -27,7 +27,6 @@ export const ITEMS: Record<string, ItemDef> = Object.fromEntries(
     I('pocketbook', 'pocket notebook', "My notebook. Every page after October the eighth has been torn out.", {
       doc: 'pocketbook',
     }),
-    I('apt_key', "Nora's key", 'A latchkey on a red ribbon, tagged BELLWETHER 3B.'),
     I('nora_photo', 'photograph of Nora', [
       'Nora Marsh, twenty-six. Dark eyes looking straight into the lens,',
       'like she knew somebody would have to come looking for her.',

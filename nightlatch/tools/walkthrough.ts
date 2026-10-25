@@ -35,6 +35,7 @@ export const STEPS: WStep[] = [
   { id: 'c1.mabel', chapter: 1, room: 'office', when: 'visited:office', done: 'clue:ask_piano', do: [talk('mabel')], say: ['told', 'nora', 'calls', 'bye'] },
   { id: 'c1.hire', chapter: 1, room: 'office', when: 'visited:office', done: 'c1_hired', do: [talk('evelyn')], say: ['what', 'about', 'reach', 'take'] },
   { id: 'c1.file', chapter: 1, room: 'office', when: 'visited:office', done: 'clue:meridian_file', do: [use('filing_cabinet')], optional: true },
+  { id: 'c1.drawer', chapter: 1, room: 'nora_flat', when: 'has:wire & c1_hired', done: 'clue:nora_list', do: [item('wire', 'desk')], optional: true },
   { id: 'c1.carbon', chapter: 1, room: 'nora_flat', when: 'c1_hired', done: 'c1_carbon_taken', do: [use('wastebasket')] },
   { id: 'c1.read', chapter: 1, room: 'nora_flat', when: 'has:carbon', done: 'clue:nora_letter', do: [item('carbon', 'window')] },
   { id: 'c1.record', chapter: 1, room: 'nora_flat', when: 'c1_hired', done: 'clue:lamplighter_record', do: [use('gramophone')] },

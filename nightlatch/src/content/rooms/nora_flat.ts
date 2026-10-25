@@ -72,8 +72,16 @@ export const nora_flat: RoomDef = {
     },
     desk: {
       name: 'desk',
-      look: ['A cheap desk. The drawers have been yanked out and emptied onto the rug.'],
-      use: ['Typing exercises, bills, a library card. Nora Marsh: excellent at shorthand, late with Dickens.'],
+      look: ['A cheap desk. The drawers have been yanked out and emptied onto the rug. One drawer is still locked in its runners.'],
+      use: ['Typing exercises, bills, a library card. Nora Marsh: excellent at shorthand, late with Dickens.',
+        'The bottom drawer won’t budge. Somebody had a key for everything else, and didn’t find the one for this.'],
+      items: {
+        wire: [pick(
+          when('!clue:nora_list', anim('reach_side'), sfx('drawer_open'), clue('nora_list'),
+            'The wire turns in the lock. The drawer runs out on its rollers: under a spare pair of stockings is a notepad from the Sorrento, with three names on it.'),
+          otherwise('The drawer is empty now. The wire is still in the lock.'),
+        )],
+      },
     },
     typewriter: {
       name: 'typewriter',

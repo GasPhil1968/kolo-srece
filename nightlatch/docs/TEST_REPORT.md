@@ -1,6 +1,6 @@
 # Night Latch — Automated playtest report
 
-Generated 2026-10-16T20:44:11.133Z by `npm run playtest:sweep` (`tools/playtest.ts`): 6 campaign(s) of 2000 runs, seed(s) 1, 2, 3, 4, 5, 6, Node v22.22.0.
+Generated 2026-10-25T15:59:15.002Z by `npm run playtest` (`tools/playtest.ts`): 1 campaign(s) of 2000 runs, seed(s) 1, Node v22.22.0.
 
 > **These are automated simulations, not human playtests.** Each run is a scripted or randomized virtual player driving the real game logic (`src/engine` + `src/content`, the same code the browser build runs) through `Game.perform()`, the entry point every mouse click uses. Rendering, input, animation timing and audio are exercised separately by the Playwright browser tests: see [BROWSER_TEST_REPORT.md](BROWSER_TEST_REPORT.md).
 
@@ -8,49 +8,38 @@ Generated 2026-10-16T20:44:11.133Z by `npm run playtest:sweep` (`tools/playtest.
 
 | | |
 |---|---|
-| Runs executed | **12000** |
-| Passed | **12000** |
+| Runs executed | **2000** |
+| Passed | **2000** |
 | Failed | **0** |
-| Game endings reached | 9509 |
-| Chapter transitions | 61645 |
-| Player actions simulated | 5,950,381 |
-| Dialogue choices | 1,246,944 |
-| Wrong item / combination attempts | 1,030,792 |
-| Out-of-order attempts | 491,626 |
-| Saves / loads (fresh Game per load) | 231100 / 316213 |
-| Autosaves written | 229358 |
-| Room changes | 1,813,867 |
+| Game endings reached | 1591 |
+| Chapter transitions | 10270 |
+| Player actions simulated | 1,003,780 |
+| Dialogue choices | 210,791 |
+| Wrong item / combination attempts | 171,838 |
+| Out-of-order attempts | 82,639 |
+| Saves / loads (fresh Game per load) | 39287 / 53591 |
+| Autosaves written | 38227 |
+| Room changes | 307,450 |
 | Exceptions | 0 |
 | Runs with invariant violations | 0 |
 | Failed chapter transitions | 0 |
 | Softlock candidates | 0 |
 | Save/load failures | 0 |
-| Average actions to finish the game | 602 |
-| Average walkthrough steps to finish | 149 |
-| Wall-clock time | 74 s |
-
-## Campaigns
-
-| Seed | Runs | Passed | Failed | Actions |
-|---|---|---|---|---|
-| 1 | 2000 | 2000 | 0 | 994,886 |
-| 2 | 2000 | 2000 | 0 | 990,735 |
-| 3 | 2000 | 2000 | 0 | 995,277 |
-| 4 | 2000 | 2000 | 0 | 986,562 |
-| 5 | 2000 | 2000 | 0 | 991,992 |
-| 6 | 2000 | 2000 | 0 | 990,929 |
+| Average actions to finish the game | 610 |
+| Average walkthrough steps to finish | 150 |
+| Wall-clock time | 14 s |
 
 ## Categories
 
 | Category | What it does | Runs | Passed | Failed | Avg actions |
 |---|---|---|---|---|---|
-| critical | Critical path: walkthrough steps executed in a random valid order, no detours. | 960 | 960 | 0 | 177 |
-| explorer | Random valid order plus bursts of random actions between steps: every hotspot and NPC, wrong items on everything, wrong item combinations, repeated and random dialogue, random evidence, random deductions and timeline orders, wrong codes. | 2640 | 2640 | 0 | 772 |
-| saveload | Save and load into a brand-new Game after milestones, reload the latest autosave, and roll back to older saves. | 1680 | 1680 | 0 | 383 |
-| chapter | Start from each chapter’s opening save, play randomly for 40–250 actions, then the solver must still finish the chapter (softlock detection). | 2880 | 2880 | 0 | 161 |
-| chaos | Long random sessions (150–600 actions incl. rapid travel and save/load) from a random chapter; the solver must then finish the whole game. | 1440 | 1440 | 0 | 457 |
-| rapid | Rapid location switching: 10–40 random exits/map hops between every step. | 960 | 960 | 0 | 1553 |
-| outoforder | Before each step, try the actions of up to three steps that are not available yet (out-of-order triggers), then continue. | 1440 | 1440 | 0 | 339 |
+| critical | Critical path: walkthrough steps executed in a random valid order, no detours. | 160 | 160 | 0 | 178 |
+| explorer | Random valid order plus bursts of random actions between steps: every hotspot and NPC, wrong items on everything, wrong item combinations, repeated and random dialogue, random evidence, random deductions and timeline orders, wrong codes. | 440 | 440 | 0 | 775 |
+| saveload | Save and load into a brand-new Game after milestones, reload the latest autosave, and roll back to older saves. | 280 | 280 | 0 | 392 |
+| chapter | Start from each chapter’s opening save, play randomly for 40–250 actions, then the solver must still finish the chapter (softlock detection). | 480 | 480 | 0 | 159 |
+| chaos | Long random sessions (150–600 actions incl. rapid travel and save/load) from a random chapter; the solver must then finish the whole game. | 240 | 240 | 0 | 471 |
+| rapid | Rapid location switching: 10–40 random exits/map hops between every step. | 160 | 160 | 0 | 1580 |
+| outoforder | Before each step, try the actions of up to three steps that are not available yet (out-of-order triggers), then continue. | 240 | 240 | 0 | 344 |
 
 ## Invariants checked after every action
 
@@ -67,10 +56,10 @@ Generated 2026-10-16T20:44:11.133Z by `npm run playtest:sweep` (`tools/playtest.
 | Content | Reached | Total |
 |---|---|---|
 | Rooms | 27 | 27 |
-| Clues | 86 | 86 |
+| Clues | 87 | 87 |
 | Deductions | 6 | 6 |
 | Documents opened by the story | 21 | 21 |
-| Items held | 51 | 51 |
+| Items held | 50 | 50 |
 | Dialogue options chosen | 161 | 161 |
 | Hotspot ids interacted with | 249 | 249 |
 | Map locations travelled to | 14 | 14 |
@@ -83,7 +72,7 @@ Nothing: every room, location, clue, deduction, item, document, dialogue option 
 
 ## Failures
 
-None. All 12000 runs reached their goal without exceptions, invariant violations, failed transitions or softlocks.
+None. All 2000 runs reached their goal without exceptions, invariant violations, failed transitions or softlocks.
 
 ## Bugs the automated tests found (all fixed)
 
