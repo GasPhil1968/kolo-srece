@@ -29,6 +29,17 @@ export class RuntimePresenter implements Presenter {
     return ctl.phaser.scene.getScene('hud') as unknown as HudLike;
   }
 
+  /** Rook and the other person in the conversation turn to look at each other. */
+  private facePartners() {
+    const room = this.room;
+    if (!room.sys.isActive() || !this.partner) return;
+    const rook = room.actorFor('rook');
+    const other = room.actorFor(this.partner);
+    if (!rook || !other || !other.sprite.visible) return;
+    rook.faceTowards(other.x, other.y);
+    other.faceTowards(rook.x, rook.y);
+  }
+
   /** Called by input handlers: finish the current line/wait early. */
   skip() {
     const f = this.skipFn;
@@ -76,6 +87,7 @@ export class RuntimePresenter implements Presenter {
     // Rook on the left; the other person in the conversation on the right
     if (who !== 'rook') this.partner = who;
     this.hud.setFaces('rook', this.partner);
+    this.facePartners();
     this.hud.setSpeech(text, color);
     actor?.talk(true);
     audio.duck(true);
@@ -199,6 +211,7 @@ export class RuntimePresenter implements Presenter {
   async choose(options: OptionDef[], dialog: DialogDef) {
     if (dialog.npc) this.partner = dialog.npc;
     this.hud.setFaces('rook', this.partner);
+    this.facePartners();
     const picked = await this.hud.chooseOption(options, dialog.id);
     this.hud.setFaces(null, null);
     return picked;
