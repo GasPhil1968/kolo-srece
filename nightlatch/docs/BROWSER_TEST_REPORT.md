@@ -1,12 +1,12 @@
 # Night Latch — Browser test report
 
-Generated 2026-10-26T08:59:57.570Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
+Generated 2026-10-26T09:13:15.532Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
 
 > These are automated browser tests. They use real mouse clicks and key presses on the game canvas; no human played these sessions.
 
 **5 of 5 cases passed, 62 of 62 checks.**
 
-## ✅ Title screen and menu (12 s)
+## ✅ Title screen and menu (4 s)
 
 - ✔ title menu offers New game
 - ✔ title menu offers Settings and Credits
@@ -81,21 +81,21 @@ Generated 2026-10-26T08:59:57.570Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 ```json
 {
  "rooms": 27,
- "fpsMin": 59,
- "fpsAvg": 61
+ "fpsMin": 56,
+ "fpsAvg": 60
 }
 ```
 
-## ✅ Complete playthrough with real mouse input (315 s)
+## ✅ Complete playthrough with real mouse input (319 s)
 
 - ✔ the game can be finished from New game to the ending
 - ✔ all eight chapters were played
 
 ```json
 {
- "steps": 144,
- "clicks": 620,
- "minutes": 5.2,
+ "steps": 146,
+ "clicks": 622,
+ "minutes": 5.3,
  "tail": [
   "  choose broadcast.frank",
   "  choose frank_talkback.early",

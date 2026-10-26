@@ -406,6 +406,29 @@ def _ring_keys(ic):
     ic.paint(ic.line((15, 15), (18, 13)), 'brass', .6, bevel=None)
 
 
+@icon('pencil')
+def _pencil(ic):
+    # a stub of carpenter's pencil, chewed at one end
+    ic.paint(ic.line((4, 16), (15, 5)), 'paper', .7, bevel=None)
+    ic.paint(ic.line((5, 15), (14, 6)), 'brass', .55, bevel=None)
+    ic.paint(ic.line((15, 5), (17, 3)), 'red', .6, bevel=None)
+
+
+@icon('cigarette_paper')
+def _cigarette_paper(ic):
+    # a folded cigarette paper
+    ic.paint(ic.poly([(4, 6), (16, 5), (15, 15), (5, 16)]), 'cream', .6, bevel=None)
+    ic.paint(ic.line((5, 9), (14, 8)), 'paper', .35, bevel=None)
+
+
+@icon('pruitt_note')
+def _pruitt_note(ic):
+    # the note: capitals on a folded paper
+    ic.paint(ic.poly([(3, 4), (17, 4), (16, 16), (4, 16)]), 'cream', .7, bevel=None)
+    ic.paint(ic.line((5, 8), (15, 8)), 'black', .5, bevel=None)
+    ic.paint(ic.line((5, 12), (13, 12)), 'black', .5, bevel=None)
+
+
 @icon('key9')
 def _key9(ic):
     # wooden fob (left), brass ring (top), brass key hanging (right)

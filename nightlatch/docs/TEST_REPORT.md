@@ -1,6 +1,6 @@
 # Night Latch — Automated playtest report
 
-Generated 2026-10-26T04:56:42.908Z by `npm run playtest` (`tools/playtest.ts`): 1 campaign(s) of 2000 runs, seed(s) 1, Node v22.22.0.
+Generated 2026-10-26T09:06:11.990Z by `npm run playtest` (`tools/playtest.ts`): 1 campaign(s) of 2000 runs, seed(s) 1, Node v22.22.0.
 
 > **These are automated simulations, not human playtests.** Each run is a scripted or randomized virtual player driving the real game logic (`src/engine` + `src/content`, the same code the browser build runs) through `Game.perform()`, the entry point every mouse click uses. Rendering, input, animation timing and audio are exercised separately by the Playwright browser tests: see [BROWSER_TEST_REPORT.md](BROWSER_TEST_REPORT.md).
 
@@ -13,33 +13,33 @@ Generated 2026-10-26T04:56:42.908Z by `npm run playtest` (`tools/playtest.ts`): 
 | Failed | **0** |
 | Game endings reached | 1591 |
 | Chapter transitions | 10269 |
-| Player actions simulated | 1,028,671 |
-| Dialogue choices | 210,984 |
-| Wrong item / combination attempts | 178,815 |
-| Out-of-order attempts | 86,321 |
-| Saves / loads (fresh Game per load) | 42921 / 58411 |
-| Autosaves written | 38222 |
-| Room changes | 310,408 |
+| Player actions simulated | 1,043,027 |
+| Dialogue choices | 210,415 |
+| Wrong item / combination attempts | 180,963 |
+| Out-of-order attempts | 88,462 |
+| Saves / loads (fresh Game per load) | 44254 / 60205 |
+| Autosaves written | 38217 |
+| Room changes | 311,207 |
 | Exceptions | 0 |
 | Runs with invariant violations | 0 |
 | Failed chapter transitions | 0 |
 | Softlock candidates | 0 |
 | Save/load failures | 0 |
-| Average actions to finish the game | 626 |
-| Average walkthrough steps to finish | 158 |
-| Wall-clock time | 13 s |
+| Average actions to finish the game | 636 |
+| Average walkthrough steps to finish | 162 |
+| Wall-clock time | 15 s |
 
 ## Categories
 
 | Category | What it does | Runs | Passed | Failed | Avg actions |
 |---|---|---|---|---|---|
-| critical | Critical path: walkthrough steps executed in a random valid order, no detours. | 160 | 160 | 0 | 181 |
-| explorer | Random valid order plus bursts of random actions between steps: every hotspot and NPC, wrong items on everything, wrong item combinations, repeated and random dialogue, random evidence, random deductions and timeline orders, wrong codes. | 440 | 440 | 0 | 795 |
-| saveload | Save and load into a brand-new Game after milestones, reload the latest autosave, and roll back to older saves. | 280 | 280 | 0 | 422 |
+| critical | Critical path: walkthrough steps executed in a random valid order, no detours. | 160 | 160 | 0 | 183 |
+| explorer | Random valid order plus bursts of random actions between steps: every hotspot and NPC, wrong items on everything, wrong item combinations, repeated and random dialogue, random evidence, random deductions and timeline orders, wrong codes. | 440 | 440 | 0 | 810 |
+| saveload | Save and load into a brand-new Game after milestones, reload the latest autosave, and roll back to older saves. | 280 | 280 | 0 | 433 |
 | chapter | Start from each chapter’s opening save, play randomly for 40–250 actions, then the solver must still finish the chapter (softlock detection). | 480 | 480 | 0 | 159 |
-| chaos | Long random sessions (150–600 actions incl. rapid travel and save/load) from a random chapter; the solver must then finish the whole game. | 240 | 240 | 0 | 472 |
-| rapid | Rapid location switching: 10–40 random exits/map hops between every step. | 160 | 160 | 0 | 1599 |
-| outoforder | Before each step, try the actions of up to three steps that are not available yet (out-of-order triggers), then continue. | 240 | 240 | 0 | 357 |
+| chaos | Long random sessions (150–600 actions incl. rapid travel and save/load) from a random chapter; the solver must then finish the whole game. | 240 | 240 | 0 | 474 |
+| rapid | Rapid location switching: 10–40 random exits/map hops between every step. | 160 | 160 | 0 | 1600 |
+| outoforder | Before each step, try the actions of up to three steps that are not available yet (out-of-order triggers), then continue. | 240 | 240 | 0 | 374 |
 
 ## Invariants checked after every action
 
@@ -59,8 +59,8 @@ Generated 2026-10-26T04:56:42.908Z by `npm run playtest` (`tools/playtest.ts`): 
 | Clues | 87 | 87 |
 | Deductions | 6 | 6 |
 | Documents opened by the story | 21 | 21 |
-| Items held | 53 | 53 |
-| Dialogue options chosen | 161 | 161 |
+| Items held | 56 | 56 |
+| Dialogue options chosen | 160 | 160 |
 | Hotspot ids interacted with | 250 | 250 |
 | Map locations travelled to | 14 | 14 |
 

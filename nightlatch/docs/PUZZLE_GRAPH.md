@@ -359,6 +359,8 @@ flowchart TD
   start5((start))
   c5_barnaby["barnaby @ holding_cell (optional)"]
   c5_rapport["rapport @ holding_cell"]
+  c5_pencil["pencil @ holding_cell"]
+  c5_note["note @ holding_cell"]
   c5_box["box @ holding_cell"]
   c5_report["report @ holding_cell"]
   c5_present["present @ holding_cell"]
@@ -372,7 +374,10 @@ flowchart TD
   c5_lantern["lantern"]
   start5 --> c5_barnaby
   start5 --> c5_rapport
+  start5 --> c5_pencil
+  c5_pencil --> c5_note
   c5_rapport --> c5_box
+  c5_note --> c5_box
   c5_box --> c5_report
   c5_report --> c5_present
   c5_box --> c5_timeline
@@ -394,7 +399,9 @@ flowchart TD
 |---|---|---|---|---|
 | c5.barnaby | holding_cell | `true` | `clue:calypso_rocks` | use barnaby (says: calypso, lieutenant, bye) |
 | c5.rapport | holding_cell | `true` | `c5_rapport` | use pruitt (says: vandermeer, bye) |
-| c5.box | holding_cell | `c5_rapport` | `c5_box` | use pruitt (says: box, bye) |
+| c5.pencil | holding_cell | `!c5_pencil` | `c5_pencil` | use bunk |
+| c5.note | holding_cell | `has:pencil & has:cigarette_paper` | `has:pruitt_note` | combine pencil + cigarette_paper |
+| c5.box | holding_cell | `c5_rapport & has:pruitt_note` | `c5_box` | item pruitt_note → bars |
 | c5.report | holding_cell | `c5_box` | `c5_report_read` | use pruitt (says: report, bye) |
 | c5.present | holding_cell | `c5_report_read` | `clue:hatch_locked` | use pruitt (says: present) |
 | c5.timeline | — | `c5_box` | `tl_meridian_night` | timeline |

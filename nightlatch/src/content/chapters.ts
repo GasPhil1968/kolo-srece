@@ -171,7 +171,7 @@ export const CHAPTERS: ChapterDef[] = [
     objectives: [
       O('c5_box', 'Get the Meridian evidence in front of me.', 'c5_box', [
         'Officer Pruitt admires my old cases.',
-        'Talk to Pruitt about the Vandermeer case, then ask him for the Meridian evidence box.',
+        'Pruitt will carry a message to the evidence room for a man who asks nicely. Find something to write with and something to write on.',
       ]),
       O('c5_hatch', 'Prove the hatch was locked.', 'clue:hatch_locked', [
         'Delaney\u2019s report says the hatch was found open.',

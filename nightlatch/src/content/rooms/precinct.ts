@@ -120,6 +120,19 @@ function openDrawer() {
     { autosave: 'Chapter 5 — Delaney’s drawer' }];
 }
 
+const boxScript = [
+  S('pruitt', '...Five minutes.'),
+  { wait: 900 },
+  { narrate: 'Danny came back with a cardboard box older than his badge and slid it through the food slot.' },
+  { walk: 'pruitt_spot', who: 'pruitt' },
+  give('padlock'), give('gate_log'), set('c5_box'),
+  'A scorched brass padlock, still shut through a sawn-off hasp. The harbor gate log. A fire brigade log, a shift roster.',
+  'Gus’s statement, stamped DISREGARDED. And Frank’s report.',
+  clue('report_open_hatch'), clue('report_time'), clue('gus_statement'), clue('shift_roster'), clue('fire_log'),
+  clue('gate_walter'), clue('gate_delaney'),
+  { doc: 'delaney_report' },
+];
+
 export const holding_cell: RoomDef = {
   id: 'holding_cell',
   name: 'Holding cell, 1st Precinct',
@@ -140,6 +153,13 @@ export const holding_cell: RoomDef = {
       name: 'bars',
       look: ['Iron bars painted green over rust. They’ve held better men. Mostly worse.'],
       use: ['I rattle them. They rattle back. It’s a conversation we’ve had before.'],
+      items: {
+        pruitt_note: [pick(
+          when('c5_box', 'Pruitt already has his box, and his note in his pocket.'),
+          when('!c5_rapport', 'Pruitt reads it and puts it in his pocket. Not yet, he says, not with the sergeant on the stairs.'),
+          otherwise(anim('reach_side'), { take: 'pruitt_note' }, ...boxScript),
+        )],
+      },
     },
     cell_door: {
       name: 'cell door',
@@ -186,7 +206,12 @@ export const holding_cell: RoomDef = {
     bunk: {
       name: 'bunk',
       look: ['A bunk with a blanket and Barnaby on it, in that order.'],
-      use: [S('barnaby', 'Mine, mate. There’s a floor going spare.')],
+      use: [pick(
+        when('!c5_pencil', anim('reach_side'), sfx('pickup'), set('c5_pencil'), give('pencil'), give('cigarette_paper'),
+          'Under the bunk, in the dust: a stub of carpenter’s pencil and a cigarette paper, folded flat.',
+          S('barnaby', 'Don’t mind the dust, mate. It’s the only thing in here that’s mine.')),
+        otherwise(S('barnaby', 'Mine, mate. There’s a floor going spare.')),
+      )],
     },
     blanket: {
       name: 'blanket',
@@ -253,19 +278,6 @@ export const barnaby: DialogDef = {
   },
 };
 
-const boxScript = [
-  S('pruitt', '...Five minutes.'),
-  { walk: 'from_map', who: 'pruitt' },
-  { wait: 900 },
-  { narrate: 'Danny came back with a cardboard box older than his badge and slid it through the food slot.' },
-  { walk: 'pruitt_spot', who: 'pruitt' },
-  give('padlock'), give('gate_log'), set('c5_box'),
-  'A scorched brass padlock, still shut through a sawn-off hasp. The harbor gate log. A fire brigade log, a shift roster.',
-  'Gus’s statement, stamped DISREGARDED. And Frank’s report.',
-  clue('report_open_hatch'), clue('report_time'), clue('gus_statement'), clue('shift_roster'), clue('fire_log'),
-  clue('gate_walter'), clue('gate_delaney'),
-  { doc: 'delaney_report' },
-];
 
 export const pruitt5: DialogDef = {
   id: 'pruitt5',
@@ -289,15 +301,6 @@ export const pruitt5: DialogDef = {
             'Then you know I don’t make things up.',
             S('pruitt', '...No sir. You didn’t. Not about the parrot.'),
             set('c5_rapport'),
-          ],
-        },
-        {
-          id: 'box', text: 'Bring me the Meridian evidence box. Five minutes.', when: 'c5_rapport & !c5_box',
-          do: [
-            S('pruitt', 'I could lose my badge, Mr. Rook.'),
-            'And if I’m wrong you can laugh at me for the rest of your career.',
-            S('barnaby', 'Go on, son. Live a little. The worst he can do is be right.'),
-            ...boxScript,
           ],
         },
         {

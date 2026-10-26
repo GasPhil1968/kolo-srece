@@ -85,6 +85,14 @@ export const ITEMS: Record<string, ItemDef> = Object.fromEntries(
           'The cup stays full. I’ll want the water for the straw.'],
       },
     }),
+    I('pencil', 'carpenter’s pencil', 'A stub of carpenter’s pencil, chewed at one end by somebody with worse problems than me.', {
+      combine: {
+        cigarette_paper: [{ take: 'pencil' }, { take: 'cigarette_paper' }, { give: 'pruitt_note' },
+          'I write in capitals, the way you write for a man who can’t lip-read through a grille. PRUITT. THE MERIDIAN BOX. FIVE MINUTES. — R.'],
+      },
+    }),
+    I('cigarette_paper', 'cigarette paper', 'A cigarette paper, folded flat. Thin enough to pass through a food slot without anybody reading it.'),
+    I('pruitt_note', 'note for Pruitt', 'A note in capitals on cigarette paper. PRUITT. THE MERIDIAN BOX.'),
     I('pills', 'pills', "Two white pills from my breakfast tray. 'Vitamins.' I'll take them later. Much later. Never.", {
       evidence: true,
     }),

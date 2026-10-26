@@ -122,7 +122,9 @@ export const STEPS: WStep[] = [
   // ------------------------------------------------------------------ chapter 5
   { id: 'c5.barnaby', chapter: 5, room: 'holding_cell', when: 'true', done: 'clue:calypso_rocks', do: [talk('barnaby')], say: ['calypso', 'lieutenant', 'bye'], optional: true },
   { id: 'c5.rapport', chapter: 5, room: 'holding_cell', when: 'true', done: 'c5_rapport', do: [talk('pruitt')], say: ['vandermeer', 'bye'] },
-  { id: 'c5.box', chapter: 5, room: 'holding_cell', when: 'c5_rapport', done: 'c5_box', do: [talk('pruitt')], say: ['box', 'bye'] },
+  { id: 'c5.pencil', chapter: 5, room: 'holding_cell', when: '!c5_pencil', done: 'c5_pencil', do: [use('bunk')] },
+  { id: 'c5.note', chapter: 5, room: 'holding_cell', when: 'has:pencil & has:cigarette_paper', done: 'has:pruitt_note', do: [combine('pencil', 'cigarette_paper')] },
+  { id: 'c5.box', chapter: 5, room: 'holding_cell', when: 'c5_rapport & has:pruitt_note', done: 'c5_box', do: [item('pruitt_note', 'bars')] },
   { id: 'c5.report', chapter: 5, room: 'holding_cell', when: 'c5_box', done: 'c5_report_read', do: [talk('pruitt')], say: ['report', 'bye'] },
   { id: 'c5.present', chapter: 5, room: 'holding_cell', when: 'c5_report_read', done: 'clue:hatch_locked', do: [talk('pruitt')], say: ['present'], show: ['present:padlock'] },
   { id: 'c5.timeline', chapter: 5, when: 'c5_box', done: 'tl_meridian_night', do: [{ t: 'timeline', id: 'meridian_night', order: ['gate_walter', 'gate_delaney', 'gus_statement', 'shift_roster', 'fire_log', 'report_time'] }] },
