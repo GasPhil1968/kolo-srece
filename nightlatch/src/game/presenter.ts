@@ -4,7 +4,7 @@ import type { Presenter } from '../engine/presenter';
 import type { CloseupDef, DialogDef, Dir, OptionDef } from '../engine/types';
 import { f, t } from '../i18n';
 import { ctl } from './controller';
-import { RoomScene, VIEW_H } from './RoomScene';
+import { RoomScene } from './RoomScene';
 import { audio, settings } from './services';
 
 type HudLike = {
@@ -68,35 +68,36 @@ export class RuntimePresenter implements Presenter {
     const actor = scene.actorFor(who);
     const color = Phaser.Display.Color.HexStringToColor(who === 'rook' ? '#f2e3b3' : npc?.color ?? '#ffffff').color;
     this.clearLine();
-    const cam = scene.cameras.main;
-    const t = scene.add.bitmapText(0, 0, 'nlo', text).setMaxWidth(196).setCenterAlign().setTint(color).setDepth(10000);
-    t.setOrigin(0.5, 1);
-    let x: number;
-    let y: number;
-    if (actor && actor.sprite.visible) {
-      x = actor.x;
-      y = actor.headY() - 3;
-    } else {
-      // off-screen voice (telephone, loudspeaker, behind a door)
-      x = cam.worldView.centerX;
-      y = 24 + t.height;
-    }
-    const halfW = t.width / 2 + 2;
-    x = Phaser.Math.Clamp(x, cam.worldView.x + halfW, cam.worldView.right - halfW);
-    y = Phaser.Math.Clamp(y, cam.worldView.y + t.height + 2, VIEW_H - 2);
-    t.setPosition(Math.round(x), Math.round(y));
-    this.lineObjs.push(t);
-    if (!actor || !actor.sprite.visible) {
-      const tag = scene.add.bitmapText(Math.round(x), Math.round(y - t.height - 1), 'nlo', npc?.name ?? who)
-        .setOrigin(0.5, 1).setTint(0x8c8c8c).setDepth(10000);
-      this.lineObjs.push(tag);
-    }
+    this.speechCard(who, npc?.name ?? who, text, color);
     actor?.talk(true);
     audio.duck(true);
     await this.holdFor(this.lineMs(text));
     actor?.talk(false);
     audio.duck(false);
     this.clearLine();
+  }
+
+  /** The speaker's face in a round frame, with the line in a box across the top of the view. */
+  private speechCard(who: string, name: string, text: string, color: number) {
+    const scene = this.room;
+    const PORTRAIT = 56;
+    const hasFace = scene.textures.exists('portrait:' + who);
+    const line = scene.add.bitmapText(0, 0, 'nlo', text).setMaxWidth(hasFace ? 200 : 260).setCenterAlign()
+      .setTint(color).setDepth(10001).setScrollFactor(0);
+    const boxW = Math.max(line.width, name ? 60 : 0) + 14;
+    const boxH = line.height + 12;
+    const boxX = hasFace ? 6 : Math.round(160 - boxW / 2);
+    const box = scene.add.rectangle(boxX, 4, boxW, boxH, 0x06060a, 0.86).setOrigin(0, 0).setScrollFactor(0)
+      .setDepth(10000).setStrokeStyle(1, 0x5a4a30);
+    line.setPosition(Math.round(boxX + boxW / 2), 9).setOrigin(0.5, 0);
+    this.lineObjs.push(box, line);
+    if (!hasFace) return;
+    // the speaker's face, in a gold frame at the top right
+    const x0 = 320 - PORTRAIT - 8;
+    const face = scene.add.image(x0, 4, 'portrait:' + who).setOrigin(0, 0).setScrollFactor(0).setDepth(10001);
+    const frame = scene.add.rectangle(x0 - 1, 3, PORTRAIT + 2, PORTRAIT + 2).setOrigin(0, 0).setScrollFactor(0)
+      .setDepth(10000).setFillStyle(0x06060a, 1).setStrokeStyle(2, 0xb9a77a);
+    this.lineObjs.push(frame, face);
   }
 
   async narrate(text: string) {

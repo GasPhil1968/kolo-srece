@@ -33,6 +33,7 @@ export class BootScene extends Phaser.Scene {
     this.load.text('credits', asset('assets/credits.txt'));
     for (const r of man.rooms) this.load.json('room:' + r, asset(`assets/rooms/${r}/room.json`));
     for (const c of man.chars) this.load.json('char:' + c, asset(`assets/chars/${c}.json`));
+    for (const c of man.chars) this.load.image('portrait:' + c, asset(`assets/portraits/${c}.png`));
     for (const d of man.docs ?? []) this.load.image('docimg:' + d, asset(`assets/docs/${d}.png`));
     const am = this.cache.json.get('audioManifest') as AudioManifest | undefined;
     if (am) {
