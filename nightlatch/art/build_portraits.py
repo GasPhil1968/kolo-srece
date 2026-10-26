@@ -1,23 +1,37 @@
-"""Speech portraits: the face of every character, cut from the front-facing frame of its sprite.
+"""Speech portraits: head and shoulders of every character, drawn at twice the sprite size.
 
     python3 art/build_portraits.py
 
-Reads public/assets/chars/<id>@100.png (frame 2 is the character facing the viewer; the head is
-about 12 pixels across) and writes public/assets/portraits/<id>.png, 56x56, one per character.
-Replace these with painted portraits later; the game only needs the same file names.
+Each character's costume (characters.py) is drawn facing the viewer with the same drawing code
+as the sprites, but at 2x resolution, so the face keeps more detail than an upscaled sprite.
+Writes public/assets/portraits/<id>.png, 56 x 56 pixels, one per character.
 """
 import json
 import os
 
 from PIL import Image
 
+from characters import CHARACTERS
+from chars_body import front_pose
+from chars_core import Sprite
+from chars_draw import draw_front
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, '..')
-CHARS = os.path.join(ROOT, 'public', 'assets', 'chars')
 OUT = os.path.join(ROOT, 'public', 'assets', 'portraits')
-FRAME = 2
-BOX = (18, 6, 46, 34)  # 28 x 28 pixels around the head and shoulders
+K = 2.0                    # drawing scale, relative to the sprite (2 = 56 pixels across the face frame)
+CANVAS = 128               # 64 pixels of sprite at 2x
+ORIGIN = (64, 120)         # feet centre, in canvas pixels
+BOX = (36, 9, 92, 65)     # head and the top of the shoulders
 SIZE = 56
+
+
+def portrait(cid):
+    spec = CHARACTERS[cid]
+    sp = Sprite(CANVAS, CANVAS, ORIGIN[0], ORIGIN[1], k=K)
+    draw_front(sp, front_pose(None, spec), spec)
+    full = Image.fromarray(sp.render(), 'RGBA')
+    return full.crop(BOX)
 
 
 def main():
@@ -25,12 +39,7 @@ def main():
     manifest = json.load(open(os.path.join(ROOT, 'public', 'assets', 'manifest.json'), encoding='utf8'))
     made = 0
     for cid in manifest['chars']:
-        sheet = Image.open(os.path.join(CHARS, f'{cid}@100.png')).convert('RGBA')
-        frame_w = frame_h = 64
-        cols = sheet.width // frame_w
-        fx, fy = (FRAME % cols) * frame_w, (FRAME // cols) * frame_h
-        face = sheet.crop((fx + BOX[0], fy + BOX[1], fx + BOX[2], fy + BOX[3]))
-        face.resize((SIZE, SIZE), Image.NEAREST).save(os.path.join(OUT, f'{cid}.png'))
+        portrait(cid).save(os.path.join(OUT, f'{cid}.png'))
         made += 1
     print(f'portraits: {made} written to {os.path.relpath(OUT, ROOT)}')
 
