@@ -560,7 +560,7 @@
     "h": 20
    }
   },
-  "matches": {
+  "sleep_draught": {
    "frame": {
     "x": 177,
     "y": 45,
@@ -580,7 +580,7 @@
     "h": 20
    }
   },
-  "straw": {
+  "ring_keys": {
    "frame": {
     "x": 199,
     "y": 45,
@@ -600,9 +600,49 @@
     "h": 20
    }
   },
-  "damp_straw": {
+  "matches": {
    "frame": {
     "x": 1,
+    "y": 67,
+    "w": 20,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 20,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 20,
+    "h": 20
+   }
+  },
+  "straw": {
+   "frame": {
+    "x": 23,
+    "y": 67,
+    "w": 20,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 20,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 20,
+    "h": 20
+   }
+  },
+  "damp_straw": {
+   "frame": {
+    "x": 45,
     "y": 67,
     "w": 20,
     "h": 20
@@ -622,7 +662,7 @@
   },
   "halcyon_files": {
    "frame": {
-    "x": 23,
+    "x": 67,
     "y": 67,
     "w": 20,
     "h": 20
@@ -642,7 +682,7 @@
   },
   "blanket": {
    "frame": {
-    "x": 45,
+    "x": 89,
     "y": 67,
     "w": 20,
     "h": 20
@@ -662,7 +702,7 @@
   },
   "cell_keys": {
    "frame": {
-    "x": 67,
+    "x": 111,
     "y": 67,
     "w": 20,
     "h": 20
@@ -682,7 +722,7 @@
   },
   "padlock": {
    "frame": {
-    "x": 89,
+    "x": 133,
     "y": 67,
     "w": 20,
     "h": 20
@@ -702,7 +742,7 @@
   },
   "gate_log": {
    "frame": {
-    "x": 111,
+    "x": 155,
     "y": 67,
     "w": 20,
     "h": 20
@@ -722,7 +762,7 @@
   },
   "minutes2": {
    "frame": {
-    "x": 133,
+    "x": 177,
     "y": 67,
     "w": 20,
     "h": 20
@@ -742,7 +782,7 @@
   },
   "lantern": {
    "frame": {
-    "x": 155,
+    "x": 199,
     "y": 67,
     "w": 20,
     "h": 20
@@ -762,8 +802,8 @@
   },
   "rum": {
    "frame": {
-    "x": 177,
-    "y": 67,
+    "x": 1,
+    "y": 89,
     "w": 20,
     "h": 20
    },
@@ -782,8 +822,8 @@
   },
   "lantern_fueled": {
    "frame": {
-    "x": 199,
-    "y": 67,
+    "x": 23,
+    "y": 89,
     "w": 20,
     "h": 20
    },
@@ -802,7 +842,7 @@
   },
   "lantern_lit": {
    "frame": {
-    "x": 1,
+    "x": 45,
     "y": 89,
     "w": 20,
     "h": 20
@@ -822,7 +862,7 @@
   },
   "hat": {
    "frame": {
-    "x": 23,
+    "x": 67,
     "y": 89,
     "w": 20,
     "h": 20
@@ -842,7 +882,7 @@
   },
   "hat_matches": {
    "frame": {
-    "x": 45,
+    "x": 89,
     "y": 89,
     "w": 20,
     "h": 20
@@ -862,7 +902,7 @@
   },
   "walter_knife": {
    "frame": {
-    "x": 67,
+    "x": 111,
     "y": 89,
     "w": 20,
     "h": 20
@@ -882,7 +922,7 @@
   },
   "calypso_manifest": {
    "frame": {
-    "x": 89,
+    "x": 133,
     "y": 89,
     "w": 20,
     "h": 20
@@ -902,7 +942,7 @@
   },
   "minutes3": {
    "frame": {
-    "x": 111,
+    "x": 155,
     "y": 89,
     "w": 20,
     "h": 20
@@ -922,7 +962,7 @@
   },
   "booth_key": {
    "frame": {
-    "x": 133,
+    "x": 177,
     "y": 89,
     "w": 20,
     "h": 20
@@ -942,7 +982,7 @@
   },
   "press_pass": {
    "frame": {
-    "x": 155,
+    "x": 199,
     "y": 89,
     "w": 20,
     "h": 20
@@ -962,46 +1002,6 @@
   },
   "gus_log": {
    "frame": {
-    "x": 177,
-    "y": 89,
-    "w": 20,
-    "h": 20
-   },
-   "rotated": false,
-   "trimmed": false,
-   "spriteSourceSize": {
-    "x": 0,
-    "y": 0,
-    "w": 20,
-    "h": 20
-   },
-   "sourceSize": {
-    "w": 20,
-    "h": 20
-   }
-  },
-  "antidote": {
-   "frame": {
-    "x": 199,
-    "y": 89,
-    "w": 20,
-    "h": 20
-   },
-   "rotated": false,
-   "trimmed": false,
-   "spriteSourceSize": {
-    "x": 0,
-    "y": 0,
-    "w": 20,
-    "h": 20
-   },
-   "sourceSize": {
-    "w": 20,
-    "h": 20
-   }
-  },
-  "self_notes": {
-   "frame": {
     "x": 1,
     "y": 111,
     "w": 20,
@@ -1020,7 +1020,7 @@
     "h": 20
    }
   },
-  "bulb": {
+  "antidote": {
    "frame": {
     "x": 23,
     "y": 111,
@@ -1040,9 +1040,49 @@
     "h": 20
    }
   },
-  "apt_key": {
+  "self_notes": {
    "frame": {
     "x": 45,
+    "y": 111,
+    "w": 20,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 20,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 20,
+    "h": 20
+   }
+  },
+  "bulb": {
+   "frame": {
+    "x": 67,
+    "y": 111,
+    "w": 20,
+    "h": 20
+   },
+   "rotated": false,
+   "trimmed": false,
+   "spriteSourceSize": {
+    "x": 0,
+    "y": 0,
+    "w": 20,
+    "h": 20
+   },
+   "sourceSize": {
+    "w": 20,
+    "h": 20
+   }
+  },
+  "apt_key": {
+   "frame": {
+    "x": 89,
     "y": 111,
     "w": 20,
     "h": 20

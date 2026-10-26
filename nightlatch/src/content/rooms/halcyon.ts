@@ -232,7 +232,17 @@ export const halcyon_corridor: RoomDef = {
   name: 'Halcyon House, B corridor',
   music: 'halcyon',
   amb: 'sanatorium',
-  npcs: [{ id: 'pike', at: 'pike_spot', face: 'left', talk: [{ dialog: 'pike4' }], items: { press_card: [] } }],
+  npcs: [
+    { id: 'pike', at: 'pike_spot', face: 'left', talk: [{ dialog: 'pike4' }], items: { press_card: [] } },
+    {
+      id: 'kroll', at: 'kroll_spot', face: 'left', when: '!c4_kroll_asleep',
+      items: {
+        sleep_draught: [anim('pickup_side'), { take: 'sleep_draught' }, set('c4_kroll_asleep'), { sfx: 'drawer_open' }, give('ring_keys'),
+          'Kroll drinks it the way a man drinks when he has been waiting all day for someone to ask him.',
+          'He’s asleep before the cup is empty. His keys hit the tiles, and he doesn’t notice.'],
+      },
+    },
+  ],
   enter: [{ once: 'c4_corridor', do: [N('The corridor was empty. Through the barred windows the patients stood on the lawn in their dressing gowns, being counted by nurses who couldn’t count.')] }],
   hotspots: {
     notice: {
@@ -262,6 +272,10 @@ export const halcyon_corridor: RoomDef = {
         blocked: [anim('reach_side'), sfx('door_locked'), 'Locked. Dr. Vey doesn’t like his records wandering.'],
       },
       items: {
+        ring_keys: [pick(
+          when('c4_office_open', 'It’s open.'),
+          otherwise(anim('reach_side'), sfx('lock_click'), set('c4_office_open'), 'Third key on the ring. It turns like it’s been waiting for me.'),
+        )],
         lockpicks: [pick(
           when('c4_office_open', 'It’s open.'),
           otherwise(anim('reach_side'), sfx('lock_click'), set('c4_office_open'), 'Tension wrench, rake, a little prayer to Hask.', 'Click.'),

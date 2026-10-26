@@ -293,6 +293,9 @@ flowchart TD
   c4_scratch["scratch @ halcyon_cell (optional)"]
   c4_pike["pike @ halcyon_corridor"]
   c4_promise["promise @ halcyon_corridor (optional)"]
+  c4_draught["draught"]
+  c4_kroll["kroll @ halcyon_corridor (optional)"]
+  c4_keys["keys @ halcyon_corridor (optional)"]
   c4_picklock["picklock @ halcyon_corridor"]
   c4_drawer["drawer @ halcyon_office"]
   c4_files["files @ halcyon_office"]
@@ -314,10 +317,14 @@ flowchart TD
   start4 --> c4_scratch
   c4_light --> c4_pike
   c4_light --> c4_promise
+  c4_tray --> c4_draught
+  c4_draught --> c4_kroll
+  c4_light --> c4_kroll
+  c4_kroll --> c4_keys
   c4_light --> c4_picklock
-  c4_picklock --> c4_drawer
+  c4_keys --> c4_drawer
   c4_drawer --> c4_files
-  c4_picklock --> c4_appt
+  c4_keys --> c4_appt
   c4_files --> c4_escape
 ```
 
@@ -336,6 +343,9 @@ flowchart TD
 | c4.scratch | halcyon_cell | `true` | `clue:been_here` | look scratches |
 | c4.pike | halcyon_corridor | `c4_door_open & has:press_card` | `clue:pike_recalls` | item press_card → pike |
 | c4.promise | halcyon_corridor | `c4_door_open` | `c4_promise_pike` | use pike (says: name, come, bye) |
+| c4.draught | — | `has:cup & has:pills` | `has:sleep_draught` | combine cup + pills |
+| c4.kroll | halcyon_corridor | `has:sleep_draught & c4_door_open & !c4_office_open` | `has:ring_keys` | item sleep_draught → kroll |
+| c4.keys | halcyon_corridor | `has:ring_keys & !c4_office_open` | `c4_office_open` | item ring_keys → exit_office |
 | c4.picklock | halcyon_corridor | `c4_door_open` | `c4_office_open` | item lockpicks → exit_office |
 | c4.drawer | halcyon_office | `c4_office_open` | `c4_cabinet_key` | use drawer |
 | c4.files | halcyon_office | `c4_cabinet_key` | `has:halcyon_files` | use cabinet_1949 |

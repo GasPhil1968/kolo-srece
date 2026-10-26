@@ -78,10 +78,18 @@ export const ITEMS: Record<string, ItemDef> = Object.fromEntries(
     // ---------------------------------------------------------------- chapter 4 ----
     I('spoon', 'tin spoon', 'A tin spoon. The edges are rounded so nobody gets ideas.'),
     I('flat_spoon', 'flattened spoon', 'The handle is ground flat as a screwdriver. Ideas were had.'),
-    I('cup', 'cup of water', 'A tin cup of water. It tastes faintly of the pills they wanted me to take.'),
+    I('cup', 'cup of water', 'A tin cup of water. It tastes faintly of the pills they wanted me to take.', {
+      combine: {
+        pills: [{ take: 'pills' }, { give: 'sleep_draught' }, { sfx: 'pour' },
+          'I crush the pills under the spoon and stir them into a splash of water in the lid of the tin. It goes cloudy and sweet.',
+          'The cup stays full. I’ll want the water for the straw.'],
+      },
+    }),
     I('pills', 'pills', "Two white pills from my breakfast tray. 'Vitamins.' I'll take them later. Much later. Never.", {
       evidence: true,
     }),
+    I('sleep_draught', 'sleeping draught', 'A tin cup of water with two crushed pills stirred in. It smells of nothing, which is the problem.'),
+    I('ring_keys', 'orderly’s keys', 'Kroll’s ring of keys. A dozen brass keys, each with a paper tag in Halcyon’s typing.'),
     I('matches', 'matches', "Three matches wrapped in a scrap of paper. Pike's whole fortune, left to whoever came next."),
     I('straw', 'mattress straw', 'A handful of straw from the mattress. Dry as a sermon.', {
       combine: {

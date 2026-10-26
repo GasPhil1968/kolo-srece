@@ -388,6 +388,24 @@ def _loupe(ic):
     ic.px([(4, 4), (3, 3)], 'brass', .9)
 
 
+@icon('sleep_draught')
+def _sleep_draught(ic):
+    # a tin cup with the water clouded by the crushed pills
+    ic.paint(ic.poly([(4, 5), (16, 5), (14, 18), (6, 18)]), 'steel', .6, bevel=None)
+    ic.paint(ic.poly([(6, 9), (14, 9), (13, 16), (7, 16)]), 'cream', .45, bevel=None)
+    ic.px([(8, 11), (11, 13), (12, 11)], 'white', .9)
+
+
+@icon('ring_keys')
+def _ring_keys(ic):
+    # a brass split ring with a key hanging off it
+    import math
+    ring = [(round(8 + 5 * math.cos(math.radians(a))), round(7 + 5 * math.sin(math.radians(a)))) for a in range(0, 360, 5)]
+    ic.paint(ic.pix(ring), 'brass', .7, bevel=None)
+    ic.paint(ic.line((11, 11), (17, 17)), 'brass', .6, bevel=None)
+    ic.paint(ic.line((15, 15), (18, 13)), 'brass', .6, bevel=None)
+
+
 @icon('key9')
 def _key9(ic):
     # wooden fob (left), brass ring (top), brass key hanging (right)
