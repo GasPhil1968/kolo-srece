@@ -1,6 +1,6 @@
 # Night Latch — Browser test report
 
-Generated 2026-10-26T11:58:18.064Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
+Generated 2026-10-26T12:55:48.076Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
 
 > These are automated browser tests. They use real mouse clicks and key presses on the game canvas; no human played these sessions.
 
@@ -34,7 +34,7 @@ Generated 2026-10-26T11:58:18.064Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 - ✔ a clue's document opens from the notebook
 - ✔ N opens the notebook
 
-## ✅ Save, load and settings through the pause menu (13 s)
+## ✅ Save, load and settings through the pause menu (14 s)
 
 - ✔ menu button opens the pause menu
 - ✔ saving to slot 1 writes the save
@@ -81,21 +81,21 @@ Generated 2026-10-26T11:58:18.064Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 ```json
 {
  "rooms": 27,
- "fpsMin": 57,
- "fpsAvg": 60
+ "fpsMin": 59,
+ "fpsAvg": 61
 }
 ```
 
-## ✅ Complete playthrough with real mouse input (320 s)
+## ✅ Complete playthrough with real mouse input (316 s)
 
 - ✔ the game can be finished from New game to the ending
 - ✔ all eight chapters were played
 
 ```json
 {
- "steps": 146,
- "clicks": 666,
- "minutes": 5.3,
+ "steps": 145,
+ "clicks": 655,
+ "minutes": 5.2,
  "tail": [
   "  choose broadcast.frank",
   "  choose frank_talkback.early",

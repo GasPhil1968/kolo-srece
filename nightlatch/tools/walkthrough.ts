@@ -165,7 +165,6 @@ export const STEPS: WStep[] = [
   { id: 'c7.key', chapter: 7, room: 'hask_shop', when: 'c7_planned', done: 'has:booth_key', do: [talk('hask')], say: ['key', 'bye'] },
   { id: 'c7.pass', chapter: 7, when: 'has:blank_form & has:rubber_stamp', done: 'has:press_pass', do: [combine('blank_form', 'rubber_stamp')] },
   { id: 'c7.log', chapter: 7, room: 'pier9', when: 'c7_planned & has:walter_knife', done: 'has:gus_log', do: [item('walter_knife', 'watch_chest')] },
-  { id: 'c7.antidote', chapter: 7, room: 'pharmacy', when: 'c7_planned', done: 'has:antidote', do: [talk('kessler')], say: ['antidote7', 'bye'] },
   { id: 'c7.go', chapter: 7, when: 'map:cityhall', done: 'c7_end', do: [go('radio_booth')] },
   // ------------------------------------------------------------------ chapter 8
   { id: 'c8.antidote', chapter: 8, when: 'has:antidote', done: 'c8_clear', do: [examine('antidote')] },

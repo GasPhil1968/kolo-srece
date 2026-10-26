@@ -253,7 +253,7 @@ export const CHAPTERS: ChapterDef[] = [
       O('c7_key', 'Get a key to the WBRK booth.', 'has:booth_key', ['Hask fitted City Hall\u2019s locks.', 'Ask Hask about a key for the booth.'], 'c7_planned'),
       O('c7_pass', 'Get into the gala.', 'has:press_pass', ['A newspaperman would have a pass.', 'The captain kept blank accreditation forms. The purser kept a stamp. Put them together.'], 'c7_planned'),
       O('c7_log', 'Get Gus\u2019s own log.', 'has:gus_log', ['Gus keeps his own watch log, in a chest under his bench.', 'Walter’s knife is the only tool you need for a rusted hasp.'], 'c7_planned'),
-      O('c7_antidote', 'Get something to clear my head.', 'has:antidote', ['Kessler mentioned physostigmine.', 'Ask Kessler for physostigmine.'], 'c7_planned'),
+      O('c7_antidote', 'Get something to clear my head.', 'has:antidote', ['Kessler mentioned physostigmine.', 'Captain Calypso kept his medicine in Frank’s briefcase.'], 'c7_planned'),
       O('c7_go', 'Go to City Hall.', 'c7_end', ['Crane speaks at nine.', 'Pick City Hall on the map.'], 'map:cityhall'),
     ],
   },

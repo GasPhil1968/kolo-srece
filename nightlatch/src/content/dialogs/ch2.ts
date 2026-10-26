@@ -146,16 +146,6 @@ export const kessler: DialogDef = {
             S('kessler', 'It does not give back what was already lost. Nothing does that.'),
           ],
         },
-        {
-          id: 'antidote7', text: 'I need physostigmine. Tonight.', when: 'chapter=7 & c7_planned & !has:antidote',
-          do: [
-            S('kessler', 'For whom?'),
-            'For me, if they get a needle into me before nine o’clock.',
-            S('kessler', '...One ampoule. Into the arm. It will clear the fog for an hour, perhaps less.'),
-            give('antidote'),
-            S('kessler', 'An hour is a long time, Mr. Rook, if you use it well.'),
-          ],
-        },
         { id: 'bye', text: 'Thank you, Mr. Kessler.', next: 'exit', do: [S('kessler', 'Mind the step. Everyone trips on the step.')] },
       ],
     },

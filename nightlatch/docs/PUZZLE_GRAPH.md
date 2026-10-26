@@ -483,7 +483,6 @@ flowchart TD
   c7_key["key @ hask_shop"]
   c7_pass["pass"]
   c7_log["log @ pier9"]
-  c7_antidote["antidote @ pharmacy"]
   c7_go["go"]
   start7 --> c7_hat
   c7_hat --> c7_lamp
@@ -507,8 +506,7 @@ flowchart TD
   c7_case --> c7_pass
   c7_escape --> c7_log
   c7_nora --> c7_log
-  c7_escape --> c7_antidote
-  c7_antidote --> c7_go
+  c7_log --> c7_go
 ```
 
 | step | where | needs | done when | actions |
@@ -529,7 +527,6 @@ flowchart TD
 | c7.key | hask_shop | `c7_planned` | `has:booth_key` | use hask (says: key, bye) |
 | c7.pass | — | `has:blank_form & has:rubber_stamp` | `has:press_pass` | combine blank_form + rubber_stamp |
 | c7.log | pier9 | `c7_planned & has:walter_knife` | `has:gus_log` | item walter_knife → watch_chest |
-| c7.antidote | pharmacy | `c7_planned` | `has:antidote` | use kessler (says: antidote7, bye) |
 | c7.go | — | `map:cityhall` | `c7_end` | go radio_booth |
 
 ## Chapter 8: On Air

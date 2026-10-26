@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-26T11:51:18.355Z",
+ "generated": "2026-10-26T12:48:46.301Z",
  "seeds": [
   1
  ],
@@ -10,24 +10,24 @@
   "runs": 2000,
   "passed": 2000,
   "failed": 0,
-  "actions": 1041261,
-  "dialogChoices": 203625,
-  "saves": 44230,
-  "loads": 60171,
+  "actions": 1031400,
+  "dialogChoices": 200012,
+  "saves": 44074,
+  "loads": 59976,
   "autosaves": 38218,
-  "roomChanges": 309506,
+  "roomChanges": 303534,
   "chapterTransitions": 10269,
-  "wrongItemTries": 181000,
-  "outOfOrderTries": 88717,
+  "wrongItemTries": 179823,
+  "outOfOrderTries": 88511,
   "endingsReached": 1591,
   "exceptions": 0,
   "runsWithViolations": 0,
   "failedTransitions": 0,
   "softlocks": 0,
   "saveLoadFailures": 0,
-  "avgActionsToFinish": 635,
-  "avgStepsToFinish": 162,
-  "durationSec": 16
+  "avgActionsToFinish": 628,
+  "avgStepsToFinish": 161,
+  "durationSec": 15
  },
  "categories": [
   {
@@ -36,8 +36,8 @@
    "runs": 160,
    "passed": 160,
    "failed": 0,
-   "avgActions": 182,
-   "avgSteps": 146,
+   "avgActions": 180,
+   "avgSteps": 145,
    "avgMs": 6
   },
   {
@@ -46,9 +46,9 @@
    "runs": 440,
    "passed": 440,
    "failed": 0,
-   "avgActions": 807,
-   "avgSteps": 128,
-   "avgMs": 52
+   "avgActions": 800,
+   "avgSteps": 127,
+   "avgMs": 49
   },
   {
    "id": "saveload",
@@ -56,9 +56,9 @@
    "runs": 280,
    "passed": 280,
    "failed": 0,
-   "avgActions": 432,
-   "avgSteps": 345,
-   "avgMs": 37
+   "avgActions": 429,
+   "avgSteps": 343,
+   "avgMs": 33
   },
   {
    "id": "chapter",
@@ -68,7 +68,7 @@
    "failed": 0,
    "avgActions": 159,
    "avgSteps": 13,
-   "avgMs": 12
+   "avgMs": 11
   },
   {
    "id": "chaos",
@@ -76,9 +76,9 @@
    "runs": 240,
    "passed": 240,
    "failed": 0,
-   "avgActions": 473,
-   "avgSteps": 62,
-   "avgMs": 37
+   "avgActions": 471,
+   "avgSteps": 61,
+   "avgMs": 34
   },
   {
    "id": "rapid",
@@ -86,9 +86,9 @@
    "runs": 160,
    "passed": 160,
    "failed": 0,
-   "avgActions": 1600,
-   "avgSteps": 137,
-   "avgMs": 32
+   "avgActions": 1570,
+   "avgSteps": 136,
+   "avgMs": 29
   },
   {
    "id": "outoforder",
@@ -96,8 +96,8 @@
    "runs": 240,
    "passed": 240,
    "failed": 0,
-   "avgActions": 376,
-   "avgSteps": 137,
+   "avgActions": 374,
+   "avgSteps": 136,
    "avgMs": 12
   }
  ],
@@ -107,7 +107,7 @@
    "runs": 2000,
    "passed": 2000,
    "failed": 0,
-   "actions": 1041261
+   "actions": 1031400
   }
  ],
  "failureReasons": [],
@@ -118,14 +118,14 @@
   "deds": 6,
   "docs": 21,
   "items": 58,
-  "options": 160,
+  "options": 159,
   "hotspots": 251,
   "travel": 14,
   "sfx": 49,
   "music": 7
  },
  "totals2": {
-  "options": 160,
+  "options": 159,
   "hotspots": 251,
   "docs": 21
  },
