@@ -12,11 +12,15 @@ type HudLike = {
   pickItem(prompt: string): Promise<string | null>;
   toast(text: string, color?: number): void;
   refresh(): void;
+  setFaces(left: string | null, right: string | null): void;
+  setSpeech(text: string | null, color?: number): void;
 };
 
 export class RuntimePresenter implements Presenter {
   private skipFn: (() => void) | null = null;
   private lineObjs: Phaser.GameObjects.GameObject[] = [];
+  /** The other person in the current conversation (shown on the right). */
+  private partner: string | null = null;
 
   private get room(): RoomScene {
     return ctl.phaser.scene.getScene('room') as RoomScene;
@@ -63,55 +67,38 @@ export class RuntimePresenter implements Presenter {
   async say(who: string, text: string) {
     const scene = this.room;
     if (!scene.sys.isActive()) return;
+    // Rook alone (looking, thinking) is narration: no box, no faces
+    if (who === 'rook' && !this.partner) return this.narrate(text);
     const g = ctl.game;
     const npc = g.content.npcs[who];
     const actor = scene.actorFor(who);
     const color = Phaser.Display.Color.HexStringToColor(who === 'rook' ? '#f2e3b3' : npc?.color ?? '#ffffff').color;
-    this.clearLine();
-    this.speechCard(who, npc?.name ?? who, text, color);
+    // Rook on the left; the other person in the conversation on the right
+    if (who !== 'rook') this.partner = who;
+    this.hud.setFaces('rook', this.partner);
+    this.hud.setSpeech(text, color);
     actor?.talk(true);
     audio.duck(true);
     await this.holdFor(this.lineMs(text));
     actor?.talk(false);
     audio.duck(false);
-    this.clearLine();
-  }
-
-  /** The speaker's face in a round frame, with the line in a box across the top of the view. */
-  private speechCard(who: string, name: string, text: string, color: number) {
-    const scene = this.room;
-    const PORTRAIT = 56;
-    const hasFace = scene.textures.exists('portrait:' + who);
-    const line = scene.add.bitmapText(0, 0, 'nlo', text).setMaxWidth(hasFace ? 200 : 260).setCenterAlign()
-      .setTint(color).setDepth(10001).setScrollFactor(0);
-    const boxW = Math.max(line.width, name ? 60 : 0) + 14;
-    const boxH = line.height + 12;
-    const boxX = hasFace ? 6 : Math.round(160 - boxW / 2);
-    const box = scene.add.rectangle(boxX, 4, boxW, boxH, 0x06060a, 0.86).setOrigin(0, 0).setScrollFactor(0)
-      .setDepth(10000).setStrokeStyle(1, 0x5a4a30);
-    line.setPosition(Math.round(boxX + boxW / 2), 9).setOrigin(0.5, 0);
-    this.lineObjs.push(box, line);
-    if (!hasFace) return;
-    // the speaker's face, in a gold frame at the top right
-    const x0 = 320 - PORTRAIT - 8;
-    const face = scene.add.image(x0, 4, 'portrait:' + who).setOrigin(0, 0).setScrollFactor(0).setDepth(10001);
-    const frame = scene.add.rectangle(x0 - 1, 3, PORTRAIT + 2, PORTRAIT + 2).setOrigin(0, 0).setScrollFactor(0)
-      .setDepth(10000).setFillStyle(0x06060a, 1).setStrokeStyle(2, 0xb9a77a);
-    this.lineObjs.push(frame, face);
+    this.hud.setSpeech(null);
   }
 
   async narrate(text: string) {
     const scene = this.room;
     if (!scene.sys.isActive()) return;
     this.clearLine();
-    const cam = scene.cameras.main;
-    const t = scene.add.bitmapText(0, 0, 'nlo', text).setMaxWidth(280).setTint(0xd9c9a0).setDepth(10001)
+    this.partner = null;
+    this.hud.setFaces(null, null);
+    // the narrator has no box: the words sit on the picture, with a dark shadow to stay readable
+    const shadow = scene.add.bitmapText(0, 0, 'nlo', text).setMaxWidth(280).setCenterAlign().setTint(0x000000)
+      .setDepth(10000).setScrollFactor(0);
+    const t = scene.add.bitmapText(0, 0, 'nlo', text).setMaxWidth(280).setCenterAlign().setTint(0xd9c9a0).setDepth(10001)
       .setScrollFactor(0);
-    t.setPosition(Math.round(160 - t.width / 2), 8);
-    const box = scene.add.rectangle(156 - t.width / 2, 4, t.width + 8, t.height + 7, 0x06060a, 0.82)
-      .setOrigin(0, 0).setScrollFactor(0).setDepth(10000).setStrokeStyle(1, 0x5a4a30);
-    void cam;
-    this.lineObjs.push(box, t);
+    shadow.setOrigin(0.5, 0).setPosition(161, 9);
+    t.setOrigin(0.5, 0).setPosition(160, 8);
+    this.lineObjs.push(shadow, t);
     await this.holdFor(this.lineMs(text) * 1.1);
     this.clearLine();
   }
@@ -209,8 +196,12 @@ export class RuntimePresenter implements Presenter {
     return runOverlay('closeup', { def });
   }
 
-  choose(options: OptionDef[], dialog: DialogDef) {
-    return this.hud.chooseOption(options, dialog.id);
+  async choose(options: OptionDef[], dialog: DialogDef) {
+    if (dialog.npc) this.partner = dialog.npc;
+    this.hud.setFaces('rook', this.partner);
+    const picked = await this.hud.chooseOption(options, dialog.id);
+    this.hud.setFaces(null, null);
+    return picked;
   }
 
   present(prompt: string) {

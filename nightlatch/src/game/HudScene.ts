@@ -21,6 +21,8 @@ export class HudScene extends Phaser.Scene {
   private toasts: { text: string; color: number }[] = [];
   private toastBusy = false;
   private dialogObjs: Phaser.GameObjects.GameObject[] = [];
+  private faceObjs: Phaser.GameObjects.GameObject[] = [];
+  private speechObjs: Phaser.GameObjects.GameObject[] = [];
   private pickResolve: ((v: string | null) => void) | null = null;
   private buttons: Record<string, Phaser.GameObjects.Image> = {};
   private hintObjs: Phaser.GameObjects.GameObject[] = [];
@@ -231,6 +233,33 @@ export class HudScene extends Phaser.Scene {
   }
 
   // ------------------------------------------------------------------ dialogue ----
+  /** The two people in a conversation, one face at each side of the view (null = none). */
+  setFaces(left: string | null, right: string | null) {
+    for (const o of this.faceObjs) o.destroy();
+    this.faceObjs = [];
+    const place = (id: string | null, x: number) => {
+      if (!id || !this.textures.exists('portrait:' + id)) return;
+      const frame = this.add.rectangle(x - 1, 7, 58, 58).setOrigin(0, 0).setDepth(4500)
+        .setFillStyle(0x06060a, 1).setStrokeStyle(2, 0xb9a77a);
+      const img = this.add.image(x, 8, 'portrait:' + id).setOrigin(0, 0).setDepth(4501);
+      this.faceObjs.push(frame, img);
+    };
+    place(left, 8);
+    place(right, 320 - 56 - 8);
+  }
+
+  /** A spoken line, in a box across the top between the two faces. Null clears it. */
+  setSpeech(text: string | null, color = 0xffffff) {
+    for (const o of this.speechObjs) o.destroy();
+    this.speechObjs = [];
+    if (text === null) return;
+    const line = this.add.bitmapText(0, 0, 'nlo', text).setMaxWidth(176).setCenterAlign().setTint(color).setDepth(4502);
+    line.setOrigin(0.5, 0).setPosition(160, 12);
+    const box = this.add.rectangle(160 - line.width / 2 - 6, 6, line.width + 12, line.height + 8, 0x06060a, 0.86)
+      .setOrigin(0, 0).setDepth(4501).setStrokeStyle(1, 0x5a4a30);
+    this.speechObjs.push(box, line);
+  }
+
   chooseOption(options: OptionDef[], dialogId = ''): Promise<OptionDef> {
     this.choosing = true;
     this.optDialog = dialogId;
@@ -246,12 +275,13 @@ export class HudScene extends Phaser.Scene {
         this.optInfo = [];
         const lines = shown.length + (more ? 1 : 0);
         const h = lines * 10 + 6;
-        const top = 180 - h;
-        const bg = this.add.image(0, top, 'ui', 'dialog_bg').setOrigin(0, 0).setDisplaySize(320, h).setDepth(4000)
+        // the choices sit in the middle of the view, above the inventory bar
+        const top = PANEL_Y - 4 - h;
+        const bg = this.add.image(10, top, 'ui', 'dialog_bg').setOrigin(0, 0).setDisplaySize(300, h).setDepth(4000)
           .setInteractive();
         this.dialogObjs.push(bg);
         shown.forEach((o, i) => {
-          const t = this.add.bitmapText(8, top + 4 + i * 10, 'nlo', truncate(tr(o.text), 72)).setTint(0xb8a070)
+          const t = this.add.bitmapText(18, top + 4 + i * 10, 'nlo', truncate(tr(o.text), 72)).setTint(0xb8a070)
             .setDepth(4001).setInteractive({ useHandCursor: true });
           t.on('pointerover', () => t.setTint(0xffffff));
           t.on('pointerout', () => t.setTint(0xb8a070));
@@ -264,17 +294,17 @@ export class HudScene extends Phaser.Scene {
             resolve(o);
           });
           this.dialogObjs.push(t);
-          this.optInfo.push({ id: o.id, text: o.text, x: 14, y: top + 8 + i * 10, exit: o.next === 'exit', present: !!o.present });
+          this.optInfo.push({ id: o.id, text: o.text, x: 24, y: top + 8 + i * 10, exit: o.next === 'exit', present: !!o.present });
         });
         if (more) {
-          const t = this.add.bitmapText(8, top + 4 + shown.length * 10, 'nlo', '... more').setTint(0x7f7f9f).setDepth(4001)
+          const t = this.add.bitmapText(18, top + 4 + shown.length * 10, 'nlo', '... more').setTint(0x7f7f9f).setDepth(4001)
             .setInteractive();
           t.on('pointerdown', () => {
             page = (page + 1) % Math.ceil(options.length / per);
             draw();
           });
           this.dialogObjs.push(t);
-          this.optInfo.push({ id: '__more', text: '... more', x: 14, y: top + 8 + shown.length * 10, exit: false, present: false });
+          this.optInfo.push({ id: '__more', text: '... more', x: 24, y: top + 8 + shown.length * 10, exit: false, present: false });
         }
       };
       draw();
