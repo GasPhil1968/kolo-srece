@@ -163,7 +163,7 @@ export const STEPS: WStep[] = [
   { id: 'c7.telegram', chapter: 7, room: 'calypso_cabin', when: 'c7_barrels', done: 'clue:telegram', do: [look('telegram')], optional: true },
   { id: 'c7.escape', chapter: 7, room: 'calypso_deck', when: 'c7_case_open & c7_nora_free', done: 'c7_escaped', do: [use('gangway')] },
   { id: 'c7.key', chapter: 7, room: 'hask_shop', when: 'c7_planned', done: 'has:booth_key', do: [talk('hask')], say: ['key', 'bye'] },
-  { id: 'c7.pass', chapter: 7, room: 'gazette', when: 'c7_planned', done: 'has:press_pass', do: [talk('abernathy')], say: ['pass', 'bye'] },
+  { id: 'c7.pass', chapter: 7, when: 'has:blank_form & has:rubber_stamp', done: 'has:press_pass', do: [combine('blank_form', 'rubber_stamp')] },
   { id: 'c7.log', chapter: 7, room: 'pier9', when: 'c7_planned', done: 'has:gus_log', do: [talk('gus')], say: ['log7', 'bye'] },
   { id: 'c7.antidote', chapter: 7, room: 'pharmacy', when: 'c7_planned', done: 'has:antidote', do: [talk('kessler')], say: ['antidote7', 'bye'] },
   { id: 'c7.go', chapter: 7, when: 'map:cityhall', done: 'c7_end', do: [go('radio_booth')] },

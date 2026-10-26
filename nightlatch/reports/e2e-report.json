@@ -1,6 +1,6 @@
 {
- "generated": "2026-10-26T09:13:15.531Z",
- "url": "http://127.0.0.1:41933/",
+ "generated": "2026-10-26T10:26:38.376Z",
+ "url": "http://127.0.0.1:43143/",
  "results": [
   {
    "name": "Title screen and menu",
@@ -35,7 +35,7 @@
      "ok": true
     }
    ],
-   "ms": 4267,
+   "ms": 12902,
    "pageErrors": []
   },
   {
@@ -109,7 +109,7 @@
      "info": "{\"ov\":[\"notebook\"],\"busy\":0,\"lock\":1,\"idle\":false}"
     }
    ],
-   "ms": 13802,
+   "ms": 13845,
    "pageErrors": []
   },
   {
@@ -161,7 +161,7 @@
      "info": "Continue | New game | Chapters | Load game | Settings | Credits"
     }
    ],
-   "ms": 13227,
+   "ms": 13168,
    "pageErrors": []
   },
   {
@@ -279,13 +279,13 @@
     {
      "name": "frame rate stays near 60 FPS in every room (software-rendered Chromium)",
      "ok": true,
-     "info": "{\"hotel_room\":60,\"hotel_lobby\":61,\"office\":61,\"nora_flat\":60,\"lantern\":62,\"cold_store\":61,\"pier9\":61,\"pharmacy\":60,\"gazette\":60,\"mission\":60,\"darkroom\":60,\"cemetery\":59,\"commission\":61,\"precinct\":61,\"hask_shop\":61,\"halcyon_gate\":59,\"halcyon_cell\":61,\"halcyon_corridor\":61,\"halcyon_office\":60,\"holding_cell\":61,\"lantern_cellar\":61,\"tunnel\":60,\"calypso_hold\":61,\"calypso_deck\":61,\"calypso_cabin\":61,\"radio_booth\":59,\"clocktower\":56}"
+     "info": "{\"hotel_room\":60,\"hotel_lobby\":60,\"office\":60,\"nora_flat\":58,\"lantern\":61,\"cold_store\":61,\"pier9\":60,\"pharmacy\":60,\"gazette\":61,\"mission\":60,\"darkroom\":61,\"cemetery\":61,\"commission\":61,\"precinct\":61,\"hask_shop\":61,\"halcyon_gate\":61,\"halcyon_cell\":61,\"halcyon_corridor\":61,\"halcyon_office\":59,\"holding_cell\":61,\"lantern_cellar\":61,\"tunnel\":61,\"calypso_hold\":61,\"calypso_deck\":61,\"calypso_cabin\":60,\"radio_booth\":58,\"clocktower\":62}"
     }
    ],
-   "ms": 53299,
+   "ms": 53188,
    "extra": {
     "rooms": 27,
-    "fpsMin": 56,
+    "fpsMin": 58,
     "fpsAvg": 60
    },
    "pageErrors": []
@@ -304,11 +304,11 @@
      "info": "1,2,3,4,5,6,7,8"
     }
    ],
-   "ms": 318548,
+   "ms": 312995,
    "extra": {
     "steps": 146,
-    "clicks": 622,
-    "minutes": 5.3,
+    "clicks": 619,
+    "minutes": 5.2,
     "tail": [
      "  choose broadcast.frank",
      "  choose frank_talkback.early",

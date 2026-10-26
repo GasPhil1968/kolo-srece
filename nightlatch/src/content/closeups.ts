@@ -25,9 +25,10 @@ export const CLOSEUPS: Record<string, CloseupDef> = {
     wheels: 3,
     knownWhen: 'clue:badge_226',
     solved: [
-      { sfx: 'padlock_open' }, { set: 'c7_case_open' }, { unstash: true }, { give: 'calypso_manifest' },
+      { sfx: 'padlock_open' }, { set: 'c7_case_open' }, { unstash: true }, { give: 'calypso_manifest' }, { give: 'blank_form' }, { give: 'rubber_stamp' },
       'Two-two-six. Frank, Frank.',
       'Everything they took off me \u2014 Frank collected the whole set \u2014 and the Calypso\u2019s own papers.',
+      'Under the papers: a stack of blank accreditation forms for the Commission gala, and the purser\u2019s stamp. Anyone with those could be anybody.',
       { doc: 'calypso_manifest' }, { clue: 'telegram' },
       { autosave: 'Chapter 7 \u2014 The briefcase' },
     ],

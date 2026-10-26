@@ -161,6 +161,13 @@ export const ITEMS: Record<string, ItemDef> = Object.fromEntries(
       evidence: true,
     }),
     I('booth_key', 'booth key', 'A freshly cut key, still warm from Hask’s machine. WBRK, City Hall.'),
+    I('blank_form', 'blank accreditation form', 'A Commission centenary accreditation form, empty except for the word PRESS printed at the top.', {
+      combine: {
+        rubber_stamp: [{ take: 'blank_form' }, { take: 'rubber_stamp' }, { give: 'press_pass' }, { sfx: 'paper_slide' },
+          'I stamp it, then sign it in a hand that isn’t mine. H. Abernathy, Gazette. It looks official, which is all the gala will check.'],
+      },
+    }),
+    I('rubber_stamp', 'purser’s stamp', 'A rubber stamp from the purser’s tin: CALYPSO — PAID.'),
     I('press_pass', 'gala press pass', 'A press pass for the Commission centenary gala. It says I’m H. Abernathy. I don’t look it.'),
     I('gus_log', "Gus's watch log", 'Gus Tolliver’s own watch log for 1949, in pencil, with gull feathers pressed in it.', {
       doc: 'gus_log',

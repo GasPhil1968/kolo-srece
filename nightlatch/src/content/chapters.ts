@@ -251,7 +251,7 @@ export const CHAPTERS: ChapterDef[] = [
       ], 'c7_barrels'),
       O('c7_off', 'Get off the ship with Nora.', 'c7_escaped', ['Down the gangway while Kroll is busy.', 'Use the gangway.'], 'c7_case_open & c7_nora_free'),
       O('c7_key', 'Get a key to the WBRK booth.', 'has:booth_key', ['Hask fitted City Hall\u2019s locks.', 'Ask Hask about a key for the booth.'], 'c7_planned'),
-      O('c7_pass', 'Get into the gala.', 'has:press_pass', ['A newspaperman would have a pass.', 'Show Abernathy the evidence and ask for a pass.'], 'c7_planned'),
+      O('c7_pass', 'Get into the gala.', 'has:press_pass', ['A newspaperman would have a pass.', 'The captain kept blank accreditation forms. The purser kept a stamp. Put them together.'], 'c7_planned'),
       O('c7_log', 'Get Gus\u2019s own log.', 'has:gus_log', ['Gus keeps his own watch log.', 'Ask Gus for his log, for Walter.'], 'c7_planned'),
       O('c7_antidote', 'Get something to clear my head.', 'has:antidote', ['Kessler mentioned physostigmine.', 'Ask Kessler for physostigmine.'], 'c7_planned'),
       O('c7_go', 'Go to City Hall.', 'c7_end', ['Crane speaks at nine.', 'Pick City Hall on the map.'], 'map:cityhall'),

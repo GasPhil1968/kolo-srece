@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-26T09:06:11.990Z",
+ "generated": "2026-10-26T10:19:30.634Z",
  "seeds": [
   1
  ],
@@ -10,24 +10,24 @@
   "runs": 2000,
   "passed": 2000,
   "failed": 0,
-  "actions": 1043027,
-  "dialogChoices": 210415,
-  "saves": 44254,
-  "loads": 60205,
+  "actions": 1041585,
+  "dialogChoices": 206864,
+  "saves": 44230,
+  "loads": 60171,
   "autosaves": 38217,
-  "roomChanges": 311207,
+  "roomChanges": 309559,
   "chapterTransitions": 10269,
-  "wrongItemTries": 180963,
-  "outOfOrderTries": 88462,
+  "wrongItemTries": 181038,
+  "outOfOrderTries": 88717,
   "endingsReached": 1591,
   "exceptions": 0,
   "runsWithViolations": 0,
   "failedTransitions": 0,
   "softlocks": 0,
   "saveLoadFailures": 0,
-  "avgActionsToFinish": 636,
+  "avgActionsToFinish": 635,
   "avgStepsToFinish": 162,
-  "durationSec": 15
+  "durationSec": 16
  },
  "categories": [
   {
@@ -36,9 +36,9 @@
    "runs": 160,
    "passed": 160,
    "failed": 0,
-   "avgActions": 183,
+   "avgActions": 182,
    "avgSteps": 146,
-   "avgMs": 6
+   "avgMs": 7
   },
   {
    "id": "explorer",
@@ -46,9 +46,9 @@
    "runs": 440,
    "passed": 440,
    "failed": 0,
-   "avgActions": 810,
+   "avgActions": 808,
    "avgSteps": 128,
-   "avgMs": 50
+   "avgMs": 51
   },
   {
    "id": "saveload",
@@ -56,9 +56,9 @@
    "runs": 280,
    "passed": 280,
    "failed": 0,
-   "avgActions": 433,
+   "avgActions": 432,
    "avgSteps": 345,
-   "avgMs": 35
+   "avgMs": 36
   },
   {
    "id": "chapter",
@@ -76,9 +76,9 @@
    "runs": 240,
    "passed": 240,
    "failed": 0,
-   "avgActions": 474,
+   "avgActions": 473,
    "avgSteps": 62,
-   "avgMs": 34
+   "avgMs": 37
   },
   {
    "id": "rapid",
@@ -88,7 +88,7 @@
    "failed": 0,
    "avgActions": 1600,
    "avgSteps": 137,
-   "avgMs": 30
+   "avgMs": 31
   },
   {
    "id": "outoforder",
@@ -96,7 +96,7 @@
    "runs": 240,
    "passed": 240,
    "failed": 0,
-   "avgActions": 374,
+   "avgActions": 376,
    "avgSteps": 137,
    "avgMs": 12
   }
@@ -107,7 +107,7 @@
    "runs": 2000,
    "passed": 2000,
    "failed": 0,
-   "actions": 1043027
+   "actions": 1041585
   }
  ],
  "failureReasons": [],
@@ -117,7 +117,7 @@
   "clues": 87,
   "deds": 6,
   "docs": 21,
-  "items": 56,
+  "items": 58,
   "options": 160,
   "hotspots": 250,
   "travel": 14,

@@ -429,6 +429,22 @@ def _pruitt_note(ic):
     ic.paint(ic.line((5, 12), (13, 12)), 'black', .5, bevel=None)
 
 
+@icon('blank_form')
+def _blank_form(ic):
+    # an empty accreditation form with a header line and a stamp box
+    ic.paint(ic.poly([(3, 3), (17, 3), (17, 17), (3, 17)]), 'cream', .6, bevel=None)
+    ic.paint(ic.line((5, 6), (15, 6)), 'black', .45, bevel=None)
+    ic.paint(ic.line((5, 10), (12, 10)), 'paper', .3, bevel=None)
+
+
+@icon('rubber_stamp')
+def _rubber_stamp(ic):
+    # a wooden-handled rubber stamp
+    ic.paint(ic.poly([(6, 3), (14, 3), (14, 8), (6, 8)]), 'brass', .5, bevel=None)
+    ic.paint(ic.line((10, 8), (10, 14)), 'brass', .5, bevel=None)
+    ic.paint(ic.poly([(6, 14), (14, 14), (14, 17), (6, 17)]), 'red', .6, bevel=None)
+
+
 @icon('key9')
 def _key9(ic):
     # wooden fob (left), brass ring (top), brass key hanging (right)
