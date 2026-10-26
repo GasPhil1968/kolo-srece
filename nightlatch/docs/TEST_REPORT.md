@@ -1,6 +1,6 @@
 # Night Latch — Automated playtest report
 
-Generated 2026-10-26T10:19:30.634Z by `npm run playtest` (`tools/playtest.ts`): 1 campaign(s) of 2000 runs, seed(s) 1, Node v22.22.0.
+Generated 2026-10-26T11:51:18.355Z by `npm run playtest` (`tools/playtest.ts`): 1 campaign(s) of 2000 runs, seed(s) 1, Node v22.22.0.
 
 > **These are automated simulations, not human playtests.** Each run is a scripted or randomized virtual player driving the real game logic (`src/engine` + `src/content`, the same code the browser build runs) through `Game.perform()`, the entry point every mouse click uses. Rendering, input, animation timing and audio are exercised separately by the Playwright browser tests: see [BROWSER_TEST_REPORT.md](BROWSER_TEST_REPORT.md).
 
@@ -13,13 +13,13 @@ Generated 2026-10-26T10:19:30.634Z by `npm run playtest` (`tools/playtest.ts`): 
 | Failed | **0** |
 | Game endings reached | 1591 |
 | Chapter transitions | 10269 |
-| Player actions simulated | 1,041,585 |
-| Dialogue choices | 206,864 |
-| Wrong item / combination attempts | 181,038 |
+| Player actions simulated | 1,041,261 |
+| Dialogue choices | 203,625 |
+| Wrong item / combination attempts | 181,000 |
 | Out-of-order attempts | 88,717 |
 | Saves / loads (fresh Game per load) | 44230 / 60171 |
-| Autosaves written | 38217 |
-| Room changes | 309,559 |
+| Autosaves written | 38218 |
+| Room changes | 309,506 |
 | Exceptions | 0 |
 | Runs with invariant violations | 0 |
 | Failed chapter transitions | 0 |
@@ -34,7 +34,7 @@ Generated 2026-10-26T10:19:30.634Z by `npm run playtest` (`tools/playtest.ts`): 
 | Category | What it does | Runs | Passed | Failed | Avg actions |
 |---|---|---|---|---|---|
 | critical | Critical path: walkthrough steps executed in a random valid order, no detours. | 160 | 160 | 0 | 182 |
-| explorer | Random valid order plus bursts of random actions between steps: every hotspot and NPC, wrong items on everything, wrong item combinations, repeated and random dialogue, random evidence, random deductions and timeline orders, wrong codes. | 440 | 440 | 0 | 808 |
+| explorer | Random valid order plus bursts of random actions between steps: every hotspot and NPC, wrong items on everything, wrong item combinations, repeated and random dialogue, random evidence, random deductions and timeline orders, wrong codes. | 440 | 440 | 0 | 807 |
 | saveload | Save and load into a brand-new Game after milestones, reload the latest autosave, and roll back to older saves. | 280 | 280 | 0 | 432 |
 | chapter | Start from each chapter’s opening save, play randomly for 40–250 actions, then the solver must still finish the chapter (softlock detection). | 480 | 480 | 0 | 159 |
 | chaos | Long random sessions (150–600 actions incl. rapid travel and save/load) from a random chapter; the solver must then finish the whole game. | 240 | 240 | 0 | 473 |
@@ -61,7 +61,7 @@ Generated 2026-10-26T10:19:30.634Z by `npm run playtest` (`tools/playtest.ts`): 
 | Documents opened by the story | 21 | 21 |
 | Items held | 58 | 58 |
 | Dialogue options chosen | 160 | 160 |
-| Hotspot ids interacted with | 250 | 250 |
+| Hotspot ids interacted with | 251 | 251 |
 | Map locations travelled to | 14 | 14 |
 
 Documents only reachable from a clue in the notebook: gus_statement. The simulator doesn't open notebook documents (a pure UI action); the browser tests check that a clue's document opens from the notebook.

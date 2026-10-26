@@ -506,6 +506,7 @@ flowchart TD
   c7_escape --> c7_key
   c7_case --> c7_pass
   c7_escape --> c7_log
+  c7_nora --> c7_log
   c7_escape --> c7_antidote
   c7_antidote --> c7_go
 ```
@@ -527,7 +528,7 @@ flowchart TD
 | c7.escape | calypso_deck | `c7_case_open & c7_nora_free` | `c7_escaped` | use gangway |
 | c7.key | hask_shop | `c7_planned` | `has:booth_key` | use hask (says: key, bye) |
 | c7.pass | — | `has:blank_form & has:rubber_stamp` | `has:press_pass` | combine blank_form + rubber_stamp |
-| c7.log | pier9 | `c7_planned` | `has:gus_log` | use gus (says: log7, bye) |
+| c7.log | pier9 | `c7_planned & has:walter_knife` | `has:gus_log` | item walter_knife → watch_chest |
 | c7.antidote | pharmacy | `c7_planned` | `has:antidote` | use kessler (says: antidote7, bye) |
 | c7.go | — | `map:cityhall` | `c7_end` | go radio_booth |
 

@@ -47,6 +47,23 @@ export const pier9: RoomDef = {
         )],
       },
     },
+    watch_chest: {
+      name: 'watch chest',
+      verb: 'Open',
+      look: ['Gus’s watch chest under the bench. Iron bands, and a hasp with a lock that rusted through years ago.'],
+      use: [pick(
+        when('c7_log_taken', 'Empty now, apart from the smell of oilskin.'),
+        otherwise('Locked. Gus keeps his watch log in here, and his key went into the harbor the night Walter died.'),
+      )],
+      items: {
+        walter_knife: [pick(
+          when('c7_log_taken', 'The hasp is open already.'),
+          otherwise(anim('reach_side'), sfx('padlock_open'), set('c7_log_taken'), give('gus_log'),
+            'Walter’s knife under the hasp, and a twist the way he taught me to open a crate with nothing else. The lock gives.',
+            'Under the oilskin: Gus’s own log. Forty years of fog and gulls, in pencil.'),
+        )],
+      },
+    },
     hut: {
       name: 'watchman’s hut',
       look: ['Gus’s hut: a stove, a stool, a kettle and forty years of gull stories.'],

@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-26T10:19:30.634Z",
+ "generated": "2026-10-26T11:51:18.355Z",
  "seeds": [
   1
  ],
@@ -10,14 +10,14 @@
   "runs": 2000,
   "passed": 2000,
   "failed": 0,
-  "actions": 1041585,
-  "dialogChoices": 206864,
+  "actions": 1041261,
+  "dialogChoices": 203625,
   "saves": 44230,
   "loads": 60171,
-  "autosaves": 38217,
-  "roomChanges": 309559,
+  "autosaves": 38218,
+  "roomChanges": 309506,
   "chapterTransitions": 10269,
-  "wrongItemTries": 181038,
+  "wrongItemTries": 181000,
   "outOfOrderTries": 88717,
   "endingsReached": 1591,
   "exceptions": 0,
@@ -38,7 +38,7 @@
    "failed": 0,
    "avgActions": 182,
    "avgSteps": 146,
-   "avgMs": 7
+   "avgMs": 6
   },
   {
    "id": "explorer",
@@ -46,9 +46,9 @@
    "runs": 440,
    "passed": 440,
    "failed": 0,
-   "avgActions": 808,
+   "avgActions": 807,
    "avgSteps": 128,
-   "avgMs": 51
+   "avgMs": 52
   },
   {
    "id": "saveload",
@@ -58,7 +58,7 @@
    "failed": 0,
    "avgActions": 432,
    "avgSteps": 345,
-   "avgMs": 36
+   "avgMs": 37
   },
   {
    "id": "chapter",
@@ -88,7 +88,7 @@
    "failed": 0,
    "avgActions": 1600,
    "avgSteps": 137,
-   "avgMs": 31
+   "avgMs": 32
   },
   {
    "id": "outoforder",
@@ -107,7 +107,7 @@
    "runs": 2000,
    "passed": 2000,
    "failed": 0,
-   "actions": 1041585
+   "actions": 1041261
   }
  ],
  "failureReasons": [],
@@ -119,14 +119,14 @@
   "docs": 21,
   "items": 58,
   "options": 160,
-  "hotspots": 250,
+  "hotspots": 251,
   "travel": 14,
   "sfx": 49,
   "music": 7
  },
  "totals2": {
   "options": 160,
-  "hotspots": 250,
+  "hotspots": 251,
   "docs": 21
  },
  "notebookDocs": [

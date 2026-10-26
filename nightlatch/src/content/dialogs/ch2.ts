@@ -70,8 +70,8 @@ export const gus: DialogDef = {
           id: 'log7', text: 'Gus, I need your log. For Walter.', when: 'chapter=7 & c7_planned & !has:gus_log',
           do: [
             S('gus', 'For Walter.'),
-            S('gus', 'Here. Forty years of fog and gulls, and one night I’d give the rest to forget.'),
-            give('gus_log'),
+            S('gus', 'The chest under my bench. The lock went rusty the night Walter died, and so did my key.'),
+            S('gus', 'Whatever you use on it, it isn’t my business.'),
             'Thank you, Gus.',
             S('gus', 'Don’t thank me. Make them listen.'),
           ],
