@@ -1,0 +1,20 @@
+{
+  "name": "TRI FILDŽANA",
+  "short_name": "Fildžani",
+  "description": "Šaner miješa tri fildžana, ti pratiš plavu kuglicu. Oberi ga do 250 KM i gledaj kako pakuje.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "bs",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "portrait",
+  "background_color": "#0a0605",
+  "theme_color": "#150c08",
+  "categories": ["games"],
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
