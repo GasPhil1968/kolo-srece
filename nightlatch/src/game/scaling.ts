@@ -1,4 +1,4 @@
-import { isTouch } from './touch';
+import { isRotated, isTouch } from './touch';
 import type Phaser from 'phaser';
 import { settings } from './services';
 
@@ -12,12 +12,14 @@ export function applyScaling(game: Phaser.Game) {
     game.events.once('ready', () => applyScaling(game));
     return;
   }
-  const w = window.innerWidth;
-  const h = window.innerHeight;
+  // played rotated, the picture's width runs along the screen's height
+  const w = isRotated() ? window.innerHeight : window.innerWidth;
+  const h = isRotated() ? window.innerWidth : window.innerHeight;
   const fit = Math.min(w / NATIVE_W, h / NATIVE_H);
   // touch screens are small: fill them, even without whole-number pixels
   const zoom = settings.pixelPerfect && !isTouch ? Math.max(1, Math.floor(fit)) : Math.max(1, fit);
   game.scale.setZoom(zoom);
+  game.scale.refresh();
 }
 
 export function fadeAndRun(fn: () => unknown) {

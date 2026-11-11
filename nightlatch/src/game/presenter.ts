@@ -50,6 +50,9 @@ export class RuntimePresenter implements Presenter {
 
   private holdFor(ms: number): Promise<void> {
     if (ctl.fast) return Promise.resolve();
+    // fast-forward: a held key ends every line almost at once
+    if (ctl.fastForward) ms = 90;
+    else if (settings.tapToContinue) ms = 10 * 60 * 1000;
     return new Promise((resolve) => {
       let done = false;
       const finish = () => {
@@ -259,7 +262,7 @@ export class RuntimePresenter implements Presenter {
     if (kind === 'shake') cam.shake(Number(value) || 250, 0.012);
     else if (kind === 'flash') {
       const c = Phaser.Display.Color.HexStringToColor(String(value || '#ffffff'));
-      cam.flash(300, c.red, c.green, c.blue);
+      if (!settings.reduceMotion) cam.flash(300, c.red, c.green, c.blue);
     } else this.room.setBlur(Number(value) || 0);
   }
 

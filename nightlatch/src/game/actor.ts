@@ -179,7 +179,7 @@ export class Actor {
         this.refreshAnim();
         const s = Phaser.Math.Clamp(this.scaleFn(this.y), 0.6, 1.2);
         const vertical = Math.abs(dy) > Math.abs(dx);
-        const speed = this.speed * s * (vertical ? 0.62 : 1) * ctl.walkMul;
+        const speed = this.speed * s * (vertical ? 0.62 : 1) * ctl.walkMul * (ctl.fastForward ? 10 : 1);
         const obj = { x: this.x, y: this.y };
         this.scene.tweens.add({
           targets: obj,

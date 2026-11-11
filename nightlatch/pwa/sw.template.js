@@ -7,7 +7,7 @@ const FILES = __FILES__;
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE)
-      .then((c) => c.addAll(FILES))
+      .then((c) => c.addAll(FILES.map((u) => new Request(u, { cache: 'reload' }))))
       .then(() => self.skipWaiting())
       .then(() => self.clients.matchAll({ includeUncontrolled: true }))
       .then((clients) => clients.forEach((c) => c.postMessage('cached'))),

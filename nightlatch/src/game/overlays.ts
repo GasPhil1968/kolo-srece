@@ -2,7 +2,7 @@
 import Phaser from 'phaser';
 import type { CloseupDef } from '../engine/types';
 import { ctl } from './controller';
-import { audio } from './services';
+import { audio, settings } from './services';
 
 export abstract class Overlay extends Phaser.Scene {
   protected onClose: (() => void) | null = null;
@@ -272,7 +272,7 @@ export class CloseupScene extends Overlay {
       await g.trySolve(this.def.id, code);
     } else {
       await g.trySolve(this.def.id, code, true);
-      this.cameras.main.shake(120, 0.01);
+      if (!settings.reduceMotion) this.cameras.main.shake(120, 0.01);
     }
   }
 }

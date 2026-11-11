@@ -12,11 +12,15 @@ export interface Settings {
   pixelPerfect: boolean;
   hints: boolean;
   lang: Lang;
+  /** Lines stay until the player taps, instead of timing out. */
+  tapToContinue: boolean;
+  /** No rain, flashes or shaking. */
+  reduceMotion: boolean;
 }
 
 const SETTINGS_KEY = 'nightlatch.settings';
 const browserLang: Lang = typeof navigator !== 'undefined' && /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
-export const settings: Settings = { music: 0.7, sfx: 0.8, textSpeed: 1, pixelPerfect: true, hints: true, lang: browserLang };
+export const settings: Settings = { music: 0.7, sfx: 0.8, textSpeed: 1, pixelPerfect: true, hints: true, lang: browserLang, tapToContinue: false, reduceMotion: false };
 
 export function loadSettings() {
   try {
@@ -65,6 +69,10 @@ export interface SaveMeta {
   room: string;
   date: number;
   time: number;
+  /** A small picture of the scene when it was saved (PNG data URL), if one could be taken. */
+  thumb?: string;
+  /** A name the player gave the save. */
+  name?: string;
 }
 
 const PREFIX = 'nightlatch.save.';
@@ -97,8 +105,74 @@ function storeDel(k: string) {
 export const SLOTS = ['auto', '1', '2', '3', '4', '5', '6'];
 
 export function writeSave(slot: string, state: GameState, label: string, roomName: string) {
-  const meta: SaveMeta = { slot, label, chapter: state.chapter, room: roomName, date: Date.now(), time: state.time };
+  // a manual save keeps the name the player gave the slot
+  const name = slot === 'auto' ? undefined : readSaveMeta(slot)?.name;
+  const meta: SaveMeta = { slot, label, chapter: state.chapter, room: roomName, date: Date.now(), time: state.time, name };
   storeSet(PREFIX + slot, JSON.stringify({ meta, state: serialize(state) }));
+}
+
+/** Change part of a save's description (its picture or name) without touching the game state. */
+export function updateSaveMeta(slot: string, change: Partial<SaveMeta>) {
+  const raw = storeGet(PREFIX + slot);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    data.meta = { ...data.meta, ...change };
+    storeSet(PREFIX + slot, JSON.stringify(data));
+  } catch {
+    /* damaged save: leave it */
+  }
+}
+
+// ------------------------------------------------------------------ backup file ----
+// Saves live only in this browser; on an iPad the home-screen app even has its own storage.
+// A backup file carries every save and the settings from one to the other.
+function checksum(text: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 0x01000193) >>> 0;
+  return h.toString(16).padStart(8, '0');
+}
+
+export function exportBackup(): string {
+  const data: Record<string, string> = {};
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k?.startsWith('nightlatch.')) data[k] = localStorage.getItem(k) ?? '';
+    }
+  } catch {
+    for (const [k, v] of memoryStore) data[k] = v;
+  }
+  const body = JSON.stringify(data);
+  return JSON.stringify({ game: 'night-latch', v: 1, date: Date.now(), sum: checksum(body), data: body });
+}
+
+/** Check a backup file; returns how many entries it holds, or an error message. */
+export function readBackup(text: string): { entries: Record<string, string> } | { error: string } {
+  try {
+    const f = JSON.parse(text);
+    if (f?.game !== 'night-latch' || typeof f.data !== 'string') return { error: 'That is not a Night Latch backup.' };
+    if (checksum(f.data) !== f.sum) return { error: 'The backup file is damaged.' };
+    return { entries: JSON.parse(f.data) as Record<string, string> };
+  } catch {
+    return { error: 'That is not a Night Latch backup.' };
+  }
+}
+
+/** Replace everything Night Latch keeps in this browser with the backup's entries. */
+export function restoreBackup(entries: Record<string, string>) {
+  try {
+    const old: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k?.startsWith('nightlatch.')) old.push(k);
+    }
+    for (const k of old) localStorage.removeItem(k);
+    for (const [k, v] of Object.entries(entries)) if (k.startsWith('nightlatch.')) localStorage.setItem(k, v);
+  } catch {
+    memoryStore.clear();
+    for (const [k, v] of Object.entries(entries)) memoryStore.set(k, v);
+  }
 }
 
 export function readSaveMeta(slot: string): SaveMeta | null {

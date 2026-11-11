@@ -6,7 +6,7 @@ import { asset } from './assets';
 import { ctl } from './controller';
 import type { Pt, RoomMeta } from './meta';
 import { NavMesh } from './path';
-import { audio } from './services';
+import { audio, settings } from './services';
 
 export const VIEW_H = 144;
 export const roomMetas: Record<string, RoomMeta> = {};
@@ -146,6 +146,7 @@ export class RoomScene extends Phaser.Scene {
     await this.ensureLoaded(id);
     this.clearRoom();
     this.roomId = id;
+    this.time.delayedCall(900, () => ctl.captureThumb());
     if (this.hover) {
       this.hover = null; // nothing is under the pointer in the new room until it moves
       this.events.emit('hover', null);
@@ -167,7 +168,7 @@ export class RoomScene extends Phaser.Scene {
       s.play({ key: `${this.animTex(name)}:loop`, startFrame: Math.floor(Math.random() * a.frames) });
       this.animSprites.set(name, s);
     }
-    if (m.rain?.length) this.rain = new Rain(this, m.rain);
+    if (m.rain?.length && !settings.reduceMotion) this.rain = new Rain(this, m.rain);
     // player
     const s = ctl.game.state;
     let px = s.pos.x;
@@ -371,7 +372,30 @@ export class RoomScene extends Phaser.Scene {
       return;
     }
     const right = p.rightButtonDown();
-    const target = this.pick(p.worldX, p.worldY);
+    let target = this.pick(p.worldX, p.worldY);
+    // a finger is wider than a pixel: a tap just beside a small thing still counts, and if two
+    // things are equally near, the game asks which one was meant
+    if (!target && ctl.touch && !right) {
+      const near = this.pickNear(p.worldX, p.worldY);
+      if (near.length > 1) {
+        void this.askWhich(near);
+        return;
+      }
+      target = near[0] ?? null;
+    }
+    // a double tap (or double click) on a way out skips the walk there
+    if (target && !right && !ctl.heldItem && this.isExit(target)) {
+      const key = target.target.kind + ':' + target.target.id;
+      const now = this.time.now;
+      if (this.lastExitTap?.key === key && now - this.lastExitTap.t < 400) {
+        this.lastExitTap = null;
+        this.actToken++;
+        this.player.stopWalking();
+        void this.act({ t: 'use', target: target.target }, target, false);
+        return;
+      }
+      this.lastExitTap = { key, t: now };
+    }
     if (right) {
       if (ctl.heldItem) {
         ctl.heldItem = null;
@@ -398,6 +422,41 @@ export class RoomScene extends Phaser.Scene {
       this.actToken++;
       void this.walkPlayer([p.worldX, p.worldY]);
     }
+  }
+
+  private lastExitTap: { key: string; t: number } | null = null;
+
+  private isExit(info: HoverInfo) {
+    return info.target.kind === 'hs' && !!this.content().rooms[this.roomId]?.hotspots[info.target.id]?.exit;
+  }
+
+  private content() {
+    return ctl.game.content;
+  }
+
+  /** Things within a finger's width of (x, y): those at the smallest distance where anything is found. */
+  private pickNear(x: number, y: number): HoverInfo[] {
+    for (const r of [4, 7, 10]) {
+      const found = new Map<string, HoverInfo>();
+      for (let a = 0; a < 16; a++) {
+        const h = this.pick(x + Math.cos((a * Math.PI) / 8) * r, y + Math.sin((a * Math.PI) / 8) * r);
+        if (h) found.set(h.target.kind + ':' + h.target.id, h);
+      }
+      if (found.size) return [...found.values()];
+    }
+    return [];
+  }
+
+  /** "Which one?" with the names of the things near the tap; picking one uses it. */
+  private async askWhich(options: HoverInfo[]) {
+    const hud = this.scene.get('hud') as unknown as { chooseOption(o: { id: string; text: string }[], d?: string): Promise<{ id: string }> };
+    const picked = await hud.chooseOption([
+      ...options.map((o, i) => ({ id: String(i), text: o.name })),
+      { id: 'none', text: 'Never mind.' },
+    ], 'which');
+    const info = options[Number(picked.id)];
+    if (!info) return;
+    void this.act({ t: 'use', target: info.target }, info, true);
   }
 
   async walkPlayer(to: Pt) {

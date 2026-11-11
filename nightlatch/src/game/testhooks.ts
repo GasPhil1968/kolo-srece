@@ -146,6 +146,8 @@ export function installTestHooks(game: Phaser.Game) {
     },
     /** Phaser's smoothed frame rate. */
     fps: () => game.loop.actualFps,
+    /** Where Phaser last saw the pointer, in game pixels (checks the touch mapping). */
+    pointer: () => ({ x: game.input.activePointer.x, y: game.input.activePointer.y }),
     /** Frames actually rendered during the next `ms` milliseconds, as frames per second. */
     measureFps: (ms = 1000) =>
       new Promise<number>((resolve) => {

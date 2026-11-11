@@ -41,7 +41,9 @@ const sw = readFileSync('pwa/sw.template.js', 'utf8')
 writeFileSync(join(OUT, 'sw.js'), sw);
 
 // 3. the page registers the service worker only in this build
-const html = readFileSync(join(OUT, 'index.html'), 'utf8').replace('<head>', '<head>\n<meta name="nl-offline" content="on">');
+const stamp = `${new Date().toISOString().slice(0, 10)} ${version.slice(0, 6)}`;
+const html = readFileSync(join(OUT, 'index.html'), 'utf8')
+  .replace('<head>', `<head>\n<meta name="nl-offline" content="on">\n<meta name="nl-version" content="${stamp}">`);
 writeFileSync(join(OUT, 'index.html'), html);
 
 // 4. Netlify: the service worker and the start page must never be cached by the CDN

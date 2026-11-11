@@ -21,7 +21,12 @@
   html, body, canvas { touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
   #rotate { display: none; position: fixed; inset: 0; z-index: 9; background: #050508; color: #b9a77a;
             font: 16px/1.5 monospace; letter-spacing: 2px; align-items: center; justify-content: center; text-align: center; }
-  @media (orientation: portrait) and (pointer: coarse) { #rotate { display: flex; } }
+  @media (orientation: portrait) and (pointer: coarse) { #rotate { display: flex; flex-direction: column; } }
+  #rotate button { margin-top: 18px; padding: 12px 18px; min-height: 44px; background: #14110c; color: #e8d8a8;
+                   border: 1px solid #b9a77a; font: 15px/1.4 monospace; letter-spacing: 1px; }
+  /* played rotated: the phone stays upright and the picture lies on its side */
+  html.rot #rotate { display: none !important; }
+  @media (orientation: portrait) { html.rot #game { transform: rotate(90deg); } }
   #pwa-note { display: none; position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 10;
               max-width: 90vw; padding: 8px 14px; background: #14110c; color: #e8d8a8; border: 1px solid #b9a77a;
               font: 14px/1.4 monospace; text-align: center; }
@@ -31,7 +36,19 @@
 </head>
 <body oncontextmenu="return false">
 <div id="game"></div>
-<div id="rotate">&#x21bb;<br>Bitte Gerät quer halten<br>Please turn your device</div>
+<div id="rotate"><div>&#x21bb;<br>Bitte Gerät quer halten<br>Please turn your device</div>
+  <button id="rotate-go" type="button">Gedreht weiterspielen<br>Play rotated</button></div>
+<script>
+  // remember "play rotated" on this device
+  (function () {
+    try { if (localStorage.getItem('nightlatch.rotated') === '1') document.documentElement.classList.add('rot'); } catch (e) {}
+    document.getElementById('rotate-go').addEventListener('click', function () {
+      document.documentElement.classList.add('rot');
+      try { localStorage.setItem('nightlatch.rotated', '1'); } catch (e) {}
+      window.dispatchEvent(new Event('resize'));
+    });
+  })();
+</script>
 <div id="boot">NIGHT LATCH</div>
 <div id="pwa-note"></div>
 <script>
@@ -39,7 +56,13 @@
   (function () {
     // only the web build (tools/pwa.ts) has sw.js and this marker
     if (!document.querySelector('meta[name="nl-offline"]') || !('serviceWorker' in navigator)) return;
+    var hadWorker = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.register('sw.js');
+    // a new version took over: reload now if the title screen is showing, otherwise when it next is
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadWorker) return;
+      if (window.NL_onTitle) location.reload(); else window.NL_reloadOnTitle = true;
+    });
     navigator.serviceWorker.addEventListener('message', function (e) {
       if (e.data !== 'cached') return;
       var n = document.getElementById('pwa-note');

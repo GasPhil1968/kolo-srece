@@ -259,6 +259,44 @@ export class HudScene extends Phaser.Scene {
   }
 
   /** A spoken line, in a box across the top between the two faces. Null clears it. */
+  /** A button for ten seconds after loading: back to the game that was running. */
+  offerUndo(fn: () => void) {
+    const b = this.add.bitmapText(6, 4, 'nlo', tr('Undo load')).setTint(0xffe2a0).setDepth(4600)
+      .setInteractive({ useHandCursor: true });
+    const bg = this.add.rectangle(3, 2, b.width + 6, b.height + 4, 0x06060a, 0.85).setOrigin(0, 0).setDepth(4599)
+      .setStrokeStyle(1, 0x7a6230);
+    const done = () => {
+      b.destroy();
+      bg.destroy();
+    };
+    b.on('pointerdown', () => {
+      done();
+      fn();
+    });
+    this.time.delayedCall(10000, done);
+  }
+
+  /** On continuing from the title: where we were, and the last things written in the notebook. */
+  showRecap() {
+    const g = ctl.game;
+    if (!g) return;
+    const lines = [f('Last time: {0}', tr(ctl.roomName()))];
+    for (const id of g.state.clues.slice(-3).reverse()) {
+      const c = g.content.clues[id];
+      if (c) lines.push('— ' + tr(c.title));
+    }
+    const t = this.add.bitmapText(160, 24, 'nlo', lines.join('\n')).setOrigin(0.5, 0).setCenterAlign().setTint(0xe8d8a8)
+      .setDepth(4600);
+    const bg = this.add.rectangle(160, 20, t.width + 14, t.height + 9, 0x06060a, 0.9).setOrigin(0.5, 0).setDepth(4599)
+      .setStrokeStyle(1, 0x7a6230).setInteractive();
+    const done = () => {
+      t.destroy();
+      bg.destroy();
+    };
+    bg.on('pointerdown', done);
+    this.time.delayedCall(6000, done);
+  }
+
   /** Whose mouth moves (null: nobody is speaking). */
   setSpeaker(who: string | null) {
     this.speaker = who;

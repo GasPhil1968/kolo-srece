@@ -5,7 +5,7 @@ import { CHAPTERS } from '../content/chapters';
 import { deserialize } from '../engine/state';
 import { ctl } from './controller';
 import { Overlay } from './overlays';
-import { audio, chaptersPlayed, deleteSave, latestSave, readSave, readSaveMeta, saveSettings, settings, SLOTS } from './services';
+import { audio, chaptersPlayed, deleteSave, exportBackup, readBackup, restoreBackup, updateSaveMeta, latestSave, readSave, readSaveMeta, saveSettings, settings, SLOTS } from './services';
 import { applyScaling, fadeAndRun } from './scaling';
 
 const CREAM = 0xe8d8a8;
@@ -109,6 +109,53 @@ export class MenuScene extends Overlay {
     this.objs.push(o);
     return o;
   }
+  /** A save's little picture at (x, y), 24 x 11; the texture is made from its data URL the first time. */
+  private thumbAt(slot: string, url: string, x: number, y: number) {
+    const key = 'thumb:' + slot + ':' + url.length + ':' + url.slice(-24);
+    const place = () => {
+      if (!this.scene.isActive()) return;
+      this.objs.push(this.add.image(x, y, key).setOrigin(0, 0).setDisplaySize(24, 11));
+    };
+    if (this.textures.exists(key)) place();
+    else {
+      this.textures.once(`addtexture-${key}`, place);
+      this.textures.addBase64(key, url);
+    }
+  }
+
+  /** Download every save and the settings as one file, to keep or to move to another browser. */
+  private exportBackupFile() {
+    const blob = new Blob([exportBackup()], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `night-latch-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    this.t(160, 128, 'Backup saved as a file.', 0x9ccf7a);
+  }
+
+  /** Read a backup file and, after asking, replace everything in this browser with it. */
+  private importBackupFile() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json,.json';
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) return;
+      const r = readBackup(await file.text());
+      if ('error' in r) {
+        this.t(160, 128, r.error, 0xff8060);
+        return;
+      }
+      if (!window.confirm(t('Replace all saves and settings in this browser with the backup?'))) return;
+      restoreBackup(r.entries);
+      location.reload();
+    };
+    input.click();
+  }
+
   /** Chapter select: a card for each chapter's opening room, joined by a line like stops on a route. */
   private chSel = 0;
   private chapterSelect() {
@@ -173,16 +220,19 @@ export class MenuScene extends Overlay {
       this.b(160, 102, 'Settings', () => this.page('settings'));
       this.b(160, 116, 'Quit to title', () => this.page('quit'));
       this.t(160, 140, 'Tab/Space: show hotspots  N: notebook  M: map  H: hint', 0x7a6a50);
+      this.t(160, 151, ctl.touch ? 'Two-finger tap: show hotspots' : 'Hold Shift: fast-forward', 0x7a6a50);
     } else if (name === 'save' || name === 'load') {
-      this.t(160, 32, name === 'save' ? 'SAVE GAME' : 'LOAD GAME', CREAM);
+      this.t(160, 30, name === 'save' ? 'SAVE GAME' : 'LOAD GAME', CREAM);
       SLOTS.forEach((slot, i) => {
         const m = readSaveMeta(slot);
         const sl = slot === 'auto' ? t('Auto') : f('Slot {0}', slot);
-        const label = m ? `${sl}: ${t(m.label)} (${fmtTime(m.time)})` : `${sl}: ${t('empty')}`;
+        const label = m ? `${sl}: ${m.name ?? t(m.label)} (${fmtTime(m.time)})` : `${sl}: ${t('empty')}`;
         const canUse = name === 'save' ? slot !== 'auto' : !!m;
-        const y = 48 + i * 12;
+        const y = 44 + i * 13;
+        // a small picture of the scene beside each save
+        if (m?.thumb) this.thumbAt(slot, m.thumb, 14, y - 5);
         if (canUse) {
-          this.b(160, y, truncate(label, 52), () => {
+          const btn = this.b(44, y, truncate(label, 44), () => {
             if (name === 'save') {
               ctl.save(slot);
               audio.sfx('pencil');
@@ -190,20 +240,37 @@ export class MenuScene extends Overlay {
             } else {
               const st = readSave(slot);
               if (!st) {
-                this.t(160, 140, 'That save is damaged.', 0xff8060);
+                this.t(160, 136, 'That save is damaged.', 0xff8060);
                 return;
               }
+              const undo = !this.fromTitle && ctl.game ? JSON.stringify(ctl.game.state) : null;
               this.close();
-              fadeAndRun(() => (this.game.scene.getScene('title') as TitleScene).launchGame(st));
+              fadeAndRun(async () => {
+                const title = this.game.scene.getScene('title') as TitleScene;
+                await title.launchGame(st);
+                if (undo) title.offerUndo(undo);
+              });
             }
           });
-        } else this.t(160, y, truncate(label, 52), 0x5a5040);
+          btn.setOrigin(0, 0.5);
+        } else this.t(44, y, truncate(label, 44), 0x5a5040).setOrigin(0, 0.5);
+        // give a manual save a name of its own
+        if (name === 'save' && m && slot !== 'auto') {
+          this.b(298, y, 'Name', () => {
+            const typed = window.prompt(t('A name for this save (up to 24 letters):'), m.name ?? '');
+            if (typed === null) return;
+            updateSaveMeta(slot, { name: typed.trim().slice(0, 24) || undefined });
+            this.page('save');
+          });
+        }
       });
-      if (name === 'save') this.t(160, 136, 'Click a slot to save. Autosaves happen at milestones.', 0x7a6a50);
+      if (name === 'save') this.t(160, 140, 'Click a slot to save. Autosaves happen at milestones.', 0x7a6a50);
       if (name === 'load') {
-        this.b(270, 136, 'Delete...', () => this.page('delete'));
+        this.b(80, 140, 'Export...', () => this.exportBackupFile());
+        this.b(160, 140, 'Import...', () => this.importBackupFile());
+        this.b(240, 140, 'Delete...', () => this.page('delete'));
       }
-      this.b(160, 150, 'Back', () => (this.fromTitle && name === 'load' ? this.close() : this.page('main')));
+      this.b(160, 164, 'Back', () => (this.fromTitle && name === 'load' ? this.close() : this.page('main')));
     } else if (name === 'chapters') {
       this.chapterSelect();
     } else if (name === 'delete') {
@@ -236,40 +303,44 @@ export class MenuScene extends Overlay {
         });
       };
       const pct = (v: number) => `${Math.round(v * 100)}%`;
-      row(52, 'Music', pct(settings.music), () => (settings.music = Math.max(0, settings.music - 0.1)),
+      row(42, 'Music', pct(settings.music), () => (settings.music = Math.max(0, settings.music - 0.1)),
         () => (settings.music = Math.min(1, settings.music + 0.1)));
-      row(66, 'Sound', pct(settings.sfx), () => (settings.sfx = Math.max(0, settings.sfx - 0.1)),
+      row(54, 'Sound', pct(settings.sfx), () => (settings.sfx = Math.max(0, settings.sfx - 0.1)),
         () => (settings.sfx = Math.min(1, settings.sfx + 0.1)));
       const speeds = [0.6, 1, 1.6];
       const sname = (v: number) => (v < 0.8 ? 'Slow' : v > 1.2 ? 'Fast' : 'Normal');
-      row(80, 'Text speed', sname(settings.textSpeed), () => {
+      row(66, 'Text speed', sname(settings.textSpeed), () => {
         const i = speeds.indexOf(settings.textSpeed);
         settings.textSpeed = speeds[Math.max(0, (i < 0 ? 1 : i) - 1)];
       }, () => {
         const i = speeds.indexOf(settings.textSpeed);
         settings.textSpeed = speeds[Math.min(2, (i < 0 ? 1 : i) + 1)];
       });
-      row(94, 'Pixel-perfect', settings.pixelPerfect ? 'On' : 'Off', () => {
+      row(78, 'Pixel-perfect', settings.pixelPerfect ? 'On' : 'Off', () => {
         settings.pixelPerfect = !settings.pixelPerfect;
         applyScaling(this.game);
       }, () => {
         settings.pixelPerfect = !settings.pixelPerfect;
         applyScaling(this.game);
       });
-      row(108, 'Hints', settings.hints ? 'On' : 'Off', () => (settings.hints = !settings.hints),
+      row(90, 'Hints', settings.hints ? 'On' : 'Off', () => (settings.hints = !settings.hints),
         () => (settings.hints = !settings.hints));
       const flipLang = () => {
         settings.lang = settings.lang === 'de' ? 'en' : 'de';
         setLang(settings.lang);
         refreshAllText(this.game);
       };
-      row(122, 'Language', settings.lang === 'de' ? 'Deutsch' : 'English', flipLang, flipLang);
-      this.b(160, 138, this.scale.isFullscreen ? 'Leave fullscreen' : 'Fullscreen', () => {
+      row(102, 'Language', settings.lang === 'de' ? 'Deutsch' : 'English', flipLang, flipLang);
+      const flipTap = () => (settings.tapToContinue = !settings.tapToContinue);
+      row(114, 'Wait for a tap', settings.tapToContinue ? 'On' : 'Off', flipTap, flipTap);
+      const flipMotion = () => (settings.reduceMotion = !settings.reduceMotion);
+      row(126, 'Less motion', settings.reduceMotion ? 'On' : 'Off', flipMotion, flipMotion);
+      this.b(160, 142, this.scale.isFullscreen ? 'Leave fullscreen' : 'Fullscreen', () => {
         if (this.scale.isFullscreen) this.scale.stopFullscreen();
         else this.scale.startFullscreen();
         this.time.delayedCall(300, () => this.page('settings'));
       });
-      this.b(160, 158, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
+      this.b(160, 160, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
     } else if (name === 'quit') {
       this.t(160, 60, 'Return to the title screen?', CREAM);
       this.t(160, 74, 'Unsaved progress since the last autosave is lost.');
@@ -308,8 +379,18 @@ export class TitleScene extends Phaser.Scene {
     audio.play('music', 'title');
     audio.play('amb', 'rain_street');
     this.buildMenu();
-    this.add.bitmapText(316, 176, 'nl', 'v1.0').setOrigin(1, 1).setTint(0x4a4038);
+    // which build this is (the web build stamps its date and fingerprint into the page)
+    const stamp = document.querySelector('meta[name="nl-version"]')?.getAttribute('content');
+    this.add.bitmapText(316, 176, 'nl', stamp ? `v1.0 - ${stamp}` : 'v1.0').setOrigin(1, 1).setTint(0x4a4038);
+    this.onTitle(true);
   }
+  /** Tell the page whether the title is showing, so an update can reload without interrupting a game. */
+  onTitle(on: boolean) {
+    const w = window as unknown as { NL_onTitle?: boolean; NL_reloadOnTitle?: boolean };
+    w.NL_onTitle = on;
+    if (on && w.NL_reloadOnTitle) location.reload();
+  }
+
   buildMenu() {
     for (const o of this.menu) o.destroy();
     this.menu = [];
@@ -317,7 +398,10 @@ export class TitleScene extends Phaser.Scene {
     const last = latestSave();
     if (last) items.push(['Continue', () => {
       const st = readSave(last);
-      if (st) fadeAndRun(() => this.launchGame(st));
+      if (st) fadeAndRun(async () => {
+        await this.launchGame(st);
+        (this.scene.get('hud') as unknown as { showRecap(): void }).showRecap();
+      });
     }]);
     items.push(['New game', () => fadeAndRun(() => this.launchGame())]);
     items.push(['Chapters', () => this.openMenu('chapters')]);
@@ -353,6 +437,7 @@ export class TitleScene extends Phaser.Scene {
 
   /** Start a new game (no state) or resume a saved one. */
   async launchGame(state?: import('../engine/state').GameState) {
+    this.onTitle(false);
     const sm = this.scene;
     // Scene operations are queued until the next game step: let a running game shut down
     // completely before the new one is built, or the shutdown would tear the new room down.
@@ -385,11 +470,19 @@ export class TitleScene extends Phaser.Scene {
     }
   }
 
+  /** After loading over a game in progress: ten seconds to change one's mind. */
+  offerUndo(json: string) {
+    (this.scene.get('hud') as unknown as { offerUndo(fn: () => void): void }).offerUndo(() => {
+      fadeAndRun(() => this.launchGame(deserialize(json)));
+    });
+  }
+
   backToTitle() {
     const sm = this.scene;
     for (const k of ['room', 'hud', 'notebook', 'map', 'menu', 'doc', 'closeup', 'card', 'end']) if (sm.isActive(k)) sm.stop(k);
     sm.wake('title');
     sm.bringToTop('title');
+    this.onTitle(true);
     audio.attach(this, this.cache.json.get('audioManifest'));
     audio.play('music', 'title');
     audio.play('amb', 'rain_street');

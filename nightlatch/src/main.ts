@@ -42,7 +42,17 @@ const game = new Phaser.Game({
 ctl.phaser = game;
 applyScaling(game);
 if (isTouch) {
-  game.events.once(Phaser.Core.Events.READY, () => installTouch(game.canvas));
+  // Phaser maps touches through the canvas's box and a scale it only recomputes on refresh()
+  let box = '';
+  const refreshBox = () => {
+    const r = game.canvas.getBoundingClientRect();
+    const k = `${r.left},${r.top},${r.width},${r.height}`;
+    if (k !== box) {
+      box = k;
+      game.scale.refresh();
+    }
+  };
+  game.events.once(Phaser.Core.Events.READY, () => installTouch(game.canvas, refreshBox));
   // phones: go fullscreen and landscape with the first touch
   document.addEventListener('touchend', () => {
     const el = document.documentElement as HTMLElement & { webkitRequestFullscreen?: () => void };
@@ -53,6 +63,20 @@ if (isTouch) {
   }, { once: true });
 }
 window.addEventListener('resize', () => applyScaling(game));
+// fast-forward while Shift is held: lines end at once and walking is ten times as fast
+const ffMarker = document.createElement('div');
+ffMarker.textContent = '>>';
+ffMarker.style.cssText = 'position:fixed;top:6px;right:10px;color:#e8d8a8;font:bold 16px monospace;display:none;z-index:20;pointer-events:none';
+document.body.appendChild(ffMarker);
+const setFastForward = (on: boolean) => {
+  if (ctl.fastForward === on) return;
+  ctl.fastForward = on;
+  ffMarker.style.display = on ? 'block' : 'none';
+  if (on) ctl.presenter?.skip();
+};
+window.addEventListener('keydown', (e) => e.key === 'Shift' && setFastForward(true));
+window.addEventListener('keyup', (e) => e.key === 'Shift' && setFastForward(false));
+window.addEventListener('blur', () => setFastForward(false));
 installTestHooks(game);
 
 // play-time clock
