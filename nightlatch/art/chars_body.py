@@ -116,6 +116,106 @@ def shoe_side(sp: Sprite, ankle, toe_dir, ramp, base, part=None):
     return part
 
 
+def _f(sp, x, y, ramp, idx):
+    """One fine pixel (half a room pixel on double-density figures), shade clamped to the ramp."""
+    from core import RAMPS
+    sp.px(x, y, ramp, max(0, min(idx, len(RAMPS[ramp]) - 1)), kind='idx', fine=True)
+
+
+def _face_front_fine(sp, hx, hy, spec, talk, blink, hs, hr, skin):
+    """A face with half-pixel detail: whites of the eyes, pupils, brows, the shadow of the nose,
+    a mouth with lips, a touch of colour in the cheeks."""
+    brow = hr if hs != 'bald' else skin
+    h = .5   # one fine pixel
+    for sx in (-1, 1):
+        ex, ey = hx + sx * 1.4, hy + .3
+        if blink:
+            _f(sp, ex - h, ey, skin, 2)
+            _f(sp, ex, ey, skin, 2)
+        else:
+            _f(sp, ex - sx * h, ey, 'white', 6)   # the white towards the nose... and the iris outward
+            _f(sp, ex, ey, 'black', 0)
+            _f(sp, ex + sx * h, ey, skin, 3)
+            _f(sp, ex, ey - h, skin, 3)           # the shadow under the eye
+        _f(sp, ex - h, ey + 1.0, brow, 1)
+        _f(sp, ex, ey + 1.1, brow, 1)
+        _f(sp, ex + sx * h, ey + 1.0, brow, 1)
+        _f(sp, hx + sx * 2.0, hy - 1.2, skin, 6)  # cheek light
+        if spec.get('glasses'):
+            for dx in (-h, 0, h):
+                _f(sp, ex + dx, ey + h, 'chrome', 5)
+            _f(sp, ex + sx * 2 * h, ey, 'chrome', 4)
+    # nose: a lit ridge and a shadow under it
+    _f(sp, hx, hy - .3, skin, 6)
+    _f(sp, hx + h, hy - .8, skin, 3)
+    _f(sp, hx - h, hy - 1.4, skin, 2)
+    _f(sp, hx + h, hy - 1.4, skin, 2)
+    my = hy - 2.4
+    lip = ('neonred', 3) if spec.get('lipstick') else (skin, 2)
+    if talk == 1:
+        for dx in (-h, 0, h):
+            _f(sp, hx + dx, my, 'blood', 1)
+        _f(sp, hx, my - h, 'blood', 1)
+    elif talk == 2:
+        for dx in (-2 * h, -h, 0, h, 2 * h):
+            _f(sp, hx + dx, my, 'blood', 1)
+    else:
+        for dx in (-2 * h, -h, 0, h, 2 * h):
+            _f(sp, hx + dx, my, lip[0], lip[1])
+        _f(sp, hx, my - h, skin, 3)               # the lower lip catches a little shadow
+    if spec.get('moustache'):
+        for dx in (-3 * h, -2 * h, -h, 0, h, 2 * h, 3 * h):
+            _f(sp, hx + dx, my + .9, hr, 0)
+    if spec.get('beard'):
+        bp = sp.new_part(spec.get('beard'), 1)
+        sp.poly(bp, [(hx - 3.0, hy - .8), (hx + 3.0, hy - .8), (hx + 1.8, hy - 4.6), (hx - 1.8, hy - 4.6)], base=.6)
+        _f(sp, hx, my, 'blood', 1 if talk else 2)
+
+
+def _face_side_fine(sp, hx, hy, spec, talk, blink, hs, hr, skin):
+    """The face in profile with half-pixel detail: eye and brow, nostril, mouth, ear."""
+    brow = hr if hs != 'bald' else skin
+    h = .5
+    ex, ey = hx + 1.6, hy + .4
+    if blink:
+        _f(sp, ex, ey, skin, 2)
+        _f(sp, ex + h, ey, skin, 2)
+    else:
+        _f(sp, ex, ey, 'black', 0)
+        _f(sp, ex + h, ey, 'white', 6)
+        _f(sp, ex, ey - h, skin, 3)
+    _f(sp, ex - h, ey + 1.1, brow, 1)
+    _f(sp, ex, ey + 1.1, brow, 1)
+    _f(sp, ex + h, ey + 1.0, brow, 1)
+    _f(sp, ex - h, ey - 1.6, skin, 6)             # cheekbone light
+    _f(sp, hx + 3.8, hy - .9, skin, 2)            # nostril
+    if hs not in ('veil',):
+        _f(sp, hx - .3, hy - .2, skin, 2)         # the hollow of the ear
+    my = hy - 2.3
+    if talk == 1:
+        _f(sp, hx + 2.8, my, 'blood', 1)
+        _f(sp, hx + 2.8, my - h, 'blood', 1)
+        _f(sp, hx + 2.3, my, 'blood', 1)
+    elif talk == 2:
+        for dx in (-h, 0, h):
+            _f(sp, hx + 2.5 + dx, my, 'blood', 1)
+    else:
+        lip = ('neonred', 3) if spec.get('lipstick') else (skin, 2)
+        _f(sp, hx + 3.0, my, lip[0], lip[1])
+        _f(sp, hx + 2.5, my, lip[0], lip[1])
+    if spec.get('moustache'):
+        for dx in (-h, 0, h, 2 * h):
+            _f(sp, hx + 2.4 + dx, my + .9, hr, 0)
+    if spec.get('glasses'):
+        _f(sp, ex, ey + h, 'chrome', 6)
+        _f(sp, ex + h, ey + h, 'chrome', 5)
+        _f(sp, ex - h, ey + h, 'chrome', 4)
+        _f(sp, ex - 2 * h, ey + h, 'chrome', 3)
+    if spec.get('beard'):
+        bp = sp.new_part(spec.get('beard'), 1)
+        sp.poly(bp, [(hx - .6, hy - 1.0), (hx + 3.4, hy - 1.2), (hx + 3.0, hy - 4.2), (hx + .4, hy - 4.4)], base=.6)
+
+
 def head_side(sp: Sprite, P, spec, facing=1, talk=0, blink=False):
     skin = spec.get('skin', 'skin')
     hx, hy = P['head']
@@ -153,6 +253,9 @@ def head_side(sp: Sprite, P, spec, facing=1, talk=0, blink=False):
     if hs not in ('veil',):
         ear = sp.new_part(skin, 0)
         sp.ellipse(ear, (hx - .3, hy - .2), .9, 1.3, base=.48)
+    if sp.k >= 1.5:
+        _face_side_fine(sp, hx, hy, spec, talk, blink, hs, hr, skin)
+        return
     # face pixels
     ex, ey = hx + 1.6, hy + .4
     if blink:
@@ -231,6 +334,9 @@ def head_front(sp: Sprite, P, spec, talk=0, blink=False, back=False):
                 sp.poly(wp, [(hx - 3.2, hy + 2.6), (hx + 3.2, hy + 2.6), (hx + 3.0, hy + 1.8), (hx - 3.0, hy + 1.8)],
                         base=.8)
     if back:
+        return
+    if sp.k >= 1.5:
+        _face_front_fine(sp, hx, hy, spec, talk, blink, hs, hr, skin)
         return
     # face pixels
     for sx in (-1, 1):

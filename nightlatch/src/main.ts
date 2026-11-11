@@ -8,6 +8,7 @@ import { NotebookScene } from './game/notebook';
 import { CardScene, CloseupScene, DocScene } from './game/overlays';
 import { RoomScene } from './game/RoomScene';
 import { applyScaling } from './game/scaling';
+import { fitCamera, RES } from './game/res';
 import { loadSettings } from './game/services';
 import { installTestHooks } from './game/testhooks';
 import { t } from './i18n';
@@ -25,14 +26,14 @@ textProto.setText = function (this: unknown, v: string | string[]) {
 const game = new Phaser.Game({
   type: Phaser.AUTO,
   parent: 'game',
-  width: 320,
-  height: 180,
+  width: 320 * RES,
+  height: 180 * RES,
   pixelArt: true,
   roundPixels: true,
   antialias: false,
   backgroundColor: '#000000',
   disableContextMenu: true,
-  scale: { mode: Phaser.Scale.NONE, zoom: 4 },
+  scale: { mode: Phaser.Scale.NONE, zoom: 2 },
   audio: { disableWebAudio: false },
   input: { mouse: { preventDefaultWheel: true }, touch: !isTouch }, // touches arrive as mouse events (touch.ts)
   fps: { target: 60 },
@@ -41,6 +42,13 @@ const game = new Phaser.Game({
 });
 
 ctl.phaser = game;
+// every scene but the room keeps the 320 x 180 layout through its camera (the room sets its own)
+game.events.once(Phaser.Core.Events.READY, () => {
+  for (const s of game.scene.scenes) {
+    if (s.sys.settings.key === 'room') continue;
+    s.events.on(Phaser.Scenes.Events.CREATE, () => fitCamera(s));
+  }
+});
 applyScaling(game);
 if (isTouch) {
   // Phaser maps touches through the canvas's box and a scale it only recomputes on refresh()

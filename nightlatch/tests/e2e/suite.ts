@@ -69,7 +69,8 @@ export const CASES: { name: string; body: Body }[] = [
         const c = document.querySelector('canvas')!;
         return { w: c.width, h: c.height, css: getComputedStyle(c).imageRendering };
       });
-      check('canvas renders at native 320x180', canvas.w === 320 && canvas.h === 180, JSON.stringify(canvas));
+      // rooms keep a 320x180 pixel grid; the canvas is twice that so figures can carry double-density detail
+      check('canvas renders at 640x360 (320x180 grid at double density)', canvas.w === 640 && canvas.h === 360, JSON.stringify(canvas));
       check('nearest-neighbour scaling (image-rendering: pixelated)', /pixelated|crisp/.test(canvas.css), canvas.css);
       await clickButton(page, 'title', 'Credits');
       await sleep(page, 600);

@@ -1,3 +1,4 @@
+import { RES } from './res';
 import { isRotated, isTouch } from './touch';
 import type Phaser from 'phaser';
 import { settings } from './services';
@@ -18,7 +19,7 @@ export function applyScaling(game: Phaser.Game) {
   const fit = Math.min(w / NATIVE_W, h / NATIVE_H);
   // touch screens are small: fill them, even without whole-number pixels
   const zoom = settings.pixelPerfect && !isTouch ? Math.max(1, Math.floor(fit)) : Math.max(1, fit);
-  game.scale.setZoom(zoom);
+  game.scale.setZoom(zoom / RES);
   game.scale.refresh();
 }
 

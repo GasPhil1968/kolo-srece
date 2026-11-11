@@ -103,10 +103,10 @@ export class HudScene extends Phaser.Scene {
     arrow('arrow_r', 260, 1);
     this.cursorItem = this.add.image(0, 0, 'items', 'none').setVisible(false).setDepth(5000).setAlpha(0.95);
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
-      this.cursorItem.setPosition(Math.round(p.x) + 6, Math.round(p.y) + 6);
+      this.cursorItem.setPosition(Math.round(p.worldX) + 6, Math.round(p.worldY) + 6);
     });
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
-      if (p.rightButtonDown() && this.pickResolve && p.y >= PANEL_Y) {
+      if (p.rightButtonDown() && this.pickResolve && p.worldY >= PANEL_Y) {
         const r = this.pickResolve;
         this.pickResolve = null;
         r(null);
@@ -250,7 +250,7 @@ export class HudScene extends Phaser.Scene {
       if (!id || !this.textures.exists('portrait:' + id)) return;
       const frame = this.add.rectangle(x - 1, 7, 58, 58).setOrigin(0, 0).setDepth(4500)
         .setFillStyle(0x06060a, 1).setStrokeStyle(2, 0xb9a77a);
-      const img = this.add.image(x, 8, 'portrait:' + id).setOrigin(0, 0).setDepth(4501);
+      const img = this.add.image(x, 8, 'portrait:' + id).setOrigin(0, 0).setDisplaySize(56, 56).setDepth(4501);
       this.faceObjs.push(frame, img);
       this.faces.push({ id, img, nextBlink: this.time.now + 1500 + Math.random() * 3000 });
     };

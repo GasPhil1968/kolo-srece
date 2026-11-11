@@ -98,7 +98,7 @@ export class DocScene extends Overlay {
   create() {
     const doc = ctl.game.content.docs[this.docId];
     this.backdrop(0.7).on('pointerdown', (p: Phaser.Input.Pointer) => {
-      if (p.rightButtonDown() || !this.paper.getBounds().contains(p.x, p.y)) this.close();
+      if (p.rightButtonDown() || !this.paper.getBounds().contains(p.worldX, p.worldY)) this.close();
     });
     audio.sfx(doc?.style === 'photo' ? 'page_turn' : 'paper_rustle');
     const style = doc?.style ?? 'paper';

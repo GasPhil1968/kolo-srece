@@ -5,6 +5,7 @@ import { newState, type GameState } from '../engine/state';
 import { CONTENT } from '../content';
 import { RuntimePresenter } from './presenter';
 import { markChapterPlayed, updateSaveMeta, writeSave } from './services';
+import { RES } from './res';
 import { isTouch } from './touch';
 
 export const ctl = {
@@ -45,7 +46,7 @@ export const ctl = {
     const r = this.phaser?.renderer as unknown as { snapshotArea?(x: number, y: number, w: number, h: number, cb: (img: unknown) => void): void };
     if (!r?.snapshotArea) return;
     try {
-      r.snapshotArea(0, 0, 320, 144, (img) => {
+      r.snapshotArea(0, 0, 320 * RES, 144 * RES, (img) => {
         if (!(img instanceof HTMLImageElement)) return;
         const c = document.createElement('canvas');
         c.width = 80;

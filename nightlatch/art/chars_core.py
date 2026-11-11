@@ -144,10 +144,11 @@ class Sprite:
         self._write(part, mask, lum.astype(np.float32), (x0, y0, x1, y1))
 
     # ---- final-res pixel overlay ----------------------------------------------------------
-    def px(self, x, y, ramp, idx_or_lum, kind='lum'):
-        """Queue a final-resolution pixel (x right, y up, relative to origin)."""
+    def px(self, x, y, ramp, idx_or_lum, kind='lum', fine=False):
+        """Queue a final-resolution pixel (x right, y up, relative to origin). At large scales a
+        pixel grows into a block (eyes stay readable) unless it is `fine` (seams, folds)."""
         X, Y = self.T(x, y)
-        self.overlay.append((X / SS, Y / SS, ramp, idx_or_lum, kind))
+        self.overlay.append((X / SS, Y / SS, ramp, idx_or_lum, kind, fine))
 
     # ---- downsample + outline -------------------------------------------------------------
     def render(self, outline_color=None) -> np.ndarray:
@@ -215,17 +216,18 @@ class Sprite:
                 out[mk, 3] = 255
         # overlay pixels (faces, buttons, highlights)
         blk = int(round(self.k)) if self.k >= 1.5 else 1
-        for (fx, fy, ramp, v, kind) in self.overlay:
-            X0 = int(round(fx - (blk - 1) / 2))
-            Y0 = int(round(fy - (blk - 1) / 2))
+        for (fx, fy, ramp, v, kind, fine) in self.overlay:
+            b = 1 if fine else blk
+            X0 = int(round(fx - (b - 1) / 2))
+            Y0 = int(round(fy - (b - 1) / 2))
             if kind == 'rgb':
                 col = v
             else:
                 cols = RAMPS[ramp]
                 idx = v if kind == 'idx' else int(np.clip(round(v * (len(cols) - 1)), 0, len(cols) - 1))
                 col = cols[idx]
-            for Y in range(Y0, Y0 + blk):
-                for X in range(X0, X0 + blk):
+            for Y in range(Y0, Y0 + b):
+                for X in range(X0, X0 + b):
                     if 0 <= X < w and 0 <= Y < h:
                         out[Y, X, :3] = col
                         out[Y, X, 3] = 255

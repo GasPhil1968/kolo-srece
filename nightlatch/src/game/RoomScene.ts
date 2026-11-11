@@ -7,6 +7,7 @@ import { ctl } from './controller';
 import type { Pt, RoomMeta } from './meta';
 import { NavMesh } from './path';
 import { audio, settings } from './services';
+import { RES } from './res';
 
 export const VIEW_H = 144;
 export const roomMetas: Record<string, RoomMeta> = {};
@@ -79,7 +80,8 @@ export class RoomScene extends Phaser.Scene {
   }
 
   create() {
-    this.cameras.main.setViewport(0, 0, 320, VIEW_H);
+    this.cameras.main.setViewport(0, 0, 320 * RES, VIEW_H * RES);
+    this.cameras.main.setZoom(RES);
     this.cameras.main.setRoundPixels(true);
     this.input.mouse?.disableContextMenu();
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => this.onMove(p));
@@ -352,7 +354,7 @@ export class RoomScene extends Phaser.Scene {
   }
 
   private onMove(p: Phaser.Input.Pointer) {
-    if (!this.meta || p.y >= VIEW_H || ctl.inputLocked) {
+    if (!this.meta || p.y >= VIEW_H * RES || ctl.inputLocked) {
       if (this.hover) {
         this.hover = null;
         this.events.emit('hover', null);
@@ -368,7 +370,7 @@ export class RoomScene extends Phaser.Scene {
 
   private onDown(p: Phaser.Input.Pointer) {
     if (!this.meta || ctl.inputLocked) return;
-    if (p.y >= VIEW_H) return;
+    if (p.y >= VIEW_H * RES) return;
     if (ctl.game.busy || ctl.game.inDialog) {
       ctl.presenter.skip();
       return;

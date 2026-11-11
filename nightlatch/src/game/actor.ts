@@ -3,6 +3,7 @@ import { ctl } from './controller';
 import type { Dir } from '../engine/types';
 import type { CharMeta, Pt } from './meta';
 import { audio } from './services';
+import { RES } from './res';
 
 export const charMetas: Record<string, CharMeta> = {};
 
@@ -52,6 +53,7 @@ export class Actor {
     this.dir = dir;
     this.sprite = scene.add.sprite(x, y, `char:${id}@100`, 0);
     this.sprite.setOrigin(meta.anchorX / meta.frameW, meta.anchorY / meta.frameH);
+    this.sprite.setScale(meta.frameW > 64 ? 1 / RES : 1); // sheets drawn at double density
     ensureAnims(scene, meta);
     this.blinkAt = scene.time.now + 2000 + Math.random() * 3000;
     this.sprite.on(Phaser.Animations.Events.ANIMATION_UPDATE, (_a: unknown, frame: Phaser.Animations.AnimationFrame) => {

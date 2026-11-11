@@ -51,7 +51,7 @@ export function installTestHooks(game: Phaser.Game) {
       let bestD = Infinity;
       for (let y = Math.ceil(y0); y <= y1; y += 1) {
         for (let x = Math.ceil(x0); x <= x1; x += 1) {
-          const sx = x - cam.scrollX;
+          const sx = x - cam.worldView.x;
           if (sx < 2 || sx > 317 || y < 2 || y > 141) continue;
           const hit = r.pick(x, y);
           if (hit?.target.kind !== 'hs' || hit.target.id !== id) continue;
@@ -71,14 +71,14 @@ export function installTestHooks(game: Phaser.Game) {
       const xs = hm.poly.map((p) => p[0]);
       return (Math.min(...xs) + Math.max(...xs)) / 2;
     },
-    cameraX: () => room().cameras.main.scrollX,
+    cameraX: () => room().cameras.main.worldView.x,
     /** A floor point (game coords) at roughly this screen x with no hotspot or NPC under it. */
     floorPoint: (sx: number) => {
       const r = room();
       const cam = r.cameras.main;
       for (const dx of [0, -6, 6, -12, 12, -20, 20, -30, 30]) {
         for (let y = 140; y > 60; y -= 2) {
-          const wx = cam.scrollX + sx + dx;
+          const wx = cam.worldView.x + sx + dx;
           if (!r.nav.inside(wx, y) || r.pick(wx, y)) continue;
           return [sx + dx, y];
         }
@@ -95,13 +95,13 @@ export function installTestHooks(game: Phaser.Game) {
         const x = Math.round(a.x);
         const y = Math.round(a.y - dy * a.size);
         const hit = r.pick(x, y);
-        if (hit?.target.kind === 'npc' && hit.target.id === id) return [x - cam.scrollX, y];
+        if (hit?.target.kind === 'npc' && hit.target.id === id) return [x - cam.worldView.x, y];
       }
       return null;
     },
     playerPos: () => {
       const p = room().player;
-      return p ? [p.x - room().cameras.main.scrollX, p.y] : null;
+      return p ? [p.x - room().cameras.main.worldView.x, p.y] : null;
     },
     /** HUD state: dialogue options, evidence picking, inventory slots, sentence line. */
     ui: () => {

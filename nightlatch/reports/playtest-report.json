@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-11T21:49:39.968Z",
+ "generated": "2026-11-11T22:57:00.813Z",
  "seeds": [
   1
  ],
@@ -48,7 +48,7 @@
    "failed": 0,
    "avgActions": 800,
    "avgSteps": 127,
-   "avgMs": 37
+   "avgMs": 36
   },
   {
    "id": "saveload",
@@ -58,7 +58,7 @@
    "failed": 0,
    "avgActions": 429,
    "avgSteps": 343,
-   "avgMs": 25
+   "avgMs": 24
   },
   {
    "id": "chapter",
@@ -68,7 +68,7 @@
    "failed": 0,
    "avgActions": 159,
    "avgSteps": 13,
-   "avgMs": 9
+   "avgMs": 8
   },
   {
    "id": "chaos",
@@ -88,7 +88,7 @@
    "failed": 0,
    "avgActions": 1570,
    "avgSteps": 136,
-   "avgMs": 23
+   "avgMs": 21
   },
   {
    "id": "outoforder",
@@ -98,7 +98,7 @@
    "failed": 0,
    "avgActions": 374,
    "avgSteps": 136,
-   "avgMs": 9
+   "avgMs": 8
   }
  ],
  "perSeed": [

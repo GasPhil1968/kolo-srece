@@ -10,7 +10,7 @@ from chars_body import head_side, head_front, hat, shoe_side
 
 def _px(sp, x, y, ramp, idx):
     """One pixel of a fixed shade; the shade is clamped to the ramp (some ramps are short)."""
-    sp.px(x, y, ramp, min(idx, len(RAMPS[ramp]) - 1), kind='idx')
+    sp.px(x, y, ramp, min(idx, len(RAMPS[ramp]) - 1), kind='idx', fine=True)
 
 
 def _line(sp, a, b, ramp, idx):

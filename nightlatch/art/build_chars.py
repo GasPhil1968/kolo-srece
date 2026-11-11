@@ -2,7 +2,7 @@
 
 Output per character:  public/assets/chars/<id>@<k>.png  (grid of 64x64 frames, 16 columns)
                        public/assets/chars/<id>.json     (animations -> frame indices, fps, loop)
-The feet anchor of every frame is at (32, 62).
+The feet anchor of every frame is at (64, 124): frames are drawn at twice the room's pixel density.
 """
 from __future__ import annotations
 
@@ -21,8 +21,11 @@ from chars_body import side_pose, front_pose, BASE
 from chars_draw import draw_side, draw_front
 from characters import CHARACTERS
 
-FW, FH = 64, 64
-OX, OY = 32, 62
+# Figures are drawn at twice the pixel density of the rooms: the game renders at 640 x 360
+# and shows them at half scale, so they keep their size but get four times the pixels.
+RES = 2
+FW, FH = 64 * RES, 64 * RES
+OX, OY = 32 * RES, 62 * RES
 COLS = 16
 SIZES = (1.0, 0.86, 0.74)
 
@@ -132,7 +135,7 @@ BREATH = [(0, 0), (.35, .15), (.7, .3), (.7, .3), (.35, .15), (0, 0)]
 
 # --------------------------------------------------------------------- frame drawing ----
 def frame(spec, k, view, P, talk=0, blink=False, rot=0.0, pivot=(0, 0), shift=(0, 0)):
-    sp = Sprite(FW, FH, OX, OY, k=k)
+    sp = Sprite(FW, FH, OX, OY, k=k * RES)
     sp.rot_deg = rot
     sp.pivot = pivot
     sp.shift = shift
