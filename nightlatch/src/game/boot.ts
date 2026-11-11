@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { charMetas } from './actor';
 import { asset } from './assets';
+import { IntroScene } from './intro';
 import type { AssetManifest, CharMeta, RoomMeta } from './meta';
 import { roomMetas } from './RoomScene';
 import type { AudioManifest } from './services';
@@ -30,6 +31,8 @@ export class BootScene extends Phaser.Scene {
     this.load.image('map', asset('assets/ui/map.png'));
     this.load.image('title', asset('assets/ui/title.png'));
     this.load.image('title_logo', asset('assets/ui/title_logo.png'));
+    // pictures for the intro and the title screens
+    for (const r of ['pier9', 'lantern', 'cemetery', 'hotel_room']) this.load.image('tbg:' + r, asset(`assets/rooms/${r}/bg.png`));
     this.load.spritesheet('chapter_cards', asset('assets/ui/chapter_cards.png'), { frameWidth: 64, frameHeight: 29 });
     this.load.text('credits', asset('assets/credits.txt'));
     for (const r of man.rooms) this.load.json('room:' + r, asset(`assets/rooms/${r}/room.json`));
@@ -62,7 +65,7 @@ export class BootScene extends Phaser.Scene {
     }
     this.load.once('complete', () => {
       document.getElementById('boot')?.remove();
-      this.scene.start('title');
+      this.scene.start(IntroScene.wanted() ? 'intro' : 'title');
     });
     this.load.start();
   }

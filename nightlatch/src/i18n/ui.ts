@@ -3,7 +3,11 @@
 export const UI_DE: Record<string, string> = {
   // title & pause menu
   'Continue': 'Weiterspielen', 'New game': 'Neues Spiel', 'Load game': 'Spiel laden', 'Save game': 'Spiel speichern',
-  'Settings': 'Einstellungen', 'Chapters': 'Kapitel', 'Two-finger tap: show hotspots': 'Mit zwei Fingern tippen: Stellen zeigen', 'Hold Shift: fast-forward': 'Umschalt halten: Schnellvorlauf', 'Wait for a tap': 'Weiter erst nach Tippen', 'Less motion': 'Weniger Bewegung', 'Undo load': 'Laden rückgängig', 'Last time: {0}': 'Zuletzt: {0}', 'Name': 'Name',
+  'Settings': 'Einstellungen', 'Chapters': 'Kapitel', 'Intro': 'Intro', 'Tap to skip': 'Tippen zum Überspringen',
+  'BRACKWATER, OCTOBER 1951': 'BRACKWATER, OKTOBER 1951',
+  'A harbor city that keeps its secrets on ice.': 'Eine Hafenstadt, die ihre Geheimnisse auf Eis legt.',
+  'Thomas Rook keeps waking up in locked rooms.': 'Thomas Rook wacht immer wieder in verschlossenen Räumen auf.',
+  'The keys are always on his side of the door.': 'Der Schlüssel liegt immer auf seiner Seite der Tür.', 'Two-finger tap: show hotspots': 'Mit zwei Fingern tippen: Stellen zeigen', 'Hold Shift: fast-forward': 'Umschalt halten: Schnellvorlauf', 'Wait for a tap': 'Weiter erst nach Tippen', 'Less motion': 'Weniger Bewegung', 'Undo load': 'Laden rückgängig', 'Last time: {0}': 'Zuletzt: {0}', 'Name': 'Name',
   'A name for this save (up to 24 letters):': 'Ein Name für diesen Spielstand (bis 24 Zeichen):', 'Export backup...': 'Sicherung exportieren …',
   'Import backup...': 'Sicherung importieren …', 'Export...': 'Sichern …', 'Import...': 'Einspielen …', 'Backup saved as a file.': 'Sicherung als Datei gespeichert.',
   'Replace all saves and settings in this browser with the backup?': 'Alle Spielstände und Einstellungen in diesem Browser durch die Sicherung ersetzen?',

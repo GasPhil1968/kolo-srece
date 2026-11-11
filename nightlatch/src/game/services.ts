@@ -16,11 +16,13 @@ export interface Settings {
   tapToContinue: boolean;
   /** No rain, flashes or shaking. */
   reduceMotion: boolean;
+  /** Play the animated intro at start. */
+  intro: boolean;
 }
 
 const SETTINGS_KEY = 'nightlatch.settings';
 const browserLang: Lang = typeof navigator !== 'undefined' && /^de\b/i.test(navigator.language || '') ? 'de' : 'en';
-export const settings: Settings = { music: 0.7, sfx: 0.8, textSpeed: 1, pixelPerfect: true, hints: true, lang: browserLang, tapToContinue: false, reduceMotion: false };
+export const settings: Settings = { music: 0.7, sfx: 0.8, textSpeed: 1, pixelPerfect: true, hints: true, lang: browserLang, tapToContinue: false, reduceMotion: false, intro: true };
 
 export function loadSettings() {
   try {

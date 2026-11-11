@@ -7,6 +7,7 @@ import { ctl } from './controller';
 import { Overlay } from './overlays';
 import { audio, chaptersPlayed, deleteSave, exportBackup, readBackup, restoreBackup, updateSaveMeta, latestSave, readSave, readSaveMeta, saveSettings, settings, SLOTS } from './services';
 import { applyScaling, fadeAndRun } from './scaling';
+import { fog, flicker, glints, lightning, rain, shade, smoke, type Effect } from './ambience';
 
 const CREAM = 0xe8d8a8;
 const DIM = 0x9a8a6a;
@@ -335,12 +336,14 @@ export class MenuScene extends Overlay {
       row(114, 'Wait for a tap', settings.tapToContinue ? 'On' : 'Off', flipTap, flipTap);
       const flipMotion = () => (settings.reduceMotion = !settings.reduceMotion);
       row(126, 'Less motion', settings.reduceMotion ? 'On' : 'Off', flipMotion, flipMotion);
-      this.b(160, 142, this.scale.isFullscreen ? 'Leave fullscreen' : 'Fullscreen', () => {
+      const flipIntro = () => (settings.intro = !settings.intro);
+      row(138, 'Intro', settings.intro ? 'On' : 'Off', flipIntro, flipIntro);
+      this.b(160, 152, this.scale.isFullscreen ? 'Leave fullscreen' : 'Fullscreen', () => {
         if (this.scale.isFullscreen) this.scale.stopFullscreen();
         else this.scale.startFullscreen();
         this.time.delayedCall(300, () => this.page('settings'));
       });
-      this.b(160, 160, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
+      this.b(160, 166, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
     } else if (name === 'quit') {
       this.t(160, 60, 'Return to the title screen?', CREAM);
       this.t(160, 74, 'Unsaved progress since the last autosave is lost.');
@@ -365,23 +368,72 @@ function truncate(s: string, n: number) {
 // ---------------------------------------------------------------------- title ----
 export class TitleScene extends Phaser.Scene {
   private menu: Phaser.GameObjects.GameObject[] = [];
-  private rain!: Phaser.GameObjects.Graphics;
-  private drops: { x: number; y: number; v: number }[] = [];
+  private effects: Effect[] = [];
+  /** Which of the four title screens this session shows (a different one at every start). */
+  private static variant = -1;
   constructor() {
     super('title');
   }
+
+  static pickVariant(): number {
+    if (TitleScene.variant < 0) {
+      let i = 0;
+      try {
+        i = (Number(localStorage.getItem('nightlatch.title') ?? '-1') + 1) % 4;
+        localStorage.setItem('nightlatch.title', String(i));
+      } catch {
+        i = Math.floor(Math.random() * 4);
+      }
+      TitleScene.variant = i;
+    }
+    return TitleScene.variant;
+  }
+
+  /**
+   * The four title screens: the street outside the Sorrento in the rain, Pier 9 at night with
+   * fog over the water, the Blue Lantern full of smoke under its neon, and St. Brigid's in a
+   * thunderstorm. The wide pictures pan slowly from side to side.
+   */
+  private background(v: number) {
+    const pan = (key: string, w: number) => {
+      const img = this.add.image(0, 18, key).setOrigin(0, 0);
+      if (!settings.reduceMotion && w > 320) {
+        this.tweens.add({ targets: img, x: 320 - w, duration: (w - 320) * 320, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      }
+      return img;
+    };
+    if (v === 1) {
+      pan('tbg:pier9', 480);
+      this.effects.push(glints(this, 0, 320, 86, 110), fog(this, 70, 150, 1.2), rain(this, 60, 5, 0.3));
+      shade(this, 92);
+    } else if (v === 2) {
+      pan('tbg:lantern', 400);
+      this.effects.push(smoke(this, [[70, 118], [150, 112], [232, 116], [290, 120]]), flicker(this, 0xff4f8b, 0.07));
+      shade(this, 92);
+    } else if (v === 3) {
+      const img = this.add.image(160, 90, 'tbg:cemetery').setScale(1.25);
+      // night and storm over the daylight picture
+      this.add.rectangle(0, 0, 320, 180, 0x0a1428, 0.5).setOrigin(0, 0).setDepth(1);
+      if (!settings.reduceMotion) this.tweens.add({ targets: img, x: 140, duration: 24000, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
+      this.effects.push(fog(this, 100, 176, 1.8), rain(this, 90, 5, 0.35), lightning(this));
+      shade(this, 100);
+    } else {
+      this.add.image(0, 0, 'title').setOrigin(0, 0);
+      this.effects.push(rain(this, 120, 5, 0.4));
+    }
+  }
+
   create() {
-    this.add.image(0, 0, 'title').setOrigin(0, 0);
-    if (this.textures.exists('title_logo')) this.add.image(160, 40, 'title_logo');
-    this.rain = this.add.graphics();
-    for (let i = 0; i < 120; i++) this.drops.push({ x: Math.random() * 340, y: Math.random() * 180, v: 150 + Math.random() * 120 });
+    this.effects = [];
+    this.background(TitleScene.pickVariant());
+    if (this.textures.exists('title_logo')) this.add.image(160, 40, 'title_logo').setDepth(20);
     audio.attach(this, this.cache.json.get('audioManifest'));
     audio.play('music', 'title');
     audio.play('amb', 'rain_street');
     this.buildMenu();
     // which build this is (the web build stamps its date and fingerprint into the page)
     const stamp = document.querySelector('meta[name="nl-version"]')?.getAttribute('content');
-    this.add.bitmapText(316, 176, 'nl', stamp ? `v1.0 - ${stamp}` : 'v1.0').setOrigin(1, 1).setTint(0x4a4038);
+    this.add.bitmapText(316, 176, 'nl', stamp ? `v1.0 - ${stamp}` : 'v1.0').setOrigin(1, 1).setTint(0x6a5a48).setDepth(30);
     this.onTitle(true);
   }
   /** Tell the page whether the title is showing, so an update can reload without interrupting a game. */
@@ -409,7 +461,7 @@ export class TitleScene extends Phaser.Scene {
     items.push(['Settings', () => this.openMenu('settings')]);
     items.push(['Credits', () => this.showCredits()]);
     items.forEach(([label, fn], i) => {
-      this.menu.push(textButton(this, 160, 100 + i * 13, label, fn));
+      this.menu.push(textButton(this, 160, 100 + i * 13, label, fn).setDepth(30));
     });
   }
   openMenu(page: string) {
@@ -421,18 +473,7 @@ export class TitleScene extends Phaser.Scene {
     this.scene.bringToTop('end');
   }
   update(_t: number, dt: number) {
-    const g = this.rain;
-    g.clear();
-    g.lineStyle(1, 0x8fa6c4, 0.4);
-    for (const d of this.drops) {
-      d.y += (d.v * dt) / 1000;
-      d.x -= (d.v * dt) / 1000 * 0.15;
-      if (d.y > 180) {
-        d.y = -6;
-        d.x = Math.random() * 340;
-      }
-      g.lineBetween(Math.round(d.x), Math.round(d.y), Math.round(d.x - 1), Math.round(d.y + 5));
-    }
+    for (const e of this.effects) e.update(dt);
   }
 
   /** Start a new game (no state) or resume a saved one. */

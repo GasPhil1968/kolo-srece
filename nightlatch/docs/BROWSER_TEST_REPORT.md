@@ -1,6 +1,6 @@
 # Night Latch — Browser test report
 
-Generated 2026-11-11T21:49:15.225Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
+Generated 2026-11-11T22:03:31.899Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
 
 > These are automated browser tests. They use real mouse clicks and key presses on the game canvas; no human played these sessions.
 
