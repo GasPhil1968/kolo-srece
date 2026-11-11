@@ -146,6 +146,13 @@ export function installTestHooks(game: Phaser.Game) {
     },
     /** Phaser's smoothed frame rate. */
     fps: () => game.loop.actualFps,
+    /** Every figure in the room with its position, facing and current animation frame (checks idle life). */
+    actors: () => {
+      const r = room() as unknown as { player: { id: string; x: number; y: number; dir: string; sprite: Phaser.GameObjects.Sprite }; npcs: Map<string, { id: string; x: number; y: number; dir: string; sprite: Phaser.GameObjects.Sprite }> };
+      const one = (a: { id: string; x: number; y: number; dir: string; sprite: Phaser.GameObjects.Sprite }) =>
+        ({ id: a.id, x: Math.round(a.x), y: Math.round(a.y), dir: a.dir, anim: a.sprite.anims.currentAnim?.key ?? '', frame: String(a.sprite.frame.name) });
+      return [one(r.player), ...[...r.npcs.values()].map(one)];
+    },
     /** Where Phaser last saw the pointer, in game pixels (checks the touch mapping). */
     pointer: () => ({ x: game.input.activePointer.x, y: game.input.activePointer.y }),
     /** Frames actually rendered during the next `ms` milliseconds, as frames per second. */

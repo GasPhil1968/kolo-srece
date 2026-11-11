@@ -119,9 +119,16 @@ export class Actor {
     const { key, flip } = this.dirAnim(base);
     this.sprite.setFlipX(flip);
     if (base === 'idle') {
-      this.sprite.anims.stop();
       const a = this.scene.anims.get(key);
-      if (a) this.sprite.setFrame(a.frames[0].frame.name);
+      if (a && a.frames.length > 2) {
+        // standing figures breathe; each starts at its own point in the breath
+        if (this.sprite.anims.currentAnim?.key !== key || !this.sprite.anims.isPlaying) {
+          this.sprite.play({ key, startFrame: Math.floor(Math.random() * a.frames.length) }, true);
+        }
+      } else {
+        this.sprite.anims.stop();
+        if (a) this.sprite.setFrame(a.frames[0].frame.name);
+      }
     } else if (this.sprite.anims.currentAnim?.key !== key || !this.sprite.anims.isPlaying) {
       this.sprite.play(key, true);
     }
@@ -249,8 +256,39 @@ export class Actor {
 
   private heldPose: string | null = null;
 
+  /** Standing about: a small gesture fitting the way the figure faces (look down, check a watch...). */
+  fidget(): Promise<void> {
+    if (this.state !== 'idle') return Promise.resolve();
+    const side = this.dir === 'left' || this.dir === 'right';
+    const options = (side ? ['look_down_side', 'check_watch_side', 'adjust_hat_side'] : this.dir === 'down' ? ['shrug_down'] : [])
+      .filter((n) => this.has(n));
+    if (!options.length) return Promise.resolve();
+    return this.play(options[Math.floor(Math.random() * options.length)]);
+  }
+
+  /** Holding a pose (seated, lying, playing the piano): not to be disturbed by idle life. */
+  get holding() {
+    return this.heldPose !== null;
+  }
+
   tick(now: number) {
     if (this.state === 'idle' && now > this.blinkAt) {
+      // a blink: its own frame where there is one, while the breathing pauses
+      const blink = this.dir === 'down' ? 'blink_down' : this.dir === 'up' ? null : 'blink_side';
+      if (blink && this.has(blink)) {
+        const b = this.scene.anims.get(this.animKey(blink));
+        if (b) {
+          this.sprite.anims.pause();
+          this.sprite.setFrame(b.frames[0].frame.name);
+          this.scene.time.delayedCall(130, () => {
+            if (!this.sprite.scene || !this.sprite.anims || this.state !== 'idle') return; // gone or busy by now
+            this.sprite.anims.resume();
+            this.refreshAnim();
+          });
+        }
+        this.blinkAt = now + 2500 + Math.random() * 4000;
+        return;
+      }
       const { key } = this.dirAnim('idle');
       const a = this.scene.anims.get(key);
       if (a && a.frames.length > 1) {

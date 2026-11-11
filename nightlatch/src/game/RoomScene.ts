@@ -127,6 +127,8 @@ export class RoomScene extends Phaser.Scene {
   }
 
   clearRoom() {
+    this.homes.clear();
+    this.lifeAt.clear();
     this.bg?.destroy();
     this.bg = undefined;
     for (const o of this.objects.values()) o.destroy();
@@ -563,6 +565,63 @@ export class RoomScene extends Phaser.Scene {
     this.player?.tick(time);
     for (const n of this.npcs.values()) n.tick(time);
     this.rain?.update(delta / 1000);
+    if (!ctl.fast) this.life(time);
+  }
+
+  // ------------------------------------------------------------------ idle life ----
+  // While nothing is going on, people do what people do: they glance at Rook when he is near,
+  // look at their watch, shrug, turn about, take a few steps and come back. Rook too, when he
+  // has stood still for a while.
+  private lifeAt = new Map<Actor, number>();
+  private homes = new Map<Actor, { x: number; y: number; dir: Dir }>();
+  private playerStill = 0;
+
+  private life(now: number) {
+    const g = ctl.game;
+    if (!g || g.busy || g.inDialog || ctl.inputLocked || !this.player) {
+      this.lifeAt.clear();
+      this.playerStill = 0;
+      return;
+    }
+    if (this.player.state === 'idle' && this.player.sprite.visible) {
+      if (!this.playerStill) this.playerStill = now + 7000 + Math.random() * 5000;
+      else if (now > this.playerStill) {
+        this.playerStill = now + 9000 + Math.random() * 7000;
+        void this.player.fidget();
+      }
+    } else this.playerStill = 0;
+    for (const a of this.npcs.values()) {
+      if (a.state !== 'idle' || a.holding || !a.sprite.visible) continue;
+      if (!this.homes.has(a)) this.homes.set(a, { x: a.x, y: a.y, dir: a.dir });
+      const at = this.lifeAt.get(a);
+      if (at === undefined) {
+        this.lifeAt.set(a, now + 1500 + Math.random() * 5000);
+        continue;
+      }
+      if (now < at) continue;
+      this.lifeAt.set(a, now + 3500 + Math.random() * 6500);
+      const near = Math.abs(this.player.x - a.x) < 90 && this.player.sprite.visible;
+      const r = Math.random();
+      if (near && r < 0.35) a.faceTowards(this.player.x, this.player.y);
+      else if (r < 0.62) void a.fidget();
+      else if (r < 0.82 && a.has('walk_side')) void this.stroll(a);
+      else a.face((['left', 'right', 'down'] as Dir[])[Math.floor(Math.random() * 3)]);
+    }
+  }
+
+  /** A few steps to one side and, after a moment, back to where they stand. */
+  private async stroll(a: Actor) {
+    const home = this.homes.get(a);
+    if (!home) return;
+    const tx = home.x + (Math.random() < 0.5 ? -1 : 1) * (6 + Math.random() * 10);
+    if (!this.nav.inside(tx, home.y)) return;
+    const speed = a.speed;
+    a.speed = 22;
+    await a.walk([[tx, home.y]]);
+    await new Promise((r) => this.time.delayedCall(1200 + Math.random() * 1800, r));
+    if (a.sprite.scene && a.state === 'idle') await a.walk([[home.x, home.y]]);
+    a.speed = speed;
+    if (a.sprite.scene && a.state === 'idle') a.face(home.dir);
   }
 
   stepAudio() {

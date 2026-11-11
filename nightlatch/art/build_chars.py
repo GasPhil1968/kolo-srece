@@ -111,6 +111,25 @@ def front_reach(spec, up=True):
     return P
 
 
+def breathe(P, b, sway=0.0):
+    """The upper body lifted by b pixels (a breath), the hands drifting by sway."""
+    Q = dict(P)
+    for k in ('shoulder', 'shoulderL', 'shoulderR', 'neck', 'head'):
+        if k in Q:
+            Q[k] = (Q[k][0], Q[k][1] + b)
+    for k in ('elbowA', 'elbowB', 'elbowL', 'elbowR'):
+        if k in Q:
+            Q[k] = (Q[k][0] + sway, Q[k][1] + b * .7)
+    for k in ('wristA', 'wristB', 'wristL', 'wristR'):
+        if k in Q:
+            Q[k] = (Q[k][0] + sway * 1.6, Q[k][1] + b * .4)
+    return Q
+
+
+# one breath in six frames: the chest rises and settles, the hands drift a little
+BREATH = [(0, 0), (.35, .15), (.7, .3), (.7, .3), (.35, .15), (0, 0)]
+
+
 # --------------------------------------------------------------------- frame drawing ----
 def frame(spec, k, view, P, talk=0, blink=False, rot=0.0, pivot=(0, 0), shift=(0, 0)):
     sp = Sprite(FW, FH, OX, OY, k=k)
@@ -138,8 +157,17 @@ def anims_for(spec, k):
         A['walk_up'] = ([frame(spec, k, 'back', front_pose(i / 6, spec, back=True)) for i in range(6)], 8, True)
         A['idle_up'] = ([frame(spec, k, 'back', front_pose(None, spec, back=True))], 1, True)
     if kind != 'sitter':
-        A['idle_side'] = ([frame(spec, k, 'side', idle_s), frame(spec, k, 'side', idle_s, blink=True)], 1, True)
-        A['idle_down'] = ([frame(spec, k, 'front', idle_f), frame(spec, k, 'front', idle_f, blink=True)], 1, True)
+        # standing: a slow breathing loop; blinking is its own frame, shown now and then by the game
+        A['idle_side'] = ([frame(spec, k, 'side', breathe(idle_s, b, s)) for b, s in BREATH], 3, True)
+        A['idle_down'] = ([frame(spec, k, 'front', breathe(idle_f, b, s * .5)) for b, s in BREATH], 3, True)
+        A['blink_side'] = ([frame(spec, k, 'side', idle_s, blink=True)], 1, False)
+        A['blink_down'] = ([frame(spec, k, 'front', idle_f, blink=True)], 1, False)
+        # small things people do while they wait
+        A['look_down_side'] = ([frame(spec, k, 'side', pose_side(spec, head_tilt=t)) for t in (-4, -9, -9, -9, -4)], 4, False)
+        A['shrug_down'] = ([frame(spec, k, 'front', breathe(idle_f, b, s)) for b, s in ((.6, .3), (1.3, .6), (1.3, .6), (.6, .3))],
+                           6, False)
+        watch = [pose_side(spec, aA=25, eA=60), pose_side(spec, aA=40, eA=95, head_tilt=-8)]
+        A['check_watch_side'] = ([frame(spec, k, 'side', watch[i]) for i in (0, 1, 1, 1, 1, 0)], 5, False)
         A['talk_side'] = ([frame(spec, k, 'side', idle_s, talk=t) for t in (1, 2, 0, 2)], 8, True)
         A['talk_down'] = ([frame(spec, k, 'front', idle_f, talk=t) for t in (1, 2, 0, 2)], 8, True)
         gest = pose_side(spec, aA=55, eA=-40)
@@ -165,6 +193,8 @@ def anims_for(spec, k):
             A['idle_down'] = ([frame(spec, k, 'front', P), frame(spec, k, 'front', P, blink=True)], 1, True)
             A['talk_down'] = ([frame(spec, k, 'front', P, talk=t) for t in (1, 2, 0, 2)], 8, True)
     if kind == 'player':
+        hat_up = [pose_side(spec, aA=70, eA=60), pose_side(spec, aA=120, eA=100)]
+        A['adjust_hat_side'] = ([frame(spec, k, 'side', hat_up[i]) for i in (0, 1, 1, 1, 0)], 6, False)
         A['reach_side'] = ([frame(spec, k, 'side', pose_side(spec, aA=45, eA=10)),
                             frame(spec, k, 'side', pose_side(spec, aA=80, eA=5))], 8, False)
         A['pickup_side'] = ([frame(spec, k, 'side', pose_side(spec, lean=18, tA=30, kA=40, tB=-5, kB=30, aA=30, eA=20)),

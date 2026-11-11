@@ -1,6 +1,6 @@
 # Night Latch — Browser test report
 
-Generated 2026-11-11T22:03:31.899Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
+Generated 2026-11-11T22:24:03.054Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
 
 > These are automated browser tests. They use real mouse clicks and key presses on the game canvas; no human played these sessions.
 
@@ -15,7 +15,7 @@ Generated 2026-11-11T22:03:31.899Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 - ✔ credits open from the title menu
 - ✔ credits close on click
 
-## ✅ New game and mouse interaction in Room 9 (13 s)
+## ✅ New game and mouse interaction in Room 9 (14 s)
 
 - ✔ new game starts in Room 9 (hotel_room)
 - ✔ chapter 1
@@ -47,7 +47,7 @@ Generated 2026-11-11T22:03:31.899Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 - ✔ settings survive a page reload
 - ✔ title offers Continue once a save exists
 
-## ✅ Every room renders (screenshots) (52 s)
+## ✅ Every room renders (screenshots) (53 s)
 
 - ✔ room hotel_room loads and renders
 - ✔ room hotel_lobby loads and renders
@@ -86,7 +86,7 @@ Generated 2026-11-11T22:03:31.899Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 }
 ```
 
-## ✅ Complete playthrough with real mouse input (293 s)
+## ✅ Complete playthrough with real mouse input (294 s)
 
 - ✔ the game can be finished from New game to the ending
 - ✔ all eight chapters were played

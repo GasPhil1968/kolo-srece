@@ -4,7 +4,21 @@ from __future__ import annotations
 import math
 
 from chars_core import Sprite
+from core import RAMPS
 from chars_body import head_side, head_front, hat, shoe_side
+
+
+def _px(sp, x, y, ramp, idx):
+    """One pixel of a fixed shade; the shade is clamped to the ramp (some ramps are short)."""
+    sp.px(x, y, ramp, min(idx, len(RAMPS[ramp]) - 1), kind='idx')
+
+
+def _line(sp, a, b, ramp, idx):
+    """A one-pixel line of a fixed shade drawn over the figure (seams, folds, highlights)."""
+    n = max(1, int(round(max(abs(b[0] - a[0]), abs(b[1] - a[1])))))
+    for i in range(n + 1):
+        t = i / n
+        _px(sp, a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, ramp, idx)
 
 
 def _leg_side(sp, hip, knee, ankle, spec, dark, toe_dir=1, bare=False):
@@ -23,6 +37,8 @@ def _leg_side(sp, hip, knee, ankle, spec, dark, toe_dir=1, bare=False):
         sp.capsule(part, hip, knee, 2.0 * w, 1.75 * w, base=base)
         sp.capsule(part, knee, ankle, 1.75 * w, 1.45 * w, base=base)
     shoe_side(sp, ankle, toe_dir, shoes, .45 - dark * .6)
+    if dark == 0.0:
+        _px(sp, ankle[0] + toe_dir * 1.4, ankle[1] - .5, shoes, 5)   # a shine on the toecap
 
 
 def _arm_side(sp, sh, el, wr, spec, dark, sleeve=None):
@@ -32,6 +48,8 @@ def _arm_side(sp, sh, el, wr, spec, dark, sleeve=None):
     w = spec.get('arm_w', 1.0)
     sp.capsule(part, sh, el, 1.75 * w, 1.55 * w, base=base)
     sp.capsule(part, el, wr, 1.55 * w, 1.4 * w, base=base)
+    if dark == 0.0:
+        _px(sp, el[0], el[1], sleeve, 1)   # the crease inside the elbow
     cuff = spec.get('cuff')
     if cuff:
         cp = sp.new_part(cuff, 1)
@@ -80,6 +98,16 @@ def draw_side(sp: Sprite, P, spec, talk=0, blink=False):
                (hip[0] + 3.7 * bw + belly * .6, waist_y), (sh[0] + 3.9 * bw + belly, sh[1] - 7),
                (sh[0] + 3.6 * bw, sh[1] - 2), (nx + 2.2, ny - 1.4)]
     sp.poly(part, pts, base=.52, grad=(.06, -.08))
+    # cloth detail: the light catches the back, the coat falls in folds, the front edge and a pocket
+    _line(sp, (sh[0] - 3.3 * bw, sh[1] - 1.0), (hip[0] - 3.0 * bw, waist_y + .6), top, 5)
+    if style in ('coat', 'dress', 'habit', 'robe', 'labcoat'):
+        _line(sp, (hip[0] - 1.0, waist_y - 1.4), (hb + 1.8, hem_y + 1.4), top, 1)
+        _line(sp, (hip[0] + 1.6, waist_y - 1.4), (hf - 2.0, hem_y + 1.4), top, 2)
+        if style in ('coat', 'labcoat'):
+            _line(sp, (nx + 1.4, ny - 2.6), (hf - .4, hem_y + 1.0), top, 2)
+            _line(sp, (hip[0] + .6, waist_y - 2.8), (hip[0] + 2.6, waist_y - 2.8), top, 1)
+    else:
+        _line(sp, (hip[0] + .4, waist_y - 2.2), (hip[0] + 2.4, waist_y - 2.2), top, 1)
     if spec.get('apron'):
         ap = sp.new_part(spec['apron'], 2)
         sp.poly(ap, [(sh[0] + 1.2, sh[1] - 9), (hip[0] + 3.2 + belly * .6, waist_y), (kx_max + 1.8, 8),
@@ -114,6 +142,8 @@ def _leg_front(sp, hip, knee, ankle, spec, dark, footz):
     else:
         sp.capsule(part, hip, knee, 2.1 * w, 1.85 * w, base=.5 - dark)
         sp.capsule(part, knee, ankle, 1.85 * w, 1.55 * w, base=.48 - dark)
+        if dark == 0.0:
+            _line(sp, (knee[0], knee[1] + 3.0), (ankle[0], ankle[1] + 1.4), pants, 5)   # pressed crease
     shoe = sp.new_part(spec.get('shoes', 'wood'), 2)
     sp.ellipse(shoe, (ankle[0], ankle[1] - 1.1 - footz * .3), 1.7, 1.3 + max(0, -footz) * .25, base=.42 - dark * .5)
 
@@ -170,6 +200,16 @@ def draw_front(sp: Sprite, P, spec, talk=0, blink=False, back=False):
         pts = [(-1.6, shy + 2.0), (-5.6 * bw, shy + .4), (-5.4 * bw, shy - 6), (-ww, waist), (-4.6 * bw, hipy - 1.8),
                (4.6 * bw, hipy - 1.8), (ww, waist), (5.4 * bw, shy - 6), (5.6 * bw, shy + .4), (1.6, shy + 2.0)]
     sp.poly(part, pts, base=.5, grad=(.08, -.06), shade_k=.12)
+    # cloth detail: light on the left shoulder, folds down the skirt of the coat, pockets
+    _line(sp, (-5.1 * bw, shy - .4), (-2.6, shy + 1.4), top, 5)
+    if style in ('coat', 'dress', 'habit', 'robe', 'labcoat'):
+        _line(sp, (-2.6, waist - 1.2), (-hx + 1.2, hem_y + .8), top, 2)
+        _line(sp, (2.6, waist - 1.2), (hx - 1.2, hem_y + .8), top, 1)
+    if not back and style in ('coat', 'jacket', 'labcoat'):
+        low = hem_y + 1.0 if style != 'jacket' else hipy - 1.4
+        _line(sp, (0, shy - 5.8), (0, low), top, 2)
+        _line(sp, (-3.8 * bw, waist - 2.6), (-1.9 * bw, waist - 2.6), top, 1)
+        _line(sp, (1.9 * bw, waist - 2.6), (3.8 * bw, waist - 2.6), top, 1)
     if not back:
         shirt = spec.get('shirt')
         vbot = shy - (5.5 if style != 'dress' else 3.0)
