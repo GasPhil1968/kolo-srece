@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-26T12:48:46.301Z",
+ "generated": "2026-11-11T21:49:39.968Z",
  "seeds": [
   1
  ],
@@ -27,7 +27,7 @@
   "saveLoadFailures": 0,
   "avgActionsToFinish": 628,
   "avgStepsToFinish": 161,
-  "durationSec": 15
+  "durationSec": 11
  },
  "categories": [
   {
@@ -38,7 +38,7 @@
    "failed": 0,
    "avgActions": 180,
    "avgSteps": 145,
-   "avgMs": 6
+   "avgMs": 5
   },
   {
    "id": "explorer",
@@ -48,7 +48,7 @@
    "failed": 0,
    "avgActions": 800,
    "avgSteps": 127,
-   "avgMs": 49
+   "avgMs": 37
   },
   {
    "id": "saveload",
@@ -58,7 +58,7 @@
    "failed": 0,
    "avgActions": 429,
    "avgSteps": 343,
-   "avgMs": 33
+   "avgMs": 25
   },
   {
    "id": "chapter",
@@ -68,7 +68,7 @@
    "failed": 0,
    "avgActions": 159,
    "avgSteps": 13,
-   "avgMs": 11
+   "avgMs": 9
   },
   {
    "id": "chaos",
@@ -78,7 +78,7 @@
    "failed": 0,
    "avgActions": 471,
    "avgSteps": 61,
-   "avgMs": 34
+   "avgMs": 26
   },
   {
    "id": "rapid",
@@ -88,7 +88,7 @@
    "failed": 0,
    "avgActions": 1570,
    "avgSteps": 136,
-   "avgMs": 29
+   "avgMs": 23
   },
   {
    "id": "outoforder",
@@ -98,7 +98,7 @@
    "failed": 0,
    "avgActions": 374,
    "avgSteps": 136,
-   "avgMs": 12
+   "avgMs": 9
   }
  ],
  "perSeed": [

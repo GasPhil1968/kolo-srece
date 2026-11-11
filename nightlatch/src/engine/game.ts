@@ -120,6 +120,21 @@ export class Game {
     return [def.text, ...def.hints];
   }
 
+  /**
+   * A clue is settled once nothing is left to do with it: every deduction it belongs to has been
+   * made (or cannot be made any more) and every timeline it belongs to is complete.
+   */
+  clueSettled(id: string): boolean {
+    for (const [key, d] of Object.entries(this.content.deductions)) {
+      if (this.state.deds.includes(key) || !this.cond(d.when)) continue;
+      if (d.a.includes(id) || d.b.includes(id)) return false;
+    }
+    for (const tl of Object.values(this.content.timelines)) {
+      if (tl.order.includes(id) && this.cond(tl.when) && !this.state.flags['tl_' + tl.id]) return false;
+    }
+    return true;
+  }
+
   /** Where the hint for the first open objective stands: the level the next call shows, of how many. */
   hintInfo(): { level: number; levels: number } | null {
     const open = this.objectives().find((o) => !o.done);

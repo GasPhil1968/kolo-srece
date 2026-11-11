@@ -125,17 +125,19 @@ export class NotebookScene extends Overlay {
       return;
     }
     if (this.tab === 'clues' || this.tab === 'people') {
-      const ids = this.tab === 'clues' ? [...g.state.clues].reverse() : g.state.people;
+      const ids = this.tab === 'clues' ? openFirst(g) : g.state.people;
       const getTitle = (id: string) => (this.tab === 'clues' ? g.content.clues[id]?.title : g.content.people[id]?.name) ?? id;
       const per = 12;
       const start = Math.min(this.listScroll, Math.max(0, ids.length - per));
       this.listScroll = start; // don't let the wheel run past the end of the list
       ids.slice(start, start + per).forEach((id, i) => {
         const sel = id === this.selected;
+        // clues with nothing left to do sit at the end, greyed
+        const settled = this.tab === 'clues' && g.clueSettled(id);
         this.button(L, row(i), (sel ? '> ' : '') + truncate(tr(getTitle(id)), 26), () => {
           this.selected = id;
           this.render();
-        }, sel ? HILITE : INK);
+        }, sel ? HILITE : settled ? INK_SOFT : INK);
       });
       if (!ids.length) this.text(L, T, 'Nothing yet.', INK_SOFT);
       if (ids.length > per) this.text(L, row(12), f('{0}-{1} of {2} (wheel)', start + 1, Math.min(ids.length, start + per), ids.length), INK_SOFT);
@@ -163,7 +165,7 @@ export class NotebookScene extends Overlay {
     }
     if (this.tab === 'deduce') {
       this.text(L, row(0), 'Link two clues that belong together.', INK_SOFT, 118);
-      const ids = [...g.state.clues].reverse();
+      const ids = openFirst(g);
       const per = 11;
       const start = Math.min(this.listScroll, Math.max(0, ids.length - per));
       this.listScroll = start; // don't let the wheel run past the end of the list
@@ -176,7 +178,7 @@ export class NotebookScene extends Overlay {
           else this.deduceB = id;
           audio.sfx('pencil');
           this.render();
-        }, on ? HILITE : INK);
+        }, on ? HILITE : g.clueSettled(id) ? INK_SOFT : INK);
       });
       this.text(R, row(0), 'FIRST', INK_SOFT);
       this.text(R, row(1), this.deduceA ? g.content.clues[this.deduceA].title : '—', INK, 118);
@@ -253,4 +255,10 @@ export class NotebookScene extends Overlay {
 
 function truncate(s: string, n: number) {
   return s.length > n ? s.slice(0, n - 1) + '…' : s;
+}
+
+/** The notebook's clues, newest first, with the ones that still lead somewhere ahead of the settled ones. */
+function openFirst(g: import('../engine/game').Game): string[] {
+  const all = [...g.state.clues].reverse();
+  return [...all.filter((id) => !g.clueSettled(id)), ...all.filter((id) => g.clueSettled(id))];
 }

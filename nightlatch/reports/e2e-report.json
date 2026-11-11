@@ -1,6 +1,6 @@
 {
- "generated": "2026-11-11T21:41:09.226Z",
- "url": "http://127.0.0.1:35563/",
+ "generated": "2026-11-11T21:49:15.225Z",
+ "url": "http://127.0.0.1:33895/",
  "results": [
   {
    "name": "Title screen and menu",
@@ -35,7 +35,7 @@
      "ok": true
     }
    ],
-   "ms": 3823,
+   "ms": 3839,
    "pageErrors": []
   },
   {
@@ -109,7 +109,7 @@
      "info": "{\"ov\":[\"notebook\"],\"busy\":0,\"lock\":1,\"idle\":false}"
     }
    ],
-   "ms": 13418,
+   "ms": 13339,
    "pageErrors": []
   },
   {
@@ -161,7 +161,7 @@
      "info": "Continue | New game | Chapters | Load game | Settings | Credits"
     }
    ],
-   "ms": 13018,
+   "ms": 12929,
    "pageErrors": []
   },
   {
@@ -279,10 +279,10 @@
     {
      "name": "frame rate stays near 60 FPS in every room (software-rendered Chromium)",
      "ok": true,
-     "info": "{\"hotel_room\":60,\"hotel_lobby\":61,\"office\":61,\"nora_flat\":61,\"lantern\":60,\"cold_store\":61,\"pier9\":61,\"pharmacy\":61,\"gazette\":61,\"mission\":61,\"darkroom\":60,\"cemetery\":60,\"commission\":61,\"precinct\":61,\"hask_shop\":60,\"halcyon_gate\":61,\"halcyon_cell\":60,\"halcyon_corridor\":62,\"halcyon_office\":61,\"holding_cell\":61,\"lantern_cellar\":61,\"tunnel\":61,\"calypso_hold\":60,\"calypso_deck\":61,\"calypso_cabin\":60,\"radio_booth\":60,\"clocktower\":61}"
+     "info": "{\"hotel_room\":60,\"hotel_lobby\":61,\"office\":60,\"nora_flat\":60,\"lantern\":60,\"cold_store\":61,\"pier9\":61,\"pharmacy\":61,\"gazette\":60,\"mission\":61,\"darkroom\":61,\"cemetery\":60,\"commission\":61,\"precinct\":61,\"hask_shop\":60,\"halcyon_gate\":61,\"halcyon_cell\":60,\"halcyon_corridor\":60,\"halcyon_office\":60,\"holding_cell\":61,\"lantern_cellar\":61,\"tunnel\":61,\"calypso_hold\":60,\"calypso_deck\":61,\"calypso_cabin\":60,\"radio_booth\":61,\"clocktower\":61}"
     }
    ],
-   "ms": 52599,
+   "ms": 52306,
    "extra": {
     "rooms": 27,
     "fpsMin": 60,
@@ -304,11 +304,11 @@
      "info": "1,2,3,4,5,6,7,8"
     }
    ],
-   "ms": 309335,
+   "ms": 293374,
    "extra": {
     "steps": 145,
     "clicks": 655,
-    "minutes": 5.1,
+    "minutes": 4.9,
     "tail": [
      "  choose broadcast.frank",
      "  choose frank_talkback.early",
