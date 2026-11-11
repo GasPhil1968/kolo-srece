@@ -6,6 +6,7 @@ export const CHAPTERS: ChapterDef[] = [
   {
     n: 1,
     title: 'Room Nine',
+    mood: "A hotel room, a locked door, and a week I can't account for.",
     sub: 'Monday, October 15, 1951',
     complete: 'c1_end',
     objectives: [
@@ -53,6 +54,7 @@ export const CHAPTERS: ChapterDef[] = [
   {
     n: 2,
     title: 'On Ice',
+    mood: 'Pier 9 before dawn, and the cold store is locked from the outside.',
     sub: 'Tuesday, October 16, 1951',
     complete: 'c2_end',
     objectives: [
@@ -100,6 +102,7 @@ export const CHAPTERS: ChapterDef[] = [
   {
     n: 3,
     title: 'Safelight',
+    mood: 'A darkroom, a roll of film, and a note in my own handwriting.',
     sub: 'Wednesday, October 17, 1951',
     complete: 'c3_end',
     objectives: [
@@ -141,6 +144,7 @@ export const CHAPTERS: ChapterDef[] = [
   {
     n: 4,
     title: 'Room Eight',
+    mood: 'Halcyon House: clean sheets, locked doors and a fire drill.',
     sub: 'Thursday, October 18, 1951',
     complete: 'c4_end',
     objectives: [
@@ -166,6 +170,7 @@ export const CHAPTERS: ChapterDef[] = [
   {
     n: 5,
     title: 'Holding',
+    mood: 'A cell at the 1st Precinct, and the one honest rookie in the building.',
     sub: 'Thursday night, October 18, 1951',
     complete: 'c5_end',
     objectives: [
@@ -202,6 +207,7 @@ export const CHAPTERS: ChapterDef[] = [
   {
     n: 6,
     title: 'The Lantern Cellar',
+    mood: "Under the Blue Lantern, the smugglers' old way out.",
     sub: 'Saturday, October 20, 1951 \u2014 before dawn',
     complete: 'c6_end',
     objectives: [
@@ -228,6 +234,7 @@ export const CHAPTERS: ChapterDef[] = [
   {
     n: 7,
     title: 'Below the Waterline',
+    mood: 'The hold of the Calypso, loaded with stones and lies.',
     sub: 'Saturday, October 20, 1951',
     complete: 'c7_end',
     objectives: [
@@ -260,6 +267,7 @@ export const CHAPTERS: ChapterDef[] = [
   {
     n: 8,
     title: 'On Air',
+    mood: 'City Hall, a radio booth, and one hour to tell the truth.',
     sub: 'Saturday, October 20, 1951 \u2014 8:47 PM',
     complete: 'game_complete',
     objectives: [

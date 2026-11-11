@@ -204,6 +204,8 @@ export interface ChapterDef {
   n: number;
   title: string;
   sub: string;
+  /** One line for the chapter select: what the chapter feels like. */
+  mood?: string;
   objectives: ObjectiveDef[];
   /** Chapter is complete when this condition holds (the end script has run). */
   complete: Cond;

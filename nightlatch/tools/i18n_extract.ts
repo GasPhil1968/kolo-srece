@@ -32,7 +32,15 @@ function walk(x: unknown, key: string) {
     }
   }
 }
-walk(CONTENT, '');
-const list = [...out].sort();
-writeFileSync('src/i18n/strings.json', JSON.stringify(list, null, 1));
-console.log(list.length, 'strings', list.reduce((a, s) => a + s.length, 0), 'chars');
+/** Every player-visible English string in the content, sorted. */
+export function collectStrings(): string[] {
+  out.clear();
+  walk(CONTENT, '');
+  return [...out].sort();
+}
+
+if (process.argv[1]?.endsWith('i18n_extract.ts')) {
+  const list = collectStrings();
+  writeFileSync('src/i18n/strings.json', JSON.stringify(list, null, 1));
+  console.log(list.length, 'strings', list.reduce((a, s) => a + s.length, 0), 'chars');
+}

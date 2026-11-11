@@ -11,6 +11,7 @@ import type { Cond, DialogDef, HotspotDef, RoomDef, Script, Step } from '../src/
 import type { WAct } from './sim/harness';
 import { Sim, readySteps } from './sim/harness';
 import { STEPS } from './walkthrough';
+import { collectStrings } from './i18n_extract';
 
 const C = CONTENT;
 const ASSETS = 'public/assets';
@@ -581,6 +582,14 @@ const warns = issues.filter((i) => i.level === 'warn');
 const dedupe = (l: typeof issues) => [...new Map(l.map((i) => [`${i.where}|${i.msg}`, i])).values()];
 for (const i of dedupe(errs)) console.log(`ERROR ${i.where}: ${i.msg}`);
 if (!process.argv.includes('--quiet')) for (const i of dedupe(warns)) console.log(`warn  ${i.where}: ${i.msg}`);
+// every player-visible string has a German translation (src/i18n/de.json)
+{
+  const de = JSON.parse(readFileSync('src/i18n/de.json', 'utf8')) as Record<string, string>;
+  const missing = collectStrings().filter((s) => !(s in de));
+  for (const s of missing.slice(0, 20)) error('i18n', `no German translation: "${s.slice(0, 60)}"`);
+  if (missing.length > 20) error('i18n', `${missing.length - 20} more strings without a German translation`);
+}
+
 console.log(
   `\nvalidated ${Object.keys(C.rooms).length} rooms, ${Object.keys(C.dialogs).length} dialogs, ${Object.keys(C.items).length} items, ` +
     `${Object.keys(C.clues).length} clues, ${conds.length} conditions, ${STEPS.length} walkthrough steps: ` +

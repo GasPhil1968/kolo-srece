@@ -4,7 +4,7 @@ import { Game } from '../engine/game';
 import { newState, type GameState } from '../engine/state';
 import { CONTENT } from '../content';
 import { RuntimePresenter } from './presenter';
-import { writeSave } from './services';
+import { markChapterPlayed, writeSave } from './services';
 import { isTouch } from './touch';
 
 export const ctl = {
@@ -39,6 +39,7 @@ export const ctl = {
 
   save(slot: string, label?: string) {
     const s = this.game.state;
+    markChapterPlayed(s.chapter);
     writeSave(slot, s, label ?? `Chapter ${s.chapter} — ${this.roomName()}`, this.roomName());
   },
 };

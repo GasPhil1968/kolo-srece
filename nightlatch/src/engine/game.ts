@@ -112,14 +112,30 @@ export class Game {
     return ch.objectives.filter((o) => this.cond(o.when)).map((def) => ({ def, done: this.cond(def.done) }));
   }
 
-  /** Next hint for the first open objective; each call escalates one tier. */
+  /**
+   * Hint levels for an objective: first what it is about (the objective itself), then its hints
+   * from a direction to the concrete next step. The last level is only shown once asked twice.
+   */
+  hintLevels(def: ObjectiveDef): string[] {
+    return [def.text, ...def.hints];
+  }
+
+  /** Where the hint for the first open objective stands: the level the next call shows, of how many. */
+  hintInfo(): { level: number; levels: number } | null {
+    const open = this.objectives().find((o) => !o.done);
+    if (!open) return null;
+    const levels = this.hintLevels(open.def).length;
+    return { level: Math.min(this.state.hintTier[open.def.id] ?? 0, levels - 1), levels };
+  }
+
+  /** Next hint for the first open objective; each call goes one level further, and the last repeats. */
   hint(peek = false): string {
     const open = this.objectives().find((o) => !o.done);
     if (!open) return 'Nothing pressing. Maybe I should keep moving.';
-    const tier = this.state.hintTier[open.def.id] ?? 0;
-    const text = open.def.hints[Math.min(tier, open.def.hints.length - 1)];
-    if (!peek) this.state.hintTier[open.def.id] = Math.min(tier + 1, open.def.hints.length - 1);
-    return text;
+    const levels = this.hintLevels(open.def);
+    const tier = Math.min(this.state.hintTier[open.def.id] ?? 0, levels.length - 1);
+    if (!peek) this.state.hintTier[open.def.id] = Math.min(tier + 1, levels.length - 1);
+    return levels[tier];
   }
 
   // ------------------------------------------------------------------- actions ----

@@ -14,6 +14,7 @@ type HudLike = {
   refresh(): void;
   setFaces(left: string | null, right: string | null): void;
   setSpeech(text: string | null, color?: number): void;
+  setSpeaker(who: string | null): void;
 };
 
 export class RuntimePresenter implements Presenter {
@@ -89,12 +90,14 @@ export class RuntimePresenter implements Presenter {
     this.hud.setFaces('rook', this.partner);
     this.facePartners();
     this.hud.setSpeech(text, color);
+    this.hud.setSpeaker(who);
     actor?.talk(true);
     audio.duck(true);
     await this.holdFor(this.lineMs(text));
     actor?.talk(false);
     audio.duck(false);
     this.hud.setSpeech(null);
+    this.hud.setSpeaker(null);
   }
 
   async narrate(text: string) {

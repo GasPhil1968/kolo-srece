@@ -22,10 +22,14 @@ export class HudScene extends Phaser.Scene {
   private toastBusy = false;
   private dialogObjs: Phaser.GameObjects.GameObject[] = [];
   private faceObjs: Phaser.GameObjects.GameObject[] = [];
+  /** The portrait images on screen, with who they show and when each blinks next. */
+  private faces: { id: string; img: Phaser.GameObjects.Image; nextBlink: number }[] = [];
+  private speaker: string | null = null;
   private speechObjs: Phaser.GameObjects.GameObject[] = [];
   private pickResolve: ((v: string | null) => void) | null = null;
   private buttons: Record<string, Phaser.GameObjects.Image> = {};
   private hintObjs: Phaser.GameObjects.GameObject[] = [];
+  private hintConfirm = false;
   private choosing = false;
   /** Where the current dialogue options are drawn (for the browser tests). */
   private optInfo: { id: string; text: string; x: number; y: number; exit: boolean; present: boolean }[] = [];
@@ -166,6 +170,10 @@ export class HudScene extends Phaser.Scene {
     return ctl.game.content.items[id]?.name ?? id;
   }
 
+  update(time: number) {
+    if (this.faces.length) this.animateFaces(time);
+  }
+
   updateSentence() {
     if (!ctl.game || this.choosing || !this.sys.isActive()) return;
     if (this.pickResolve) {
@@ -237,18 +245,38 @@ export class HudScene extends Phaser.Scene {
   setFaces(left: string | null, right: string | null) {
     for (const o of this.faceObjs) o.destroy();
     this.faceObjs = [];
+    this.faces = [];
     const place = (id: string | null, x: number) => {
       if (!id || !this.textures.exists('portrait:' + id)) return;
       const frame = this.add.rectangle(x - 1, 7, 58, 58).setOrigin(0, 0).setDepth(4500)
         .setFillStyle(0x06060a, 1).setStrokeStyle(2, 0xb9a77a);
       const img = this.add.image(x, 8, 'portrait:' + id).setOrigin(0, 0).setDepth(4501);
       this.faceObjs.push(frame, img);
+      this.faces.push({ id, img, nextBlink: this.time.now + 1500 + Math.random() * 3000 });
     };
     place(left, 8);
     place(right, 320 - 56 - 8);
   }
 
   /** A spoken line, in a box across the top between the two faces. Null clears it. */
+  /** Whose mouth moves (null: nobody is speaking). */
+  setSpeaker(who: string | null) {
+    this.speaker = who;
+  }
+
+  /** Mouths open and close on the speaker's face; everyone blinks now and then. */
+  private animateFaces(now: number) {
+    for (const f of this.faces) {
+      let v = '';
+      if (now >= f.nextBlink) {
+        v = ':b';
+        if (now >= f.nextBlink + 140) f.nextBlink = now + 2500 + Math.random() * 3500;
+      } else if (f.id === this.speaker && Math.floor(now / 130) % 2 === 0) v = ':o';
+      const key = 'portrait:' + f.id + v;
+      if (f.img.texture.key !== key && this.textures.exists(key)) f.img.setTexture(key);
+    }
+  }
+
   setSpeech(text: string | null, color = 0xffffff) {
     for (const o of this.speechObjs) o.destroy();
     this.speechObjs = [];
@@ -375,8 +403,20 @@ export class HudScene extends Phaser.Scene {
       return;
     }
     for (const o of this.hintObjs) o.destroy();
-    const text = ctl.game.hint();
-    const t = this.add.bitmapText(160, 20, 'nlo', f('Hint: {0}', tr(text))).setMaxWidth(280).setOrigin(0.5, 0).setTint(0xffe2a0)
+    // the last level gives the next step away, so it needs a second press to confirm
+    const info = ctl.game.hintInfo();
+    let label: string;
+    if (info && info.level === info.levels - 1 && info.levels > 1 && !this.hintConfirm) {
+      this.hintConfirm = true;
+      this.time.delayedCall(6000, () => (this.hintConfirm = false));
+      label = tr('Want the next step itself? Ask for a hint again.');
+    } else {
+      this.hintConfirm = false;
+      const text = ctl.game.hint();
+      label = info ? f('Hint {0}/{1}: {2}', info.level + 1, info.levels, tr(text)) : f('Hint: {0}', tr(text));
+    }
+    const text = label;
+    const t = this.add.bitmapText(160, 20, 'nlo', label).setMaxWidth(280).setOrigin(0.5, 0).setTint(0xffe2a0)
       .setDepth(4500);
     const bg = this.add.rectangle(160, 16, t.width + 10, t.height + 8, 0x06060a, 0.85).setOrigin(0.5, 0)
       .setStrokeStyle(1, 0x7a6230).setDepth(4499);

@@ -5,7 +5,7 @@ import { CHAPTERS } from '../content/chapters';
 import { deserialize } from '../engine/state';
 import { ctl } from './controller';
 import { Overlay } from './overlays';
-import { audio, deleteSave, latestSave, readSave, readSaveMeta, saveSettings, settings, SLOTS } from './services';
+import { audio, chaptersPlayed, deleteSave, latestSave, readSave, readSaveMeta, saveSettings, settings, SLOTS } from './services';
 import { applyScaling, fadeAndRun } from './scaling';
 
 const CREAM = 0xe8d8a8;
@@ -109,6 +109,53 @@ export class MenuScene extends Overlay {
     this.objs.push(o);
     return o;
   }
+  /** Chapter select: a card for each chapter's opening room, joined by a line like stops on a route. */
+  private chSel = 0;
+  private chapterSelect() {
+    const starts = this.cache.json.get('chapterStarts') as Record<string, string> | undefined;
+    const played = chaptersPlayed();
+    const push = <T extends Phaser.GameObjects.GameObject>(o: T) => (this.objs.push(o), o);
+    push(this.add.rectangle(0, 0, 320, 180, 0x07070b, 0.96).setOrigin(0, 0).setInteractive());
+    this.t(160, 10, 'CHAPTERS', CREAM);
+    const pos = (i: number) => ({ x: 26 + (i % 4) * 72, y: 20 + Math.floor(i / 4) * 40 });
+    const line = push(this.add.graphics());
+    line.lineStyle(1, 0x5a4a30);
+    for (let i = 0; i < CHAPTERS.length - 1; i++) {
+      const a = pos(i), b = pos(i + 1);
+      if (i === 3) line.lineBetween(a.x + 32, a.y + 32, a.x + 32, a.y + 36).lineBetween(a.x + 32, a.y + 36, b.x + 32, b.y - 4)
+        .lineBetween(b.x + 32, b.y - 4, b.x + 32, b.y);
+      else line.lineBetween(a.x + 64, a.y + 14, b.x, b.y + 14);
+    }
+    CHAPTERS.forEach((c, i) => {
+      const { x, y } = pos(i);
+      const sel = i === this.chSel;
+      push(this.add.rectangle(x - 1, y - 1, 66, 31).setOrigin(0, 0).setStrokeStyle(sel ? 2 : 1, sel ? 0xe8d8a8 : 0x5a4a30));
+      const card = push(this.add.image(x, y, 'chapter_cards', i).setOrigin(0, 0).setAlpha(sel ? 1 : 0.6));
+      card.setInteractive({ useHandCursor: true }).on('pointerdown', () => {
+        this.chSel = i;
+        this.page('chapters');
+      });
+      push(this.add.bitmapText(x + 2, y + 1, 'nlo', String(c.n)).setTint(sel ? CREAM : DIM));
+      if (played.includes(c.n)) push(this.add.bitmapText(x + 62, y + 1, 'nlo', '+').setOrigin(1, 0).setTint(0x9ccf7a));
+    });
+    const c = CHAPTERS[this.chSel];
+    this.t(160, 100, f('Chapter {0}: {1}', c.n, t(c.title)), CREAM);
+    this.t(160, 111, c.sub, DIM);
+    if (c.mood) push(this.add.bitmapText(160, 120, 'nlo', t(c.mood)).setOrigin(0.5, 0).setMaxWidth(280).setCenterAlign()
+      .setTint(0xb8a070));
+    this.t(160, 149, c.n === 1 ? 'Start here if you are new.' : 'Starts with what the earlier chapters established.', 0x7a6a50);
+    if (starts?.[c.n]) this.b(110, 166, 'Begin chapter', () => this.startChapter(c.n));
+    this.b(220, 166, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
+    const move = (d: number) => {
+      this.chSel = (this.chSel + d + CHAPTERS.length) % CHAPTERS.length;
+      this.page('chapters');
+    };
+    this.input.keyboard?.removeAllListeners('keydown-LEFT');
+    this.input.keyboard?.removeAllListeners('keydown-RIGHT');
+    this.input.keyboard?.on('keydown-LEFT', () => move(-1));
+    this.input.keyboard?.on('keydown-RIGHT', () => move(1));
+  }
+
   /** Start a chapter from its opening save (tools/chapter_starts.ts). */
   private startChapter(n: number) {
     const starts = this.cache.json.get('chapterStarts') as Record<string, string>;
@@ -158,15 +205,7 @@ export class MenuScene extends Overlay {
       }
       this.b(160, 150, 'Back', () => (this.fromTitle && name === 'load' ? this.close() : this.page('main')));
     } else if (name === 'chapters') {
-      this.t(160, 32, 'CHAPTERS', CREAM);
-      const starts = this.cache.json.get('chapterStarts') as Record<string, string> | undefined;
-      CHAPTERS.forEach((c, i) => {
-        const y = 48 + i * 12;
-        if (starts?.[c.n]) this.b(160, y, `${c.n}  ${t(c.title)}`, () => this.startChapter(c.n));
-        else this.t(160, y, `${c.n}  ${t(c.title)}`, 0x5a5040);
-      });
-      this.t(160, 146, 'Starts with what the earlier chapters established.', 0x7a6a50);
-      this.b(160, 160, 'Back', () => (this.fromTitle ? this.close() : this.page('main')));
+      this.chapterSelect();
     } else if (name === 'delete') {
       this.t(160, 32, 'DELETE A SAVE', CREAM);
       SLOTS.forEach((slot, i) => {

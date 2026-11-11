@@ -119,7 +119,7 @@ export class NotebookScene extends Overlay {
       }
       if (!recent.length) this.text(R, row(1), 'Not much. Yet.', INK_SOFT);
       this.button(R, row(12), '[ Ask for a hint ]', () => {
-        const h = g.hint();
+        const h = g.hint(true);
         this.text(R, row(8), h, HILITE, 118);
       });
       return;

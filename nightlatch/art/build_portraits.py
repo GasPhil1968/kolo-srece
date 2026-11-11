@@ -4,7 +4,8 @@
 
 Each character's costume (characters.py) is drawn facing the viewer with the same drawing code
 as the sprites, but at 2x resolution, so the face keeps more detail than an upscaled sprite.
-Writes public/assets/portraits/<id>.png, 56 x 56 pixels, one per character.
+Writes public/assets/portraits/<id>.png (calm), <id>_o.png (speaking) and <id>_b.png (blinking),
+56 x 56 pixels each.
 """
 import json
 import os
@@ -26,10 +27,14 @@ BOX = (36, 9, 92, 65)     # head and the top of the shoulders
 SIZE = 56
 
 
-def portrait(cid):
+# variant suffix -> (mouth open, eyes shut): calm, speaking, blinking
+VARIANTS = {'': (0, False), '_o': (1, False), '_b': (0, True)}
+
+
+def portrait(cid, talk=0, blink=False):
     spec = CHARACTERS[cid]
     sp = Sprite(CANVAS, CANVAS, ORIGIN[0], ORIGIN[1], k=K)
-    draw_front(sp, front_pose(None, spec), spec)
+    draw_front(sp, front_pose(None, spec), spec, talk=talk, blink=blink)
     full = Image.fromarray(sp.render(), 'RGBA')
     return full.crop(BOX)
 
@@ -39,8 +44,9 @@ def main():
     manifest = json.load(open(os.path.join(ROOT, 'public', 'assets', 'manifest.json'), encoding='utf8'))
     made = 0
     for cid in manifest['chars']:
-        portrait(cid).save(os.path.join(OUT, f'{cid}.png'))
-        made += 1
+        for suffix, (talk, blink) in VARIANTS.items():
+            portrait(cid, talk, blink).save(os.path.join(OUT, f'{cid}{suffix}.png'))
+            made += 1
     print(f'portraits: {made} written to {os.path.relpath(OUT, ROOT)}')
 
 

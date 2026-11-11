@@ -36,6 +36,27 @@ export function saveSettings() {
   }
 }
 
+// ------------------------------------------------------------- chapters played ----
+const PLAYED_KEY = 'nightlatch.chapters';
+
+export function chaptersPlayed(): number[] {
+  try {
+    return JSON.parse(localStorage.getItem(PLAYED_KEY) ?? '[]') as number[];
+  } catch {
+    return [];
+  }
+}
+
+export function markChapterPlayed(n: number) {
+  const played = chaptersPlayed();
+  if (played.includes(n)) return;
+  try {
+    localStorage.setItem(PLAYED_KEY, JSON.stringify([...played, n].sort((a, b) => a - b)));
+  } catch {
+    /* storage unavailable */
+  }
+}
+
 // ------------------------------------------------------------------------ saves ----
 export interface SaveMeta {
   slot: string;

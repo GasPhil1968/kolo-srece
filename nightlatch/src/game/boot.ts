@@ -30,10 +30,15 @@ export class BootScene extends Phaser.Scene {
     this.load.image('map', asset('assets/ui/map.png'));
     this.load.image('title', asset('assets/ui/title.png'));
     this.load.image('title_logo', asset('assets/ui/title_logo.png'));
+    this.load.spritesheet('chapter_cards', asset('assets/ui/chapter_cards.png'), { frameWidth: 64, frameHeight: 29 });
     this.load.text('credits', asset('assets/credits.txt'));
     for (const r of man.rooms) this.load.json('room:' + r, asset(`assets/rooms/${r}/room.json`));
     for (const c of man.chars) this.load.json('char:' + c, asset(`assets/chars/${c}.json`));
-    for (const c of man.chars) this.load.image('portrait:' + c, asset(`assets/portraits/${c}.png`));
+    for (const c of man.chars) {
+      this.load.image('portrait:' + c, asset(`assets/portraits/${c}.png`));
+      this.load.image('portrait:' + c + ':o', asset(`assets/portraits/${c}_o.png`));
+      this.load.image('portrait:' + c + ':b', asset(`assets/portraits/${c}_b.png`));
+    }
     for (const d of man.docs ?? []) this.load.image('docimg:' + d, asset(`assets/docs/${d}.png`));
     const am = this.cache.json.get('audioManifest') as AudioManifest | undefined;
     if (am) {

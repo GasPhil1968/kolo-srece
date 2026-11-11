@@ -1,12 +1,12 @@
 # Night Latch — Browser test report
 
-Generated 2026-10-26T14:21:39.141Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
+Generated 2026-11-11T21:22:20.324Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
 
 > These are automated browser tests. They use real mouse clicks and key presses on the game canvas; no human played these sessions.
 
 **5 of 5 cases passed, 62 of 62 checks.**
 
-## ✅ Title screen and menu (4 s)
+## ✅ Title screen and menu (5 s)
 
 - ✔ title menu offers New game
 - ✔ title menu offers Settings and Credits
@@ -15,7 +15,7 @@ Generated 2026-10-26T14:21:39.141Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 - ✔ credits open from the title menu
 - ✔ credits close on click
 
-## ✅ New game and mouse interaction in Room 9 (14 s)
+## ✅ New game and mouse interaction in Room 9 (13 s)
 
 - ✔ new game starts in Room 9 (hotel_room)
 - ✔ chapter 1
@@ -34,7 +34,7 @@ Generated 2026-10-26T14:21:39.141Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 - ✔ a clue's document opens from the notebook
 - ✔ N opens the notebook
 
-## ✅ Save, load and settings through the pause menu (14 s)
+## ✅ Save, load and settings through the pause menu (13 s)
 
 - ✔ menu button opens the pause menu
 - ✔ saving to slot 1 writes the save
@@ -81,12 +81,12 @@ Generated 2026-10-26T14:21:39.141Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 ```json
 {
  "rooms": 27,
- "fpsMin": 59,
- "fpsAvg": 60
+ "fpsMin": 60,
+ "fpsAvg": 61
 }
 ```
 
-## ✅ Complete playthrough with real mouse input (316 s)
+## ✅ Complete playthrough with real mouse input (310 s)
 
 - ✔ the game can be finished from New game to the ending
 - ✔ all eight chapters were played
@@ -95,7 +95,7 @@ Generated 2026-10-26T14:21:39.141Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 {
  "steps": 145,
  "clicks": 655,
- "minutes": 5.2,
+ "minutes": 5.1,
  "tail": [
   "  choose broadcast.frank",
   "  choose frank_talkback.early",
