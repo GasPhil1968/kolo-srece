@@ -452,6 +452,8 @@ export class Game {
     if ('fade' in st) return this.p.fade(st.fade, st.ms ?? 600);
     if ('card' in st) return this.p.card(st.card, st.sub);
     if ('chapter' in st) {
+      // the chapter that just finished gets its ending card before the next one opens
+      if (st.chapter > s.chapter && s.chapter >= 1) await this.p.chapterEnd?.(s.chapter);
       // a new chapter starts with clean staging: every NPC back to its default placements
       if (s.chapter !== st.chapter) s.npcs = {};
       s.chapter = st.chapter;

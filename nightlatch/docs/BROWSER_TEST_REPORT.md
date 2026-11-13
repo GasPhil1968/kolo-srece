@@ -1,12 +1,12 @@
 # Night Latch — Browser test report
 
-Generated 2026-11-11T22:56:17.078Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
+Generated 2026-11-13T00:56:06.605Z by `npm run e2e` (`tests/e2e/run.ts`): Playwright driving Chromium against the production build.
 
 > These are automated browser tests. They use real mouse clicks and key presses on the game canvas; no human played these sessions.
 
 **5 of 5 cases passed, 62 of 62 checks.**
 
-## ✅ Title screen and menu (5 s)
+## ✅ Title screen and menu (11 s)
 
 - ✔ title menu offers New game
 - ✔ title menu offers Settings and Credits
@@ -15,7 +15,7 @@ Generated 2026-11-11T22:56:17.078Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 - ✔ credits open from the title menu
 - ✔ credits close on click
 
-## ✅ New game and mouse interaction in Room 9 (15 s)
+## ✅ New game and mouse interaction in Room 9 (16 s)
 
 - ✔ new game starts in Room 9 (hotel_room)
 - ✔ chapter 1
@@ -34,7 +34,7 @@ Generated 2026-11-11T22:56:17.078Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 - ✔ a clue's document opens from the notebook
 - ✔ N opens the notebook
 
-## ✅ Save, load and settings through the pause menu (15 s)
+## ✅ Save, load and settings through the pause menu (17 s)
 
 - ✔ menu button opens the pause menu
 - ✔ saving to slot 1 writes the save
@@ -47,7 +47,7 @@ Generated 2026-11-11T22:56:17.078Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 - ✔ settings survive a page reload
 - ✔ title offers Continue once a save exists
 
-## ✅ Every room renders (screenshots) (54 s)
+## ✅ Every room renders (screenshots) (53 s)
 
 - ✔ room hotel_room loads and renders
 - ✔ room hotel_lobby loads and renders
@@ -86,7 +86,7 @@ Generated 2026-11-11T22:56:17.078Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 }
 ```
 
-## ✅ Complete playthrough with real mouse input (307 s)
+## ✅ Complete playthrough with real mouse input (366 s)
 
 - ✔ the game can be finished from New game to the ending
 - ✔ all eight chapters were played
@@ -94,8 +94,8 @@ Generated 2026-11-11T22:56:17.078Z by `npm run e2e` (`tests/e2e/run.ts`): Playwr
 ```json
 {
  "steps": 145,
- "clicks": 656,
- "minutes": 5.1,
+ "clicks": 655,
+ "minutes": 6.1,
  "tail": [
   "  choose broadcast.frank",
   "  choose frank_talkback.early",

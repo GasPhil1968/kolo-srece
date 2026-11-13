@@ -49,42 +49,6 @@ export abstract class Overlay extends Phaser.Scene {
   }
 }
 
-// ----------------------------------------------------------------- chapter card ----
-export class CardScene extends Overlay {
-  private data0!: { title: string; sub?: string };
-  constructor() {
-    super('card');
-  }
-  init(data: { title: string; sub?: string; onClose?: () => void }) {
-    super.init(data);
-    this.data0 = data;
-  }
-  create() {
-    const bg = this.add.rectangle(0, 0, 320, 180, 0x000000, 1).setOrigin(0, 0).setInteractive();
-    const lines = this.data0.title.split('\n');
-    const t1 = this.add.bitmapText(160, 70, 'nlo', lines[0]).setOrigin(0.5).setTint(0x9a8a6a).setAlpha(0);
-    const t2 = this.add.bitmapText(160, 88, 'nlo', lines[1] ?? '').setOrigin(0.5).setScale(2).setTint(0xe8d8a8)
-      .setAlpha(0);
-    const t3 = this.add.bitmapText(160, 112, 'nlo', this.data0.sub ?? '').setOrigin(0.5).setTint(0x8a7a60)
-      .setMaxWidth(260).setCenterAlign().setAlpha(0);
-    audio.play('music', null);
-    audio.sfx('chapter');
-    if (ctl.fast && ctl.autoOverlays) {
-      this.time.delayedCall(10, () => this.close());
-      return;
-    }
-    this.tweens.add({ targets: [t1, t2, t3], alpha: 1, duration: 900, delay: (_t: unknown, _k: string, _v: number, i: number) => i * 350 });
-    const done = () => {
-      this.tweens.add({ targets: [t1, t2, t3], alpha: 0, duration: 600, onComplete: () => this.close() });
-    };
-    const timer = this.time.delayedCall(4200, done);
-    bg.on('pointerdown', () => {
-      timer.remove();
-      done();
-    });
-  }
-}
-
 // -------------------------------------------------------------- document viewer ----
 export class DocScene extends Overlay {
   private docId = '';

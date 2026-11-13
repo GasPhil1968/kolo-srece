@@ -5,7 +5,8 @@ import { HudScene } from './game/HudScene';
 import { IntroScene } from './game/intro';
 import { EndScene, MapScene, MenuScene, TitleScene } from './game/menus';
 import { NotebookScene } from './game/notebook';
-import { CardScene, CloseupScene, DocScene } from './game/overlays';
+import { CloseupScene, DocScene } from './game/overlays';
+import { ChapterIntroScene, ChapterOutroScene } from './game/cinema';
 import { RoomScene } from './game/RoomScene';
 import { applyScaling } from './game/scaling';
 import { fitCamera, RES } from './game/res';
@@ -38,7 +39,7 @@ const game = new Phaser.Game({
   input: { mouse: { preventDefaultWheel: true }, touch: !isTouch }, // touches arrive as mouse events (touch.ts)
   fps: { target: 60 },
   scene: [BootScene, IntroScene, TitleScene, RoomScene, HudScene, NotebookScene, MapScene, MenuScene, DocScene, CloseupScene,
-    CardScene, EndScene],
+    ChapterIntroScene, ChapterOutroScene, EndScene],
 });
 
 ctl.phaser = game;

@@ -203,7 +203,11 @@ export class RuntimePresenter implements Presenter {
   }
 
   card(title: string, sub?: string) {
-    return runOverlay('card', { title, sub });
+    return runOverlay('card', { title, sub, chapter: ctl.game?.state.chapter });
+  }
+
+  chapterEnd(n: number) {
+    return runOverlay('outro', { chapter: n });
   }
 
   doc(id: string) {
@@ -266,7 +270,8 @@ export class RuntimePresenter implements Presenter {
     } else this.room.setBlur(Number(value) || 0);
   }
 
-  end() {
+  async end() {
+    await runOverlay('outro', { chapter: 8 }); // the last chapter's ending card, then the credits
     return runOverlay('end', {});
   }
 }

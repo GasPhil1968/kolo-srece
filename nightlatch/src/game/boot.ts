@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { charMetas } from './actor';
 import { asset } from './assets';
 import { IntroScene } from './intro';
+import { OPENING_ROOMS } from './cinema';
 import type { AssetManifest, CharMeta, RoomMeta } from './meta';
 import { roomMetas } from './RoomScene';
 import type { AudioManifest } from './services';
@@ -32,7 +33,9 @@ export class BootScene extends Phaser.Scene {
     this.load.image('title', asset('assets/ui/title.png'));
     this.load.image('title_logo', asset('assets/ui/title_logo.png'));
     // pictures for the intro and the title screens
-    for (const r of ['pier9', 'lantern', 'cemetery', 'hotel_room']) this.load.image('tbg:' + r, asset(`assets/rooms/${r}/bg.png`));
+    for (const r of ['pier9', 'lantern', 'cemetery']) this.load.image('tbg:' + r, asset(`assets/rooms/${r}/bg.png`));
+    // each chapter opens and ends over its locked room (the ship's hold is shown with its lamp lit)
+    for (const r of OPENING_ROOMS) this.load.image('tbg:' + r, asset(`assets/rooms/${r}/${r === 'calypso_hold' ? 'bg_lit' : 'bg'}.png`));
     this.load.spritesheet('chapter_cards', asset('assets/ui/chapter_cards.png'), { frameWidth: 64, frameHeight: 29 });
     this.load.text('credits', asset('assets/credits.txt'));
     for (const r of man.rooms) this.load.json('room:' + r, asset(`assets/rooms/${r}/room.json`));

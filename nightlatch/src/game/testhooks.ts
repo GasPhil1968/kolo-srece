@@ -2,6 +2,7 @@
 // things are on screen, so tests can drive the game with real mouse clicks. Harmless in
 // normal play.
 import type Phaser from 'phaser';
+import { CHAPTERS } from '../content/chapters';
 import type { Action } from '../engine/game';
 import { routeTo } from '../engine/route';
 import { deserialize, serialize } from '../engine/state';
@@ -9,7 +10,7 @@ import { ctl } from './controller';
 import type { HudScene } from './HudScene';
 import type { RoomScene } from './RoomScene';
 
-const OVERLAYS = ['notebook', 'map', 'menu', 'doc', 'closeup', 'card', 'end'];
+const OVERLAYS = ['notebook', 'map', 'menu', 'doc', 'closeup', 'card', 'outro', 'end'];
 
 export function installTestHooks(game: Phaser.Game) {
   const room = () => game.scene.getScene('room') as RoomScene;
@@ -153,6 +154,14 @@ export function installTestHooks(game: Phaser.Game) {
         ({ id: a.id, x: Math.round(a.x), y: Math.round(a.y), dir: a.dir, anim: a.sprite.anims.currentAnim?.key ?? '', frame: String(a.sprite.frame.name) });
       return [one(r.player), ...[...r.npcs.values()].map(one)];
     },
+    /** Play a chapter's opening ('card') or ending ('outro') card on its own (for review videos). */
+    cinema: (kind: 'card' | 'outro', n: number) => new Promise<void>((resolve) => {
+      const c = CHAPTERS.find((x) => x.n === n);
+      const words = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT'];
+      const data = kind === 'card' ? { title: `CHAPTER ${words[n - 1]}\n${c?.title ?? ''}`, sub: c?.sub, chapter: n } : { chapter: n };
+      game.scene.run(kind, { ...data, onClose: resolve });
+      game.scene.bringToTop(kind);
+    }),
     /** Where Phaser last saw the pointer, in game pixels (checks the touch mapping). */
     pointer: () => ({ x: game.input.activePointer.x, y: game.input.activePointer.y }),
     /** Frames actually rendered during the next `ms` milliseconds, as frames per second. */

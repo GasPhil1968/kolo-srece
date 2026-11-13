@@ -1,6 +1,6 @@
 # Night Latch — Automated playtest report
 
-Generated 2026-11-11T22:57:00.813Z by `npm run playtest` (`tools/playtest.ts`): 1 campaign(s) of 2000 runs, seed(s) 1, Node v22.22.0.
+Generated 2026-11-13T00:48:21.181Z by `npm run playtest` (`tools/playtest.ts`): 1 campaign(s) of 2000 runs, seed(s) 1, Node v22.22.0.
 
 > **These are automated simulations, not human playtests.** Each run is a scripted or randomized virtual player driving the real game logic (`src/engine` + `src/content`, the same code the browser build runs) through `Game.perform()`, the entry point every mouse click uses. Rendering, input, animation timing and audio are exercised separately by the Playwright browser tests: see [BROWSER_TEST_REPORT.md](BROWSER_TEST_REPORT.md).
 
@@ -27,7 +27,7 @@ Generated 2026-11-11T22:57:00.813Z by `npm run playtest` (`tools/playtest.ts`): 
 | Save/load failures | 0 |
 | Average actions to finish the game | 628 |
 | Average walkthrough steps to finish | 161 |
-| Wall-clock time | 11 s |
+| Wall-clock time | 12 s |
 
 ## Categories
 

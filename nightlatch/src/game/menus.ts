@@ -484,7 +484,7 @@ export class TitleScene extends Phaser.Scene {
     // completely before the new one is built, or the shutdown would tear the new room down.
     const nextStep = () => new Promise<void>((r) => this.game.events.once(Phaser.Core.Events.POST_STEP, () => r()));
     let stopped = false;
-    for (const k of ['room', 'hud', 'notebook', 'map', 'menu', 'doc', 'closeup', 'card', 'end']) {
+    for (const k of ['room', 'hud', 'notebook', 'map', 'menu', 'doc', 'closeup', 'card', 'outro', 'end']) {
       if (sm.isActive(k) || sm.isPaused(k) || sm.isSleeping(k)) {
         sm.stop(k);
         stopped = true;
@@ -520,7 +520,7 @@ export class TitleScene extends Phaser.Scene {
 
   backToTitle() {
     const sm = this.scene;
-    for (const k of ['room', 'hud', 'notebook', 'map', 'menu', 'doc', 'closeup', 'card', 'end']) if (sm.isActive(k)) sm.stop(k);
+    for (const k of ['room', 'hud', 'notebook', 'map', 'menu', 'doc', 'closeup', 'card', 'outro', 'end']) if (sm.isActive(k)) sm.stop(k);
     sm.wake('title');
     sm.bringToTop('title');
     this.onTitle(true);

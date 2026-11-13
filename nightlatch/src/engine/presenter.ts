@@ -18,6 +18,8 @@ export interface Presenter {
   wait(ms: number): Promise<void>;
   fade(dir: 'out' | 'in', ms: number): Promise<void>;
   card(title: string, sub?: string): Promise<void>;
+  /** A chapter has just been finished (its ending card); optional for headless runs. */
+  chapterEnd?(n: number): Promise<void>;
   doc(id: string): Promise<void>;
   closeup(def: CloseupDef): Promise<void>;
   choose(options: OptionDef[], dialog: DialogDef): Promise<OptionDef>;
